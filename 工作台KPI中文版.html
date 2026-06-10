@@ -61,6 +61,7 @@
     .submenu-item{
       display:block;padding:0 8px;margin:0 -8px;border-radius:4px;cursor:default;
     }
+    a.submenu-item{color:inherit;text-decoration:none;cursor:pointer}
     .submenu-item:hover{color:#1d4ed8}
     .submenu-item.active{color:#2563eb;font-weight:700;background:#eff6ff}
     .menu-divider{height:1px;background:#58a9f7;margin:8px 12px;opacity:.85}
@@ -1339,7 +1340,7 @@
     }
     #commReviewFilters .my-follow-drawer-filters-grid{flex:1;min-width:0}
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
-    #commReviewDrawer .alert-task-detail-panel{width:80%}
+    #commReviewDrawer .alert-task-detail-panel{width:85%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
     .alert-task-detail-table .col-screenshot-link{
       border:none;background:none;padding:0;margin:0;
@@ -1965,6 +1966,12 @@
       margin:0;font-size:12px;color:#64748b;line-height:1.45;
     }
     .alert-task-detail-sub strong{color:#0f172a}
+    .alert-task-detail-sub .alert-task-detail-category-tag{
+      display:inline-block;vertical-align:middle;margin:0 2px;
+      position:static;border-radius:5px;border-left:1px solid;
+      padding:2px 7px;font-size:10px;font-weight:700;line-height:1.3;
+      box-shadow:none;
+    }
     .alert-task-detail-update{
       margin:6px 0 0;font-size:11px;color:#94a3b8;line-height:1.4;
     }
@@ -3926,6 +3933,12 @@
         <div class="submenu">
           <span class="submenu-item active">销售工作台</span>
           <span class="submenu-item">系统仪表盘</span>
+        </div>
+      </div>
+      <div class="menu-item is-expanded"><span class="menu-icon">◎</span>绩效管理 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" href="员工绩效管理.html">员工绩效管理页</a>
         </div>
       </div>
       <div class="menu-item is-expanded"><span class="menu-icon">●</span>用户管理 <span class="arrow">›</span></div>
@@ -7999,6 +8012,7 @@
           <div>
             <h3 id="alertTaskDetailTitle"><span id="alertTaskDetailSales">—</span> 的任务执行明细</h3>
             <p class="alert-task-detail-sub">
+              <span id="alertTaskDetailCategoryWrap" hidden>任务分类：<span id="alertTaskDetailCategoryTag" class="alert-task-detail-category-tag"></span> · </span>
               任务类型：<strong id="alertTaskDetailType">—</strong>
               · 统计范围：<strong id="alertTaskDetailPeriod">—</strong>
               · 共 <strong id="alertTaskDetailCount">0</strong> 条已完成
@@ -10828,6 +10842,7 @@ var _alertTaskFollowPeriod = 'today';
 var ALERT_TASK_DETAIL_PAGE_SIZE = 10;
 var _alertTaskDetailRows = [];
 var _alertTaskDetailPage = 1;
+var _alertTaskDetailCategory = null;
 
 var ALERT_TASK_CUSTOMER_NAMES = [
   'Coleman', 'Hayes', 'Griffin', 'Porter', 'Russell', 'Rivera', 'Collins', 'Ward',
@@ -10930,16 +10945,16 @@ function buildAlertTaskFollowNoteHtml(seed) {
     '</div>';
 }
 
-function buildAlertTaskStatusHtml(seed) {
-  var overdueDone = seed % 6 === 0;
-  if (overdueDone) {
-    return '<span class="task-status-tag task-status-tag--overdue-done">逾期完成</span>';
+function buildAlertTaskStatusHtml(isDone) {
+  if (isDone) {
+    return '<span class="task-status-tag task-status-tag--done">已完成</span>';
   }
-  return '<span class="task-status-tag task-status-tag--done">已完成</span>';
+  return '<span class="task-status-tag task-status-tag--pending">待完成</span>';
 }
 
 function buildAlertTaskDetailRows(salesName, completedCount) {
-  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName);
+  completedCount = Math.max(0, completedCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|detail');
   var rows = [];
   for (var i = 0; i < completedCount; i++) {
     var s = seed + i * 131;
@@ -10952,7 +10967,7 @@ function buildAlertTaskDetailRows(salesName, completedCount) {
       sid: sid,
       assignTime: assignTime,
       completeTime: completeTime,
-      statusHtml: buildAlertTaskStatusHtml(s),
+      statusHtml: buildAlertTaskStatusHtml(true),
       noteHtml: buildAlertTaskFollowNoteHtml(s + i * 7)
     });
   }
@@ -10965,7 +10980,7 @@ function renderAlertTaskFollowTable() {
   var rows = buildAlertTaskFollowRows(_alertTaskFollowType, _alertTaskFollowPeriod);
   tbody.innerHTML = rows.map(function (row) {
     var completedCell = row.completed > 0
-      ? '<a href="#" class="col-completed-link" data-sales="' + row.name + '" data-completed="' + row.completed + '">' + row.completed + '</a>'
+      ? '<a href="#" class="col-completed-link" data-sales="' + row.name + '" data-assigned="' + row.assigned + '" data-completed="' + row.completed + '">' + row.completed + '</a>'
       : '<span class="col-completed-zero">0</span>';
     return '<tr>' +
       '<td class="col-name">' + row.name + '</td>' +
@@ -11151,7 +11166,43 @@ function initCorralPreviewNameLinks() {
   });
 }
 
-function openAlertTaskDetailDrawer(salesName, completedCount) {
+function getTempMktCardCategory(card) {
+  var tag = card ? card.querySelector('.temp-mkt-type-tag') : null;
+  if (!tag) return null;
+  var label = tag.textContent.trim();
+  if (!label) return null;
+  var tagClass = 'temp-mkt-type-tag--test';
+  TEMP_MKT_TYPE_DEFS.forEach(function (d) {
+    if (tag.classList.contains(d.tagClass)) tagClass = d.tagClass;
+  });
+  return { label: label, tagClass: tagClass };
+}
+
+function setAlertTaskDetailCategory(category) {
+  _alertTaskDetailCategory = category && category.label ? category : null;
+}
+
+function clearAlertTaskDetailCategory() {
+  _alertTaskDetailCategory = null;
+}
+
+function renderAlertTaskDetailCategoryTag() {
+  var wrap = document.getElementById('alertTaskDetailCategoryWrap');
+  var tagEl = document.getElementById('alertTaskDetailCategoryTag');
+  if (!wrap || !tagEl) return;
+  if (!_alertTaskDetailCategory) {
+    wrap.hidden = true;
+    tagEl.textContent = '';
+    tagEl.className = 'alert-task-detail-category-tag';
+    return;
+  }
+  tagEl.textContent = _alertTaskDetailCategory.label;
+  tagEl.className = 'alert-task-detail-category-tag ' + _alertTaskDetailCategory.tagClass;
+  wrap.hidden = false;
+}
+
+function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
+  completedCount = Math.max(0, completedCount || 0);
   if (!salesName || !completedCount) return;
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
@@ -11165,6 +11216,7 @@ function openAlertTaskDetailDrawer(salesName, completedCount) {
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
   if (countEl) countEl.textContent = String(completedCount);
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
+  renderAlertTaskDetailCategoryTag();
   renderAlertTaskDetailTable(salesName, completedCount);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -11184,6 +11236,8 @@ function closeAlertTaskDetailDrawer() {
   if (scrollWrap) scrollWrap.style.overflow = '';
   _alertTaskDetailRows = [];
   _alertTaskDetailPage = 1;
+  clearAlertTaskDetailCategory();
+  renderAlertTaskDetailCategoryTag();
   var pager = document.getElementById('alertTaskDetailPager');
   if (pager) pager.hidden = true;
   setTimeout(function () {
@@ -11256,6 +11310,7 @@ function initAlertTaskCardInteractions() {
       e.stopPropagation();
       openAlertTaskDetailDrawer(
         link.getAttribute('data-sales'),
+        parseInt(link.getAttribute('data-assigned'), 10) || 0,
         parseInt(link.getAttribute('data-completed'), 10) || 0
       );
     });
@@ -12280,11 +12335,64 @@ function handleCommStatsChannelActivate(card) {
   }
 }
 
-function getAlertTaskCardCompletedCount(card) {
+function getAlertTaskCardProgressCounts(card) {
   var strongEl = card.querySelector('.alert-task-card-progress strong');
-  if (!strongEl) return 0;
-  var match = (strongEl.textContent || '').match(/^(\d+)/);
-  return match ? parseInt(match[1], 10) || 0 : 0;
+  if (!strongEl) return { completed: 0, assigned: 0 };
+  var match = (strongEl.textContent || '').match(/^(\d+)\s*\/\s*(\d+)/);
+  if (!match) return { completed: 0, assigned: 0 };
+  return {
+    completed: parseInt(match[1], 10) || 0,
+    assigned: parseInt(match[2], 10) || 0
+  };
+}
+
+function getTempMktCardProgressCounts(card) {
+  var stats = card.querySelectorAll('.temp-mkt-stat');
+  var assigned = 0;
+  var completed = 0;
+  stats.forEach(function (stat) {
+    var label = stat.querySelector('.temp-mkt-stat-label');
+    var valEl = stat.querySelector('.temp-mkt-stat-val');
+    if (!label || !valEl) return;
+    var labelText = label.textContent.trim();
+    var num = parseInt(valEl.textContent.replace(/,/g, ''), 10);
+    if (isNaN(num)) return;
+    if (labelText === '目标客户') assigned = num;
+    else if (labelText === '已触达') completed = num;
+  });
+  return { assigned: assigned, completed: completed };
+}
+
+function initTempMktCardInteractions() {
+  document.querySelectorAll('.temp-mkt-section .temp-mkt-card').forEach(function (card) {
+    var nameEl = card.querySelector('.temp-mkt-card-name');
+    if (!nameEl) return;
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', nameEl.textContent.trim() + ' 活动营销任务');
+  });
+}
+
+function handleTempMktCardActivate(card) {
+  if (!card || !card.closest('.temp-mkt-section')) return;
+  var view = document.body.dataset.view || 'sales';
+  var nameEl = card.querySelector('.temp-mkt-card-name');
+  var taskType = nameEl ? nameEl.textContent.trim() : '';
+  if (!taskType) return;
+
+  if (view === 'manager' && card.closest('.manager-only')) {
+    setAlertTaskDetailCategory(getTempMktCardCategory(card));
+    openAlertTaskFollowModal(taskType);
+    return;
+  }
+  if (view === 'sales' && card.closest('.sales-only')) {
+    var counts = getTempMktCardProgressCounts(card);
+    if (!counts.completed) return;
+    _alertTaskFollowType = taskType;
+    _alertTaskFollowPeriod = 'today';
+    setAlertTaskDetailCategory(getTempMktCardCategory(card));
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
+  }
 }
 
 function handleAlertTaskCardActivate(card) {
@@ -12294,15 +12402,19 @@ function handleAlertTaskCardActivate(card) {
   var taskType = nameEl ? nameEl.textContent.trim() : '';
 
   if (view === 'manager' && card.closest('.manager-only')) {
-    if (taskType) openAlertTaskFollowModal(taskType);
+    if (taskType) {
+      clearAlertTaskDetailCategory();
+      openAlertTaskFollowModal(taskType);
+    }
     return;
   }
   if (view === 'sales' && card.closest('.sales-only')) {
-    var completed = getAlertTaskCardCompletedCount(card);
-    if (!taskType || !completed) return;
+    var counts = getAlertTaskCardProgressCounts(card);
+    if (!taskType || !counts.completed) return;
     _alertTaskFollowType = taskType;
     _alertTaskFollowPeriod = 'today';
-    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, completed);
+    clearAlertTaskDetailCategory();
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
   }
 }
 
@@ -15075,6 +15187,9 @@ document.addEventListener('click', function (e) {
   var alertCard = e.target.closest('.alert-task-section .alert-task-card');
   if (alertCard) handleAlertTaskCardActivate(alertCard);
 
+  var tempMktCard = e.target.closest('.temp-mkt-section .temp-mkt-card');
+  if (tempMktCard) handleTempMktCardActivate(tempMktCard);
+
   var commTotalChip = e.target.closest('.comm-stats-section .comm-summary-chip--action');
   if (commTotalChip) handleCommStatsTotalContactActivate(commTotalChip);
 
@@ -15152,9 +15267,16 @@ document.addEventListener('keydown', function (e) {
     return;
   }
   var card = e.target.closest('.alert-task-section .alert-task-card');
-  if (!card || document.activeElement !== card) return;
-  e.preventDefault();
-  handleAlertTaskCardActivate(card);
+  if (card && document.activeElement === card) {
+    e.preventDefault();
+    handleAlertTaskCardActivate(card);
+    return;
+  }
+  var tempMktCard = e.target.closest('.temp-mkt-section .temp-mkt-card');
+  if (tempMktCard && document.activeElement === tempMktCard) {
+    e.preventDefault();
+    handleTempMktCardActivate(tempMktCard);
+  }
 });
 
 window.addEventListener('resize', function () {
@@ -16207,6 +16329,7 @@ initEnableHotPanel();
 randomizeTempMktCardTypes();
 normalizeTempMktRemainingDays();
 initAlertTaskCardInteractions();
+initTempMktCardInteractions();
 initCommStatsCardInteractions();
 initCommFollowEntryForm();
 initCommReviewDrawer();
