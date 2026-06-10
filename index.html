@@ -2041,6 +2041,17 @@
     .alert-task-detail-table .comm-result-tag--fail{
       color:#dc2626;background:#fef2f2;border-color:#fecaca;
     }
+    .alert-task-detail-table .col-contacted{white-space:nowrap}
+    .alert-task-detail-table .comm-contacted-tag{
+      display:inline-block;padding:2px 8px;border-radius:999px;
+      font-size:10px;font-weight:700;line-height:1.4;
+    }
+    .alert-task-detail-table .comm-contacted-tag--yes{
+      color:#059669;background:#ecfdf5;border:1px solid #bbf7d0;
+    }
+    .alert-task-detail-table .comm-contacted-tag--no{
+      color:#64748b;background:#f8fafc;border:1px solid #e2e8f0;
+    }
     .alert-task-detail-table .alert-task-note-block{display:flex;flex-direction:column;gap:4px}
     .alert-task-detail-table .alert-task-note-line{font-size:11px;color:#475569;line-height:1.45}
     .alert-task-detail-table .note-label{color:#64748b;font-weight:400}
@@ -8411,6 +8422,7 @@
                   <th>SID</th>
                   <th>沟通时间</th>
                   <th>联系结果</th>
+                  <th>已联系</th>
                   <th>沟通内容</th>
                 </tr>
               </thead>
@@ -11565,6 +11577,19 @@ function buildCommStatsCommContentText(seed, hasResults) {
   return ALERT_TASK_COMM_CONTENTS[seed % ALERT_TASK_COMM_CONTENTS.length];
 }
 
+function buildCommStatsContactedHtml(label) {
+  var isYes = label === '是';
+  return '<span class="comm-contacted-tag comm-contacted-tag--' + (isYes ? 'yes' : 'no') + '">' + label + '</span>';
+}
+
+function buildCommStatsContactedLabel(contactResults) {
+  if (!contactResults || !contactResults.length) return '否';
+  return contactResults.some(function (resultId) {
+    var meta = COMM_STATS_CONTACT_RESULT_META[resultId];
+    return meta && !meta.isFail;
+  }) ? '是' : '否';
+}
+
 function buildCommStatsDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
   var poolSize = Math.max(rowCount * 4, 48);
@@ -11581,6 +11606,7 @@ function buildCommStatsDetailRows(salesName, rowCount, metric) {
       commTime: buildCommStatsCommTime(s),
       contactResults: contactResults,
       contactResultsHtml: buildCommStatsContactResultsHtml(contactResults),
+      contactedLabel: buildCommStatsContactedLabel(contactResults),
       contentText: buildCommStatsCommContentText(s + i * 9, contactResults.length > 0)
     });
   }
@@ -11642,6 +11668,7 @@ function renderCommStatsDetailRowHtml(row) {
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-contact-results">' + row.contactResultsHtml + '</td>' +
+    '<td class="col-contacted">' + buildCommStatsContactedHtml(row.contactedLabel || '否') + '</td>' +
     '<td class="col-content">' + row.contentText + '</td>' +
     '</tr>';
 }
@@ -11649,6 +11676,24 @@ function renderCommStatsDetailRowHtml(row) {
 function getCommStatsDetailTotalPages() {
   if (!_commStatsDetailRows.length) return 1;
   return Math.ceil(_commStatsDetailRows.length / COMM_STATS_DETAIL_PAGE_SIZE);
+}
+
+function buildLimitedPagerPages(totalPages, currentPage, maxVisible) {
+  maxVisible = maxVisible || 6;
+  if (totalPages <= maxVisible) {
+    var allPages = [];
+    for (var i = 1; i <= totalPages; i++) allPages.push(i);
+    return allPages;
+  }
+  var start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+  var end = start + maxVisible - 1;
+  if (end > totalPages) {
+    end = totalPages;
+    start = Math.max(1, end - maxVisible + 1);
+  }
+  var pages = [];
+  for (var p = start; p <= end; p++) pages.push(p);
+  return pages;
 }
 
 function renderCommStatsDetailPagination() {
@@ -11667,11 +11712,18 @@ function renderCommStatsDetailPagination() {
   var end = Math.min(_commStatsDetailPage * COMM_STATS_DETAIL_PAGE_SIZE, total);
   infoEl.innerHTML = '共 <strong>' + total + '</strong> 条 · 每页 <strong>' + COMM_STATS_DETAIL_PAGE_SIZE + '</strong> 条 · 当前 <strong>' + start + '–' + end + '</strong> 条 · 第 <strong>' + _commStatsDetailPage + '</strong> / ' + totalPages + ' 页';
 
-  var html = '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(' + (_commStatsDetailPage - 1) + ')"' + (_commStatsDetailPage <= 1 ? ' disabled' : '') + '>上一页</button>';
-  for (var p = 1; p <= totalPages; p++) {
+  var html =
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(1)"' + (_commStatsDetailPage <= 1 ? ' disabled' : '') + '>首页</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(' + (_commStatsDetailPage - 1) + ')"' + (_commStatsDetailPage <= 1 ? ' disabled' : '') + '>上一页</button>';
+  var pageNumbers = _commStatsDetailScope === 'all'
+    ? buildLimitedPagerPages(totalPages, _commStatsDetailPage, 6)
+    : buildLimitedPagerPages(totalPages, _commStatsDetailPage, totalPages);
+  pageNumbers.forEach(function (p) {
     html += '<button type="button" class="alert-task-detail-page-btn' + (p === _commStatsDetailPage ? ' active' : '') + '" onclick="goCommStatsDetailPage(' + p + ')">' + p + '</button>';
-  }
-  html += '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(' + (_commStatsDetailPage + 1) + ')"' + (_commStatsDetailPage >= totalPages ? ' disabled' : '') + '>下一页</button>';
+  });
+  html +=
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(' + (_commStatsDetailPage + 1) + ')"' + (_commStatsDetailPage >= totalPages ? ' disabled' : '') + '>下一页</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goCommStatsDetailPage(' + totalPages + ')"' + (_commStatsDetailPage >= totalPages ? ' disabled' : '') + '>末页</button>';
   actionsEl.innerHTML = html;
 }
 

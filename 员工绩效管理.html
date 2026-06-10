@@ -229,6 +229,8 @@
     .rate-warn{color:#d97706;font-weight:700}
     .rate-bad{color:#dc2626;font-weight:700}
     .money{font-variant-numeric:tabular-nums;font-weight:600;color:#0f172a}
+    .perf-reward{font-variant-numeric:tabular-nums;font-weight:700;color:#2563eb}
+    .perf-reward.perf-reward--high{color:#dc2626}
     .sales-name{font-weight:700;color:#0f172a}
     .rate-split{
       display:inline-flex;align-items:baseline;justify-content:flex-end;gap:4px;
@@ -376,9 +378,9 @@
             </div>
           </div>
           <div class="board-filter-field">
-            <label class="board-filter-label" for="channelFilterSelect">渠道</label>
+            <label class="board-filter-label" for="channelFilterSelect">项目</label>
             <div class="board-filter-control">
-              <select id="channelFilterSelect" class="board-filter-select" aria-label="渠道" onchange="switchChannelFilter(this.value)">
+              <select id="channelFilterSelect" class="board-filter-select" aria-label="项目" onchange="switchChannelFilter(this.value)">
                 <option value="all">全部</option>
                 <option value="DATA">DATA</option>
                 <option value="TW">TW</option>
@@ -404,7 +406,7 @@
             <thead>
               <tr>
                 <th class="col-left">销售等级</th>
-                <th class="col-left">渠道</th>
+                <th class="col-left">项目</th>
                 <th class="col-left">销售</th>
                 <th>月份</th>
                 <th>时间进度</th>
@@ -417,6 +419,7 @@
                 <th>活跃达标率/相对</th>
                 <th>交易手数</th>
                 <th>交易手续费</th>
+                <th>绩效提成</th>
               </tr>
             </thead>
             <tbody id="employeeBoardBody"></tbody>
@@ -671,10 +674,15 @@ function getPageRows(page) {
 }
 
 function calcRowPerformanceReward(row) {
-  var netRate = Math.min(row.netDeposit / NET_DEPOSIT_TARGET, 1.2);
-  var activeRate = Math.min(row.rechargeUsers / ACTIVE_TARGET, 1.2);
-  var weighted = netRate * 0.7 + activeRate * 0.3;
-  return row.tradeLots * 0.03 * weighted;
+  var netDepositRate = row.netDeposit / NET_DEPOSIT_TARGET;
+  var activeRate = row.rechargeUsers / ACTIVE_TARGET;
+  return row.tradeLots * 0.03 * (0.7 * netDepositRate + 0.3 * activeRate);
+}
+
+function buildPerformanceRewardCell(row) {
+  var value = calcRowPerformanceReward(row);
+  var cls = 'perf-reward' + (value > 1000 ? ' perf-reward--high' : '');
+  return '<td class="' + cls + '">' + formatMoney(round(value, 2)) + '</td>';
 }
 
 function getDaysInYear(year) {
@@ -833,6 +841,7 @@ function buildRowHtml(row, monthLabel, time) {
       '<td>' + buildRateSplitCell(activeRate, activeRelative) + '</td>' +
       '<td>' + row.tradeLots.toLocaleString('en-US') + '</td>' +
       '<td class="money">' + formatMoney(row.tradeFee) + '</td>' +
+      buildPerformanceRewardCell(row) +
     '</tr>'
   );
 }
