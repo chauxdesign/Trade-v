@@ -239,6 +239,40 @@
     .ai-item strong{color:#4c1d95;font-weight:800}
     #customer-target-module .customer-target-ai{margin-top:20px;padding-top:4px}
     #customer-target-module .customer-target-ai .layer-title{margin-top:0}
+    #panel-goals .manager-goal-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+    }
+    #panel-goals .manager-goal-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-goals .manager-goal-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-goals .manager-goal-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-goals .manager-goal-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
+    .manager-goal-scope-row{width:95%;display:flex;justify-content:flex-start}
+    .manager-goal-scope-select{
+      width:100%;padding:8px 28px 8px 12px;border-radius:8px;border:1px solid #cbd5e1;
+      background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E") no-repeat right 10px center;
+      font-size:12px;font-weight:600;color:#0f172a;cursor:pointer;font-family:inherit;
+      appearance:none;-webkit-appearance:none;
+    }
+    .manager-goal-scope-select:focus{
+      outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25);
+    }
+    .manager-goal-scope-hint{
+      width:95%;margin:0;padding:0;box-sizing:border-box;text-align:left;
+      font-size:13px;color:#475569;line-height:1.7;
+    }
+    .manager-goal-scope-hint strong{font-weight:700;color:#475569}
+    .manager-goal-scope-hint.is-sales-mode strong{color:#2563eb}
+    #manager-goal-perf-title .manager-goal-perf-sales-name,
+    #manager-goal-customer-target-title .manager-goal-perf-sales-name,
+    #manager-goal-customer-rank-title .manager-goal-perf-sales-name{color:#2563eb}
+    .manager-goal-scope-panel + .perf-panel{margin-top:8px}
+    #manager-goal-perf-rank-panel tbody tr.is-active-sales td{background:#eff6ff}
+    #manager-goal-perf-rank-panel tbody tr.is-active-sales .rank-name{color:#2563eb;font-weight:700}
     #revenue-personal .revenue-target-ai,
     #revenue-team .revenue-target-ai{margin-top:20px;padding-top:4px}
     #revenue-personal .revenue-target-ai .layer-title,
@@ -266,6 +300,7 @@
     .block .arrow-link{color:#2563eb;font-weight:700}
     /* 我的目标页：主模块 + 右侧排行榜 */
     #panel-goals .perf-panel,
+    #panel-goals .manager-goal-scope-panel,
     #panel-goals .customer-rank-panel,
     #panel-goals .revenue-rank-panel,
     #panel-goals .perf-rank-panel{
@@ -4030,8 +4065,8 @@
         <div class="wb-panel active" id="panel-goals" role="tabpanel">
         <div class="content-row">
         <section class="module module-main" id="customer-target-module">
-          <h1>客户目标</h1>
-          <p class="module-note">
+          <h1 id="manager-goal-customer-target-title">客户目标</h1>
+          <p class="module-note" id="customer-target-module-note">
             客户指标按 <strong>客户活跃、净入金、客户沟通、交易手数、风险</strong> 等 5 大维度，系统性展示客户目标的跟进情况，总览数据为本月截止到当日的数据汇总。
           </p>
 
@@ -4781,9 +4816,31 @@
           </div>
 
           <div id="perf-team" class="perf-view">
-          <div class="module perf-panel">
+          <div class="module manager-goal-scope-panel" id="manager-goal-scope-module">
             <div class="module-head">
-              <h2>团队绩效预估</h2>
+              <h2>切换管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row">
+                <select id="managerGoalSalesFilter" class="manager-goal-scope-select" aria-label="切换管理视角" onchange="applyManagerGoalSalesFilter(this.value)">
+                  <option value="all" selected>团队所有人</option>
+                  <option value="Coulson">Coulson</option>
+                  <option value="May">May</option>
+                  <option value="Daisy">Daisy</option>
+                  <option value="Fitz">Fitz</option>
+                  <option value="Simmons">Simmons</option>
+                  <option value="Mack">Mack</option>
+                  <option value="Fury">Fury</option>
+                  <option value="Hunter">Hunter</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint" id="managerGoalScopeHint">当前管理视角：<strong>团队所有人</strong></p>
+            </div>
+          </div>
+
+          <div class="module perf-panel" id="manager-goal-perf-panel">
+            <div class="module-head">
+              <h2 id="manager-goal-perf-title">团队绩效预估</h2>
             </div>
             <div class="module-body">
               <div class="perf-estimate">
@@ -4832,9 +4889,40 @@
             </div>
           </div>
 
+          <div class="module perf-rank-panel" id="manager-goal-perf-rank-panel">
+            <div class="module-head">
+              <h2>个人绩效排行榜</h2>
+              <p class="kpi-intro rank-period-intro">统计维度：<strong>本月销售累计绩效提成</strong></p>
+            </div>
+            <div class="module-body">
+              <table class="customer-rank-table">
+                <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">本月累计绩效提成</th></tr></thead>
+                <tbody>
+                  <tr data-sales-name="Coulson"><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">$4,280</td></tr>
+                  <tr data-sales-name="May"><td class="rank-no">2</td><td class="rank-name">May</td><td class="rank-val">$3,860</td></tr>
+                  <tr data-sales-name="Daisy"><td class="rank-no">3</td><td class="rank-name">Daisy</td><td class="rank-val">$3,520</td></tr>
+                  <tr data-sales-name="Fitz"><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">$3,180</td></tr>
+                  <tr data-sales-name="Simmons"><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">$2,940</td></tr>
+                  <tr data-sales-name="Mack"><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">$2,680</td></tr>
+                  <tr data-sales-name="Fury"><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">$2,420</td></tr>
+                </tbody>
+              </table>
+              <div class="rank-self">
+                <div class="rank-self-line rank-self-line--main">
+                  <span class="rank-self-label">团队 TOP1</span>
+                  <span class="rank-self-name">Coulson · 第 1 名</span>
+                  <span class="rank-self-val">$4,280</span>
+                </div>
+                <div class="rank-self-line rank-self-line--sub">
+                  <span class="rank-self-gap">领先第 2 名 $420</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="module customer-rank-panel">
             <div class="module-head">
-              <h2>客户排行榜</h2>
+              <h2 id="manager-goal-customer-rank-title">团队客户排行榜</h2>
               <p class="kpi-intro rank-period-intro">统计范围：<strong class="rank-date-label">昨日</strong></p>
             </div>
             <div class="module-body">
@@ -8422,7 +8510,7 @@
                   <th>SID</th>
                   <th>沟通时间</th>
                   <th>联系结果</th>
-                  <th>已联系</th>
+                  <th>有效沟通</th>
                   <th>沟通内容</th>
                 </tr>
               </thead>
@@ -12491,9 +12579,11 @@ function switchView(view, btn) {
   renderGrowthCharts();
   requestAnimationFrame(function () {
     if (view === 'manager') {
+      applyManagerGoalSalesFilter(_managerGoalSalesFilter);
       initGoalCompletionAnalysis('manager');
       resizeGcaHistoryChart();
     } else {
+      resetManagerGoalSalesFilter();
       resizeGcaHistoryChart();
     }
   });
@@ -12516,7 +12606,10 @@ function switchPanel(panelId, btn) {
     });
   }
   if (panelId === 'goals') {
-    requestAnimationFrame(resizeGcaHistoryChart);
+    requestAnimationFrame(function () {
+      if (document.body.dataset.view === 'manager') applyManagerGoalSalesFilter(_managerGoalSalesFilter);
+      resizeGcaHistoryChart();
+    });
   }
 }
 
@@ -15390,6 +15483,706 @@ function goalKpiBarClass(pct) {
 
 function formatGoalKpiPct(actualPct) {
   return formatKpiPct(actualPct);
+}
+
+var _managerGoalSalesFilter = 'all';
+
+var MANAGER_GOAL_TEAM_DATA = {
+  isTeam: true,
+  salesName: '',
+  note: '客户指标按 <strong>客户活跃、净入金、客户沟通、交易手数、风险</strong> 等 5 大维度，系统性展示<strong>团队所有人</strong>客户目标的跟进情况，总览数据为本月截止到当日的数据汇总。',
+  summary: {
+    customerLabel: '团队客户数',
+    customers: 3840,
+    depositCustomers: 186,
+    tradeCustomers: 312,
+    tradeLots: 8620,
+    tradeLotsAvg: 27.6,
+    contacts: 2995,
+    contactCoverage: 78,
+    highRisk: 61
+  },
+  active: { today: 586, week: 1680, month: 2048, target: 3200 },
+  netDeposit: { today: 48600, week: 168400, month: 440320, target: 512000 },
+  reach: { contacts: 2995, connected: 2334, cr: 892, tell: 648 },
+  tradeLots: { today: 1240, week: 4680, month: 18200, teamMonthLots: 18200, members: 8, personalMonth: 0 },
+  risk: { depositNoTrade: 42, tradeNoDeposit: 38, cancelled: 28, marginCall: 11, withdrawAlert: 18, highRisk: 34, uninstalled: 22 },
+  gcaReachTarget: 3840,
+  labels: {
+    activeTitle: '团队客户活跃',
+    netTitle: '团队净入金',
+    reachTitle: '团队客户沟通',
+    tradeTitle: '团队交易手数',
+    riskTitle: '团队风险',
+    riskPrefix: '团队'
+  },
+  ai: [
+    '团队联系覆盖率 <strong>78%</strong>，仍有 <strong>282</strong> 名客户待跟进，建议按销售负载重排今日触达优先级。',
+    '团队高风险流失客户 <strong>34</strong> 人，建议启动今日风险处置专场并跟踪闭环进度。',
+    '团队尝试充值 <strong>186</strong> 人、成功 <strong>142</strong> 人，建议加强未转化客户的充值引导与主管协同跟进。'
+  ]
+};
+
+var MANAGER_GOAL_SALES_DATA = {
+  Coulson: {
+    isTeam: false,
+    salesName: 'Coulson',
+    note: '当前查看 <strong>Coulson</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 312, depositCustomers: 18, tradeCustomers: 52, tradeLots: 3680, tradeLotsAvg: 11.8, contacts: 268, contactCoverage: 84, highRisk: 5 },
+    active: { today: 52, week: 158, month: 248, target: 480 },
+    netDeposit: { today: 3280, week: 18600, month: 68200, target: 80000 },
+    reach: { contacts: 268, connected: 225, cr: 68, tell: 52 },
+    tradeLots: { today: 118, week: 680, month: 3680, teamMonthLots: 18200, members: 8, personalMonth: 3680 },
+    risk: { depositNoTrade: 4, tradeNoDeposit: 3, cancelled: 2, marginCall: 1, withdrawAlert: 2, highRisk: 5, uninstalled: 2 },
+    gcaReachTarget: 312,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>84%</strong>，仍有 <strong>43</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>5</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>248</strong> 人，KPI 完成 <strong>52%</strong>（目标 480 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  May: {
+    isTeam: false,
+    salesName: 'May',
+    note: '当前查看 <strong>May</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 248, depositCustomers: 12, tradeCustomers: 37, tradeLots: 2860, tradeLotsAvg: 8.2, contacts: 183, contactCoverage: 74, highRisk: 6 },
+    active: { today: 37, week: 112, month: 186, target: 400 },
+    netDeposit: { today: 2580, week: 14200, month: 55040, target: 64000 },
+    reach: { contacts: 183, connected: 136, cr: 42, tell: 28 },
+    tradeLots: { today: 86, week: 512, month: 2860, teamMonthLots: 18200, members: 8, personalMonth: 2860 },
+    risk: { depositNoTrade: 5, tradeNoDeposit: 4, cancelled: 3, marginCall: 1, withdrawAlert: 2, highRisk: 4, uninstalled: 3 },
+    gcaReachTarget: 248,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>74%</strong>，仍有 <strong>47</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>6</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>186</strong> 人，KPI 完成 <strong>47%</strong>（目标 400 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Daisy: {
+    isTeam: false,
+    salesName: 'Daisy',
+    note: '当前查看 <strong>Daisy</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 268, depositCustomers: 14, tradeCustomers: 42, tradeLots: 3120, tradeLotsAvg: 9.1, contacts: 198, contactCoverage: 76, highRisk: 5 },
+    active: { today: 42, week: 128, month: 212, target: 420 },
+    netDeposit: { today: 2860, week: 15800, month: 59800, target: 70000 },
+    reach: { contacts: 198, connected: 150, cr: 48, tell: 34 },
+    tradeLots: { today: 92, week: 548, month: 3120, teamMonthLots: 18200, members: 8, personalMonth: 3120 },
+    risk: { depositNoTrade: 4, tradeNoDeposit: 4, cancelled: 2, marginCall: 0, withdrawAlert: 2, highRisk: 5, uninstalled: 2 },
+    gcaReachTarget: 268,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>76%</strong>，仍有 <strong>48</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>5</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>212</strong> 人，KPI 完成 <strong>50%</strong>（目标 420 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Fitz: {
+    isTeam: false,
+    salesName: 'Fitz',
+    note: '当前查看 <strong>Fitz</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 236, depositCustomers: 11, tradeCustomers: 35, tradeLots: 2480, tradeLotsAvg: 7.6, contacts: 172, contactCoverage: 72, highRisk: 7 },
+    active: { today: 34, week: 102, month: 168, target: 380 },
+    netDeposit: { today: 2180, week: 12600, month: 48200, target: 60000 },
+    reach: { contacts: 172, connected: 124, cr: 38, tell: 26 },
+    tradeLots: { today: 72, week: 428, month: 2480, teamMonthLots: 18200, members: 8, personalMonth: 2480 },
+    risk: { depositNoTrade: 5, tradeNoDeposit: 5, cancelled: 3, marginCall: 1, withdrawAlert: 3, highRisk: 7, uninstalled: 3 },
+    gcaReachTarget: 236,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>72%</strong>，仍有 <strong>48</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>7</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>168</strong> 人，KPI 完成 <strong>44%</strong>（目标 380 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Simmons: {
+    isTeam: false,
+    salesName: 'Simmons',
+    note: '当前查看 <strong>Simmons</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 224, depositCustomers: 10, tradeCustomers: 32, tradeLots: 2280, tradeLotsAvg: 7.1, contacts: 158, contactCoverage: 70, highRisk: 8 },
+    active: { today: 30, week: 92, month: 152, target: 360 },
+    netDeposit: { today: 1980, week: 11200, month: 42800, target: 56000 },
+    reach: { contacts: 158, connected: 111, cr: 34, tell: 22 },
+    tradeLots: { today: 64, week: 386, month: 2280, teamMonthLots: 18200, members: 8, personalMonth: 2280 },
+    risk: { depositNoTrade: 6, tradeNoDeposit: 5, cancelled: 3, marginCall: 1, withdrawAlert: 2, highRisk: 8, uninstalled: 3 },
+    gcaReachTarget: 224,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>70%</strong>，仍有 <strong>47</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>8</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>152</strong> 人，KPI 完成 <strong>42%</strong>（目标 360 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Mack: {
+    isTeam: false,
+    salesName: 'Mack',
+    note: '当前查看 <strong>Mack</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 208, depositCustomers: 9, tradeCustomers: 28, tradeLots: 1980, tradeLotsAvg: 6.4, contacts: 142, contactCoverage: 68, highRisk: 9 },
+    active: { today: 26, week: 82, month: 138, target: 340 },
+    netDeposit: { today: 1680, week: 9800, month: 36800, target: 52000 },
+    reach: { contacts: 142, connected: 97, cr: 28, tell: 18 },
+    tradeLots: { today: 56, week: 342, month: 1980, teamMonthLots: 18200, members: 8, personalMonth: 1980 },
+    risk: { depositNoTrade: 6, tradeNoDeposit: 6, cancelled: 4, marginCall: 2, withdrawAlert: 3, highRisk: 9, uninstalled: 4 },
+    gcaReachTarget: 208,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>68%</strong>，仍有 <strong>45</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>9</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>138</strong> 人，KPI 完成 <strong>41%</strong>（目标 340 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Fury: {
+    isTeam: false,
+    salesName: 'Fury',
+    note: '当前查看 <strong>Fury</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 196, depositCustomers: 8, tradeCustomers: 24, tradeLots: 1680, tradeLotsAvg: 5.8, contacts: 128, contactCoverage: 66, highRisk: 10 },
+    active: { today: 22, week: 72, month: 122, target: 320 },
+    netDeposit: { today: 1420, week: 8600, month: 31200, target: 48000 },
+    reach: { contacts: 128, connected: 84, cr: 24, tell: 16 },
+    tradeLots: { today: 48, week: 298, month: 1680, teamMonthLots: 18200, members: 8, personalMonth: 1680 },
+    risk: { depositNoTrade: 7, tradeNoDeposit: 6, cancelled: 4, marginCall: 2, withdrawAlert: 3, highRisk: 10, uninstalled: 4 },
+    gcaReachTarget: 196,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>66%</strong>，仍有 <strong>44</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>10</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>122</strong> 人，KPI 完成 <strong>38%</strong>（目标 320 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  },
+  Hunter: {
+    isTeam: false,
+    salesName: 'Hunter',
+    note: '当前查看 <strong>Hunter</strong> 的客户目标进度；指标按 5 大维度展示其本月截止到当日的个人客户目标跟进情况。',
+    summary: { customerLabel: '我的客户数', customers: 184, depositCustomers: 7, tradeCustomers: 22, tradeLots: 1420, tradeLotsAvg: 5.2, contacts: 118, contactCoverage: 64, highRisk: 11 },
+    active: { today: 18, week: 62, month: 108, target: 300 },
+    netDeposit: { today: 1180, week: 7200, month: 26800, target: 44000 },
+    reach: { contacts: 118, connected: 76, cr: 20, tell: 14 },
+    tradeLots: { today: 38, week: 248, month: 1420, teamMonthLots: 18200, members: 8, personalMonth: 1420 },
+    risk: { depositNoTrade: 7, tradeNoDeposit: 7, cancelled: 5, marginCall: 2, withdrawAlert: 4, highRisk: 11, uninstalled: 5 },
+    gcaReachTarget: 184,
+    labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
+    ai: [
+      '联系覆盖率 <strong>64%</strong>，仍有 <strong>42</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+      '有 <strong>11</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '本月活跃客户 <strong>108</strong> 人，KPI 完成 <strong>36%</strong>（目标 300 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+    ]
+  }
+};
+
+var MANAGER_GOAL_RANK_LIMIT = 7;
+
+var MANAGER_GOAL_CUST_RANK_NAMES = ['Coleman', 'Hayes', 'Griffin', 'Porter', 'Russell', 'Rivera', 'Collins', 'Ward'];
+var MANAGER_GOAL_CUST_RANK_NET = [128.6, 96.4, 86.2, 72.8, 68.5, 54.2, 48.6, 42.1];
+var MANAGER_GOAL_CUST_RANK_WITHDRAW = [42.6, 38.2, 31.8, 28.4, 24.6, 21.2, 18.8, 16.4];
+var MANAGER_GOAL_CUST_RANK_LOTS = [428, 386, 352, 318, 296, 264, 228, 196];
+
+function buildManagerGoalCustRankRows(baseValues, scale, suffix) {
+  return MANAGER_GOAL_CUST_RANK_NAMES.map(function (name, i) {
+    if (suffix === '手') {
+      return { name: name, val: Math.round(baseValues[i] * scale).toLocaleString('en-US') + ' 手' };
+    }
+    var val = Math.round(baseValues[i] * scale * 10) / 10;
+    return { name: name, val: '$' + val + 'K' };
+  }).slice(0, MANAGER_GOAL_RANK_LIMIT);
+}
+
+function limitManagerGoalTableRows(tbody, limit) {
+  if (!tbody) return;
+  tbody.querySelectorAll('tr').forEach(function (row, i) {
+    row.style.display = i < limit ? '' : 'none';
+  });
+}
+
+function buildManagerGoalCustRankSelf(salesName, scale, kind) {
+  var top3Net = (MANAGER_GOAL_CUST_RANK_NET[0] + MANAGER_GOAL_CUST_RANK_NET[1] + MANAGER_GOAL_CUST_RANK_NET[2]) * scale;
+  var top3Withdraw = (MANAGER_GOAL_CUST_RANK_WITHDRAW[0] + MANAGER_GOAL_CUST_RANK_WITHDRAW[1] + MANAGER_GOAL_CUST_RANK_WITHDRAW[2]) * scale;
+  var top3Lots = Math.round((MANAGER_GOAL_CUST_RANK_LOTS[0] + MANAGER_GOAL_CUST_RANK_LOTS[1] + MANAGER_GOAL_CUST_RANK_LOTS[2]) * scale);
+  if (kind === 'net-deposit') {
+    return { name: salesName + ' 名下', val: 'TOP3 占 $' + Math.round(top3Net) + 'K', gap: '净充值合计领先' };
+  }
+  if (kind === 'withdraw') {
+    return { name: salesName + ' 名下', val: 'TOP3 提现 $' + top3Withdraw.toFixed(1) + 'K', gap: '建议关注大额提现挽回' };
+  }
+  return { name: salesName + ' 名下', val: 'TOP3 合计 ' + top3Lots.toLocaleString('en-US') + ' 手', gap: '活跃交易客户集中' };
+}
+
+var MANAGER_GOAL_SALES_META = {
+  Coulson: { rank: 1, reward: '$4,280', revenueRank: 1, netK: '$286K', feeK: '$17.2K', tradeLots: '1,280', revShare: '18.8%', topLabel: 'TOP 1' },
+  May: { rank: 2, reward: '$3,860', revenueRank: 2, netK: '$248K', feeK: '$18.6K', tradeLots: '1,156', revShare: '16.3%', topLabel: 'TOP 2' },
+  Daisy: { rank: 3, reward: '$3,520', revenueRank: 3, netK: '$212K', feeK: '$14.8K', tradeLots: '1,024', revShare: '13.9%', topLabel: 'TOP 3' },
+  Fitz: { rank: 4, reward: '$3,180', revenueRank: 4, netK: '$198K', feeK: '$12.4K', tradeLots: '968', revShare: '13.0%', topLabel: '第 4 名' },
+  Simmons: { rank: 5, reward: '$2,940', revenueRank: 5, netK: '$176K', feeK: '$10.6K', tradeLots: '892', revShare: '11.6%', topLabel: '第 5 名' },
+  Mack: { rank: 6, reward: '$2,680', revenueRank: 6, netK: '$154K', feeK: '$8.2K', tradeLots: '816', revShare: '10.1%', topLabel: '第 6 名' },
+  Fury: { rank: 7, reward: '$2,420', revenueRank: 7, netK: '$132K', feeK: '$7.1K', tradeLots: '724', revShare: '8.7%', topLabel: '第 7 名' },
+  Hunter: { rank: 8, reward: '$2,180', revenueRank: 8, netK: '$118K', feeK: '$5.5K', tradeLots: '648', revShare: '7.8%', topLabel: '第 8 名' }
+};
+
+var MANAGER_GOAL_TEAM_SIDEBAR = {
+  perfTitle: '团队绩效预估',
+  perfFootnote: '基于团队 KPI、积压任务与历史经营数据预估。',
+  perfItems: [
+    { label: '今日预计团队净入金', desc: '预计今日团队最终净入金', value: '$2.46M' },
+    { label: '今日预计新增实盘', desc: '预计团队新增实盘客户', value: '86 人' },
+    { label: '今日预计团队佣金', desc: '预计团队总佣金', value: '$48,200' },
+    { label: '今日团队完成率', desc: '任务与联系覆盖率综合', value: '88%' },
+    { label: '今日管理风险提示', desc: '待处理风险/订单积压', value: '61 项' }
+  ],
+  customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong>',
+  customerRank: {
+    'net-deposit': {
+      rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, 1, 'K'),
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'net-deposit')
+    },
+    withdraw: {
+      rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, 1, 'K'),
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'withdraw')
+    },
+    'trade-lots': {
+      rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, 1, '手'),
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'trade-lots')
+    }
+  },
+  revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 入金 / 手续费 / 交易',
+  revenueRank: {
+    deposit: {
+      teamLabel: '团队净入金', teamVal: '$1.52M', teamSub: '较昨日 +6.8%',
+      topLabel: '入金 TOP1', topName: 'Coulson', topSub: '$286K · 32 客户',
+      mineLabel: '团队净入金', mineVal: '$1.52M', mineSub: '较昨日 +6.8%',
+      foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', '今日新增入金 <strong>$428K</strong>'],
+      self: { no: '—', name: '团队汇总', val: '$1.52M', gap: '8 位销售合计' },
+      showSelf: true
+    },
+    fee: {
+      teamLabel: '团队手续费', teamVal: '$86.4K', teamSub: '较昨日 +4.2%',
+      topLabel: '手续费 TOP1', topName: 'May', topSub: '$18.6K · 占比 21.5%',
+      mineLabel: '团队手续费', mineVal: '$86.4K', mineSub: '较昨日 +4.2%',
+      foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', '高贡献客户 <strong>May 26 人</strong>'],
+      self: { no: '—', name: '团队汇总', val: '$86.4K', gap: '8 位销售合计' },
+      showSelf: true
+    },
+    trade: {
+      teamLabel: '团队交易量', teamVal: '7,842 手', teamSub: '较昨日 +9.1%',
+      topLabel: '交易 TOP1', topName: 'Coulson', topSub: '1,280 手 · 16.3%',
+      mineLabel: '团队交易量', mineVal: '7,842 手', mineSub: '较昨日 +9.1%',
+      foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', '活跃交易客户 <strong>472 人</strong>'],
+      self: { no: '—', name: '团队汇总', val: '7,842 手', gap: '8 位销售合计' },
+      showSelf: true
+    }
+  }
+};
+
+function buildManagerGoalSalesSidebar(salesName) {
+  var meta = MANAGER_GOAL_SALES_META[salesName];
+  var goal = MANAGER_GOAL_SALES_DATA[salesName];
+  if (!meta || !goal) return null;
+  var scale = 0.55 + (9 - meta.rank) * 0.06;
+  var netMonth = goal.netDeposit.month;
+  var netFmt = '$' + Math.round(netMonth / 1000) + 'K';
+  var rankGap = meta.rank === 1
+    ? '领先第 2 名 $' + Math.max(0, Math.round((MANAGER_GOAL_SALES_DATA.May.netDeposit.month - netMonth) / 1000)) + 'K'
+    : (meta.rank === 8
+      ? '距 TOP1 差 $' + Math.round((MANAGER_GOAL_SALES_DATA.Coulson.netDeposit.month - netMonth) / 1000) + 'K'
+      : '距 TOP1 差 $' + Math.round((MANAGER_GOAL_SALES_DATA.Coulson.netDeposit.month - netMonth) / 1000) + 'K · 领先后一名');
+  return {
+    perfTitle: salesName + ' · 绩效预估',
+    perfFootnote: '基于 ' + salesName + ' 本月累计 KPI 完成进度与历史转化模型动态预估，仅供参考。',
+    perfItems: [
+      { label: '本月累计净入金', desc: '本月累计净入金', value: formatNetDepositUsd(netMonth) },
+      { label: '本月累计交易客户', desc: '本月累计实盘交易客户数', value: goal.summary.tradeCustomers + ' 人' },
+      { label: '本月创收排名', desc: '预计团队创收排名', value: meta.topLabel },
+      { label: '本月累计绩效奖励', desc: '本月累计个人绩效奖励', value: meta.reward },
+      { label: '今日风险提醒', desc: '可能流失高价值客户', value: goal.summary.highRisk + ' 人' }
+    ],
+    customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + salesName + '</strong> 名下客户',
+    customerRank: {
+      'net-deposit': {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, scale, 'K'),
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'net-deposit')
+      },
+      withdraw: {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, scale, 'K'),
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'withdraw')
+      },
+      'trade-lots': {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, scale, '手'),
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'trade-lots')
+      }
+    },
+    revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 高亮 <strong>' + salesName + '</strong>',
+    revenueRank: {
+      deposit: {
+        teamLabel: '团队净入金', teamVal: '$1.52M', teamSub: '较昨日 +6.8%',
+        topLabel: '入金 TOP1', topName: 'Coulson', topSub: '$286K · 32 客户',
+        mineLabel: salesName + ' 净入金', mineVal: meta.netK, mineSub: '排名第 ' + meta.revenueRank + ' · 占团队 ' + meta.revShare,
+        foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', salesName + ' 净入金 <strong>' + meta.netK + '</strong>'],
+        self: { no: '#' + meta.revenueRank, name: salesName, val: meta.netK, gap: rankGap },
+        showSelf: true
+      },
+      fee: {
+        teamLabel: '团队手续费', teamVal: '$86.4K', teamSub: '较昨日 +4.2%',
+        topLabel: '手续费 TOP1', topName: 'May', topSub: '$18.6K · 占比 21.5%',
+        mineLabel: salesName + ' 手续费', mineVal: meta.feeK, mineSub: '团队排名第 ' + (salesName === 'May' ? '1' : meta.revenueRank),
+        foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', salesName + ' 手续费 <strong>' + meta.feeK + '</strong>'],
+        self: { no: salesName === 'May' ? '#1' : '#' + meta.revenueRank, name: salesName, val: meta.feeK, gap: salesName === 'May' ? '领先第 2 名 $1.4K' : '距 TOP1 差 $' + (18.6 - parseFloat(meta.feeK.replace(/[^\d.]/g, ''))).toFixed(1) + 'K' },
+        showSelf: true
+      },
+      trade: {
+        teamLabel: '团队交易量', teamVal: '7,842 手', teamSub: '较昨日 +9.1%',
+        topLabel: '交易 TOP1', topName: 'Coulson', topSub: '1,280 手 · 16.3%',
+        mineLabel: salesName + ' 交易量', mineVal: meta.tradeLots + ' 手', mineSub: '排名第 ' + meta.revenueRank,
+        foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', salesName + ' 交易 <strong>' + meta.tradeLots + ' 手</strong>'],
+        self: { no: '#' + meta.revenueRank, name: salesName, val: meta.tradeLots + ' 手', gap: meta.rank <= 2 ? '距 TOP1 差 ' + (meta.rank === 1 ? '0' : '124') + ' 手' : '距 TOP1 差 ' + (1280 - parseInt(meta.tradeLots.replace(/,/g, ''), 10)) + ' 手' },
+        showSelf: true
+      }
+    }
+  };
+}
+
+function getManagerGoalDisplayData(filter) {
+  var isTeam = !filter || filter === 'all';
+  var base = isTeam ? MANAGER_GOAL_TEAM_DATA : (MANAGER_GOAL_SALES_DATA[filter] || MANAGER_GOAL_TEAM_DATA);
+  var sidebar = isTeam ? MANAGER_GOAL_TEAM_SIDEBAR : buildManagerGoalSalesSidebar(filter);
+  return Object.assign({}, base, { sidebar: sidebar || MANAGER_GOAL_TEAM_SIDEBAR });
+}
+
+function renderManagerGoalCustRankTable(tbody, rows) {
+  if (!tbody || !rows) return;
+  tbody.innerHTML = rows.map(function (row, i) {
+    return '<tr><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + row.name + '</td><td class="rank-val">' + row.val + '</td></tr>';
+  }).join('');
+}
+
+function applyManagerGoalCustomerRankPanel(panel, sidebar) {
+  if (!panel || !sidebar) return;
+  var intro = panel.querySelector('.rank-period-intro');
+  if (intro) intro.innerHTML = sidebar.customerRankIntro;
+  ['net-deposit', 'withdraw', 'trade-lots'].forEach(function (key) {
+    var tabPanel = panel.querySelector('[data-cust-panel="' + key + '"]');
+    if (!tabPanel) return;
+    var block = sidebar.customerRank[key];
+    if (!block) return;
+    renderManagerGoalCustRankTable(tabPanel.querySelector('tbody'), block.rows);
+    var self = tabPanel.querySelector('.rank-self');
+    if (self && block.self) {
+      self.querySelector('.rank-self-name').textContent = block.self.name;
+      self.querySelector('.rank-self-val').textContent = block.self.val;
+      var gap = self.querySelector('.rank-self-gap');
+      if (gap) gap.textContent = block.self.gap;
+    }
+  });
+}
+
+function applyManagerGoalRevenueRankPanel(panel, sidebar) {
+  if (!panel || !sidebar) return;
+  var intro = panel.querySelector('.rank-period-intro');
+  if (intro) intro.innerHTML = sidebar.revenueIntro;
+  ['deposit', 'fee', 'trade'].forEach(function (key) {
+    var tabPanel = panel.querySelector('[data-rev-panel="' + key + '"]');
+    var block = sidebar.revenueRank[key];
+    if (!tabPanel || !block) return;
+    var heroes = tabPanel.querySelectorAll('.rev-hero-card');
+    if (heroes.length >= 3) {
+      heroes[0].querySelector('.rev-hero-label').textContent = block.teamLabel;
+      heroes[0].querySelector('.rev-hero-val').textContent = block.teamVal;
+      heroes[0].querySelector('.rev-hero-sub').textContent = block.teamSub;
+      heroes[1].querySelector('.rev-hero-label').textContent = block.topLabel;
+      heroes[1].querySelector('.rev-hero-val').textContent = block.topName;
+      heroes[1].querySelector('.rev-hero-sub').textContent = block.topSub;
+      heroes[2].querySelector('.rev-hero-label').textContent = block.mineLabel;
+      heroes[2].querySelector('.rev-hero-val').textContent = block.mineVal;
+      heroes[2].querySelector('.rev-hero-sub').textContent = block.mineSub;
+    }
+    var foot = tabPanel.querySelector('.rev-rank-foot');
+    if (foot && block.foot) {
+      foot.innerHTML = block.foot.map(function (chip) {
+        return '<span class="rev-rank-chip">' + chip + '</span>';
+      }).join('');
+    }
+    limitManagerGoalTableRows(tabPanel.querySelector('.revenue-rank-table tbody'), MANAGER_GOAL_RANK_LIMIT);
+    var self = tabPanel.querySelector('.rev-rank-self');
+    if (self && block.self) {
+      self.style.display = '';
+      self.querySelector('.rev-rank-self-no').textContent = block.self.no;
+      self.querySelector('.rev-rank-self-name').textContent = block.self.name;
+      self.querySelector('.rev-rank-self-val').textContent = block.self.val;
+      self.querySelector('.rev-rank-self-gap').textContent = block.self.gap;
+      self.querySelector('.rev-rank-self-label').textContent = block.self.no === '—' ? '团队汇总' : '当前销售排名';
+    }
+  });
+}
+
+var MANAGER_GOAL_PERF_RANK_ORDER = ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
+
+function parseManagerGoalRewardUsd(str) {
+  return Number(String(str).replace(/[$,]/g, '')) || 0;
+}
+
+function applyManagerGoalPerfRankPanel(panel, data) {
+  if (!panel) return;
+  var perfRows = panel.querySelectorAll('tbody tr[data-sales-name]');
+  perfRows.forEach(function (row, i) {
+    row.style.display = i < MANAGER_GOAL_RANK_LIMIT ? '' : 'none';
+    row.classList.toggle('is-active-sales', !data.isTeam && row.getAttribute('data-sales-name') === data.salesName);
+  });
+  var self = panel.querySelector('.rank-self');
+  if (!self) return;
+  var labelEl = self.querySelector('.rank-self-label');
+  var nameEl = self.querySelector('.rank-self-name');
+  var valEl = self.querySelector('.rank-self-val');
+  var gapEl = self.querySelector('.rank-self-gap');
+  if (data.isTeam) {
+    labelEl.textContent = '团队 TOP1';
+    nameEl.textContent = 'Coulson · 第 1 名';
+    valEl.textContent = '$4,280';
+    if (gapEl) gapEl.textContent = '领先第 2 名 $420';
+    return;
+  }
+  var meta = MANAGER_GOAL_SALES_META[data.salesName];
+  if (!meta) return;
+  var reward = parseManagerGoalRewardUsd(meta.reward);
+  var topReward = parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META.Coulson.reward);
+  labelEl.textContent = '当前销售排名';
+  nameEl.innerHTML = '<span class="manager-goal-perf-sales-name">' + data.salesName + '</span> · 第 ' + meta.rank + ' 名';
+  valEl.textContent = meta.reward;
+  if (!gapEl) return;
+  if (meta.rank === 1) {
+    gapEl.textContent = '领先第 2 名 $' + (topReward - parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META.May.reward)).toLocaleString('en-US');
+  } else if (meta.rank >= MANAGER_GOAL_PERF_RANK_ORDER.length) {
+    gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US');
+  } else {
+    var nextName = MANAGER_GOAL_PERF_RANK_ORDER[meta.rank];
+    var nextReward = parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[nextName].reward);
+    gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US') + ' · 领先第 ' + (meta.rank + 1) + ' 名 $' + (reward - nextReward).toLocaleString('en-US');
+  }
+}
+
+function renderManagerGoalModuleTitle(el, teamTitle, personalTitle, salesName, isTeam) {
+  if (!el) return;
+  if (isTeam) {
+    el.textContent = teamTitle;
+  } else {
+    el.innerHTML = '<span class="manager-goal-perf-sales-name">' + salesName + '</span> · ' + personalTitle;
+  }
+}
+
+function resetManagerGoalModuleTitles() {
+  var customerTargetTitle = document.getElementById('manager-goal-customer-target-title');
+  if (customerTargetTitle) customerTargetTitle.textContent = '客户目标';
+}
+
+function applyManagerGoalSidebar(data) {
+  var perfTeam = document.getElementById('perf-team');
+  if (!perfTeam || !data.sidebar) return;
+  var sb = data.sidebar;
+
+  var hintEl = document.getElementById('managerGoalScopeHint');
+  if (hintEl) {
+    hintEl.classList.toggle('is-sales-mode', !data.isTeam);
+    hintEl.innerHTML = '当前管理视角：<strong>' + (data.isTeam ? '团队所有人' : data.salesName) + '</strong>';
+  }
+
+  renderManagerGoalModuleTitle(
+    document.getElementById('manager-goal-customer-target-title'),
+    '团队客户目标', '客户目标', data.salesName, data.isTeam
+  );
+  renderManagerGoalModuleTitle(
+    document.getElementById('manager-goal-customer-rank-title'),
+    '团队客户排行榜', '客户排行榜', data.salesName, data.isTeam
+  );
+
+  var perfTitle = document.getElementById('manager-goal-perf-title');
+  if (perfTitle) {
+    if (data.isTeam) {
+      perfTitle.textContent = sb.perfTitle;
+    } else {
+      perfTitle.innerHTML = '<span class="manager-goal-perf-sales-name">' + data.salesName + '</span> · 绩效预估';
+    }
+  }
+
+  var perfPanel = perfTeam.querySelector('.perf-panel');
+  if (perfPanel) {
+    var items = perfPanel.querySelectorAll('.perf-item');
+    sb.perfItems.forEach(function (item, i) {
+      if (!items[i]) return;
+      items[i].querySelector('.perf-label').textContent = item.label;
+      items[i].querySelector('.perf-desc').textContent = item.desc;
+      items[i].querySelector('.perf-value').textContent = item.value;
+    });
+    var foot = perfPanel.querySelector('.perf-footnote');
+    if (foot) foot.textContent = sb.perfFootnote;
+  }
+
+  applyManagerGoalPerfRankPanel(document.getElementById('manager-goal-perf-rank-panel'), data);
+  applyManagerGoalCustomerRankPanel(perfTeam.querySelector('.customer-rank-panel'), sb);
+  applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb);
+}
+
+function syncManagerGoalGcaMode(isTeam) {
+  var inst = GCA_INSTANCES.manager;
+  if (isTeam) {
+    inst.compareName = '区域平均';
+    inst.benchmarkLabel = '区域上月平均';
+    inst.rewardName = '团队绩效预估奖励';
+    inst.activeName = '团队客户活跃';
+    inst.netName = '团队净入金';
+    inst.reachName = '团队客户沟通';
+    inst.tradeName = '团队交易手数';
+    inst.sprintTradeLeadLabel = '区域平均';
+  } else {
+    inst.compareName = '团队平均';
+    inst.benchmarkLabel = '团队上月平均';
+    inst.rewardName = '绩效预估奖励';
+    inst.activeName = '客户活跃';
+    inst.netName = '净入金';
+    inst.reachName = '客户沟通';
+    inst.tradeName = '交易手数';
+    inst.sprintTradeLeadLabel = '团队人均';
+  }
+}
+
+function setManagerGoalRiskLabel(btn, prefix, base) {
+  if (!btn) return;
+  var span = btn.querySelector('span');
+  if (span) span.textContent = (prefix ? prefix : '') + base;
+}
+
+function applyManagerGoalSalesFilter(value) {
+  _managerGoalSalesFilter = value || 'all';
+  var select = document.getElementById('managerGoalSalesFilter');
+  if (select && select.value !== _managerGoalSalesFilter) select.value = _managerGoalSalesFilter;
+
+  var data = getManagerGoalDisplayData(_managerGoalSalesFilter);
+  var root = document.getElementById('view-team');
+  if (!root) return;
+
+  var noteEl = document.getElementById('customer-target-module-note');
+  if (noteEl) noteEl.innerHTML = data.note;
+
+  var summaryCards = root.querySelectorAll('.kpi-summary .kpi-card');
+  if (summaryCards.length >= 6) {
+    summaryCards[0].querySelector('.label').textContent = data.summary.customerLabel;
+    summaryCards[0].querySelector('.value').textContent = data.summary.customers.toLocaleString('en-US');
+    summaryCards[1].querySelector('.value').textContent = data.summary.depositCustomers.toLocaleString('en-US');
+    summaryCards[2].querySelector('.value').textContent = data.summary.tradeCustomers.toLocaleString('en-US');
+    var lotsSplit = summaryCards[3].querySelector('.kpi-value-split');
+    if (lotsSplit) {
+      lotsSplit.querySelector('span').textContent = data.summary.tradeLots.toLocaleString('en-US');
+      lotsSplit.querySelector('.kpi-value-sub').textContent = String(data.summary.tradeLotsAvg);
+    }
+    var reachSplit = summaryCards[4].querySelector('.kpi-value-split');
+    if (reachSplit) {
+      reachSplit.querySelector('span').textContent = data.summary.contacts.toLocaleString('en-US');
+      reachSplit.querySelector('.kpi-value-sub').textContent = data.summary.contactCoverage + '%';
+    }
+    summaryCards[5].querySelector('.value').textContent = data.summary.highRisk.toLocaleString('en-US');
+  }
+
+  var activeCard = root.querySelector('.goal-card--cust-active');
+  if (activeCard) {
+    activeCard.setAttribute('data-cust-active-target', data.active.target);
+    activeCard.querySelector('h3').textContent = data.labels.activeTitle;
+    var activeCounts = activeCard.querySelectorAll('.cust-active-counts .metric-item strong');
+    if (activeCounts.length >= 3) {
+      activeCounts[0].textContent = data.active.today.toLocaleString('en-US');
+      activeCounts[1].textContent = data.active.week.toLocaleString('en-US');
+      activeCounts[2].textContent = data.active.month.toLocaleString('en-US');
+    }
+    var activeProg = activeCard.querySelector('[data-cust-active-month]');
+    if (activeProg) activeProg.setAttribute('data-cust-active-month', data.active.month);
+  }
+
+  var netCard = root.querySelector('.goal-card--net-deposit');
+  if (netCard) {
+    netCard.setAttribute('data-net-deposit-target', data.netDeposit.target);
+    netCard.querySelector('h3').textContent = data.labels.netTitle;
+    netCard.querySelector('[data-net-field="today"]').textContent = formatNetDepositUsd(data.netDeposit.today);
+    netCard.querySelector('[data-net-field="week"]').textContent = formatNetDepositUsd(data.netDeposit.week);
+    netCard.querySelector('[data-net-field="month"]').textContent = formatNetDepositUsd(data.netDeposit.month);
+    var netProg = netCard.querySelector('[data-net-deposit-month]');
+    if (netProg) netProg.setAttribute('data-net-deposit-month', data.netDeposit.month);
+  }
+
+  var reachCard = root.querySelector('.goal-card--reach');
+  if (reachCard) {
+    reachCard.setAttribute('data-reach-connected', data.reach.connected);
+    reachCard.setAttribute('data-reach-contacts', data.reach.contacts);
+    reachCard.querySelector('h3').textContent = data.labels.reachTitle;
+    var reachMetrics = reachCard.querySelectorAll('.cust-reach-metrics .metric-item strong');
+    if (reachMetrics.length >= 4) {
+      reachMetrics[0].textContent = data.reach.contacts.toLocaleString('en-US');
+      reachMetrics[1].textContent = data.reach.connected.toLocaleString('en-US');
+      reachMetrics[2].textContent = data.reach.cr.toLocaleString('en-US');
+      reachMetrics[3].textContent = data.reach.tell.toLocaleString('en-US');
+    }
+  }
+
+  var tradeCard = root.querySelector('.goal-card--trade-lots');
+  if (tradeCard) {
+    tradeCard.querySelector('h3').textContent = data.labels.tradeTitle;
+    tradeCard.querySelector('[data-trade-field="today"]').textContent = data.tradeLots.today.toLocaleString('en-US');
+    tradeCard.querySelector('[data-trade-field="week"]').textContent = data.tradeLots.week.toLocaleString('en-US');
+    tradeCard.querySelector('[data-trade-field="month"]').textContent = data.tradeLots.month.toLocaleString('en-US');
+    var tradeRow = tradeCard.querySelector('.trade-lots-second-row');
+    if (tradeRow) {
+      tradeRow.setAttribute('data-trade-lots-month', data.tradeLots.month);
+      tradeRow.setAttribute('data-team-month-lots', data.tradeLots.teamMonthLots);
+      tradeRow.setAttribute('data-team-members', data.tradeLots.members);
+      if (data.tradeLots.personalMonth) tradeRow.setAttribute('data-personal-month', data.tradeLots.personalMonth);
+      else tradeRow.removeAttribute('data-personal-month');
+    }
+  }
+
+  var riskCard = root.querySelector('.goal-card--risk');
+  if (riskCard) {
+    riskCard.querySelector('h3').textContent = data.labels.riskTitle;
+    var riskBtns = riskCard.querySelectorAll('.metric-grid .metric-item');
+    var riskKeys = ['depositNoTrade', 'tradeNoDeposit', 'cancelled', 'marginCall', 'withdrawAlert', 'highRisk', 'uninstalled'];
+    var riskLabels = ['充值无交易', '交易无充值', '注销客户', '穿仓客户', '提现预警客户', '高风险客户', '卸载客户'];
+    riskBtns.forEach(function (btn, i) {
+      if (riskKeys[i]) btn.querySelector('strong').textContent = data.risk[riskKeys[i]];
+      setManagerGoalRiskLabel(btn, data.labels.riskPrefix, riskLabels[i]);
+    });
+  }
+
+  var gcaBlock = document.getElementById('goal-completion-analysis-mgr');
+  if (gcaBlock) gcaBlock.setAttribute('data-reach-contacts-target', data.gcaReachTarget);
+
+  var gcaHint = root.querySelector('.gca-history-hint');
+  if (gcaHint) {
+    gcaHint.textContent = data.isTeam
+      ? '切换维度查看近 9 月柱状对比 · 每月两根柱分别为团队完成值与区域平均，共用真实刻度。'
+      : '切换维度查看近 9 月柱状对比 · 每月两根柱分别为该销售完成值与团队平均，共用真实刻度。';
+  }
+
+  var aiList = root.querySelector('.customer-target-ai .ai-suggest-list');
+  if (aiList && data.ai) {
+    aiList.innerHTML = data.ai.map(function (text) {
+      return '<div class="ai-item"><span class="ai-icon">AI</span><span>' + text + '</span></div>';
+    }).join('');
+  }
+
+  applyManagerGoalSidebar(data);
+  syncManagerGoalGcaMode(data.isTeam);
+  initNetDepositCards();
+  initCustActiveCards();
+  initCustReachCards();
+  initTradeLotsCards();
+  if (document.body.dataset.view === 'manager') {
+    initGoalCompletionAnalysis('manager');
+    requestAnimationFrame(resizeGcaHistoryChart);
+  }
+}
+
+function resetManagerGoalSalesFilter() {
+  _managerGoalSalesFilter = 'all';
+  var select = document.getElementById('managerGoalSalesFilter');
+  if (select) select.value = 'all';
+  if (document.body.dataset.view === 'manager') {
+    applyManagerGoalSalesFilter('all');
+  } else {
+    resetManagerGoalModuleTitles();
+  }
 }
 
 function initTradeLotsCards() {
