@@ -17102,11 +17102,11 @@ function initNetDepositCards() {
 })();
 
 function switchLanguage(sel) {
-  var onEn = /English/i.test(location.pathname) || /English\)/i.test(document.title);
+  var onEn = /英文版|English/i.test(location.pathname) || /English\)/i.test(document.title);
   if (sel.value === 'en') {
-    if (!onEn) window.location.href = 'Workbench KPI (English).html';
+    if (!onEn) window.location.href = '工作台KPI英文版.html';
   } else if (onEn) {
-    window.location.href = 'worker action KPI in version .html';
+    window.location.href = '工作台KPI中文版.html';
   } else {
     sel.value = 'zh';
   }
