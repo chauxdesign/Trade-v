@@ -1391,6 +1391,22 @@
       display:flex;align-items:flex-end;gap:10px;
     }
     #commReviewFilters .my-follow-drawer-filters-grid{flex:1;min-width:0}
+    #alertTaskDetailFilters{
+      display:flex;align-items:center;gap:12px;flex-wrap:nowrap;
+    }
+    #alertTaskDetailFilters .my-follow-filter-field{
+      display:flex;flex-direction:row;align-items:center;gap:8px;
+      flex:1;min-width:0;margin:0;
+    }
+    #alertTaskDetailFilters .my-follow-filter-label{
+      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
+    }
+    #alertTaskDetailFilters .my-follow-filter-select{
+      width:160px;flex-shrink:0;
+    }
+    #alertTaskDetailFilters .my-follow-filter-reset{
+      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
+    }
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
     #commReviewDrawer .alert-task-detail-panel{width:85%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
@@ -1401,7 +1417,7 @@
     .alert-task-detail-table .col-screenshot-link:hover{text-decoration:underline}
     .alert-task-detail-table .col-screenshot-empty,
     .alert-task-detail-table .col-status-empty{color:#94a3b8}
-    .alert-task-detail-table .col-action{white-space:nowrap}
+    .alert-task-detail-table .col-action{white-space:nowrap;width:1%}
     .comm-review-action-link{
       color:#2563eb;font-weight:700;text-decoration:none;cursor:pointer;
       font-size:12px;font-family:inherit;white-space:nowrap;
@@ -1995,6 +2011,47 @@
       transform:translateX(100%);transition:transform .25s ease;
     }
     .alert-task-detail-drawer.is-open .alert-task-detail-panel{transform:translateX(0)}
+    #alertTaskDetailDrawer .alert-task-detail-panel{max-width:80%}
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-panel{width:80%;max-width:80%;min-width:480px}
+    body[data-view="sales"] .alert-task-detail-drawer .alert-task-detail-panel{max-width:80%}
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table{min-width:1400px}
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table-wrap{
+      overflow-x:auto;overflow-y:visible;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table th.col-action,
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table td.col-action{
+      position:sticky;right:0;z-index:1;
+      width:1%;min-width:0;max-width:max-content;
+      padding-left:6px;padding-right:8px;
+      border-left:2px solid #bfdbfe;
+      background:linear-gradient(90deg,#eef2ff 0,#eef2ff 8px,#fff 28px);
+      box-shadow:-10px 0 18px rgba(37,99,235,.10);
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table th.col-action{
+      z-index:3;
+      border-left-color:#93c5fd;
+      background:linear-gradient(90deg,#dbeafe 0,#dbeafe 8px,#f8fafc 28px);
+      box-shadow:-10px 0 18px rgba(37,99,235,.12);
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table th.col-action::before,
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table td.col-action::before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+      background:linear-gradient(180deg,#2563eb,#60a5fa);
+      pointer-events:none;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table tbody tr:hover td.col-action{
+      background:linear-gradient(90deg,#dbeafe 0,#dbeafe 8px,#f8fafc 28px);
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-cell-stack{
+      display:flex;flex-direction:column;gap:2px;white-space:normal;min-width:132px;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-cell-line{
+      font-size:12px;line-height:1.4;color:#334155;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-cell-line .col-sid-line{font-size:11px}
+    #alertTaskDetailDrawer.is-cancellation-mode .col-customer-info{min-width:168px;white-space:normal}
+    #alertTaskDetailDrawer.is-cancellation-mode .col-churn-metric{min-width:148px;white-space:normal}
+    .alert-task-detail-table .col-action-links{white-space:nowrap}
     .alert-task-detail-head{
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
       padding:16px 18px;border-bottom:1px solid #eef2f7;
@@ -4495,7 +4552,7 @@
           </div>
         </section>
 
-        <!-- Right: performance estimate + customer leaderboard -->
+        <!-- Right: performance estimate + my customer leaderboard -->
         <aside class="right-sidebar" id="perf-panel">
           <div id="perf-personal" class="perf-view active">
           <div class="module perf-panel">
@@ -4583,7 +4640,7 @@
 
           <div class="module customer-rank-panel">
             <div class="module-head">
-              <h2>Customer Leaderboard</h2>
+              <h2>My Customer Leaderboard</h2>
               <p class="kpi-intro rank-period-intro">Scope: <strong class="rank-date-label">Yesterday</strong></p>
             </div>
             <div class="module-body">
@@ -4678,7 +4735,7 @@
 
           <div class="module revenue-rank-panel">
             <div class="module-head">
-              <h2>Revenue Leaderboard</h2>
+              <h2>Sales Revenue Leaderboard</h2>
               <p class="kpi-intro rank-period-intro"><strong class="rank-date-label">Yesterday</strong>Team revenue ranking · Deposits / Fees / Trading</p>
             </div>
             <div class="module-body">
@@ -4905,7 +4962,7 @@
 
           <div class="module perf-rank-panel" id="manager-goal-perf-rank-panel">
             <div class="module-head">
-              <h2>Individual Performance Leaderboard</h2>
+              <h2>Sales Performance Leaderboard</h2>
               <p class="kpi-intro rank-period-intro">Metric: <strong>MTD Performance Commission</strong></p>
             </div>
             <div class="module-body">
@@ -5031,7 +5088,7 @@
 
           <div class="module revenue-rank-panel">
             <div class="module-head">
-              <h2>Revenue Leaderboard</h2>
+              <h2>Sales Revenue Leaderboard</h2>
               <p class="kpi-intro rank-period-intro"><strong class="rank-date-label">Yesterday</strong>Team revenue ranking · Deposits / Fees / Trading</p>
             </div>
             <div class="module-body">
@@ -5601,7 +5658,7 @@
 
                   <article class="alert-task-card alert-task-card--ok">
                     <div class="alert-task-card-head">
-                      <span class="alert-task-card-name">Withdrawal Recovery</span>
+                      <span class="alert-task-card-name">Withdrawal Alert</span>
                     </div>
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
@@ -5915,7 +5972,7 @@
 
                   <article class="alert-task-card alert-task-card--ok">
                     <div class="alert-task-card-head">
-                      <span class="alert-task-card-name">Withdrawal Recovery</span>
+                      <span class="alert-task-card-name">Withdrawal Alert</span>
                     </div>
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
@@ -6568,7 +6625,7 @@
                 <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchRankDate('lastmonth', this)">Last Month</button>
               </div>
               <div class="rank-tabs" role="tablist">
-                <button type="button" class="rank-tab active" role="tab" aria-selected="true" onclick="switchCommRankTab('tel', this)">Tel Call</button>
+                <button type="button" class="rank-tab active" role="tab" aria-selected="true" onclick="switchCommRankTab('tel', this)">Phone</button>
                 <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCommRankTab('whatsapp', this)">WhatsApp</button>
                 <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCommRankTab('chatroom', this)">ChatRoom</button>
               </div>
@@ -8115,16 +8172,27 @@
               <span id="alertTaskDetailCategoryWrap" hidden>Task category：<span id="alertTaskDetailCategoryTag" class="alert-task-detail-category-tag"></span>                ·                </span>                              
               Task Type：<strong id="alertTaskDetailType">—</strong>                              
               · Scope: <strong id="alertTaskDetailPeriod">—</strong>                              
-               · Total   <strong id="alertTaskDetailCount">0</strong>    itemsCompleted                                       </p>
+              · Total <strong id="alertTaskDetailCount">0</strong> <span id="alertTaskDetailCountSuffix">completed</span>                                       </p>
             <p class="alert-task-detail-update">Data updated: <strong id="alertTaskDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeAlertTaskDetailDrawer()" aria-label="Close">×</button>
         </div>
         <div class="alert-task-detail-body">
+          <div class="my-follow-drawer-filters" id="alertTaskDetailFilters" hidden>
+            <label class="my-follow-filter-field">
+              <span class="my-follow-filter-label">Task Status</span>
+              <select class="my-follow-filter-select" id="alertTaskDetailFilterStatus" onchange="applyAlertTaskDetailFilters()">
+                <option value="">All</option>
+                <option value="done">Completed</option>
+                <option value="pending">Pending</option>
+              </select>
+            </label>
+            <button type="button" class="my-follow-filter-reset" onclick="resetAlertTaskDetailFilters()">Reset Filters</button>
+          </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
               <thead>
-                <tr>
+                <tr id="alertTaskDetailThead">
                   <th>Customer Nickname</th>
                   <th>SID</th>
                   <th>Issued At</th>
@@ -10947,9 +11015,137 @@ var ALERT_TASK_FOLLOW_PERIODS = {
 var _alertTaskFollowType = '';
 var _alertTaskFollowPeriod = 'today';
 var ALERT_TASK_DETAIL_PAGE_SIZE = 10;
+var ALERT_TASK_DETAIL_MIN_ROWS = 15;
 var _alertTaskDetailRows = [];
+var _alertTaskDetailAllRows = [];
 var _alertTaskDetailPage = 1;
 var _alertTaskDetailCategory = null;
+var _alertTaskDetailMode = 'default';
+var CANCELLATION_RETENTION_TASK_TYPES = ['Closure Recovery'];
+var DEPOSIT_GUIDANCE_TASK_TYPES = ['Deposit Guidance'];
+var ALERT_TASK_SPECIAL_DETAIL_MODES = {
+  'Closure Recovery': 'cancellation-retention',
+  'Deposit Guidance': 'deposit-guidance',
+  'Margin Call Care': 'margin-call-care',
+  'Withdrawal Guidance': 'withdrawal-guidance',
+  'Forced Liquidation': 'forced-liquidation',
+  'Identity Verification Coaching': 'kyc-coaching',
+  'High-Risk Churn Recovery': 'high-risk-churn-recovery',
+  'Churn Recovery': 'uninstall-recovery',
+  'Withdrawal Alert': 'withdrawal-clearout'
+};
+var ALERT_TASK_DETAIL_DEFAULT_COLUMNS = [
+  'Customer Nickname', 'SID', 'Issued At', 'Completed At', 'Task Status', 'Task Follow-Up Result Notes'
+];
+var CANCELLATION_RETENTION_DETAIL_COLUMNS = [
+  'Task Status', 'Review Status', 'SID', 'VIP Level', 'Registration Time', 'Applicant', 'Application Time', 'Application Reason',
+  'Review Time', 'Reviewer', 'Review Notes', 'Task Created', 'Task Completed', 'Actions'
+];
+var CANCELLATION_APPLY_REASONS = [
+  'Long-term inactivity, requesting account closure', 'Account balance cleared, no longer needed',
+  'Dissatisfied with service experience', 'Moving to another platform', 'Personal reasons, pausing usage'
+];
+var CANCELLATION_REVIEWERS = ['Admin_Lisa', 'Supervisor_Tom'];
+var CANCELLATION_VIP_LEVELS = ['V0', 'V1', 'V2', 'V3', 'V4'];
+var CANCELLATION_AUDIT_STATUSES = [
+  { key: 'approved', label: 'Reviewed', tagClass: 'task-status-tag--done' },
+  { key: 'pending', label: 'Pending Review', tagClass: 'task-status-tag--pending' },
+  { key: 'reviewing', label: 'In Review', tagClass: 'task-status-tag--overdue-done' }
+];
+var DEPOSIT_GUIDANCE_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Order No.', 'Order Source', 'Order Created', 'Account Type', 'Account', 'Deposit Amount', 'Payment Channel',
+  'VIP Level', 'Last Contact Note', 'Task Created', 'Task Completed', 'Actions'
+];
+var DEPOSIT_ORDER_SOURCES = ['Self-service', 'Sales-guided', 'Campaign Page', 'Support Referral'];
+var DEPOSIT_ACCOUNT_TYPES = ['Live', 'Demo'];
+var DEPOSIT_PAYMENT_CHANNELS = ['Bank Transfer', 'Wire Transfer', 'Online Payment', 'USDT'];
+var DEPOSIT_LAST_CONTACT_NOTES = [
+  'Confirmed deposit intent by phone; customer plans to fund today',
+  'Explained deposit limits and channel settlement times',
+  'Sent deposit guide via WA; customer will proceed later',
+  'Customer asked about payment channels; bank transfer recommended',
+  'Customer agreed to a small test deposit first'
+];
+var MARGIN_CALL_CARE_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Account Type', 'Net Equity', 'Margin Call Amount', 'Last Contact Time', 'Record', 'Follow-up Time',
+  'Task Created', 'Task Completed', 'Actions'
+];
+var MARGIN_CALL_CARE_RECORDS = [
+  'Reassured customer by phone and explained margin top-up plan; customer agreed to add funds',
+  'Customer questioned margin call calculation; sent account breakdown and risk notes',
+  'Followed up on margin top-up via WA; customer will handle today',
+  'Escalated to supervisor for margin review; awaiting customer confirmation',
+  'Customer is calm; scheduled follow-up tomorrow to confirm funding plan'
+];
+var WITHDRAWAL_GUIDANCE_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Account Type', 'Order No.', 'Withdrawal Amount', 'Rejection Reason', 'Order Created', 'Review Time', 'Reviewer',
+  'Last Contact Note', 'Task Created', 'Task Completed', 'Actions'
+];
+var WITHDRAWAL_REJECT_REASONS = [
+  'Incomplete payout account details', 'Withdrawal exceeds daily limit', 'KYC info mismatch', 'Risk review rejected', '—'
+];
+var WITHDRAWAL_LAST_CONTACT_NOTES = [
+  'Explained missing payout details by phone; customer will resubmit today',
+  'Customer asked about rejection reason; guided through updating the request',
+  'Sent withdrawal guide via WA; customer will proceed later',
+  'Explained review progress; customer agreed to wait for risk review',
+  'Customer agreed to adjust withdrawal amount and reapply'
+];
+var FORCED_LIQUIDATION_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Close Order No.', 'Live Account', 'Open Time', 'Liquidation Time', 'Last Contact Note',
+  'Task Created', 'Task Completed', 'Actions'
+];
+var FORCED_LIQUIDATION_LAST_CONTACT_NOTES = [
+  'Reassured customer by phone and explained liquidation reason; customer understood',
+  'Customer asked about liquidation details; sent close order and account notes',
+  'Followed up on trade review via WA; customer open to risk guidance',
+  'Explained margin and risk precautions; scheduled another follow-up',
+  'Customer is calm and acknowledged the liquidation result'
+];
+var KYC_COACHING_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Verification Type', 'Verification Status', 'Failure Reason', 'Application Time', 'Last Follow-Up Record',
+  'Task Created', 'Task Completed', 'Actions'
+];
+var KYC_VERIFY_TYPES = ['Individual', 'Corporate', 'Advanced'];
+var KYC_VERIFY_STATUSES = [
+  { key: 'pending', label: 'Pending Review', tagClass: 'task-status-tag--pending' },
+  { key: 'reviewing', label: 'In Review', tagClass: 'task-status-tag--overdue-done' },
+  { key: 'approved', label: 'Approved', tagClass: 'task-status-tag--done' },
+  { key: 'rejected', label: 'Rejected', tagClass: 'task-status-tag--pending' }
+];
+var KYC_FAIL_REASONS = ['ID photo unclear', 'Name mismatch on document', 'Document expired', 'Missing address proof', '—'];
+var KYC_LAST_FOLLOW_RECORDS = [
+  'Guided customer by phone to upload clear ID photos',
+  'Customer asked about verification flow; explained step by step',
+  'Sent KYC document checklist via WA; customer will submit today',
+  'Helped customer verify name against ID document',
+  'Customer resubmitted verification after follow-up'
+];
+var HIGH_RISK_CHURN_RECOVERY_DETAIL_COLUMNS = [
+  'Task Status', 'Customer Info', 'Activity & Trading', 'Account Balance / Total Deposit', 'Churn Risk & Reason', 'Duration / Issued At', 'Actions'
+];
+var CHURN_PEAK_TRADE_INFOS = [
+  'Peak: Nov 2025 ~ Jan 2026 avg $2.3K/day',
+  'Peak: Oct 2025 ~ Dec 2025 avg $1.8K/day',
+  'Peak: Sep 2025 ~ Nov 2025 avg $3.1K/day',
+  'Peak: Dec 2025 ~ Feb 2026 avg $960/day',
+  'Peak: Aug 2025 ~ Oct 2025 avg $4.5K/day'
+];
+var CHURN_RISK_REASONS = ['Consecutive losses', 'Long-term inactivity', 'Consecutive withdrawals', 'Stopped trading', 'Moved to competitor'];
+var CHURN_RISK_LEVELS = [
+  { pct: 70, level: 'High' },
+  { pct: 55, level: 'Medium' },
+  { pct: 85, level: 'High' },
+  { pct: 42, level: 'Medium' },
+  { pct: 78, level: 'High' }
+];
+var UNINSTALL_RECOVERY_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Uninstall Time', 'Uninstall Version', 'Push Time', 'Last Active Time', 'Last Active Version', 'Task Completed', 'Actions'
+];
+var UNINSTALL_APP_VERSIONS = ['v4.2.1', 'v4.1.0', 'v3.9.5', 'v3.8.2', 'v4.0.3'];
+var WITHDRAWAL_CLEAROUT_DETAIL_COLUMNS = [
+  'Task Status', 'SID', 'Withdrawal Order No.', 'Withdrawal Amount', 'Deposit Count', 'Total Deposit', 'Push Time', 'Task Completed', 'Actions'
+];
 
 var ALERT_TASK_CUSTOMER_NAMES = [
   'Coleman', 'Hayes', 'Griffin', 'Porter', 'Russell', 'Rivera', 'Collins', 'Ward',
@@ -11059,8 +11255,597 @@ function buildAlertTaskStatusHtml(isDone) {
   return '<span class="task-status-tag task-status-tag--pending">pending</span>';
 }
 
+function isCancellationRetentionTaskType(taskType) {
+  return CANCELLATION_RETENTION_TASK_TYPES.indexOf(taskType) !== -1;
+}
+
+function isDepositGuidanceTaskType(taskType) {
+  return DEPOSIT_GUIDANCE_TASK_TYPES.indexOf(taskType) !== -1;
+}
+
+function getSpecialAlertTaskDetailMode(taskType) {
+  return ALERT_TASK_SPECIAL_DETAIL_MODES[taskType] || null;
+}
+
+function isSpecialAlertTaskDetailMode() {
+  return _alertTaskDetailMode !== 'default';
+}
+
+function isCancellationRetentionDetailMode() {
+  return _alertTaskDetailMode === 'cancellation-retention';
+}
+
+function isDepositGuidanceDetailMode() {
+  return _alertTaskDetailMode === 'deposit-guidance';
+}
+
+function isMarginCallCareDetailMode() {
+  return _alertTaskDetailMode === 'margin-call-care';
+}
+
+function isWithdrawalGuidanceDetailMode() {
+  return _alertTaskDetailMode === 'withdrawal-guidance';
+}
+
+function isForcedLiquidationDetailMode() {
+  return _alertTaskDetailMode === 'forced-liquidation';
+}
+
+function isKycCoachingDetailMode() {
+  return _alertTaskDetailMode === 'kyc-coaching';
+}
+
+function isHighRiskChurnRecoveryDetailMode() {
+  return _alertTaskDetailMode === 'high-risk-churn-recovery';
+}
+
+function isUninstallRecoveryDetailMode() {
+  return _alertTaskDetailMode === 'uninstall-recovery';
+}
+
+function isWithdrawalClearoutDetailMode() {
+  return _alertTaskDetailMode === 'withdrawal-clearout';
+}
+
+function renderAlertTaskDetailThead() {
+  var thead = document.getElementById('alertTaskDetailThead');
+  if (!thead) return;
+  var cols = ALERT_TASK_DETAIL_DEFAULT_COLUMNS;
+  if (isCancellationRetentionDetailMode()) {
+    cols = CANCELLATION_RETENTION_DETAIL_COLUMNS;
+  } else if (isDepositGuidanceDetailMode()) {
+    cols = DEPOSIT_GUIDANCE_DETAIL_COLUMNS;
+  } else if (isMarginCallCareDetailMode()) {
+    cols = MARGIN_CALL_CARE_DETAIL_COLUMNS;
+  } else if (isWithdrawalGuidanceDetailMode()) {
+    cols = WITHDRAWAL_GUIDANCE_DETAIL_COLUMNS;
+  } else if (isForcedLiquidationDetailMode()) {
+    cols = FORCED_LIQUIDATION_DETAIL_COLUMNS;
+  } else if (isKycCoachingDetailMode()) {
+    cols = KYC_COACHING_DETAIL_COLUMNS;
+  } else if (isHighRiskChurnRecoveryDetailMode()) {
+    cols = HIGH_RISK_CHURN_RECOVERY_DETAIL_COLUMNS;
+  } else if (isUninstallRecoveryDetailMode()) {
+    cols = UNINSTALL_RECOVERY_DETAIL_COLUMNS;
+  } else if (isWithdrawalClearoutDetailMode()) {
+    cols = WITHDRAWAL_CLEAROUT_DETAIL_COLUMNS;
+  }
+  thead.innerHTML = cols.map(function (col) {
+    var isAction = col === '操作' || col === 'Actions';
+    return '<th' + (isAction ? ' class="col-action"' : '') + '>' + col + '</th>';
+  }).join('');
+}
+
+function buildCancellationRetentionAuditStatusHtml(status) {
+  return '<span class="task-status-tag ' + status.tagClass + '">' + status.label + '</span>';
+}
+
+function buildCancellationRetentionDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|cancel');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 173;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var auditStatus = CANCELLATION_AUDIT_STATUSES[s % CANCELLATION_AUDIT_STATUSES.length];
+    if (!isDone && auditStatus.key === 'approved') {
+      auditStatus = CANCELLATION_AUDIT_STATUSES[1];
+    }
+    var registerTime = buildAlertTaskDateTime(s, -48);
+    var applyTime = buildAlertTaskDateTime(s, -2);
+    var taskCreateTime = buildAlertTaskDateTime(s, -1);
+    var taskCompleteTime = isDone ? buildAlertTaskDateTime(s, 2) : '—';
+    var reviewTime = auditStatus.key === 'approved' ? buildAlertTaskDateTime(s, 1) : '—';
+    var reviewer = auditStatus.key === 'approved' ? CANCELLATION_REVIEWERS[s % CANCELLATION_REVIEWERS.length] : '—';
+    var reviewNote = auditStatus.key === 'approved' ? 'Customer intent pending confirmation; follow-up scheduled' : '—';
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      auditStatus: auditStatus,
+      vipLevel: CANCELLATION_VIP_LEVELS[s % CANCELLATION_VIP_LEVELS.length],
+      registerTime: registerTime,
+      applicant: nick,
+      applyTime: applyTime,
+      applyReason: CANCELLATION_APPLY_REASONS[s % CANCELLATION_APPLY_REASONS.length],
+      reviewTime: reviewTime,
+      reviewer: reviewer,
+      reviewNote: reviewNote,
+      taskCreateTime: taskCreateTime,
+      taskCompleteTime: taskCompleteTime
+    });
+  }
+  return rows;
+}
+
+function renderAlertTaskSpecialActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Private Chat</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Log Entry</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-summary" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Submit AI Summary</a>' +
+    '</span>';
+}
+
+function renderHighRiskChurnRecoveryActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Private Chat</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Log Entry</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-summary" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Submit AI Summary</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="churn-analysis" data-sid="' + row.sid + '" data-nick="' + row.nick + '">Churn Analysis</a>' +
+    '</span>';
+}
+
+function buildAlertTaskDetailCellStack(lines) {
+  return '<div class="alert-task-detail-cell-stack">' +
+    lines.map(function (line) {
+      return '<span class="alert-task-detail-cell-line">' + line + '</span>';
+    }).join('') +
+    '</div>';
+}
+
+function buildAlertTaskIssueDateShort(seed, offsetHours) {
+  var full = buildAlertTaskDateTime(seed, offsetHours);
+  var parts = full.split(' ');
+  var dateParts = parts[0].split('-');
+  return dateParts[1] + '-' + dateParts[2] + '-' + dateParts[0] + ' ' + parts[1];
+}
+
+function buildChurnTaskDuration(seed) {
+  var days = 1 + (seed % 7);
+  var hours = seed % 24;
+  var mins = (seed * 3) % 60;
+  return days + 'd ' + hours + 'h ' + mins + 'm';
+}
+
+function formatChurnAccountBalance(seed) {
+  var balance = ((seed % 1000) / 100).toFixed(2);
+  return '$ ' + balance;
+}
+
+function formatChurnTotalDeposit(seed) {
+  var deposit = (500 + (seed % 50) * 200 + (seed % 100) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return '$ ' + deposit;
+}
+
+function renderCancellationRetentionActionHtml(row) {
+  return renderAlertTaskSpecialActionHtml(row);
+}
+
+function renderCancellationRetentionDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-status">' + buildCancellationRetentionAuditStatusHtml(row.auditStatus) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-level">' + row.vipLevel + '</td>' +
+    '<td class="col-time">' + row.registerTime + '</td>' +
+    '<td class="col-nick">' + row.applicant + '</td>' +
+    '<td class="col-time">' + row.applyTime + '</td>' +
+    '<td class="col-content">' + row.applyReason + '</td>' +
+    '<td class="col-time">' + row.reviewTime + '</td>' +
+    '<td class="col-nick">' + row.reviewer + '</td>' +
+    '<td class="col-content">' + row.reviewNote + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderCancellationRetentionActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildDepositGuidanceDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|deposit');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 191;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      orderNo: 'DEP' + String(20260600000 + (s % 99999)),
+      orderSource: DEPOSIT_ORDER_SOURCES[s % DEPOSIT_ORDER_SOURCES.length],
+      orderCreateTime: buildAlertTaskDateTime(s, -3),
+      accountType: DEPOSIT_ACCOUNT_TYPES[s % DEPOSIT_ACCOUNT_TYPES.length],
+      account: 'MT5-' + String(10000000 + (s % 999999)),
+      depositAmount: '$' + (500 + (s % 20) * 100).toLocaleString('en-US'),
+      paymentChannel: DEPOSIT_PAYMENT_CHANNELS[s % DEPOSIT_PAYMENT_CHANNELS.length],
+      vipLevel: CANCELLATION_VIP_LEVELS[s % CANCELLATION_VIP_LEVELS.length],
+      lastContactNote: DEPOSIT_LAST_CONTACT_NOTES[s % DEPOSIT_LAST_CONTACT_NOTES.length],
+      taskCreateTime: buildAlertTaskDateTime(s, -1),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderDepositGuidanceDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-order">' + row.orderNo + '</td>' +
+    '<td class="col-source">' + row.orderSource + '</td>' +
+    '<td class="col-time">' + row.orderCreateTime + '</td>' +
+    '<td class="col-type">' + row.accountType + '</td>' +
+    '<td class="col-account">' + row.account + '</td>' +
+    '<td class="col-amount">' + row.depositAmount + '</td>' +
+    '<td class="col-channel">' + row.paymentChannel + '</td>' +
+    '<td class="col-level">' + row.vipLevel + '</td>' +
+    '<td class="col-content">' + row.lastContactNote + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildMarginCallCareDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|margin');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 197;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var lastContactTime = buildAlertTaskDateTime(s, -4);
+    var followUpTime = isDone ? buildAlertTaskDateTime(s, 3) : buildAlertTaskDateTime(s, 5);
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      accountType: DEPOSIT_ACCOUNT_TYPES[s % DEPOSIT_ACCOUNT_TYPES.length],
+      netValue: '$' + (8 + (s % 40)).toFixed(1) + 'K',
+      marginCallAmount: '$' + ((s % 20) * 0.2 + 1).toFixed(1) + 'K',
+      lastContactTime: lastContactTime,
+      record: MARGIN_CALL_CARE_RECORDS[s % MARGIN_CALL_CARE_RECORDS.length],
+      followUpTime: followUpTime,
+      taskCreateTime: buildAlertTaskDateTime(s, -1),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderMarginCallCareDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-type">' + row.accountType + '</td>' +
+    '<td class="col-amount">' + row.netValue + '</td>' +
+    '<td class="col-amount">' + row.marginCallAmount + '</td>' +
+    '<td class="col-time">' + row.lastContactTime + '</td>' +
+    '<td class="col-content">' + row.record + '</td>' +
+    '<td class="col-time">' + row.followUpTime + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildWithdrawalGuidanceDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|withdraw');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 203;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var hasReject = (s % 4) !== 0;
+    var rejectReason = hasReject ? WITHDRAWAL_REJECT_REASONS[s % (WITHDRAWAL_REJECT_REASONS.length - 1)] : '—';
+    var reviewTime = hasReject ? buildAlertTaskDateTime(s, 1) : (isDone ? buildAlertTaskDateTime(s, 1) : '—');
+    var reviewer = (hasReject || isDone) ? CANCELLATION_REVIEWERS[s % CANCELLATION_REVIEWERS.length] : '—';
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      accountType: DEPOSIT_ACCOUNT_TYPES[s % DEPOSIT_ACCOUNT_TYPES.length],
+      orderNo: 'WD' + String(20260600000 + (s % 99999)),
+      withdrawAmount: '$' + (300 + (s % 25) * 100).toLocaleString('en-US'),
+      rejectReason: rejectReason,
+      orderCreateTime: buildAlertTaskDateTime(s, -3),
+      reviewTime: reviewTime,
+      reviewer: reviewer,
+      lastContactNote: WITHDRAWAL_LAST_CONTACT_NOTES[s % WITHDRAWAL_LAST_CONTACT_NOTES.length],
+      taskCreateTime: buildAlertTaskDateTime(s, -1),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderWithdrawalGuidanceDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-type">' + row.accountType + '</td>' +
+    '<td class="col-order">' + row.orderNo + '</td>' +
+    '<td class="col-amount">' + row.withdrawAmount + '</td>' +
+    '<td class="col-content">' + row.rejectReason + '</td>' +
+    '<td class="col-time">' + row.orderCreateTime + '</td>' +
+    '<td class="col-time">' + row.reviewTime + '</td>' +
+    '<td class="col-nick">' + row.reviewer + '</td>' +
+    '<td class="col-content">' + row.lastContactNote + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildForcedLiquidationDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|forced');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 211;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var openTime = buildAlertTaskDateTime(s, -6);
+    var liquidatedTime = buildAlertTaskDateTime(s, -2);
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      closeOrderNo: 'FL' + String(20260600000 + (s % 99999)),
+      liveAccount: 'MT5-' + String(10000000 + (s % 999999)),
+      openTime: openTime,
+      liquidatedTime: liquidatedTime,
+      lastContactNote: FORCED_LIQUIDATION_LAST_CONTACT_NOTES[s % FORCED_LIQUIDATION_LAST_CONTACT_NOTES.length],
+      taskCreateTime: buildAlertTaskDateTime(s, -1),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderForcedLiquidationDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-order">' + row.closeOrderNo + '</td>' +
+    '<td class="col-account">' + row.liveAccount + '</td>' +
+    '<td class="col-time">' + row.openTime + '</td>' +
+    '<td class="col-time">' + row.liquidatedTime + '</td>' +
+    '<td class="col-content">' + row.lastContactNote + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildKycVerifyStatusHtml(status) {
+  return '<span class="task-status-tag ' + status.tagClass + '">' + status.label + '</span>';
+}
+
+function buildKycCoachingDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|kyc');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 217;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var verifyStatus = KYC_VERIFY_STATUSES[s % KYC_VERIFY_STATUSES.length];
+    var isRejected = verifyStatus.key === 'rejected';
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      verifyType: KYC_VERIFY_TYPES[s % KYC_VERIFY_TYPES.length],
+      verifyStatus: verifyStatus,
+      failReason: isRejected ? KYC_FAIL_REASONS[s % (KYC_FAIL_REASONS.length - 1)] : '—',
+      applyTime: buildAlertTaskDateTime(s, -3),
+      lastFollowRecord: KYC_LAST_FOLLOW_RECORDS[s % KYC_LAST_FOLLOW_RECORDS.length],
+      taskCreateTime: buildAlertTaskDateTime(s, -1),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderKycCoachingDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-type">' + row.verifyType + '</td>' +
+    '<td class="col-status">' + buildKycVerifyStatusHtml(row.verifyStatus) + '</td>' +
+    '<td class="col-content">' + row.failReason + '</td>' +
+    '<td class="col-time">' + row.applyTime + '</td>' +
+    '<td class="col-content">' + row.lastFollowRecord + '</td>' +
+    '<td class="col-time">' + row.taskCreateTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildUninstallRecoveryDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|uninstall');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 229;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var uninstallVersion = UNINSTALL_APP_VERSIONS[s % UNINSTALL_APP_VERSIONS.length];
+    var lastActiveVersion = UNINSTALL_APP_VERSIONS[(s + 1) % UNINSTALL_APP_VERSIONS.length];
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      uninstallTime: buildAlertTaskDateTime(s, -5),
+      uninstallVersion: uninstallVersion,
+      pushTime: buildAlertTaskDateTime(s, -2),
+      lastActiveTime: buildAlertTaskDateTime(s, -6),
+      lastActiveVersion: lastActiveVersion,
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderUninstallRecoveryDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-time">' + row.uninstallTime + '</td>' +
+    '<td class="col-version">' + row.uninstallVersion + '</td>' +
+    '<td class="col-time">' + row.pushTime + '</td>' +
+    '<td class="col-time">' + row.lastActiveTime + '</td>' +
+    '<td class="col-version">' + row.lastActiveVersion + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildWithdrawalClearoutDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|wd-clear');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 233;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var depositCount = 1 + (s % 18);
+    var totalDepositVal = 800 + (s % 40) * 250 + (s % 100);
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      withdrawOrderNo: 'WD' + String(20260600000 + (s % 99999)),
+      withdrawAmount: '$' + (200 + (s % 30) * 150).toLocaleString('en-US'),
+      depositCount: depositCount,
+      totalDeposit: '$' + totalDepositVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+      pushTime: buildAlertTaskDateTime(s, -2),
+      taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderWithdrawalClearoutDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-order">' + row.withdrawOrderNo + '</td>' +
+    '<td class="col-amount">' + row.withdrawAmount + '</td>' +
+    '<td class="col-num">' + row.depositCount + '</td>' +
+    '<td class="col-amount">' + row.totalDeposit + '</td>' +
+    '<td class="col-time">' + row.pushTime + '</td>' +
+    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildHighRiskChurnRecoveryDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|churn');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 223;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 3) !== 0;
+    var risk = CHURN_RISK_LEVELS[s % CHURN_RISK_LEVELS.length];
+    var daysSinceActive = 2 + (s % 14);
+    var daysSinceTrade = 3 + (s % 18);
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      peakTradeInfo: CHURN_PEAK_TRADE_INFOS[s % CHURN_PEAK_TRADE_INFOS.length],
+      daysSinceActive: daysSinceActive,
+      daysSinceTrade: daysSinceTrade,
+      accountBalance: formatChurnAccountBalance(s),
+      totalDeposit: formatChurnTotalDeposit(s),
+      riskPct: risk.pct,
+      riskLevel: risk.level,
+      churnReason: CHURN_RISK_REASONS[s % CHURN_RISK_REASONS.length],
+      durationText: buildChurnTaskDuration(s),
+      issueTime: buildAlertTaskIssueDateShort(s, -2)
+    });
+  }
+  return rows;
+}
+
+function renderHighRiskChurnRecoveryDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-customer-info">' + buildAlertTaskDetailCellStack([
+      '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
+      '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
+      row.peakTradeInfo
+    ]) + '</td>' +
+    '<td class="col-churn-metric">' + buildAlertTaskDetailCellStack([
+      'Last active ' + row.daysSinceActive + ' days ago',
+      'Last trade ' + row.daysSinceTrade + ' days ago'
+    ]) + '</td>' +
+    '<td class="col-churn-metric">' + buildAlertTaskDetailCellStack([
+      'Account:' + row.accountBalance,
+      'Total deposit:' + row.totalDeposit
+    ]) + '</td>' +
+    '<td class="col-churn-metric">' + buildAlertTaskDetailCellStack([
+      'Risk:' + row.riskPct + '% (' + row.riskLevel + ')',
+      'Reason:' + row.churnReason
+    ]) + '</td>' +
+    '<td class="col-churn-metric">' + buildAlertTaskDetailCellStack([
+      'Duration:' + row.durationText,
+      'Issued:' + row.issueTime
+    ]) + '</td>' +
+    '<td class="col-action">' + renderHighRiskChurnRecoveryActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function handleAlertTaskDetailAction(action, sid, nick) {
+  if (action === 'chat') {
+    alert('Open private chat\nSID: ' + sid + '\nCustomer: ' + nick + '\n(Prototype placeholder — connect to chat entry)');
+    return;
+  }
+  if (action === 'log') {
+    alert('Open log entry\nSID: ' + sid + '\nCustomer: ' + nick + '\n(Prototype placeholder — connect to follow-up entry)');
+    return;
+  }
+  if (action === 'ai-summary') {
+    alert('Submit AI summary\nSID: ' + sid + '\nCustomer: ' + nick + '\n(Prototype placeholder — connect to AI summary submission)');
+    return;
+  }
+  if (action === 'churn-analysis') {
+    openMyFollowChurnRisk(sid, nick, 'risk');
+  }
+}
+
 function buildAlertTaskDetailRows(salesName, completedCount) {
-  completedCount = Math.max(0, completedCount || 0);
+  completedCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, Math.max(0, completedCount || 0));
   var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|detail');
   var rows = [];
   for (var i = 0; i < completedCount; i++) {
@@ -11139,12 +11924,40 @@ function renderAlertTaskDetailPagination() {
   actionsEl.innerHTML = html;
 }
 
+function getAlertTaskDetailRowRenderer() {
+  if (isCancellationRetentionDetailMode()) return renderCancellationRetentionDetailRowHtml;
+  if (isDepositGuidanceDetailMode()) return renderDepositGuidanceDetailRowHtml;
+  if (isMarginCallCareDetailMode()) return renderMarginCallCareDetailRowHtml;
+  if (isWithdrawalGuidanceDetailMode()) return renderWithdrawalGuidanceDetailRowHtml;
+  if (isForcedLiquidationDetailMode()) return renderForcedLiquidationDetailRowHtml;
+  if (isKycCoachingDetailMode()) return renderKycCoachingDetailRowHtml;
+  if (isHighRiskChurnRecoveryDetailMode()) return renderHighRiskChurnRecoveryDetailRowHtml;
+  if (isUninstallRecoveryDetailMode()) return renderUninstallRecoveryDetailRowHtml;
+  if (isWithdrawalClearoutDetailMode()) return renderWithdrawalClearoutDetailRowHtml;
+  return renderAlertTaskDetailRowHtml;
+}
+
+function buildSpecialAlertTaskDetailRows(salesName, taskCount) {
+  taskCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, taskCount || 0);
+  if (isCancellationRetentionDetailMode()) return buildCancellationRetentionDetailRows(salesName, taskCount);
+  if (isDepositGuidanceDetailMode()) return buildDepositGuidanceDetailRows(salesName, taskCount);
+  if (isMarginCallCareDetailMode()) return buildMarginCallCareDetailRows(salesName, taskCount);
+  if (isWithdrawalGuidanceDetailMode()) return buildWithdrawalGuidanceDetailRows(salesName, taskCount);
+  if (isForcedLiquidationDetailMode()) return buildForcedLiquidationDetailRows(salesName, taskCount);
+  if (isKycCoachingDetailMode()) return buildKycCoachingDetailRows(salesName, taskCount);
+  if (isHighRiskChurnRecoveryDetailMode()) return buildHighRiskChurnRecoveryDetailRows(salesName, taskCount);
+  if (isUninstallRecoveryDetailMode()) return buildUninstallRecoveryDetailRows(salesName, taskCount);
+  if (isWithdrawalClearoutDetailMode()) return buildWithdrawalClearoutDetailRows(salesName, taskCount);
+  return [];
+}
+
 function renderAlertTaskDetailTablePage() {
   var tbody = document.getElementById('alertTaskDetailTbody');
   if (!tbody) return;
   var startIdx = (_alertTaskDetailPage - 1) * ALERT_TASK_DETAIL_PAGE_SIZE;
   var pageRows = _alertTaskDetailRows.slice(startIdx, startIdx + ALERT_TASK_DETAIL_PAGE_SIZE);
-  tbody.innerHTML = pageRows.map(renderAlertTaskDetailRowHtml).join('');
+  var renderRow = getAlertTaskDetailRowRenderer();
+  tbody.innerHTML = pageRows.map(renderRow).join('');
   renderAlertTaskDetailPagination();
 }
 
@@ -11154,13 +11967,66 @@ function goAlertTaskDetailPage(page) {
   if (nextPage === _alertTaskDetailPage) return;
   _alertTaskDetailPage = nextPage;
   renderAlertTaskDetailTablePage();
-  var wrap = document.querySelector('.alert-task-detail-table-wrap');
+  var wrap = document.querySelector('#alertTaskDetailDrawer .alert-task-detail-table-wrap');
   if (wrap) wrap.scrollTop = 0;
 }
 
-function renderAlertTaskDetailTable(salesName, completedCount) {
-  _alertTaskDetailRows = buildAlertTaskDetailRows(salesName, completedCount);
+function getAlertTaskDetailFilterValues() {
+  var statusEl = document.getElementById('alertTaskDetailFilterStatus');
+  return { status: statusEl ? statusEl.value : '' };
+}
+
+function filterAlertTaskDetailRows(rows, filters) {
+  return rows.filter(function (row) {
+    if (!filters.status) return true;
+    if (filters.status === 'done') return !!row.isDone;
+    if (filters.status === 'pending') return !row.isDone;
+    return true;
+  });
+}
+
+function updateAlertTaskDetailFilterVisibility() {
+  var filtersEl = document.getElementById('alertTaskDetailFilters');
+  if (filtersEl) filtersEl.hidden = !isSpecialAlertTaskDetailMode();
+}
+
+function updateAlertTaskDetailFilteredCount() {
+  var countEl = document.getElementById('alertTaskDetailCount');
+  if (!countEl || !isSpecialAlertTaskDetailMode()) return;
+  countEl.textContent = String(_alertTaskDetailRows.length);
+}
+
+function clearAlertTaskDetailFilterInputs() {
+  var statusEl = document.getElementById('alertTaskDetailFilterStatus');
+  if (statusEl) statusEl.value = '';
+}
+
+function applyAlertTaskDetailFilters() {
+  if (!isSpecialAlertTaskDetailMode()) return;
+  _alertTaskDetailRows = filterAlertTaskDetailRows(_alertTaskDetailAllRows, getAlertTaskDetailFilterValues());
   _alertTaskDetailPage = 1;
+  updateAlertTaskDetailFilteredCount();
+  renderAlertTaskDetailTablePage();
+}
+
+function resetAlertTaskDetailFilters() {
+  clearAlertTaskDetailFilterInputs();
+  applyAlertTaskDetailFilters();
+}
+
+function renderAlertTaskDetailTable(salesName, assignedCount, completedCount) {
+  if (isSpecialAlertTaskDetailMode()) {
+    _alertTaskDetailAllRows = buildSpecialAlertTaskDetailRows(salesName, assignedCount);
+    clearAlertTaskDetailFilterInputs();
+    _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
+  } else {
+    _alertTaskDetailAllRows = [];
+    _alertTaskDetailRows = buildAlertTaskDetailRows(salesName, completedCount);
+  }
+  _alertTaskDetailPage = 1;
+  renderAlertTaskDetailThead();
+  updateAlertTaskDetailFilterVisibility();
+  updateAlertTaskDetailFilteredCount();
   renderAlertTaskDetailTablePage();
 }
 
@@ -11310,21 +12176,28 @@ function renderAlertTaskDetailCategoryTag() {
 
 function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
   completedCount = Math.max(0, completedCount || 0);
-  if (!salesName || !completedCount) return;
+  assignedCount = Math.max(0, assignedCount || completedCount);
+  if (!salesName) return;
+  if (!isSpecialAlertTaskDetailMode() && !completedCount) return;
+  if (isSpecialAlertTaskDetailMode() && !assignedCount) return;
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
   var salesEl = document.getElementById('alertTaskDetailSales');
   var typeEl = document.getElementById('alertTaskDetailType');
   var periodEl = document.getElementById('alertTaskDetailPeriod');
   var countEl = document.getElementById('alertTaskDetailCount');
+  var countSuffixEl = document.getElementById('alertTaskDetailCountSuffix');
   var updatedEl = document.getElementById('alertTaskDetailUpdatedAt');
+  var displayCount = isSpecialAlertTaskDetailMode() ? assignedCount : completedCount;
+  drawer.classList.toggle('is-cancellation-mode', isSpecialAlertTaskDetailMode());
   if (salesEl) salesEl.textContent = salesName;
   if (typeEl) typeEl.textContent = _alertTaskFollowType;
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
-  if (countEl) countEl.textContent = String(completedCount);
+  if (countEl) countEl.textContent = String(displayCount);
+  if (countSuffixEl) countSuffixEl.textContent = isSpecialAlertTaskDetailMode() ? 'tasks' : 'completed';
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   renderAlertTaskDetailCategoryTag();
-  renderAlertTaskDetailTable(salesName, completedCount);
+  renderAlertTaskDetailTable(salesName, assignedCount, completedCount);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
   var scrollWrap = document.querySelector('.scroll-wrap');
@@ -11342,11 +12215,17 @@ function closeAlertTaskDetailDrawer() {
   var scrollWrap = document.querySelector('.scroll-wrap');
   if (scrollWrap) scrollWrap.style.overflow = '';
   _alertTaskDetailRows = [];
+  _alertTaskDetailAllRows = [];
   _alertTaskDetailPage = 1;
+  _alertTaskDetailMode = 'default';
+  clearAlertTaskDetailFilterInputs();
+  updateAlertTaskDetailFilterVisibility();
   clearAlertTaskDetailCategory();
   renderAlertTaskDetailCategoryTag();
+  renderAlertTaskDetailThead();
   var pager = document.getElementById('alertTaskDetailPager');
   if (pager) pager.hidden = true;
+  drawer.classList.remove('is-cancellation-mode');
   setTimeout(function () {
     if (!drawer.classList.contains('is-open')) drawer.hidden = true;
   }, 260);
@@ -11415,6 +12294,7 @@ function initAlertTaskCardInteractions() {
       if (!link) return;
       e.preventDefault();
       e.stopPropagation();
+      _alertTaskDetailMode = 'default';
       openAlertTaskDetailDrawer(
         link.getAttribute('data-sales'),
         parseInt(link.getAttribute('data-assigned'), 10) || 0,
@@ -11426,6 +12306,17 @@ function initAlertTaskCardInteractions() {
   if (detailTbody && !detailTbody.dataset.bound) {
     detailTbody.dataset.bound = '1';
     detailTbody.addEventListener('click', function (e) {
+      var actionLink = e.target.closest('.alert-task-detail-action-link');
+      if (actionLink) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleAlertTaskDetailAction(
+          actionLink.getAttribute('data-action'),
+          actionLink.getAttribute('data-sid'),
+          actionLink.getAttribute('data-nick')
+        );
+        return;
+      }
       var sidLink = e.target.closest('.col-sid-link');
       if (!sidLink) return;
       e.preventDefault();
@@ -12538,6 +13429,7 @@ function handleTempMktCardActivate(card) {
     _alertTaskFollowType = taskType;
     _alertTaskFollowPeriod = 'today';
     setAlertTaskDetailCategory(getTempMktCardCategory(card));
+    _alertTaskDetailMode = 'default';
     openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
   }
 }
@@ -12557,10 +13449,19 @@ function handleAlertTaskCardActivate(card) {
   }
   if (view === 'sales' && card.closest('.sales-only')) {
     var counts = getAlertTaskCardProgressCounts(card);
-    if (!taskType || !counts.completed) return;
+    if (!taskType) return;
     _alertTaskFollowType = taskType;
     _alertTaskFollowPeriod = 'today';
     clearAlertTaskDetailCategory();
+    var specialMode = getSpecialAlertTaskDetailMode(taskType);
+    if (specialMode) {
+      if (!counts.assigned) return;
+      _alertTaskDetailMode = specialMode;
+      openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
+      return;
+    }
+    if (!counts.completed) return;
+    _alertTaskDetailMode = 'default';
     openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
   }
 }
