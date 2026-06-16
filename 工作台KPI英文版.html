@@ -650,6 +650,23 @@
     .perf-item .perf-value{font-size:20px;font-weight:800;color:#1d4ed8;line-height:1.15;letter-spacing:-.3px}
     .perf-item--rank .perf-icon{background:#ecfdf5}
     .perf-item--rank .perf-value{color:#059669}
+    .perf-item--top3 .perf-desc{margin-bottom:6px}
+    .perf-item--top3 .perf-value{display:none}
+    .perf-top3-list{
+      list-style:none;margin:0;padding:0;
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;
+    }
+    .perf-top3-list li{
+      display:flex;flex-direction:column;align-items:center;gap:2px;
+      min-width:0;text-align:center;
+      font-size:10px;line-height:1.25;
+    }
+    .perf-top3-rank{flex-shrink:0;font-size:12px;line-height:1}
+    .perf-top3-name{
+      width:100%;font-weight:700;color:#0f172a;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .perf-top3-val{font-weight:800;color:#059669;font-size:10px}
     .perf-item--risk,
     .perf-item--bonus{
       background:linear-gradient(135deg,#fff7ed 0%,#fffbeb 100%);
@@ -4847,41 +4864,38 @@
                 <div class="perf-item">
                   <span class="perf-icon" aria-hidden="true">💰</span>
                   <div class="perf-body">
-                    <div class="perf-label">Projected Team Net Deposit Today</div>
-                    <div class="perf-desc">Projected Final Team Net Deposit Today</div>
-                    <div class="perf-value">$2.46M</div>
+                    <div class="perf-label">MTD Team Net Deposit</div>
+                    <div class="perf-desc">MTD cumulative team net deposit</div>
+                    <div class="perf-value">$440,320</div>
                   </div>
                 </div>
                 <div class="perf-item">
                   <span class="perf-icon" aria-hidden="true">👥</span>
                   <div class="perf-body">
-                    <div class="perf-label">Projected New Live Accounts Today</div>
-                    <div class="perf-desc">Projected new live customers</div>
-                    <div class="perf-value">86 people</div>
+                    <div class="perf-label">MTD Team Trading Customers</div>
+                    <div class="perf-desc">MTD cumulative trading customers</div>
+                    <div class="perf-value">312 people</div>
                   </div>
                 </div>
-                <div class="perf-item">
+                <div class="perf-item perf-item--rank perf-item--top3">
+                  <span class="perf-icon" aria-hidden="true">🏆</span>
+                  <div class="perf-body">
+                    <div class="perf-label">MTD Team TOP3 Sales</div>
+                    <div class="perf-desc">Top 3 by performance bonus</div>
+                    <div class="perf-value" hidden>—</div>
+                    <ol class="perf-top3-list" aria-label="Performance Bonus TOP3">
+                      <li><span class="perf-top3-rank" aria-hidden="true">🥇</span><span class="perf-top3-name">Coulson</span><span class="perf-top3-val">$4,280</span></li>
+                      <li><span class="perf-top3-rank" aria-hidden="true">🥈</span><span class="perf-top3-name">May</span><span class="perf-top3-val">$3,860</span></li>
+                      <li><span class="perf-top3-rank" aria-hidden="true">🥉</span><span class="perf-top3-name">Daisy</span><span class="perf-top3-val">$3,520</span></li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="perf-item perf-item--bonus">
                   <span class="perf-icon" aria-hidden="true">📈</span>
                   <div class="perf-body">
-                    <div class="perf-label">Projected Team Commission Today</div>
-                    <div class="perf-desc">Projected Team Total Commission</div>
-                    <div class="perf-value">$48,200</div>
-                  </div>
-                </div>
-                <div class="perf-item perf-item--rank">
-                  <span class="perf-icon" aria-hidden="true">✓</span>
-                  <div class="perf-body">
-                    <div class="perf-label">TodayTeam Completion Rate</div>
-                    <div class="perf-desc">task task and Contact Coveragecomposite combined</div>
-                    <div class="perf-value">88%</div>
-                  </div>
-                </div>
-                <div class="perf-item perf-item--risk">
-                  <span class="perf-icon" aria-hidden="true">⚠️</span>
-                  <div class="perf-body">
-                    <div class="perf-label">Management Risk Alert Today</div>
-                    <div class="perf-desc">Pending Risk/Order Backlog</div>
-                    <div class="perf-value">61 items</div>
+                    <div class="perf-label">MTD Team Performance Bonus</div>
+                    <div class="perf-desc">MTD cumulative team performance bonus</div>
+                    <div class="perf-value">$23,060</div>
                   </div>
                 </div>
               </div>
@@ -15715,11 +15729,19 @@ var MANAGER_GOAL_TEAM_SIDEBAR = {
   perfTitle: 'Team Performance Estimate',
   perfFootnote: 'Estimated from team KPIs, backlog, and historical performance.',
   perfItems: [
-    { label: 'Projected Team Net Deposit Today', desc: 'Projected final team net deposit today', value: '$2.46M' },
-    { label: 'Projected New Live Accounts Today', desc: 'Projected new live customers', value: '86 people' },
-    { label: 'Projected Team Commission Today', desc: 'Projected team total commission', value: '$48,200' },
-    { label: 'Team Completion Rate Today', desc: 'Tasks and contact coverage combined', value: '88%' },
-    { label: 'Management Risk Alert Today', desc: 'Pending risk/order backlog', value: '61 items' }
+    { label: 'MTD Team Net Deposit', desc: 'MTD cumulative team net deposit', value: '$440,320' },
+    { label: 'MTD Team Trading Customers', desc: 'MTD cumulative trading customers', value: '312 people' },
+    {
+      label: 'MTD Team TOP3 Sales',
+      desc: 'Top 3 by performance bonus',
+      type: 'top3',
+      top3: [
+        { name: 'Coulson', value: '$4,280' },
+        { name: 'May', value: '$3,860' },
+        { name: 'Daisy', value: '$3,520' }
+      ]
+    },
+    { label: 'MTD Team Performance Bonus', desc: 'MTD cumulative team performance bonus', value: '$23,060' }
   ],
   customerRankIntro: 'Scope: <strong class="rank-date-label">Yesterday</strong>',
   customerRank: {
@@ -15907,6 +15929,45 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
 
 var MANAGER_GOAL_PERF_RANK_ORDER = ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
 
+function buildManagerGoalPerfTop3() {
+  return MANAGER_GOAL_PERF_RANK_ORDER.slice(0, 3).map(function (name) {
+    return { name: name, value: MANAGER_GOAL_SALES_META[name].reward };
+  });
+}
+
+function renderManagerGoalPerfTop3List(listEl, top3) {
+  if (!listEl || !top3) return;
+  var medals = ['🥇', '🥈', '🥉'];
+  listEl.innerHTML = top3.map(function (row, idx) {
+    return (
+      '<li><span class="perf-top3-rank" aria-hidden="true">' + medals[idx] + '</span>' +
+      '<span class="perf-top3-name">' + row.name + '</span>' +
+      '<span class="perf-top3-val">' + row.value + '</span></li>'
+    );
+  }).join('');
+}
+
+function applyManagerGoalPerfItem(el, item) {
+  if (!el || !item) return;
+  el.querySelector('.perf-label').textContent = item.label;
+  el.querySelector('.perf-desc').textContent = item.desc;
+  var valEl = el.querySelector('.perf-value');
+  var listEl = el.querySelector('.perf-top3-list');
+  if (item.type === 'top3' && listEl) {
+    el.classList.add('perf-item--top3');
+    if (valEl) valEl.hidden = true;
+    listEl.hidden = false;
+    renderManagerGoalPerfTop3List(listEl, item.top3 || buildManagerGoalPerfTop3());
+    return;
+  }
+  el.classList.remove('perf-item--top3');
+  if (listEl) listEl.hidden = true;
+  if (valEl) {
+    valEl.hidden = false;
+    valEl.textContent = item.value || '';
+  }
+}
+
 function parseManagerGoalRewardUsd(str) {
   return Number(String(str).replace(/[$,]/g, '')) || 0;
 }
@@ -15998,9 +16059,7 @@ function applyManagerGoalSidebar(data) {
     var items = perfPanel.querySelectorAll('.perf-item');
     sb.perfItems.forEach(function (item, i) {
       if (!items[i]) return;
-      items[i].querySelector('.perf-label').textContent = item.label;
-      items[i].querySelector('.perf-desc').textContent = item.desc;
-      items[i].querySelector('.perf-value').textContent = item.value;
+      applyManagerGoalPerfItem(items[i], item);
     });
     var foot = perfPanel.querySelector('.perf-footnote');
     if (foot) foot.textContent = sb.perfFootnote;
