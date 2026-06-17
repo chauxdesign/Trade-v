@@ -1699,7 +1699,7 @@
       padding-bottom:12px;border-bottom:1px solid #eef2f7;
     }
     .comm-summary-chip{
-      flex:1;min-width:120px;padding:8px 10px;border-radius:8px;
+      flex:1;min-width:96px;padding:8px 10px;border-radius:8px;
       background:#f8fafc;border:1px solid #eef2f7;
       display:flex;flex-direction:column;gap:2px;
     }
@@ -2051,6 +2051,121 @@
     #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-cell-line .col-sid-line{font-size:11px}
     #alertTaskDetailDrawer.is-cancellation-mode .col-customer-info{min-width:168px;white-space:normal}
     #alertTaskDetailDrawer.is-cancellation-mode .col-churn-metric{min-width:148px;white-space:normal}
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table th.col-action{
+      text-align:center;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table{
+      min-width:0;width:100%;table-layout:auto;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th,
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td{
+      padding:5px 6px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th{
+      white-space:normal;line-height:1.3;font-size:11px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-cell-stack{
+      min-width:0;gap:1px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-cell-line{
+      font-size:11px;line-height:1.35;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .alert-task-detail-cell-stack{
+      min-width:0;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info{
+      min-width:156px;white-space:normal;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric{
+      min-width:108px;white-space:normal;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table{
+      table-layout:fixed;font-size:11px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table .col-status{
+      width:7%;min-width:52px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info{
+      width:20%;min-width:148px;max-width:none;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric{
+      width:14%;min-width:72px;max-width:112px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th.col-action,
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td.col-action{
+      width:9%;min-width:84px;padding-left:4px;padding-right:6px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .alert-task-detail-cell-line{
+      font-size:11px;line-height:1.35;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .col-sid-line{
+      font-size:10px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric .alert-task-detail-cell-line{
+      font-size:10px;line-height:1.32;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table .task-status-tag{
+      padding:1px 6px;font-size:9px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-status{
+      white-space:nowrap;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-action-links{
+      font-size:11px;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table{
+      min-width:0;width:100%;table-layout:fixed;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th,
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td{
+      padding:8px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(1),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(1){
+      width:7%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(2),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(2){
+      width:11%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(3),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(3){
+      width:12%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(4),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(4){
+      width:8%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(5),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(5){
+      width:6%;text-align:right;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(6),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(6){
+      width:10%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(7),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(7),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(8),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(8){
+      width:12%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(9),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(9){
+      width:10%;overflow:visible;text-overflow:clip;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-order{
+      font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-amount,
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-time{
+      font-variant-numeric:tabular-nums;
+    }
+    .alert-task-detail-cell-line .churn-peak-trade-label{color:#64748b}
+    .alert-task-detail-cell-line .churn-peak-trade-value{color:#334155}
+    .alert-task-detail-cell-line .churn-peak-trade-line{
+      display:block;font-size:inherit;line-height:1.35;word-break:break-word;
+    }
     .alert-task-detail-table .col-action-links{white-space:nowrap}
     .alert-task-detail-head{
       display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
@@ -2069,8 +2184,96 @@
       grid-template-columns:repeat(5,minmax(0,1fr));
     }
     #commStatsDetailFilters .my-follow-filter-field--action{flex-shrink:0}
+    #commStatsDetailFilters.is-customer-mode .my-follow-filter-field--comm-only{display:none}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #phoneCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
+    #phoneCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #phoneCommDetailDrawer .alert-task-detail-table{min-width:920px}
+    #phoneCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #phoneCommDetailDrawer .phone-comm-result-block .alert-task-note-line,
+    #waCommDetailDrawer .channel-comm-result-block .alert-task-note-line,
+    #phoneCommDetailDrawer .phone-comm-result-block .alert-task-note-line,
+    #chatCommDetailDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
+    #chatCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
+    #chatCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #chatCommDetailDrawer .alert-task-detail-table{min-width:900px}
+    #chatCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #chatCommDetailDrawer .chat-comm-followup--slow{color:#dc2626;font-weight:700}
+    #phoneCommDetailDrawer .phone-comm-duration--short{color:#dc2626;font-weight:700}
+    #waCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
+    #waCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #waCommDetailDrawer .alert-task-detail-table{min-width:860px}
+    #waCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #phoneCommDetailFilters{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
+    }
+    #phoneCommDetailFilters .my-follow-drawer-filters-grid{
+      display:flex;align-items:center;justify-content:flex-start;gap:12px;
+      flex:1;min-width:0;
+    }
+    #phoneCommDetailFilters .my-follow-filter-field{
+      display:flex;flex-direction:row;align-items:center;gap:8px;
+      flex:0 0 auto;min-width:0;margin:0;
+    }
+    #phoneCommDetailFilters .my-follow-filter-label{
+      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
+    }
+    #phoneCommDetailFilters .my-follow-filter-input{
+      width:250px;flex-shrink:0;
+    }
+    #phoneCommDetailFilters .my-follow-filter-select{
+      width:200px;flex-shrink:0;
+    }
+    #phoneCommDetailFilters .my-follow-filter-reset{
+      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
+    }
+    #waCommDetailFilters{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
+    }
+    #waCommDetailFilters .my-follow-drawer-filters-grid{
+      display:flex;align-items:center;justify-content:flex-start;gap:12px;
+      flex:1;min-width:0;
+    }
+    #waCommDetailFilters .my-follow-filter-field{
+      display:flex;flex-direction:row;align-items:center;gap:8px;
+      flex:0 0 auto;min-width:0;margin:0;
+    }
+    #waCommDetailFilters .my-follow-filter-label{
+      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
+    }
+    #waCommDetailFilters .my-follow-filter-input{
+      width:250px;flex-shrink:0;
+    }
+    #waCommDetailFilters .my-follow-filter-select{
+      width:200px;flex-shrink:0;
+    }
+    #waCommDetailFilters .my-follow-filter-reset{
+      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
+    }
+    #chatCommDetailFilters{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
+    }
+    #chatCommDetailFilters .my-follow-drawer-filters-grid{
+      display:flex;align-items:center;justify-content:flex-start;gap:12px;
+      flex:1;min-width:0;
+    }
+    #chatCommDetailFilters .my-follow-filter-field{
+      display:flex;flex-direction:row;align-items:center;gap:8px;
+      flex:0 0 auto;min-width:0;margin:0;
+    }
+    #chatCommDetailFilters .my-follow-filter-label{
+      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
+    }
+    #chatCommDetailFilters .my-follow-filter-input{
+      width:250px;flex-shrink:0;
+    }
+    #chatCommDetailFilters .my-follow-filter-select{
+      width:200px;flex-shrink:0;
+    }
+    #chatCommDetailFilters .my-follow-filter-reset{
+      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
+    }
     .alert-task-detail-sub{
       margin:0;font-size:12px;color:#64748b;line-height:1.45;
     }
@@ -5265,8 +5468,12 @@
             <div class="module-body">
               <div class="sales-only">
                 <div class="comm-stats-summary">
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-scope="all" role="button" tabindex="0" aria-label="search has customer customer communicate communicate clear detailed">
-                    <span>Total Unique Contacts</span>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="my-customers" role="button" tabindex="0" aria-label="View my customer details">
+                    <span>My Customers</span>
+                    <strong>86</strong>
+                  </div>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="total-contacts" role="button" tabindex="0" aria-label="View customer contact details">
+                    <span>Total Contacts</span>
                     <strong>64</strong>
                   </div>
                   <div class="comm-summary-chip">
@@ -5274,16 +5481,20 @@
                     <strong>44</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>Effectively Communicated</span>
+                    <span>Effective Communication Customers</span>
                     <strong>28</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>Overall Reply Rate</span>
-                    <strong>69%</strong>
+                    <span>Customer Reach Rate</span>
+                    <strong>74%</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>Customer Reach Completion Rate</span>
-                    <strong>74%</strong>
+                    <span>Customer Reply Rate</span>
+                    <strong>69%</strong>
+                  </div>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="effective-rate" data-comm-count="28" role="button" tabindex="0" aria-label="View effective communication customer details">
+                    <span>Effective Communication Rate</span>
+                    <strong>44%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -5361,8 +5572,12 @@
               </div>
               <div class="manager-only">
                 <div class="comm-stats-summary">
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-scope="all" role="button" tabindex="0" aria-label="search team has customer customer communicate communicate clear detailed">
-                    <span>Total Unique Contacts</span>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="team-customers" role="button" tabindex="0" aria-label="View team customer details">
+                    <span>Team Customers</span>
+                    <strong>680</strong>
+                  </div>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="total-contacts" role="button" tabindex="0" aria-label="View team customer contact details">
+                    <span>Total Contacts</span>
                     <strong>512</strong>
                   </div>
                   <div class="comm-summary-chip">
@@ -5370,16 +5585,20 @@
                     <strong>358</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>Effectively Communicated</span>
-                    <strong>428</strong>
+                    <span>Effective Communication Customers</span>
+                    <strong>296</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>Overall Reply Rate</span>
+                    <span>Customer Reach Rate</span>
+                    <strong>75%</strong>
+                  </div>
+                  <div class="comm-summary-chip">
+                    <span>Customer Reply Rate</span>
                     <strong>70%</strong>
                   </div>
-                  <div class="comm-summary-chip">
-                    <span>Customer Reach Completion Rate</span>
-                    <strong>78%</strong>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="effective-rate" data-comm-count="296" role="button" tabindex="0" aria-label="View team effective communication customer details">
+                    <span>Effective Communication Rate</span>
+                    <strong>58%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -8537,7 +8756,7 @@
                 <span class="my-follow-filter-label">SID</span>
                 <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterSid" placeholder="Enter SID" oninput="applyCommStatsDetailFilters()">
               </label>
-              <label class="my-follow-filter-field">
+              <label class="my-follow-filter-field my-follow-filter-field--comm-only">
                 <span class="my-follow-filter-label">Contact result</span>
                 <select class="my-follow-filter-select" id="commStatsDetailFilterResult" onchange="applyCommStatsDetailFilters()">
                   <option value="">All</option>
@@ -8549,11 +8768,11 @@
                   <option value="cr-no-reply">CR No Reply</option>
                 </select>
               </label>
-              <label class="my-follow-filter-field">
+              <label class="my-follow-filter-field my-follow-filter-field--comm-only">
                 <span class="my-follow-filter-label">Start time</span>
                 <input type="date" class="my-follow-filter-input" id="commStatsDetailFilterDateStart" onchange="applyCommStatsDetailFilters()">
               </label>
-              <label class="my-follow-filter-field">
+              <label class="my-follow-filter-field my-follow-filter-field--comm-only">
                 <span class="my-follow-filter-label">End time</span>
                 <input type="date" class="my-follow-filter-input" id="commStatsDetailFilterDateEnd" onchange="applyCommStatsDetailFilters()">
               </label>
@@ -8564,12 +8783,200 @@
             </div>
           </div>
           <div class="alert-task-detail-table-wrap">
-            <table class="alert-task-detail-table"> <thead> <tr> <th>Customer name</th> <th>SID</th> <th>Communication Time</th> <th>Contact result</th> <th>has communicate communicate </th> <th>CommunicationContent</th> </tr> </thead> <tbody id="commStatsDetailTbody"></tbody>
+            <table class="alert-task-detail-table">
+              <thead id="commStatsDetailThead">
+                <tr>
+                  <th>Customer Name</th>
+                  <th>SID</th>
+                  <th>Communication Time</th>
+                  <th>Contact Result</th>
+                  <th>Effective Communication</th>
+                  <th>Communication Content</th>
+                </tr>
+              </thead>
+              <tbody id="commStatsDetailTbody"></tbody>
             </table>
           </div>
           <div class="alert-task-detail-pager" id="commStatsDetailPager" hidden>
             <span class="alert-task-detail-pager-info" id="commStatsDetailPagerInfo"></span>
             <div class="alert-task-detail-pager-actions" id="commStatsDetailPagerActions"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div id="phoneCommDetailDrawer" class="alert-task-detail-drawer" hidden aria-hidden="true">
+      <div class="alert-task-detail-backdrop" onclick="closePhoneCommDetailDrawer()"></div>
+      <aside class="alert-task-detail-panel" role="dialog" aria-modal="true" aria-labelledby="phoneCommDetailTitle">
+        <div class="alert-task-detail-head">
+          <div>
+            <h3 id="phoneCommDetailTitle">—</h3>
+            <p class="alert-task-detail-sub">
+              Channel: <strong>Phone</strong>
+              · Scope: <strong id="phoneCommDetailPeriod">—</strong>
+              · Total <strong id="phoneCommDetailCount">0</strong> communication records
+            </p>
+            <p class="alert-task-detail-update">Data updated: <strong id="phoneCommDetailUpdatedAt">—</strong></p>
+          </div>
+          <button type="button" class="alert-task-detail-close" onclick="closePhoneCommDetailDrawer()" aria-label="Close">×</button>
+        </div>
+        <div class="alert-task-detail-body">
+          <div class="my-follow-drawer-filters" id="phoneCommDetailFilters">
+            <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Customer Nickname</span>
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyPhoneCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">SID</span>
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterSid" placeholder="Enter SID" oninput="applyPhoneCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Connected</span>
+                <select class="my-follow-filter-select" id="phoneCommDetailFilterConnected" onchange="applyPhoneCommDetailFilters()">
+                  <option value="">All</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+            </div>
+            <button type="button" class="my-follow-filter-reset" onclick="resetPhoneCommDetailFilters()">Reset Filters</button>
+          </div>
+          <div class="alert-task-detail-table-wrap">
+            <table class="alert-task-detail-table">
+              <thead>
+                <tr>
+                  <th>Customer Nickname</th>
+                  <th>SID</th>
+                  <th>Communication Time</th>
+                  <th>Connected</th>
+                  <th>Duration</th>
+                  <th>Communication Result</th>
+                </tr>
+              </thead>
+              <tbody id="phoneCommDetailTbody"></tbody>
+            </table>
+          </div>
+          <div class="alert-task-detail-pager" id="phoneCommDetailPager" hidden>
+            <span class="alert-task-detail-pager-info" id="phoneCommDetailPagerInfo"></span>
+            <div class="alert-task-detail-pager-actions" id="phoneCommDetailPagerActions"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div id="waCommDetailDrawer" class="alert-task-detail-drawer" hidden aria-hidden="true">
+      <div class="alert-task-detail-backdrop" onclick="closeWaCommDetailDrawer()"></div>
+      <aside class="alert-task-detail-panel" role="dialog" aria-modal="true" aria-labelledby="waCommDetailTitle">
+        <div class="alert-task-detail-head">
+          <div>
+            <h3 id="waCommDetailTitle">—</h3>
+            <p class="alert-task-detail-sub">
+              Channel: <strong>WhatsApp</strong>
+              · Scope: <strong id="waCommDetailPeriod">—</strong>
+              · Total <strong id="waCommDetailCount">0</strong> communication records
+            </p>
+            <p class="alert-task-detail-update">Data updated: <strong id="waCommDetailUpdatedAt">—</strong></p>
+          </div>
+          <button type="button" class="alert-task-detail-close" onclick="closeWaCommDetailDrawer()" aria-label="Close">×</button>
+        </div>
+        <div class="alert-task-detail-body">
+          <div class="my-follow-drawer-filters" id="waCommDetailFilters">
+            <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Customer Nickname</span>
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyWaCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">SID</span>
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterSid" placeholder="Enter SID" oninput="applyWaCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Replied</span>
+                <select class="my-follow-filter-select" id="waCommDetailFilterReplied" onchange="applyWaCommDetailFilters()">
+                  <option value="">All</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+            </div>
+            <button type="button" class="my-follow-filter-reset" onclick="resetWaCommDetailFilters()">Reset Filters</button>
+          </div>
+          <div class="alert-task-detail-table-wrap">
+            <table class="alert-task-detail-table">
+              <thead>
+                <tr>
+                  <th>Customer Nickname</th>
+                  <th>SID</th>
+                  <th>Communication Time</th>
+                  <th>Replied</th>
+                  <th>Screenshot</th>
+                  <th>Communication Result</th>
+                </tr>
+              </thead>
+              <tbody id="waCommDetailTbody"></tbody>
+            </table>
+          </div>
+          <div class="alert-task-detail-pager" id="waCommDetailPager" hidden>
+            <span class="alert-task-detail-pager-info" id="waCommDetailPagerInfo"></span>
+            <div class="alert-task-detail-pager-actions" id="waCommDetailPagerActions"></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <div id="chatCommDetailDrawer" class="alert-task-detail-drawer" hidden aria-hidden="true">
+      <div class="alert-task-detail-backdrop" onclick="closeChatCommDetailDrawer()"></div>
+      <aside class="alert-task-detail-panel" role="dialog" aria-modal="true" aria-labelledby="chatCommDetailTitle">
+        <div class="alert-task-detail-head">
+          <div>
+            <h3 id="chatCommDetailTitle">—</h3>
+            <p class="alert-task-detail-sub">
+              Channel: <strong>Chatroom</strong>
+              · Scope: <strong id="chatCommDetailPeriod">—</strong>
+              · Total <strong id="chatCommDetailCount">0</strong> communication records
+            </p>
+            <p class="alert-task-detail-update">Data updated: <strong id="chatCommDetailUpdatedAt">—</strong></p>
+          </div>
+          <button type="button" class="alert-task-detail-close" onclick="closeChatCommDetailDrawer()" aria-label="Close">×</button>
+        </div>
+        <div class="alert-task-detail-body">
+          <div class="my-follow-drawer-filters" id="chatCommDetailFilters">
+            <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Customer Nickname</span>
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyChatCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">SID</span>
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterSid" placeholder="Enter SID" oninput="applyChatCommDetailFilters()">
+              </label>
+              <label class="my-follow-filter-field">
+                <span class="my-follow-filter-label">Replied</span>
+                <select class="my-follow-filter-select" id="chatCommDetailFilterReplied" onchange="applyChatCommDetailFilters()">
+                  <option value="">All</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </label>
+            </div>
+            <button type="button" class="my-follow-filter-reset" onclick="resetChatCommDetailFilters()">Reset Filters</button>
+          </div>
+          <div class="alert-task-detail-table-wrap">
+            <table class="alert-task-detail-table">
+              <thead>
+                <tr>
+                  <th>Customer Nickname</th>
+                  <th>SID</th>
+                  <th>Communication Time</th>
+                  <th>Replied</th>
+                  <th>Follow-up Time</th>
+                  <th>Communication Result</th>
+                </tr>
+              </thead>
+              <tbody id="chatCommDetailTbody"></tbody>
+            </table>
+          </div>
+          <div class="alert-task-detail-pager" id="chatCommDetailPager" hidden>
+            <span class="alert-task-detail-pager-info" id="chatCommDetailPagerInfo"></span>
+            <div class="alert-task-detail-pager-actions" id="chatCommDetailPagerActions"></div>
           </div>
         </div>
       </aside>
@@ -11124,12 +11531,12 @@ var KYC_LAST_FOLLOW_RECORDS = [
 var HIGH_RISK_CHURN_RECOVERY_DETAIL_COLUMNS = [
   'Task Status', 'Customer Info', 'Activity & Trading', 'Account Balance / Total Deposit', 'Churn Risk & Reason', 'Duration / Issued At', 'Actions'
 ];
-var CHURN_PEAK_TRADE_INFOS = [
-  'Peak: Nov 2025 ~ Jan 2026 avg $2.3K/day',
-  'Peak: Oct 2025 ~ Dec 2025 avg $1.8K/day',
-  'Peak: Sep 2025 ~ Nov 2025 avg $3.1K/day',
-  'Peak: Dec 2025 ~ Feb 2026 avg $960/day',
-  'Peak: Aug 2025 ~ Oct 2025 avg $4.5K/day'
+var CHURN_PEAK_TRADE_TIME_SLOTS = [
+  'Early morning (0~5)',
+  'Morning (6~11)',
+  'Noon (12~13)',
+  'Afternoon (14~17)',
+  'Evening (18~23)'
 ];
 var CHURN_RISK_REASONS = ['Consecutive losses', 'Long-term inactivity', 'Consecutive withdrawals', 'Stopped trading', 'Moved to competitor'];
 var CHURN_RISK_LEVELS = [
@@ -11415,6 +11822,16 @@ function buildAlertTaskIssueDateShort(seed, offsetHours) {
   var parts = full.split(' ');
   var dateParts = parts[0].split('-');
   return dateParts[1] + '-' + dateParts[2] + '-' + dateParts[0] + ' ' + parts[1];
+}
+
+function formatAlertTaskDetailDateTime(value) {
+  if (!value || value === '—') return value;
+  if (!document.body || document.body.getAttribute('data-view') !== 'sales') return value;
+  var parts = String(value).split(' ');
+  if (parts.length < 2) return value;
+  var dateParts = parts[0].split('-');
+  if (dateParts.length < 3) return value;
+  return dateParts[1] + '-' + dateParts[2] + ' ' + parts[1];
 }
 
 function buildChurnTaskDuration(seed) {
@@ -11757,12 +12174,12 @@ function renderWithdrawalClearoutDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
-    '<td class="col-order">' + row.withdrawOrderNo + '</td>' +
+    '<td class="col-order" title="' + row.withdrawOrderNo + '">' + row.withdrawOrderNo + '</td>' +
     '<td class="col-amount">' + row.withdrawAmount + '</td>' +
     '<td class="col-num">' + row.depositCount + '</td>' +
     '<td class="col-amount">' + row.totalDeposit + '</td>' +
-    '<td class="col-time">' + row.pushTime + '</td>' +
-    '<td class="col-time">' + row.taskCompleteTime + '</td>' +
+    '<td class="col-time" title="' + row.pushTime + '">' + formatAlertTaskDetailDateTime(row.pushTime) + '</td>' +
+    '<td class="col-time" title="' + row.taskCompleteTime + '">' + formatAlertTaskDetailDateTime(row.taskCompleteTime) + '</td>' +
     '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
     '</tr>';
 }
@@ -11783,7 +12200,7 @@ function buildHighRiskChurnRecoveryDetailRows(salesName, taskCount) {
       nick: nick,
       sid: sid,
       isDone: isDone,
-      peakTradeInfo: CHURN_PEAK_TRADE_INFOS[s % CHURN_PEAK_TRADE_INFOS.length],
+      peakTradeTimeSlot: CHURN_PEAK_TRADE_TIME_SLOTS[s % CHURN_PEAK_TRADE_TIME_SLOTS.length],
       daysSinceActive: daysSinceActive,
       daysSinceTrade: daysSinceTrade,
       accountBalance: formatChurnAccountBalance(s),
@@ -11798,14 +12215,19 @@ function buildHighRiskChurnRecoveryDetailRows(salesName, taskCount) {
   return rows;
 }
 
+function buildChurnCustomerInfoStackHtml(row, peakLabel) {
+  peakLabel = peakLabel || 'Peak trading period:';
+  return buildAlertTaskDetailCellStack([
+    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
+    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
+    '<span class="churn-peak-trade-line"><span class="churn-peak-trade-label">' + peakLabel + '</span> <span class="churn-peak-trade-value">' + row.peakTradeTimeSlot + '</span></span>'
+  ]);
+}
+
 function renderHighRiskChurnRecoveryDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-customer-info">' + buildAlertTaskDetailCellStack([
-      '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
-      '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
-      row.peakTradeInfo
-    ]) + '</td>' +
+    '<td class="col-customer-info">' + buildChurnCustomerInfoStackHtml(row) + '</td>' +
     '<td class="col-churn-metric">' + buildAlertTaskDetailCellStack([
       'Last active ' + row.daysSinceActive + ' days ago',
       'Last trade ' + row.daysSinceTrade + ' days ago'
@@ -12190,6 +12612,11 @@ function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
   var updatedEl = document.getElementById('alertTaskDetailUpdatedAt');
   var displayCount = isSpecialAlertTaskDetailMode() ? assignedCount : completedCount;
   drawer.classList.toggle('is-cancellation-mode', isSpecialAlertTaskDetailMode());
+  if (isSpecialAlertTaskDetailMode()) {
+    drawer.setAttribute('data-detail-mode', _alertTaskDetailMode);
+  } else {
+    drawer.removeAttribute('data-detail-mode');
+  }
   if (salesEl) salesEl.textContent = salesName;
   if (typeEl) typeEl.textContent = _alertTaskFollowType;
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
@@ -12226,6 +12653,7 @@ function closeAlertTaskDetailDrawer() {
   var pager = document.getElementById('alertTaskDetailPager');
   if (pager) pager.hidden = true;
   drawer.classList.remove('is-cancellation-mode');
+  drawer.removeAttribute('data-detail-mode');
   setTimeout(function () {
     if (!drawer.classList.contains('is-open')) drawer.hidden = true;
   }, 260);
@@ -12345,6 +12773,9 @@ var _commStatsDetailMetric = 'contacted';
 var _commStatsDetailScope = 'channel';
 var _commStatsDetailChannelFilter = '';
 
+var _commStatsDetailListMode = 'records';
+var _commStatsDetailCustomerMode = 'my-customers';
+
 var COMM_STATS_CONTACT_RESULT_META = {
   'phone-connected': { label: 'Phone Connected', channel: 'tel', isFail: false },
   'phone-missed': { label: 'Phone Not Connected', channel: 'tel', isFail: true },
@@ -12396,6 +12827,7 @@ function filterCommStatsDetailRows(rows, filters) {
   return rows.filter(function (row) {
     if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
     if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (_commStatsDetailListMode === 'customers') return true;
     if (_commStatsDetailChannelFilter && !rowHasChannelContactResult(row, _commStatsDetailChannelFilter)) return false;
     if (filters.contactResult && row.contactResults.indexOf(filters.contactResult) === -1) return false;
     var commDate = getCommStatsCommDate(row);
@@ -12555,6 +12987,12 @@ function rowMatchesCommStatsMetric(row, metric, channelType) {
     if (channelType === 'chat') return row.contactResults.indexOf('cr-replied') !== -1;
     return row.contactResults.indexOf('wa-replied') !== -1 || row.contactResults.indexOf('cr-replied') !== -1;
   }
+  if (metric === 'effective') {
+    return row.contactResults && row.contactResults.some(function (resultId) {
+      var meta = COMM_STATS_CONTACT_RESULT_META[resultId];
+      return meta && !meta.isFail;
+    });
+  }
   return true;
 }
 
@@ -12659,6 +13097,80 @@ function renderCommStatsDetailRowHtml(row) {
     '</tr>';
 }
 
+function buildCommStatsCustomerDetailRows(salesName, rowCount, customerMode) {
+  rowCount = Math.max(15, rowCount || 0);
+  var seed = alertTaskFollowSeed('comm-customers|' + salesName + '|' + customerMode);
+  var rows = [];
+  for (var i = 0; i < rowCount; i++) {
+    var s = seed + i * 131;
+    var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var contactResults = pickCommStatsContactResults(s);
+    if (customerMode === 'effective') {
+      var effectiveOptions = ['phone-connected', 'wa-replied', 'cr-replied'];
+      contactResults = [effectiveOptions[s % effectiveOptions.length]];
+    }
+    var effectiveLabel = buildCommStatsContactedLabel(contactResults);
+    rows.push({
+      name: name,
+      sid: sid,
+      vipLevel: CANCELLATION_VIP_LEVELS[s % CANCELLATION_VIP_LEVELS.length],
+      lastCommTime: buildCommStatsCommTime(s),
+      contactedLabel: contactResults.length ? 'Yes' : 'No',
+      effectiveLabel: effectiveLabel
+    });
+  }
+  return rows;
+}
+
+function renderCommStatsCustomerDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-level">' + row.vipLevel + '</td>' +
+    '<td class="col-time">' + row.lastCommTime + '</td>' +
+    '<td class="col-contacted">' + buildCommStatsContactedHtml(row.contactedLabel || 'No') + '</td>' +
+    '<td class="col-contacted">' + buildCommStatsContactedHtml(row.effectiveLabel || 'No') + '</td>' +
+    '</tr>';
+}
+
+function renderCommStatsDetailTableHeader() {
+  var thead = document.getElementById('commStatsDetailThead');
+  if (!thead) return;
+  if (_commStatsDetailListMode === 'customers') {
+    thead.innerHTML =
+      '<tr>' +
+      '<th>Customer Name</th>' +
+      '<th>SID</th>' +
+      '<th>VIP Level</th>' +
+      '<th>Last Contact Time</th>' +
+      '<th>Contacted</th>' +
+      '<th>Effective Communication</th>' +
+      '</tr>';
+    return;
+  }
+  thead.innerHTML =
+    '<tr>' +
+    '<th>Customer Name</th>' +
+    '<th>SID</th>' +
+    '<th>Communication Time</th>' +
+    '<th>Contact Result</th>' +
+    '<th>Effective Communication</th>' +
+    '<th>Communication Content</th>' +
+    '</tr>';
+}
+
+function updateCommStatsDetailFilterVisibility() {
+  var filtersEl = document.getElementById('commStatsDetailFilters');
+  if (!filtersEl) return;
+  filtersEl.classList.toggle('is-customer-mode', _commStatsDetailListMode === 'customers');
+}
+
+function renderCommStatsCustomerDetailTitle(salesName, customerMode) {
+  var suffix = customerMode === 'effective' ? 'Effective Communication Customer Details' : 'Customer Details';
+  return '<span class="comm-stats-detail-title-name">' + salesName + '</span> ' + suffix;
+}
+
 function getCommStatsDetailTotalPages() {
   if (!_commStatsDetailRows.length) return 1;
   return Math.ceil(_commStatsDetailRows.length / COMM_STATS_DETAIL_PAGE_SIZE);
@@ -12718,7 +13230,10 @@ function renderCommStatsDetailTablePage() {
   if (!tbody) return;
   var startIdx = (_commStatsDetailPage - 1) * COMM_STATS_DETAIL_PAGE_SIZE;
   var pageRows = _commStatsDetailRows.slice(startIdx, startIdx + COMM_STATS_DETAIL_PAGE_SIZE);
-  tbody.innerHTML = pageRows.map(renderCommStatsDetailRowHtml).join('');
+  var renderRow = _commStatsDetailListMode === 'customers'
+    ? renderCommStatsCustomerDetailRowHtml
+    : renderCommStatsDetailRowHtml;
+  tbody.innerHTML = pageRows.map(renderRow).join('');
   renderCommStatsDetailPagination();
 }
 
@@ -12733,12 +13248,18 @@ function goCommStatsDetailPage(page) {
 }
 
 function renderCommStatsDetailTable(salesName, rowCount, metric) {
-  _commStatsDetailAllRows = buildCommStatsDetailRows(salesName, rowCount, metric);
+  if (_commStatsDetailListMode === 'customers') {
+    _commStatsDetailAllRows = buildCommStatsCustomerDetailRows(salesName, rowCount, _commStatsDetailCustomerMode);
+  } else {
+    _commStatsDetailAllRows = buildCommStatsDetailRows(salesName, rowCount, metric);
+  }
   applyCommStatsDetailFilters();
 }
 
 function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   if (!salesName || !rowCount) return;
+  _commStatsDetailListMode = 'records';
+  _commStatsDetailCustomerMode = 'my-customers';
   _commStatsDetailMetric = metric || 'contacted';
   _commStatsDetailScope = detailScope || (_commStatsChannelType ? 'channel' : 'all');
   var drawer = document.getElementById('commStatsDetailDrawer');
@@ -12757,12 +13278,50 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (metricLabelEl) {
-    var metricLabels = { replied: 'Reply', connected: 'Connected', contacted: 'Communication' };
+    var metricLabels = { replied: 'Reply', connected: 'Connected', contacted: 'Communication', effective: 'Effective Communication' };
     metricLabelEl.textContent = metricLabels[_commStatsDetailMetric] || 'Communication';
   }
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   _commStatsDetailChannelFilter = (_commStatsDetailScope === 'channel' && _commStatsChannelType) ? _commStatsChannelType : '';
   clearCommStatsDetailFilterInputs();
+  renderCommStatsDetailTableHeader();
+  updateCommStatsDetailFilterVisibility();
+  renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
+  drawer.hidden = false;
+  drawer.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = 'hidden';
+  requestAnimationFrame(function () {
+    drawer.classList.add('is-open');
+  });
+}
+
+function openCommStatsCustomerDrawer(salesName, rowCount, customerMode) {
+  if (!salesName || !rowCount) return;
+  _commStatsDetailListMode = 'customers';
+  _commStatsDetailCustomerMode = customerMode || 'my-customers';
+  _commStatsDetailMetric = 'contacted';
+  _commStatsDetailScope = 'all';
+  _commStatsChannelType = '';
+  _commStatsFollowPeriod = 'today';
+  var drawer = document.getElementById('commStatsDetailDrawer');
+  if (!drawer) return;
+  var titleEl = document.getElementById('commStatsDetailTitle');
+  var channelEl = document.getElementById('commStatsDetailChannel');
+  var periodEl = document.getElementById('commStatsDetailPeriod');
+  var countEl = document.getElementById('commStatsDetailCount');
+  var metricLabelEl = document.getElementById('commStatsDetailMetricLabel');
+  var updatedEl = document.getElementById('commStatsDetailUpdatedAt');
+  if (titleEl) titleEl.innerHTML = renderCommStatsCustomerDetailTitle(salesName, _commStatsDetailCustomerMode);
+  if (channelEl) channelEl.textContent = 'All';
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (countEl) countEl.textContent = String(rowCount);
+  if (metricLabelEl) metricLabelEl.textContent = 'Customers';
+  if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
+  _commStatsDetailChannelFilter = '';
+  clearCommStatsDetailFilterInputs();
+  renderCommStatsDetailTableHeader();
+  updateCommStatsDetailFilterVisibility();
   renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -12784,6 +13343,8 @@ function closeCommStatsDetailDrawer() {
   _commStatsDetailAllRows = [];
   _commStatsDetailChannelFilter = '';
   _commStatsDetailPage = 1;
+  _commStatsDetailListMode = 'records';
+  _commStatsDetailCustomerMode = 'my-customers';
   var pager = document.getElementById('commStatsDetailPager');
   if (pager) pager.hidden = true;
   setTimeout(function () {
@@ -12860,11 +13421,11 @@ function initCommStatsCardInteractions() {
       if (!link) return;
       e.preventDefault();
       e.stopPropagation();
-      openCommStatsDetailDrawer(
+      openCommChannelTaskDetailDrawer(
         link.getAttribute('data-sales'),
-        parseInt(link.getAttribute('data-count'), 10) || 0,
-        link.getAttribute('data-metric') || 'contacted',
-        'channel'
+        link.getAttribute('data-count'),
+        _commStatsChannelType,
+        link.getAttribute('data-metric') || 'contacted'
       );
     });
   }
@@ -12884,6 +13445,64 @@ function initCommStatsCardInteractions() {
       );
     });
   }
+  var phoneDetailTbody = document.getElementById('phoneCommDetailTbody');
+  if (phoneDetailTbody && !phoneDetailTbody.dataset.bound) {
+    phoneDetailTbody.dataset.bound = '1';
+    phoneDetailTbody.addEventListener('click', function (e) {
+      var sidLink = e.target.closest('.col-sid-link');
+      var nameLink = e.target.closest('.col-nick-link');
+      var link = sidLink || nameLink;
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openAlertTaskCustomerBySid(
+        link.getAttribute('data-sid'),
+        link.getAttribute('data-nick')
+      );
+    });
+  }
+  var waDetailTbody = document.getElementById('waCommDetailTbody');
+  if (waDetailTbody && !waDetailTbody.dataset.bound) {
+    waDetailTbody.dataset.bound = '1';
+    waDetailTbody.addEventListener('click', function (e) {
+      var screenshotLink = e.target.closest('.col-screenshot-link');
+      if (screenshotLink) {
+        e.preventDefault();
+        e.stopPropagation();
+        handleChannelCommScreenshotPreview(
+          screenshotLink.getAttribute('data-nick'),
+          screenshotLink.getAttribute('data-screenshot')
+        );
+        return;
+      }
+      var sidLink = e.target.closest('.col-sid-link');
+      var nameLink = e.target.closest('.col-nick-link');
+      var link = sidLink || nameLink;
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openAlertTaskCustomerBySid(
+        link.getAttribute('data-sid'),
+        link.getAttribute('data-nick')
+      );
+    });
+  }
+  var chatDetailTbody = document.getElementById('chatCommDetailTbody');
+  if (chatDetailTbody && !chatDetailTbody.dataset.bound) {
+    chatDetailTbody.dataset.bound = '1';
+    chatDetailTbody.addEventListener('click', function (e) {
+      var sidLink = e.target.closest('.col-sid-link');
+      var nameLink = e.target.closest('.col-nick-link');
+      var link = sidLink || nameLink;
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openAlertTaskCustomerBySid(
+        link.getAttribute('data-sid'),
+        link.getAttribute('data-nick')
+      );
+    });
+  }
 }
 
 function getCommChannelContactedCount(card) {
@@ -12891,13 +13510,690 @@ function getCommChannelContactedCount(card) {
   return valEl ? parseInt(valEl.textContent.trim(), 10) || 0 : 0;
 }
 
-function getCommSummaryChipCount(chip) {
-  var valEl = chip && chip.querySelector('strong');
-  return valEl ? parseInt(valEl.textContent.trim(), 10) || 0 : 0;
+function openCommChannelTaskDetailDrawer(salesName, count, channelType, metric) {
+  count = parseInt(count, 10) || 0;
+  if (!salesName || !count) return;
+  channelType = channelType || _commStatsChannelType;
+  if (channelType === 'tel') {
+    openPhoneCommDetailDrawer(salesName, count, metric || 'contacted');
+    return;
+  }
+  if (channelType === 'wa') {
+    openWaCommDetailDrawer(salesName, count, metric || 'contacted');
+    return;
+  }
+  if (channelType === 'chat') {
+    openChatCommDetailDrawer(salesName, count, metric || 'contacted');
+    return;
+  }
+  _alertTaskFollowType = COMM_STATS_CHANNEL_LABELS[channelType] || channelType || '';
+  _alertTaskFollowPeriod = _commStatsFollowPeriod || 'today';
+  clearAlertTaskDetailCategory();
+  _alertTaskDetailMode = 'default';
+  openAlertTaskDetailDrawer(salesName, count, count);
 }
 
-function handleCommStatsTotalContactActivate(chip) {
+var PHONE_COMM_DETAIL_PAGE_SIZE = 12;
+var _phoneCommDetailRows = [];
+var _phoneCommDetailAllRows = [];
+var _phoneCommDetailPage = 1;
+var _phoneCommDetailMetric = 'contacted';
+
+function formatPhoneCommDuration(totalSeconds) {
+  var sec = Math.max(0, totalSeconds | 0);
+  if (!sec) return '—';
+  if (sec < 60) return sec + 's';
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  if (m >= 60) {
+    var h = Math.floor(m / 60);
+    m = m % 60;
+    return h + 'h ' + m + 'm';
+  }
+  return s > 0 ? m + 'm ' + s + 's' : m + 'm';
+}
+
+function formatPhoneCommDurationHtml(totalSeconds) {
+  var sec = Math.max(0, totalSeconds | 0);
+  if (!sec) return '—';
+  var text = formatPhoneCommDuration(sec);
+  if (sec < 60) {
+    return '<span class="phone-comm-duration phone-comm-duration--short">' + text + '</span>';
+  }
+  return '<span class="phone-comm-duration">' + text + '</span>';
+}
+
+var PHONE_COMM_SHORT_DURATION_DEMO = [18, 42, 55];
+
+function buildChannelCommResultHtml(seed) {
+  var purposes = pickAlertTaskCommPurposes(seed + 11);
+  var outcome = ALERT_TASK_COMM_OUTCOMES[seed % ALERT_TASK_COMM_OUTCOMES.length];
+  var content = ALERT_TASK_COMM_CONTENTS[seed % ALERT_TASK_COMM_CONTENTS.length];
+  return '<div class="alert-task-note-block channel-comm-result-block">' +
+    '<div class="alert-task-note-line"><span class="note-label">Purpose: </span>' + purposes + '</div>' +
+    '<div class="alert-task-note-line"><span class="note-label">Outcome: </span>' + outcome + '</div>' +
+    '<div class="alert-task-note-line"><span class="note-label">Content: </span>' + content + '</div>' +
+    '</div>';
+}
+
+function buildPhoneCommResultHtml(seed) {
+  return buildChannelCommResultHtml(seed);
+}
+
+function buildChannelCommScreenshotMeta(s, sid, filePrefix) {
+  var hasScreenshot = s % 5 !== 0;
+  return {
+    hasScreenshot: hasScreenshot,
+    screenshotName: hasScreenshot ? filePrefix + sid.slice(-6) + '.png' : ''
+  };
+}
+
+function renderChannelCommScreenshotHtml(row) {
+  if (!row.hasScreenshot) return '<span class="col-screenshot-empty">—</span>';
+  return '<button type="button" class="col-screenshot-link" data-nick="' + row.name + '" data-screenshot="' + row.screenshotName + '">' + row.screenshotName + '</button>';
+}
+
+function handleChannelCommScreenshotPreview(nick, screenshotName) {
+  if (!screenshotName) return;
+  alert('View screenshot\nCustomer: ' + nick + '\nFile: ' + screenshotName + '\n(Prototype placeholder)');
+}
+
+function buildPhoneCommDetailRows(salesName, rowCount, metric) {
+  var seed = alertTaskFollowSeed('phone-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
+  var poolSize = Math.max(rowCount * 4, 48);
+  var rows = [];
+  for (var i = 0; i < poolSize; i++) {
+    var s = seed + i * 127;
+    var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isConnected = (s % 5) !== 0;
+    var durationSec = 0;
+    if (i < PHONE_COMM_SHORT_DURATION_DEMO.length) {
+      isConnected = true;
+      durationSec = PHONE_COMM_SHORT_DURATION_DEMO[i];
+    } else if (isConnected) {
+      durationSec = 60 + (s % 540);
+    }
+    rows.push({
+      name: name,
+      sid: sid,
+      commTime: buildCommStatsCommTime(s),
+      isConnected: isConnected,
+      connectedLabel: isConnected ? 'Yes' : 'No',
+      durationHtml: formatPhoneCommDurationHtml(durationSec),
+      resultHtml: buildPhoneCommResultHtml(s)
+    });
+  }
+  if (metric === 'connected') {
+    rows = rows.filter(function (row) { return row.isConnected; });
+  }
+  return rows;
+}
+
+function getPhoneCommDetailFilterValues() {
+  var nickEl = document.getElementById('phoneCommDetailFilterNick');
+  var sidEl = document.getElementById('phoneCommDetailFilterSid');
+  var connectedEl = document.getElementById('phoneCommDetailFilterConnected');
+  return {
+    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
+    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
+    connected: connectedEl ? connectedEl.value : ''
+  };
+}
+
+function filterPhoneCommDetailRows(rows, filters) {
+  return rows.filter(function (row) {
+    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
+    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.connected === 'yes' && !row.isConnected) return false;
+    if (filters.connected === 'no' && row.isConnected) return false;
+    return true;
+  });
+}
+
+function renderPhoneCommDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-time">' + row.commTime + '</td>' +
+    '<td class="col-connected">' + buildCommStatsContactedHtml(row.connectedLabel) + '</td>' +
+    '<td class="col-duration">' + row.durationHtml + '</td>' +
+    '<td class="col-comm-result">' + row.resultHtml + '</td>' +
+    '</tr>';
+}
+
+function getPhoneCommDetailTotalPages() {
+  if (!_phoneCommDetailRows.length) return 1;
+  return Math.ceil(_phoneCommDetailRows.length / PHONE_COMM_DETAIL_PAGE_SIZE);
+}
+
+function renderPhoneCommDetailPagination() {
+  var pager = document.getElementById('phoneCommDetailPager');
+  var infoEl = document.getElementById('phoneCommDetailPagerInfo');
+  var actionsEl = document.getElementById('phoneCommDetailPagerActions');
+  if (!pager || !infoEl || !actionsEl) return;
+  var total = _phoneCommDetailRows.length;
+  var totalPages = getPhoneCommDetailTotalPages();
+  if (total <= PHONE_COMM_DETAIL_PAGE_SIZE) {
+    pager.hidden = true;
+    return;
+  }
+  pager.hidden = false;
+  var start = (_phoneCommDetailPage - 1) * PHONE_COMM_DETAIL_PAGE_SIZE + 1;
+  var end = Math.min(_phoneCommDetailPage * PHONE_COMM_DETAIL_PAGE_SIZE, total);
+  infoEl.innerHTML = 'Total <strong>' + total + '</strong> · <strong>' + PHONE_COMM_DETAIL_PAGE_SIZE + '</strong> per page · Showing <strong>' + start + '–' + end + '</strong> · Page <strong>' + _phoneCommDetailPage + '</strong> / ' + totalPages;
+
+  var html =
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goPhoneCommDetailPage(1)"' + (_phoneCommDetailPage <= 1 ? ' disabled' : '') + '>First</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goPhoneCommDetailPage(' + (_phoneCommDetailPage - 1) + ')"' + (_phoneCommDetailPage <= 1 ? ' disabled' : '') + '>Prev</button>';
+  var pageNumbers = buildLimitedPagerPages(totalPages, _phoneCommDetailPage, 6);
+  pageNumbers.forEach(function (p) {
+    html += '<button type="button" class="alert-task-detail-page-btn' + (p === _phoneCommDetailPage ? ' active' : '') + '" onclick="goPhoneCommDetailPage(' + p + ')">' + p + '</button>';
+  });
+  html +=
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goPhoneCommDetailPage(' + (_phoneCommDetailPage + 1) + ')"' + (_phoneCommDetailPage >= totalPages ? ' disabled' : '') + '>Next</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goPhoneCommDetailPage(' + totalPages + ')"' + (_phoneCommDetailPage >= totalPages ? ' disabled' : '') + '>Last</button>';
+  actionsEl.innerHTML = html;
+}
+
+function renderPhoneCommDetailTablePage() {
+  var tbody = document.getElementById('phoneCommDetailTbody');
+  if (!tbody) return;
+  var startIdx = (_phoneCommDetailPage - 1) * PHONE_COMM_DETAIL_PAGE_SIZE;
+  var pageRows = _phoneCommDetailRows.slice(startIdx, startIdx + PHONE_COMM_DETAIL_PAGE_SIZE);
+  tbody.innerHTML = pageRows.map(renderPhoneCommDetailRowHtml).join('');
+  renderPhoneCommDetailPagination();
+}
+
+function goPhoneCommDetailPage(page) {
+  var totalPages = getPhoneCommDetailTotalPages();
+  var nextPage = Math.max(1, Math.min(page, totalPages));
+  if (nextPage === _phoneCommDetailPage) return;
+  _phoneCommDetailPage = nextPage;
+  renderPhoneCommDetailTablePage();
+  var wrap = document.querySelector('#phoneCommDetailDrawer .alert-task-detail-table-wrap');
+  if (wrap) wrap.scrollTop = 0;
+}
+
+function clearPhoneCommDetailFilterInputs() {
+  var nickEl = document.getElementById('phoneCommDetailFilterNick');
+  var sidEl = document.getElementById('phoneCommDetailFilterSid');
+  var connectedEl = document.getElementById('phoneCommDetailFilterConnected');
+  if (nickEl) nickEl.value = '';
+  if (sidEl) sidEl.value = '';
+  if (connectedEl) connectedEl.value = '';
+}
+
+function applyPhoneCommDetailFilters() {
+  var filters = getPhoneCommDetailFilterValues();
+  _phoneCommDetailRows = filterPhoneCommDetailRows(_phoneCommDetailAllRows, filters);
+  _phoneCommDetailPage = 1;
+  var countEl = document.getElementById('phoneCommDetailCount');
+  if (countEl) countEl.textContent = String(_phoneCommDetailRows.length);
+  renderPhoneCommDetailTablePage();
+}
+
+function resetPhoneCommDetailFilters() {
+  clearPhoneCommDetailFilterInputs();
+  applyPhoneCommDetailFilters();
+}
+
+function renderPhoneCommDetailTable(salesName, rowCount, metric) {
+  _phoneCommDetailAllRows = buildPhoneCommDetailRows(salesName, rowCount, metric);
+  applyPhoneCommDetailFilters();
+}
+
+function openPhoneCommDetailDrawer(salesName, rowCount, metric) {
+  if (!salesName || !rowCount) return;
+  _phoneCommDetailMetric = metric || 'contacted';
+  _phoneCommDetailPage = 1;
+  var drawer = document.getElementById('phoneCommDetailDrawer');
+  if (!drawer) return;
+  var titleEl = document.getElementById('phoneCommDetailTitle');
+  var periodEl = document.getElementById('phoneCommDetailPeriod');
+  var countEl = document.getElementById('phoneCommDetailCount');
+  var updatedEl = document.getElementById('phoneCommDetailUpdatedAt');
+  if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> Customer Communication Details';
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (countEl) countEl.textContent = String(rowCount);
+  if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
+  clearPhoneCommDetailFilterInputs();
+  renderPhoneCommDetailTable(salesName, rowCount, _phoneCommDetailMetric);
+  drawer.hidden = false;
+  drawer.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = 'hidden';
+  requestAnimationFrame(function () {
+    drawer.classList.add('is-open');
+  });
+}
+
+function closePhoneCommDetailDrawer() {
+  var drawer = document.getElementById('phoneCommDetailDrawer');
+  if (!drawer || drawer.hidden) return;
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = '';
+  _phoneCommDetailRows = [];
+  _phoneCommDetailAllRows = [];
+  _phoneCommDetailPage = 1;
+  clearPhoneCommDetailFilterInputs();
+  var pager = document.getElementById('phoneCommDetailPager');
+  if (pager) pager.hidden = true;
+  setTimeout(function () {
+    if (!drawer.classList.contains('is-open')) drawer.hidden = true;
+  }, 260);
+}
+
+var WA_COMM_DETAIL_PAGE_SIZE = 12;
+var _waCommDetailRows = [];
+var _waCommDetailAllRows = [];
+var _waCommDetailPage = 1;
+var _waCommDetailMetric = 'contacted';
+
+function buildWaCommDetailRows(salesName, rowCount, metric) {
+  var seed = alertTaskFollowSeed('wa-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
+  var poolSize = Math.max(rowCount * 4, 48);
+  var rows = [];
+  for (var i = 0; i < poolSize; i++) {
+    var s = seed + i * 127;
+    var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isReplied = (s % 4) !== 0;
+    var screenshotMeta = buildChannelCommScreenshotMeta(s, sid, 'wa_chat_');
+    rows.push({
+      name: name,
+      sid: sid,
+      commTime: buildCommStatsCommTime(s),
+      isReplied: isReplied,
+      repliedLabel: isReplied ? 'Yes' : 'No',
+      hasScreenshot: screenshotMeta.hasScreenshot,
+      screenshotName: screenshotMeta.screenshotName,
+      resultHtml: buildChannelCommResultHtml(s)
+    });
+  }
+  if (metric === 'replied') {
+    rows = rows.filter(function (row) { return row.isReplied; });
+  }
+  return rows;
+}
+
+function getWaCommDetailFilterValues() {
+  var nickEl = document.getElementById('waCommDetailFilterNick');
+  var sidEl = document.getElementById('waCommDetailFilterSid');
+  var repliedEl = document.getElementById('waCommDetailFilterReplied');
+  return {
+    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
+    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
+    replied: repliedEl ? repliedEl.value : ''
+  };
+}
+
+function filterWaCommDetailRows(rows, filters) {
+  return rows.filter(function (row) {
+    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
+    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.replied === 'yes' && !row.isReplied) return false;
+    if (filters.replied === 'no' && row.isReplied) return false;
+    return true;
+  });
+}
+
+function renderWaCommDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-time">' + row.commTime + '</td>' +
+    '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
+    '<td class="col-screenshot">' + renderChannelCommScreenshotHtml(row) + '</td>' +
+    '<td class="col-comm-result">' + row.resultHtml + '</td>' +
+    '</tr>';
+}
+
+function getWaCommDetailTotalPages() {
+  if (!_waCommDetailRows.length) return 1;
+  return Math.ceil(_waCommDetailRows.length / WA_COMM_DETAIL_PAGE_SIZE);
+}
+
+function renderWaCommDetailPagination() {
+  var pager = document.getElementById('waCommDetailPager');
+  var infoEl = document.getElementById('waCommDetailPagerInfo');
+  var actionsEl = document.getElementById('waCommDetailPagerActions');
+  if (!pager || !infoEl || !actionsEl) return;
+  var total = _waCommDetailRows.length;
+  var totalPages = getWaCommDetailTotalPages();
+  if (total <= WA_COMM_DETAIL_PAGE_SIZE) {
+    pager.hidden = true;
+    return;
+  }
+  pager.hidden = false;
+  var start = (_waCommDetailPage - 1) * WA_COMM_DETAIL_PAGE_SIZE + 1;
+  var end = Math.min(_waCommDetailPage * WA_COMM_DETAIL_PAGE_SIZE, total);
+  infoEl.innerHTML = 'Total <strong>' + total + '</strong> · <strong>' + WA_COMM_DETAIL_PAGE_SIZE + '</strong> per page · Showing <strong>' + start + '–' + end + '</strong> · Page <strong>' + _waCommDetailPage + '</strong> / ' + totalPages;
+
+  var html =
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goWaCommDetailPage(1)"' + (_waCommDetailPage <= 1 ? ' disabled' : '') + '>First</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goWaCommDetailPage(' + (_waCommDetailPage - 1) + ')"' + (_waCommDetailPage <= 1 ? ' disabled' : '') + '>Prev</button>';
+  var pageNumbers = buildLimitedPagerPages(totalPages, _waCommDetailPage, 6);
+  pageNumbers.forEach(function (p) {
+    html += '<button type="button" class="alert-task-detail-page-btn' + (p === _waCommDetailPage ? ' active' : '') + '" onclick="goWaCommDetailPage(' + p + ')">' + p + '</button>';
+  });
+  html +=
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goWaCommDetailPage(' + (_waCommDetailPage + 1) + ')"' + (_waCommDetailPage >= totalPages ? ' disabled' : '') + '>Next</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goWaCommDetailPage(' + totalPages + ')"' + (_waCommDetailPage >= totalPages ? ' disabled' : '') + '>Last</button>';
+  actionsEl.innerHTML = html;
+}
+
+function renderWaCommDetailTablePage() {
+  var tbody = document.getElementById('waCommDetailTbody');
+  if (!tbody) return;
+  var startIdx = (_waCommDetailPage - 1) * WA_COMM_DETAIL_PAGE_SIZE;
+  var pageRows = _waCommDetailRows.slice(startIdx, startIdx + WA_COMM_DETAIL_PAGE_SIZE);
+  tbody.innerHTML = pageRows.map(renderWaCommDetailRowHtml).join('');
+  renderWaCommDetailPagination();
+}
+
+function goWaCommDetailPage(page) {
+  var totalPages = getWaCommDetailTotalPages();
+  var nextPage = Math.max(1, Math.min(page, totalPages));
+  if (nextPage === _waCommDetailPage) return;
+  _waCommDetailPage = nextPage;
+  renderWaCommDetailTablePage();
+  var wrap = document.querySelector('#waCommDetailDrawer .alert-task-detail-table-wrap');
+  if (wrap) wrap.scrollTop = 0;
+}
+
+function clearWaCommDetailFilterInputs() {
+  var nickEl = document.getElementById('waCommDetailFilterNick');
+  var sidEl = document.getElementById('waCommDetailFilterSid');
+  var repliedEl = document.getElementById('waCommDetailFilterReplied');
+  if (nickEl) nickEl.value = '';
+  if (sidEl) sidEl.value = '';
+  if (repliedEl) repliedEl.value = '';
+}
+
+function applyWaCommDetailFilters() {
+  var filters = getWaCommDetailFilterValues();
+  _waCommDetailRows = filterWaCommDetailRows(_waCommDetailAllRows, filters);
+  _waCommDetailPage = 1;
+  var countEl = document.getElementById('waCommDetailCount');
+  if (countEl) countEl.textContent = String(_waCommDetailRows.length);
+  renderWaCommDetailTablePage();
+}
+
+function resetWaCommDetailFilters() {
+  clearWaCommDetailFilterInputs();
+  applyWaCommDetailFilters();
+}
+
+function renderWaCommDetailTable(salesName, rowCount, metric) {
+  _waCommDetailAllRows = buildWaCommDetailRows(salesName, rowCount, metric);
+  applyWaCommDetailFilters();
+}
+
+function openWaCommDetailDrawer(salesName, rowCount, metric) {
+  if (!salesName || !rowCount) return;
+  _waCommDetailMetric = metric || 'contacted';
+  _waCommDetailPage = 1;
+  var drawer = document.getElementById('waCommDetailDrawer');
+  if (!drawer) return;
+  var titleEl = document.getElementById('waCommDetailTitle');
+  var periodEl = document.getElementById('waCommDetailPeriod');
+  var countEl = document.getElementById('waCommDetailCount');
+  var updatedEl = document.getElementById('waCommDetailUpdatedAt');
+  if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> Customer Communication Details';
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (countEl) countEl.textContent = String(rowCount);
+  if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
+  clearWaCommDetailFilterInputs();
+  renderWaCommDetailTable(salesName, rowCount, _waCommDetailMetric);
+  drawer.hidden = false;
+  drawer.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = 'hidden';
+  requestAnimationFrame(function () {
+    drawer.classList.add('is-open');
+  });
+}
+
+function closeWaCommDetailDrawer() {
+  var drawer = document.getElementById('waCommDetailDrawer');
+  if (!drawer || drawer.hidden) return;
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = '';
+  _waCommDetailRows = [];
+  _waCommDetailAllRows = [];
+  _waCommDetailPage = 1;
+  clearWaCommDetailFilterInputs();
+  var pager = document.getElementById('waCommDetailPager');
+  if (pager) pager.hidden = true;
+  setTimeout(function () {
+    if (!drawer.classList.contains('is-open')) drawer.hidden = true;
+  }, 260);
+}
+
+var CHAT_COMM_DETAIL_PAGE_SIZE = 12;
+var CHAT_COMM_FOLLOWUP_THRESHOLD_SEC = 120;
+var CHAT_COMM_SLOW_FOLLOWUP_DEMO = [135, 168, 245];
+var _chatCommDetailRows = [];
+var _chatCommDetailAllRows = [];
+var _chatCommDetailPage = 1;
+var _chatCommDetailMetric = 'contacted';
+
+function formatChatFollowupTimelinessHtml(totalSeconds) {
+  var sec = Math.max(0, totalSeconds | 0);
+  if (!sec) return '—';
+  var text = formatPhoneCommDuration(sec);
+  if (sec > CHAT_COMM_FOLLOWUP_THRESHOLD_SEC) {
+    return '<span class="chat-comm-followup chat-comm-followup--slow">' + text + '</span>';
+  }
+  return '<span class="chat-comm-followup">' + text + '</span>';
+}
+
+function buildChatCommDetailRows(salesName, rowCount, metric) {
+  var seed = alertTaskFollowSeed('chat-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
+  var poolSize = Math.max(rowCount * 4, 48);
+  var rows = [];
+  for (var i = 0; i < poolSize; i++) {
+    var s = seed + i * 127;
+    var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isReplied = (s % 4) !== 0;
+    var followupSec;
+    if (i < CHAT_COMM_SLOW_FOLLOWUP_DEMO.length) {
+      followupSec = CHAT_COMM_SLOW_FOLLOWUP_DEMO[i];
+    } else {
+      followupSec = 20 + (s % 180);
+    }
+    rows.push({
+      name: name,
+      sid: sid,
+      commTime: buildCommStatsCommTime(s),
+      isReplied: isReplied,
+      repliedLabel: isReplied ? 'Yes' : 'No',
+      followupHtml: formatChatFollowupTimelinessHtml(followupSec),
+      resultHtml: buildChannelCommResultHtml(s)
+    });
+  }
+  if (metric === 'replied') {
+    rows = rows.filter(function (row) { return row.isReplied; });
+  }
+  return rows;
+}
+
+function getChatCommDetailFilterValues() {
+  var nickEl = document.getElementById('chatCommDetailFilterNick');
+  var sidEl = document.getElementById('chatCommDetailFilterSid');
+  var repliedEl = document.getElementById('chatCommDetailFilterReplied');
+  return {
+    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
+    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
+    replied: repliedEl ? repliedEl.value : ''
+  };
+}
+
+function filterChatCommDetailRows(rows, filters) {
+  return rows.filter(function (row) {
+    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
+    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.replied === 'yes' && !row.isReplied) return false;
+    if (filters.replied === 'no' && row.isReplied) return false;
+    return true;
+  });
+}
+
+function renderChatCommDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-time">' + row.commTime + '</td>' +
+    '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
+    '<td class="col-followup">' + row.followupHtml + '</td>' +
+    '<td class="col-comm-result">' + row.resultHtml + '</td>' +
+    '</tr>';
+}
+
+function getChatCommDetailTotalPages() {
+  if (!_chatCommDetailRows.length) return 1;
+  return Math.ceil(_chatCommDetailRows.length / CHAT_COMM_DETAIL_PAGE_SIZE);
+}
+
+function renderChatCommDetailPagination() {
+  var pager = document.getElementById('chatCommDetailPager');
+  var infoEl = document.getElementById('chatCommDetailPagerInfo');
+  var actionsEl = document.getElementById('chatCommDetailPagerActions');
+  if (!pager || !infoEl || !actionsEl) return;
+  var total = _chatCommDetailRows.length;
+  var totalPages = getChatCommDetailTotalPages();
+  if (total <= CHAT_COMM_DETAIL_PAGE_SIZE) {
+    pager.hidden = true;
+    return;
+  }
+  pager.hidden = false;
+  var start = (_chatCommDetailPage - 1) * CHAT_COMM_DETAIL_PAGE_SIZE + 1;
+  var end = Math.min(_chatCommDetailPage * CHAT_COMM_DETAIL_PAGE_SIZE, total);
+  infoEl.innerHTML = 'Total <strong>' + total + '</strong> · <strong>' + CHAT_COMM_DETAIL_PAGE_SIZE + '</strong> per page · Showing <strong>' + start + '–' + end + '</strong> · Page <strong>' + _chatCommDetailPage + '</strong> / ' + totalPages;
+
+  var html =
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goChatCommDetailPage(1)"' + (_chatCommDetailPage <= 1 ? ' disabled' : '') + '>First</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goChatCommDetailPage(' + (_chatCommDetailPage - 1) + ')"' + (_chatCommDetailPage <= 1 ? ' disabled' : '') + '>Prev</button>';
+  var pageNumbers = buildLimitedPagerPages(totalPages, _chatCommDetailPage, 6);
+  pageNumbers.forEach(function (p) {
+    html += '<button type="button" class="alert-task-detail-page-btn' + (p === _chatCommDetailPage ? ' active' : '') + '" onclick="goChatCommDetailPage(' + p + ')">' + p + '</button>';
+  });
+  html +=
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goChatCommDetailPage(' + (_chatCommDetailPage + 1) + ')"' + (_chatCommDetailPage >= totalPages ? ' disabled' : '') + '>Next</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goChatCommDetailPage(' + totalPages + ')"' + (_chatCommDetailPage >= totalPages ? ' disabled' : '') + '>Last</button>';
+  actionsEl.innerHTML = html;
+}
+
+function renderChatCommDetailTablePage() {
+  var tbody = document.getElementById('chatCommDetailTbody');
+  if (!tbody) return;
+  var startIdx = (_chatCommDetailPage - 1) * CHAT_COMM_DETAIL_PAGE_SIZE;
+  var pageRows = _chatCommDetailRows.slice(startIdx, startIdx + CHAT_COMM_DETAIL_PAGE_SIZE);
+  tbody.innerHTML = pageRows.map(renderChatCommDetailRowHtml).join('');
+  renderChatCommDetailPagination();
+}
+
+function goChatCommDetailPage(page) {
+  var totalPages = getChatCommDetailTotalPages();
+  var nextPage = Math.max(1, Math.min(page, totalPages));
+  if (nextPage === _chatCommDetailPage) return;
+  _chatCommDetailPage = nextPage;
+  renderChatCommDetailTablePage();
+  var wrap = document.querySelector('#chatCommDetailDrawer .alert-task-detail-table-wrap');
+  if (wrap) wrap.scrollTop = 0;
+}
+
+function clearChatCommDetailFilterInputs() {
+  var nickEl = document.getElementById('chatCommDetailFilterNick');
+  var sidEl = document.getElementById('chatCommDetailFilterSid');
+  var repliedEl = document.getElementById('chatCommDetailFilterReplied');
+  if (nickEl) nickEl.value = '';
+  if (sidEl) sidEl.value = '';
+  if (repliedEl) repliedEl.value = '';
+}
+
+function applyChatCommDetailFilters() {
+  var filters = getChatCommDetailFilterValues();
+  _chatCommDetailRows = filterChatCommDetailRows(_chatCommDetailAllRows, filters);
+  _chatCommDetailPage = 1;
+  var countEl = document.getElementById('chatCommDetailCount');
+  if (countEl) countEl.textContent = String(_chatCommDetailRows.length);
+  renderChatCommDetailTablePage();
+}
+
+function resetChatCommDetailFilters() {
+  clearChatCommDetailFilterInputs();
+  applyChatCommDetailFilters();
+}
+
+function renderChatCommDetailTable(salesName, rowCount, metric) {
+  _chatCommDetailAllRows = buildChatCommDetailRows(salesName, rowCount, metric);
+  applyChatCommDetailFilters();
+}
+
+function openChatCommDetailDrawer(salesName, rowCount, metric) {
+  if (!salesName || !rowCount) return;
+  _chatCommDetailMetric = metric || 'contacted';
+  _chatCommDetailPage = 1;
+  var drawer = document.getElementById('chatCommDetailDrawer');
+  if (!drawer) return;
+  var titleEl = document.getElementById('chatCommDetailTitle');
+  var periodEl = document.getElementById('chatCommDetailPeriod');
+  var countEl = document.getElementById('chatCommDetailCount');
+  var updatedEl = document.getElementById('chatCommDetailUpdatedAt');
+  if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> Customer Communication Details';
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (countEl) countEl.textContent = String(rowCount);
+  if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
+  clearChatCommDetailFilterInputs();
+  renderChatCommDetailTable(salesName, rowCount, _chatCommDetailMetric);
+  drawer.hidden = false;
+  drawer.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = 'hidden';
+  requestAnimationFrame(function () {
+    drawer.classList.add('is-open');
+  });
+}
+
+function closeChatCommDetailDrawer() {
+  var drawer = document.getElementById('chatCommDetailDrawer');
+  if (!drawer || drawer.hidden) return;
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = '';
+  _chatCommDetailRows = [];
+  _chatCommDetailAllRows = [];
+  _chatCommDetailPage = 1;
+  clearChatCommDetailFilterInputs();
+  var pager = document.getElementById('chatCommDetailPager');
+  if (pager) pager.hidden = true;
+  setTimeout(function () {
+    if (!drawer.classList.contains('is-open')) drawer.hidden = true;
+  }, 260);
+}
+
+function getCommSummaryChipCount(chip) {
+  var dataCount = chip && chip.getAttribute('data-comm-count');
+  if (dataCount) return parseInt(dataCount, 10) || 0;
+  var valEl = chip && chip.querySelector('strong');
+  if (!valEl) return 0;
+  var text = valEl.textContent.trim();
+  if (text.indexOf('%') !== -1) return 0;
+  return parseInt(text.replace(/[^\d]/g, ''), 10) || 0;
+}
+
+function handleCommStatsSummaryChipActivate(chip) {
   if (!chip || !chip.closest('.comm-stats-section')) return;
+  var chipType = chip.getAttribute('data-comm-chip');
+  if (!chipType) return;
   var view = document.body.dataset.view || 'sales';
   var count = getCommSummaryChipCount(chip);
   if (!count) return;
@@ -12906,12 +14202,28 @@ function handleCommStatsTotalContactActivate(chip) {
   _commStatsFollowPeriod = 'today';
 
   if (view === 'manager' && chip.closest('.manager-only')) {
-    openCommStatsDetailDrawer('Team', count, 'contacted', 'all');
+    if (chipType === 'effective-rate') {
+      openCommStatsDetailDrawer('Team', count, 'effective', 'all');
+      return;
+    }
+    if (chipType === 'my-customers' || chipType === 'team-customers' || chipType === 'total-contacts') {
+      openCommStatsDetailDrawer('Team', count, 'contacted', 'all');
+    }
     return;
   }
   if (view === 'sales' && chip.closest('.sales-only')) {
-    openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'contacted', 'all');
+    if (chipType === 'effective-rate') {
+      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'effective', 'all');
+      return;
+    }
+    if (chipType === 'my-customers' || chipType === 'total-contacts') {
+      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'contacted', 'all');
+    }
   }
+}
+
+function handleCommStatsTotalContactActivate(chip) {
+  handleCommStatsSummaryChipActivate(chip);
 }
 
 var _commFollowCustomerPool = null;
@@ -13366,10 +14678,9 @@ function handleCommStatsChannelActivate(card) {
     return;
   }
   if (view === 'sales' && card.closest('.sales-only')) {
-    _commStatsChannelType = channelType;
-    _commStatsFollowPeriod = 'today';
     var contacted = getCommChannelContactedCount(card);
-    openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, contacted, 'contacted', 'channel');
+    if (!contacted) return;
+    openCommChannelTaskDetailDrawer(COMM_STATS_CURRENT_SALES, contacted, channelType);
   }
 }
 
@@ -16244,7 +17555,7 @@ document.addEventListener('click', function (e) {
   if (tempMktCard) handleTempMktCardActivate(tempMktCard);
 
   var commTotalChip = e.target.closest('.comm-stats-section .comm-summary-chip--action');
-  if (commTotalChip) handleCommStatsTotalContactActivate(commTotalChip);
+  if (commTotalChip) handleCommStatsSummaryChipActivate(commTotalChip);
 
   var commChannel = e.target.closest('.comm-stats-section .comm-channel');
   if (commChannel) handleCommStatsChannelActivate(commChannel);
@@ -16292,6 +17603,21 @@ document.addEventListener('keydown', function (e) {
       closeCommStatsDetailDrawer();
       return;
     }
+    var phoneCommDrawer = document.getElementById('phoneCommDetailDrawer');
+    if (phoneCommDrawer && !phoneCommDrawer.hidden && phoneCommDrawer.classList.contains('is-open')) {
+      closePhoneCommDetailDrawer();
+      return;
+    }
+    var waCommDrawer = document.getElementById('waCommDetailDrawer');
+    if (waCommDrawer && !waCommDrawer.hidden && waCommDrawer.classList.contains('is-open')) {
+      closeWaCommDetailDrawer();
+      return;
+    }
+    var chatCommDrawer = document.getElementById('chatCommDetailDrawer');
+    if (chatCommDrawer && !chatCommDrawer.hidden && chatCommDrawer.classList.contains('is-open')) {
+      closeChatCommDetailDrawer();
+      return;
+    }
     var drawer = document.getElementById('alertTaskDetailDrawer');
     if (drawer && !drawer.hidden && drawer.classList.contains('is-open')) {
       closeAlertTaskDetailDrawer();
@@ -16310,7 +17636,7 @@ document.addEventListener('keydown', function (e) {
   var commTotalChip = e.target.closest('.comm-stats-section .comm-summary-chip--action');
   if (commTotalChip && document.activeElement === commTotalChip) {
     e.preventDefault();
-    handleCommStatsTotalContactActivate(commTotalChip);
+    handleCommStatsSummaryChipActivate(commTotalChip);
     return;
   }
   var commCard = e.target.closest('.comm-stats-section .comm-channel');
