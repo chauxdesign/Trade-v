@@ -7796,11 +7796,13 @@
             <div class="growth-chart-toolbar growth-chart-toolbar--panel">
               <span class="growth-chart-toolbar-label">Time Range</span>
               <div class="growth-chart-period" role="tablist" aria-label="Time Range">
-                <button type="button" class="growth-chart-range-btn" data-range="today" onclick="switchGrowthChartRange('today', this)">Today</button>
+                <button type="button" class="growth-chart-range-btn" data-range="today" onclick="switchGrowthChartRange('today', this)">Yesterday</button>
                 <button type="button" class="growth-chart-range-btn" data-range="3d" onclick="switchGrowthChartRange('3d', this)">Last 3 Days</button>
                 <button type="button" class="growth-chart-range-btn active" data-range="7d" onclick="switchGrowthChartRange('7d', this)">Last 7 Days</button>
                 <button type="button" class="growth-chart-range-btn" data-range="15d" onclick="switchGrowthChartRange('15d', this)">Last 15 Days</button>
                 <button type="button" class="growth-chart-range-btn" data-range="30d" onclick="switchGrowthChartRange('30d', this)">Last 30 Days</button>
+                <button type="button" class="growth-chart-range-btn" data-range="60d" onclick="switchGrowthChartRange('60d', this)">Last 60 Days</button>
+                <button type="button" class="growth-chart-range-btn" data-range="90d" onclick="switchGrowthChartRange('90d', this)">Last 90 Days</button>
               </div>
             </div>
           <section class="block large growth-custdev-section" id="sec-growth-custdev">
@@ -9350,15 +9352,25 @@ var GROWTH_LABELS_BY_RANGE = {
   '3d': ['4-15', '4-16', '4-17'],
   '7d': ['4-10', '4-11', '4-12', '4-13', '4-14', '4-15', '4-16', '4-17'],
   '15d': ['4-03', '4-05', '4-07', '4-09', '4-11', '4-13', '4-15', '4-17'],
-  '30d': ['3-20', '3-25', '3-30', '4-05', '4-10', '4-13', '4-16', '4-17']
+  '30d': ['3-20', '3-25', '3-30', '4-05', '4-10', '4-13', '4-16', '4-17'],
+  '60d': ['2-18', '2-28', '3-10', '3-20', '3-30', '4-10', '4-13', '4-17'],
+  '90d': ['1-19', '2-08', '2-18', '2-28', '3-10', '3-20', '4-05', '4-17']
 };
 var GROWTH_RANGE_META = {
-  today: { label: 'Today', period: 'Apr 17 (by time slot)' },
+  today: { label: 'Yesterday', period: 'Apr 16 (by time slot)' },
   '3d': { label: 'Last 3 Days', period: '4-15 ~ 4-17' },
   '7d': { label: 'Last 7 Days', period: '4-10 ~ 4-17' },
   '15d': { label: 'Last 15 Days', period: '4-03 ~ 4-17' },
-  '30d': { label: 'Last 30 Days', period: '3-20 ~ 4-17' }
+  '30d': { label: 'Last 30 Days', period: '3-20 ~ 4-17' },
+  '60d': { label: 'Last 60 Days', period: '2-18 ~ 4-17' },
+  '90d': { label: 'Last 90 Days', period: '1-19 ~ 4-17' }
 };
+var GROWTH_RANGE_SCALE = {
+  today: 0.6, '3d': 0.8, '7d': 1, '15d': 1.15, '30d': 1.3, '60d': 1.45, '90d': 1.6
+};
+function getGrowthRangeScale(range) {
+  return GROWTH_RANGE_SCALE[range] != null ? GROWTH_RANGE_SCALE[range] : 1;
+}
 var _enableHotRange = '7d';
 /** Team access hot · [people, views] × TOP10 */
 var ENABLE_HOT_METRICS = {
@@ -9498,6 +9510,14 @@ var growthCustDevData = {
     '30d': {
       funnel: [430, 142, 103, 73, 26],
       capability: { personal: [88, 72, 66, 63, 76], teamAvg: [83, 66, 61, 58, 70] }
+    },
+    '60d': {
+      funnel: [774, 256, 185, 131, 47],
+      capability: { personal: [89, 73, 67, 64, 77], teamAvg: [84, 67, 62, 59, 71] }
+    },
+    '90d': {
+      funnel: [1075, 355, 258, 183, 65],
+      capability: { personal: [90, 74, 68, 65, 78], teamAvg: [85, 68, 63, 60, 72] }
     }
   },
   manager: {
@@ -9520,6 +9540,14 @@ var growthCustDevData = {
     '30d': {
       funnel: [2240, 739, 538, 380, 134],
       capability: { personal: [88, 74, 68, 65, 78], teamAvg: [84, 68, 63, 60, 72] }
+    },
+    '60d': {
+      funnel: [4032, 1330, 968, 684, 241],
+      capability: { personal: [89, 75, 69, 66, 79], teamAvg: [85, 69, 64, 61, 73] }
+    },
+    '90d': {
+      funnel: [5600, 1848, 1345, 950, 335],
+      capability: { personal: [90, 76, 70, 67, 80], teamAvg: [86, 70, 65, 62, 74] }
     }
   }
 };
@@ -9527,7 +9555,11 @@ var growthCustDevData = {
 function getGrowthCustDevDataset() {
   var view = getGrowthChartViewKey();
   var pack = growthCustDevData[view] || growthCustDevData.sales;
-  return pack[_growthChartRange] || pack['7d'];
+  if (pack[_growthChartRange]) return pack[_growthChartRange];
+  if (_growthChartRange === '60d' || _growthChartRange === '90d') {
+    return pack['30d'] || pack['7d'];
+  }
+  return pack['7d'];
 }
 
 // Customer assignment conversion: assigned, converted deposit/trade, team avg converted traders
@@ -9568,8 +9600,7 @@ function getGrowthUpgradeConvDataset() {
   var base = GROWTH_UPGRADE_CONV_BASE[view] || GROWTH_UPGRADE_CONV_BASE.sales;
   var labels = getGrowthLabelsForRange(_growthChartRange);
   var n = labels.length;
-  var scaleMap = { today: 0.6, '3d': 0.8, '7d': 1, '15d': 1.15, '30d': 1.3 };
-  var s = scaleMap[_growthChartRange] != null ? scaleMap[_growthChartRange] : 1;
+  var s = getGrowthRangeScale(_growthChartRange);
   return {
     labels: labels,
     v01: growthSimSeries(base.v01 * s, n, 1),
@@ -9597,8 +9628,7 @@ function getGrowthMgmtDataset() {
   var base = GROWTH_MGMT_BASE[view] || GROWTH_MGMT_BASE.sales;
   var labels = getGrowthLabelsForRange(_growthChartRange);
   var n = labels.length;
-  var scaleMap = { today: 0.6, '3d': 0.8, '7d': 1, '15d': 1.15, '30d': 1.3 };
-  var s = scaleMap[_growthChartRange] != null ? scaleMap[_growthChartRange] : 1;
+  var s = getGrowthRangeScale(_growthChartRange);
   return {
     labels: labels,
     activeCust: growthSimSeries(base.activeCust * s, n, 1),
@@ -9631,8 +9661,7 @@ function getGrowthRevenueDataset() {
   var base = GROWTH_REVENUE_BASE[view] || GROWTH_REVENUE_BASE.sales;
   var labels = getGrowthLabelsForRange(_growthChartRange);
   var n = labels.length;
-  var scaleMap = { today: 0.6, '3d': 0.8, '7d': 1, '15d': 1.15, '30d': 1.3 };
-  var s = scaleMap[_growthChartRange] != null ? scaleMap[_growthChartRange] : 1;
+  var s = getGrowthRangeScale(_growthChartRange);
   return {
     labels: labels,
     totalDeposit: growthSimSeries(base.totalDeposit * s, n, 1),
@@ -9662,8 +9691,7 @@ function getGrowthRiskDataset() {
   var base = GROWTH_RISK_BASE[view] || GROWTH_RISK_BASE.sales;
   var labels = getGrowthLabelsForRange(_growthChartRange);
   var n = labels.length;
-  var scaleMap = { today: 0.6, '3d': 0.8, '7d': 1, '15d': 1.15, '30d': 1.3 };
-  var s = scaleMap[_growthChartRange] != null ? scaleMap[_growthChartRange] : 1;
+  var s = getGrowthRangeScale(_growthChartRange);
   return {
     labels: labels,
     riskCust: growthSimSeries(base.riskCust * s, n, 1),
@@ -9755,7 +9783,11 @@ function getGrowthLabelsForRange(range) {
 
 function getGrowthTrendBlock(store) {
   var pack = store[getGrowthChartViewKey()] || store.sales;
-  return pack[_growthChartRange] || pack['7d'];
+  if (pack[_growthChartRange]) return pack[_growthChartRange];
+  if (_growthChartRange === '60d' || _growthChartRange === '90d') {
+    return pack['30d'] || pack['7d'];
+  }
+  return pack['7d'];
 }
 
 function getGrowthDataset(store) {
@@ -11474,7 +11506,9 @@ function resizeGrowthCharts() {
 }
 
 function syncGrowthChartRangeButtons(range) {
-  document.querySelectorAll('.growth-chart-range-btn').forEach(function (b) {
+  var panel = document.getElementById('panel-growth');
+  if (!panel) return;
+  panel.querySelectorAll('.growth-chart-range-btn').forEach(function (b) {
     b.classList.toggle('active', b.getAttribute('data-range') === range);
   });
 }
