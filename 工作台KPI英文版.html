@@ -252,6 +252,8 @@
       padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
     }
     .manager-goal-scope-row{width:95%;display:flex;justify-content:flex-start}
+    .manager-goal-scope-row--dual{gap:8px;flex-wrap:wrap}
+    .manager-goal-scope-row--dual .manager-goal-scope-select{flex:1;min-width:140px}
     .manager-goal-scope-select{
       width:100%;padding:8px 28px 8px 12px;border-radius:8px;border:1px solid #cbd5e1;
       background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E") no-repeat right 10px center;
@@ -1372,10 +1374,13 @@
     }
     .comm-stats-section .module-head-row{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      margin-bottom:4px;
+      margin-bottom:4px;min-height:32px;
     }
     .comm-stats-section .module-head-row h2{flex:1;min-width:0;margin:0}
-    .comm-stats-head-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+    .comm-stats-head-actions{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;
+      flex-shrink:0;min-height:30px;min-width:132px;
+    }
     .comm-review-entry-btn{
       flex-shrink:0;display:inline-flex;align-items:center;gap:4px;
       padding:6px 12px;border-radius:8px;border:1px solid #fcd34d;
@@ -1433,6 +1438,7 @@
     .alert-task-detail-table .task-status-tag--reviewed{
       color:#059669;background:#ecfdf5;border:1px solid #bbf7d0;
     }
+    #commFollowEntryModal{z-index:1400}
     .comm-follow-entry-modal .alert-task-follow-dialog{
       width:min(800px,100%);max-height:min(88vh,760px);
     }
@@ -2140,6 +2146,46 @@
     }
     .alert-task-follow-table .col-completed-link:hover{text-decoration:underline}
     .alert-task-follow-table .col-completed-zero{color:#94a3b8}
+    #commStatsFollowModal .comm-follow-row--team td,
+    #alertTaskFollowModal .comm-follow-row--team td{background:#fff}
+    #commStatsFollowModal .comm-follow-row--team .col-name,
+    #alertTaskFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commStatsFollowModal .comm-follow-row--group td,
+    #alertTaskFollowModal .comm-follow-row--group td{background:#f8fafc}
+    #commStatsFollowModal .comm-follow-row--group .col-name,
+    #alertTaskFollowModal .comm-follow-row--group .col-name{font-weight:800;color:#0f172a}
+    #commStatsFollowModal .comm-follow-row--toggle,
+    #alertTaskFollowModal .comm-follow-row--toggle{cursor:pointer}
+    #commStatsFollowModal .comm-follow-row--toggle:hover td,
+    #alertTaskFollowModal .comm-follow-row--toggle:hover td{background:#f1f5f9}
+    #commStatsFollowModal .comm-follow-row--member td,
+    #alertTaskFollowModal .comm-follow-row--member td{background:#fff}
+    #commStatsFollowModal .comm-follow-row--member .col-name,
+    #alertTaskFollowModal .comm-follow-row--member .col-name{font-weight:600;color:#334155}
+    #commStatsFollowModal .comm-follow-name-inner,
+    #alertTaskFollowModal .comm-follow-name-inner{
+      display:inline-flex;align-items:center;gap:6px;min-height:20px;
+    }
+    #commStatsFollowModal .comm-follow-name--level-0,
+    #alertTaskFollowModal .comm-follow-name--level-0{padding-left:0}
+    #commStatsFollowModal .comm-follow-name--level-1,
+    #alertTaskFollowModal .comm-follow-name--level-1{padding-left:20px}
+    #commStatsFollowModal .comm-follow-name--level-2,
+    #alertTaskFollowModal .comm-follow-name--level-2{
+      padding-left:44px;position:relative;
+    }
+    #commStatsFollowModal .comm-follow-name--level-2::before,
+    #alertTaskFollowModal .comm-follow-name--level-2::before{
+      content:"";position:absolute;left:28px;top:50%;
+      width:10px;height:1px;background:#cbd5e1;
+    }
+    #commStatsFollowModal .comm-follow-chevron,
+    #alertTaskFollowModal .comm-follow-chevron{
+      display:inline-block;width:12px;font-size:10px;line-height:1;
+      color:#64748b;transition:transform .15s ease;flex-shrink:0;
+    }
+    #commStatsFollowModal .comm-follow-row--group.is-collapsed .comm-follow-chevron,
+    #alertTaskFollowModal .comm-follow-row--group.is-collapsed .comm-follow-chevron{transform:rotate(-90deg)}
 
     /* Daily alert tasks · detail drawer (main content only) */
     .alert-task-detail-drawer{
@@ -2326,14 +2372,19 @@
     }
     .comm-stats-detail-title-name{color:#2563eb}
     #commStatsDetailFilters{
-      display:flex;align-items:flex-end;gap:10px;
+      display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
     }
     #commStatsDetailFilters .my-follow-drawer-filters-grid{
-      flex:1;min-width:0;
-      grid-template-columns:repeat(5,minmax(0,1fr));
+      display:flex;align-items:center;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
-    #commStatsDetailFilters .my-follow-filter-field--action{flex-shrink:0}
+    #commStatsDetailFilters .my-follow-filter-field{
+      flex:1 1 0;min-width:0;margin:0;
+    }
+    #commStatsDetailFilters .my-follow-filter-reset{
+      flex-shrink:0;height:30px;padding:0 10px;white-space:nowrap;
+    }
     #commStatsDetailFilters.is-customer-mode .my-follow-filter-field--comm-only{display:none}
+    #commStatsDetailDrawer .alert-task-detail-panel{width:80%;max-width:85%}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #phoneCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
@@ -2354,74 +2405,35 @@
     #waCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #waCommDetailDrawer .alert-task-detail-table{min-width:860px}
     #waCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
-    #phoneCommDetailFilters{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
-    }
-    #phoneCommDetailFilters .my-follow-drawer-filters-grid{
-      display:flex;align-items:center;justify-content:flex-start;gap:12px;
-      flex:1;min-width:0;
-    }
-    #phoneCommDetailFilters .my-follow-filter-field{
-      display:flex;flex-direction:row;align-items:center;gap:8px;
-      flex:0 0 auto;min-width:0;margin:0;
-    }
-    #phoneCommDetailFilters .my-follow-filter-label{
-      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
-    }
-    #phoneCommDetailFilters .my-follow-filter-input{
-      width:250px;flex-shrink:0;
-    }
-    #phoneCommDetailFilters .my-follow-filter-select{
-      width:200px;flex-shrink:0;
-    }
-    #phoneCommDetailFilters .my-follow-filter-reset{
-      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
-    }
-    #waCommDetailFilters{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
-    }
-    #waCommDetailFilters .my-follow-drawer-filters-grid{
-      display:flex;align-items:center;justify-content:flex-start;gap:12px;
-      flex:1;min-width:0;
-    }
-    #waCommDetailFilters .my-follow-filter-field{
-      display:flex;flex-direction:row;align-items:center;gap:8px;
-      flex:0 0 auto;min-width:0;margin:0;
-    }
-    #waCommDetailFilters .my-follow-filter-label{
-      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
-    }
-    #waCommDetailFilters .my-follow-filter-input{
-      width:250px;flex-shrink:0;
-    }
-    #waCommDetailFilters .my-follow-filter-select{
-      width:200px;flex-shrink:0;
-    }
-    #waCommDetailFilters .my-follow-filter-reset{
-      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
-    }
+    #phoneCommDetailFilters,
+    #waCommDetailFilters,
     #chatCommDetailFilters{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
+      display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
     }
+    #phoneCommDetailFilters .my-follow-drawer-filters-grid,
+    #waCommDetailFilters .my-follow-drawer-filters-grid,
     #chatCommDetailFilters .my-follow-drawer-filters-grid{
-      display:flex;align-items:center;justify-content:flex-start;gap:12px;
-      flex:1;min-width:0;
+      display:flex;align-items:center;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
+    #phoneCommDetailFilters .my-follow-filter-field,
+    #waCommDetailFilters .my-follow-filter-field,
     #chatCommDetailFilters .my-follow-filter-field{
-      display:flex;flex-direction:row;align-items:center;gap:8px;
       flex:0 0 auto;min-width:0;margin:0;
     }
-    #chatCommDetailFilters .my-follow-filter-label{
-      flex-shrink:0;margin:0;line-height:30px;white-space:nowrap;
-    }
+    #phoneCommDetailFilters .my-follow-filter-input,
+    #waCommDetailFilters .my-follow-filter-input,
     #chatCommDetailFilters .my-follow-filter-input{
-      width:250px;flex-shrink:0;
+      width:150px;
     }
+    #phoneCommDetailFilters .my-follow-filter-select,
+    #waCommDetailFilters .my-follow-filter-select,
     #chatCommDetailFilters .my-follow-filter-select{
-      width:200px;flex-shrink:0;
+      width:120px;
     }
+    #phoneCommDetailFilters .my-follow-filter-reset,
+    #waCommDetailFilters .my-follow-filter-reset,
     #chatCommDetailFilters .my-follow-filter-reset{
-      flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
+      flex-shrink:0;height:30px;padding:0 10px;white-space:nowrap;
     }
     .alert-task-detail-sub{
       margin:0;font-size:12px;color:#64748b;line-height:1.45;
@@ -5247,9 +5259,18 @@
               <h2>Switch Management View</h2>
             </div>
             <div class="module-body">
-              <div class="manager-goal-scope-row">
-                <select id="managerGoalSalesFilter" class="manager-goal-scope-select" aria-label="Switch Management View" onchange="applyManagerGoalSalesFilter(this.value)">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="Select team scope" onchange="onManagerGoalScopeLevel1Change()">
                   <option value="all" selected>All Team Members</option>
+                  <option value="A">TW Sales Team A</option>
+                  <option value="B">TW Sales Team B</option>
+                  <option value="C">TW Sales Team C</option>
+                  <option value="DA">DANA Sales Team A</option>
+                  <option value="DB">DANA Sales Team B</option>
+                  <option value="DC">DANA Sales Team C</option>
+                </select>
+                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="Select sales rep" onchange="onManagerGoalScopeLevel2Change()">
+                  <option value="__all__" selected>All Team Summary</option>
                   <option value="Coulson">Coulson</option>
                   <option value="May">May</option>
                   <option value="Daisy">Daisy</option>
@@ -5258,6 +5279,15 @@
                   <option value="Mack">Mack</option>
                   <option value="Fury">Fury</option>
                   <option value="Hunter">Hunter</option>
+                  <option value="Ward">Ward</option>
+                  <option value="Bobbi">Bobbi</option>
+                  <option value="Skye">Skye</option>
+                  <option value="Melinda">Melinda</option>
+                  <option value="Trip">Trip</option>
+                  <option value="Antoine">Antoine</option>
+                  <option value="Yo-Yo">Yo-Yo</option>
+                  <option value="Deke">Deke</option>
+                  <option value="Jemma">Jemma</option>
                 </select>
               </div>
               <p class="manager-goal-scope-hint" id="managerGoalScopeHint">Current management view:<strong>All Team Members</strong></p>
@@ -5607,7 +5637,6 @@
               <div class="module-head-row">
                 <h2>Today's Customer Reach Stats</h2>
                 <div class="comm-stats-head-actions">
-                  <button type="button" class="lead-corral-add-btn" onclick="openCommFollowEntryModal()">Follow up customer</button>
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp Review</button>
                 </div>
               </div>
@@ -8900,17 +8929,14 @@
           <div class="my-follow-drawer-filters" id="commStatsDetailFilters">
             <div class="my-follow-drawer-filters-grid">
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Customer name</span>
-                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterNick" placeholder="Enter customer name" oninput="applyCommStatsDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterNick" placeholder="Customer Name" oninput="applyCommStatsDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterSid" placeholder="Enter SID" oninput="applyCommStatsDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterSid" placeholder="SID" oninput="applyCommStatsDetailFilters()">
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
-                <span class="my-follow-filter-label">Contact result</span>
                 <select class="my-follow-filter-select" id="commStatsDetailFilterResult" onchange="applyCommStatsDetailFilters()">
-                  <option value="">All</option>
+                  <option value="">Contact Result</option>
                   <option value="phone-connected">Phone Connected</option>
                   <option value="phone-missed">Phone Not Connected</option>
                   <option value="wa-replied">WA Replied</option>
@@ -8920,18 +8946,14 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
-                <span class="my-follow-filter-label">Start time</span>
-                <input type="date" class="my-follow-filter-input" id="commStatsDetailFilterDateStart" onchange="applyCommStatsDetailFilters()">
-              </label>
-              <label class="my-follow-filter-field my-follow-filter-field--comm-only">
-                <span class="my-follow-filter-label">End time</span>
-                <input type="date" class="my-follow-filter-input" id="commStatsDetailFilterDateEnd" onchange="applyCommStatsDetailFilters()">
+                <select class="my-follow-filter-select" id="commStatsDetailFilterEffective" onchange="applyCommStatsDetailFilters()">
+                  <option value="">Effective Communication</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
               </label>
             </div>
-            <div class="my-follow-filter-field my-follow-filter-field--action">
-              <span class="my-follow-filter-label" aria-hidden="true">&nbsp;</span>
-              <button type="button" class="my-follow-filter-reset" onclick="resetCommStatsDetailFilters()">Reset Filters</button>
-            </div>
+            <button type="button" class="my-follow-filter-reset" onclick="resetCommStatsDetailFilters()">Reset Filters</button>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -8939,10 +8961,11 @@
                 <tr>
                   <th>Customer Name</th>
                   <th>SID</th>
-                  <th>Communication Time</th>
+                  <th>Contact Phone</th>
                   <th>Contact Result</th>
                   <th>Effective Communication</th>
-                  <th>Communication Content</th>
+                  <th>Last Communication Content</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody id="commStatsDetailTbody"></tbody>
@@ -8974,17 +8997,14 @@
           <div class="my-follow-drawer-filters" id="phoneCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Customer Nickname</span>
-                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyPhoneCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterNick" placeholder="Customer Nickname" oninput="applyPhoneCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterSid" placeholder="Enter SID" oninput="applyPhoneCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterSid" placeholder="SID" oninput="applyPhoneCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Connected</span>
                 <select class="my-follow-filter-select" id="phoneCommDetailFilterConnected" onchange="applyPhoneCommDetailFilters()">
-                  <option value="">All</option>
+                  <option value="">Connected</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
@@ -9033,17 +9053,14 @@
           <div class="my-follow-drawer-filters" id="waCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Customer Nickname</span>
-                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyWaCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterNick" placeholder="Customer Nickname" oninput="applyWaCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterSid" placeholder="Enter SID" oninput="applyWaCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterSid" placeholder="SID" oninput="applyWaCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Replied</span>
                 <select class="my-follow-filter-select" id="waCommDetailFilterReplied" onchange="applyWaCommDetailFilters()">
-                  <option value="">All</option>
+                  <option value="">Replied</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
@@ -9092,17 +9109,14 @@
           <div class="my-follow-drawer-filters" id="chatCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Customer Nickname</span>
-                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterNick" placeholder="Enter nickname keyword" oninput="applyChatCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterNick" placeholder="Customer Nickname" oninput="applyChatCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterSid" placeholder="Enter SID" oninput="applyChatCommDetailFilters()">
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterSid" placeholder="SID" oninput="applyChatCommDetailFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">Replied</span>
                 <select class="my-follow-filter-select" id="chatCommDetailFilterReplied" onchange="applyChatCommDetailFilters()">
-                  <option value="">All</option>
+                  <option value="">Replied</option>
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
@@ -9309,7 +9323,7 @@
         <table class="alert-task-follow-table">
           <thead>
             <tr>
-              <th>Sales Rep</th>
+              <th>Name</th>
               <th class="col-num">Tasks Issued</th>
               <th class="col-num">Completed</th>
               <th class="col-num">Overdue</th>
@@ -11604,6 +11618,8 @@ var ALERT_TASK_FOLLOW_PERIODS = {
 };
 var _alertTaskFollowType = '';
 var _alertTaskFollowPeriod = 'today';
+var _alertTaskFollowExpandedGroups = {};
+var ALERT_TASK_FOLLOW_TEAM_LABEL = 'Team Overall Progress';
 var ALERT_TASK_DETAIL_PAGE_SIZE = 10;
 var ALERT_TASK_DETAIL_MIN_ROWS = 15;
 var _alertTaskDetailRows = [];
@@ -11772,17 +11788,108 @@ function alertTaskFollowSeed(str) {
 }
 
 function buildAlertTaskFollowRows(taskType, period) {
+  return getCommStatsManagerSalesNames().map(function (name) {
+    return buildAlertTaskFollowRowForName(name, taskType, period);
+  }).sort(function (a, b) { return b.rate - a.rate || b.completed - a.completed; });
+}
+
+function buildAlertTaskFollowRowForName(name, taskType, period) {
+  var names = getCommStatsManagerSalesNames();
+  var i = names.indexOf(name);
+  if (i < 0) i = 0;
   var seed = alertTaskFollowSeed(taskType + '|' + period);
   var periodMul = period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
-  return RANK_SALES_POOL.map(function (name, i) {
-    var s = seed + i * 97;
-    var assigned = Math.max(1, (3 + (s % 12)) * periodMul);
-    var ratePct = 52 + (s % 46);
-    var completed = Math.min(assigned, Math.round(assigned * ratePct / 100));
-    var overdue = Math.min(assigned - completed, s % 5);
-    var rate = assigned ? Math.round(completed / assigned * 100) : 0;
-    return { name: name, assigned: assigned, completed: completed, overdue: overdue, rate: rate };
-  }).sort(function (a, b) { return b.rate - a.rate || b.completed - a.completed; });
+  var s = seed + i * 97;
+  var assigned = Math.max(1, (3 + (s % 12)) * periodMul);
+  var ratePct = 52 + (s % 46);
+  var completed = Math.min(assigned, Math.round(assigned * ratePct / 100));
+  var overdue = Math.min(assigned - completed, s % 5);
+  var rate = assigned ? Math.round(completed / assigned * 100) : 0;
+  return { name: name, assigned: assigned, completed: completed, overdue: overdue, rate: rate };
+}
+
+function aggregateAlertTaskFollowRows(rows) {
+  var assigned = 0;
+  var completed = 0;
+  var overdue = 0;
+  rows.forEach(function (row) {
+    assigned += row.assigned || 0;
+    completed += row.completed || 0;
+    overdue += row.overdue || 0;
+  });
+  return {
+    assigned: assigned,
+    completed: completed,
+    overdue: overdue,
+    rate: assigned ? Math.round(completed / assigned * 100) : 0
+  };
+}
+
+function isAlertTaskFollowGroupExpanded(groupKey) {
+  return _alertTaskFollowExpandedGroups[groupKey] === true;
+}
+
+function toggleAlertTaskFollowGroup(groupKey) {
+  if (!groupKey) return;
+  _alertTaskFollowExpandedGroups[groupKey] = !isAlertTaskFollowGroupExpanded(groupKey);
+  renderAlertTaskFollowTable();
+}
+
+function renderAlertTaskFollowCompletedCell(row, salesName, linkable) {
+  if (linkable && salesName && row.completed > 0) {
+    return '<td class="col-num"><a href="#" class="col-completed-link" data-sales="' + salesName + '" data-assigned="' + row.assigned + '" data-completed="' + row.completed + '">' + row.completed + '</a></td>';
+  }
+  if (!row.completed) {
+    return '<td class="col-num"><span class="col-completed-zero">0</span></td>';
+  }
+  return '<td class="col-num">' + row.completed + '</td>';
+}
+
+function renderAlertTaskFollowDataCells(row, salesName, linkable) {
+  return '<td class="col-num">' + (row.assigned || 0) + '</td>' +
+    renderAlertTaskFollowCompletedCell(row, salesName, linkable) +
+    '<td class="col-num col-overdue"><strong>' + (row.overdue || 0) + '</strong></td>' +
+    '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
+}
+
+function renderAlertTaskFollowManagerHierarchy() {
+  var period = _alertTaskFollowPeriod;
+  var taskType = _alertTaskFollowType;
+  if (!taskType) return '';
+  var html = [];
+  var teamNames = getCommStatsManagerSalesNames();
+  var teamRows = teamNames.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
+  var teamAgg = aggregateAlertTaskFollowRows(teamRows);
+  var group;
+  var memberRows;
+  var groupAgg;
+  var expanded;
+  var i;
+
+  html.push(buildCommStatsFollowTeamRowOpenTag() +
+    renderCommStatsFollowNameCell(ALERT_TASK_FOLLOW_TEAM_LABEL) +
+    renderAlertTaskFollowDataCells(teamAgg, '', false) +
+    '</tr>');
+  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+    group = MANAGER_GOAL_SALES_GROUPS[gk];
+    if (!group) return;
+    memberRows = group.members.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
+    groupAgg = aggregateAlertTaskFollowRows(memberRows);
+    expanded = isAlertTaskFollowGroupExpanded(gk);
+    html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
+      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+      renderAlertTaskFollowDataCells(groupAgg, '', false) +
+      '</tr>');
+    if (expanded) {
+      for (i = 0; i < memberRows.length; i++) {
+        html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
+          renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
+          renderAlertTaskFollowDataCells(memberRows[i], memberRows[i].name, true) +
+          '</tr>');
+      }
+    }
+  });
+  return html.join('');
 }
 
 function padAlertTaskNum(n) {
@@ -12474,19 +12581,7 @@ function buildAlertTaskDetailRows(salesName, completedCount) {
 function renderAlertTaskFollowTable() {
   var tbody = document.getElementById('alertTaskFollowTbody');
   if (!tbody || !_alertTaskFollowType) return;
-  var rows = buildAlertTaskFollowRows(_alertTaskFollowType, _alertTaskFollowPeriod);
-  tbody.innerHTML = rows.map(function (row) {
-    var completedCell = row.completed > 0
-      ? '<a href="#" class="col-completed-link" data-sales="' + row.name + '" data-assigned="' + row.assigned + '" data-completed="' + row.completed + '">' + row.completed + '</a>'
-      : '<span class="col-completed-zero">0</span>';
-    return '<tr>' +
-      '<td class="col-name">' + row.name + '</td>' +
-      '<td class="col-num">' + row.assigned + '</td>' +
-      '<td class="col-num">' + completedCell + '</td>' +
-      '<td class="col-num col-overdue"><strong>' + row.overdue + '</strong></td>' +
-      '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>' +
-      '</tr>';
-  }).join('');
+  tbody.innerHTML = renderAlertTaskFollowManagerHierarchy();
 }
 
 function renderAlertTaskDetailRowHtml(row) {
@@ -12901,6 +12996,12 @@ function initAlertTaskCardInteractions() {
   if (followTbody && !followTbody.dataset.bound) {
     followTbody.dataset.bound = '1';
     followTbody.addEventListener('click', function (e) {
+      var groupRow = e.target.closest('tr[data-comm-follow-group]');
+      if (groupRow && !e.target.closest('.col-completed-link')) {
+        e.preventDefault();
+        toggleAlertTaskFollowGroup(groupRow.getAttribute('data-comm-follow-group'));
+        return;
+      }
       var link = e.target.closest('.col-completed-link');
       if (!link) return;
       e.preventDefault();
@@ -12957,6 +13058,390 @@ var _commStatsDetailMetric = 'contacted';
 var _commStatsDetailScope = 'channel';
 var _commStatsDetailChannelFilter = '';
 
+var _commStatsFollowExpandedGroups = {};
+var COMM_STATS_FOLLOW_GROUP_KEYS = ['A', 'B', 'C', 'DA', 'DB', 'DC'];
+var COMM_STATS_FOLLOW_TEAM_LABEL = 'Team Overall Progress';
+
+function getCommStatsManagerSalesNames() {
+  if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') return MANAGER_GOAL_PERF_RANK_ORDER.slice();
+  return ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
+}
+
+function isCommStatsFollowGroupExpanded(groupKey) {
+  return _commStatsFollowExpandedGroups[groupKey] === true;
+}
+
+function toggleCommStatsFollowGroup(groupKey) {
+  if (!groupKey) return;
+  _commStatsFollowExpandedGroups[groupKey] = !isCommStatsFollowGroupExpanded(groupKey);
+  renderCommStatsFollowTable();
+}
+
+function getCommStatsFollowPeriodMul(period) {
+  return period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
+}
+
+function buildCommStatsFollowRowForName(name, channelType, period) {
+  var names = getCommStatsManagerSalesNames();
+  var i = names.indexOf(name);
+  if (i < 0) i = 0;
+  var seed = alertTaskFollowSeed('comm|' + channelType + '|' + period);
+  var periodMul = getCommStatsFollowPeriodMul(period);
+  var s = seed + i * 83;
+  if (channelType === 'tel') {
+    var contacted = Math.max(1, (4 + (s % 15)) * periodMul);
+    var connectRatePct = 55 + (s % 35);
+    var connected = Math.min(contacted, Math.max(0, Math.round(contacted * connectRatePct / 100)));
+    var duration60Pct = 45 + (s % 40);
+    var duration60 = Math.min(connected, Math.max(0, Math.round(connected * duration60Pct / 100)));
+    var totalDurationMin = (18 + (s % 90)) * periodMul + connected * (2 + (s % 6));
+    return {
+      name: name,
+      contacted: contacted,
+      connected: connected,
+      duration60: duration60,
+      totalDuration: formatCommStatsCallDuration(totalDurationMin),
+      totalDurationMin: totalDurationMin,
+      connectRate: contacted ? Math.round(connected / contacted * 100) : 0,
+      effectiveRate: contacted ? Math.round(duration60 / contacted * 100) : 0
+    };
+  }
+  if (channelType === 'wa') {
+    var contactedWa = Math.max(1, (4 + (s % 15)) * periodMul);
+    var replyPctWa = 48 + (s % 48);
+    var repliedWa = Math.min(contactedWa, Math.max(0, Math.round(contactedWa * replyPctWa / 100)));
+    var auditValidPct = 42 + (s % 38);
+    var auditValid = Math.min(repliedWa, Math.max(0, Math.round(repliedWa * auditValidPct / 100)));
+    return {
+      name: name,
+      contacted: contactedWa,
+      replied: repliedWa,
+      auditValid: auditValid,
+      replyRate: contactedWa ? Math.round(repliedWa / contactedWa * 100) : 0,
+      effectiveRate: contactedWa ? Math.round(auditValid / contactedWa * 100) : 0
+    };
+  }
+  if (channelType === 'chat') {
+    var contactedChat = Math.max(1, (4 + (s % 15)) * periodMul);
+    var replyPctChat = 48 + (s % 48);
+    var repliedChat = Math.min(contactedChat, Math.max(0, Math.round(contactedChat * replyPctChat / 100)));
+    var followup2minPct = 50 + (s % 35);
+    var followup2min = Math.min(repliedChat, Math.max(0, Math.round(repliedChat * followup2minPct / 100)));
+    return {
+      name: name,
+      contacted: contactedChat,
+      replied: repliedChat,
+      followup2min: followup2min,
+      replyRate: contactedChat ? Math.round(repliedChat / contactedChat * 100) : 0,
+      effectiveRate: contactedChat ? Math.round(followup2min / contactedChat * 100) : 0
+    };
+  }
+  return { name: name };
+}
+
+function buildCommStatsSummaryFollowRowForName(name, period) {
+  var names = getCommStatsManagerSalesNames();
+  var i = names.indexOf(name);
+  if (i < 0) i = 0;
+  var seed = alertTaskFollowSeed('comm-summary|' + period);
+  var periodMul = getCommStatsFollowPeriodMul(period);
+  var s = seed + i * 91;
+  var assigned = Math.max(8, (12 + (s % 24)) * periodMul);
+  var contacted = Math.min(assigned, Math.max(1, (5 + (s % 16)) * periodMul));
+  var replyPct = 50 + (s % 40);
+  var replied = Math.min(contacted, Math.max(0, Math.round(contacted * replyPct / 100)));
+  var effectivePct = 38 + (s % 42);
+  var effective = Math.min(contacted, Math.max(0, Math.round(contacted * effectivePct / 100)));
+  return {
+    name: name,
+    assigned: assigned,
+    contacted: contacted,
+    replied: replied,
+    effective: effective,
+    reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
+    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
+    effectiveRate: contacted ? Math.round(effective / contacted * 100) : 0
+  };
+}
+
+function aggregateCommStatsTelRows(rows) {
+  var contacted = 0;
+  var connected = 0;
+  var duration60 = 0;
+  var totalDurationMin = 0;
+  rows.forEach(function (row) {
+    contacted += row.contacted || 0;
+    connected += row.connected || 0;
+    duration60 += row.duration60 || 0;
+    totalDurationMin += row.totalDurationMin || 0;
+  });
+  return {
+    contacted: contacted,
+    connected: connected,
+    duration60: duration60,
+    totalDuration: formatCommStatsCallDuration(totalDurationMin),
+    totalDurationMin: totalDurationMin,
+    connectRate: contacted ? Math.round(connected / contacted * 100) : 0,
+    effectiveRate: contacted ? Math.round(duration60 / contacted * 100) : 0
+  };
+}
+
+function aggregateCommStatsWaRows(rows) {
+  var contacted = 0;
+  var replied = 0;
+  var auditValid = 0;
+  rows.forEach(function (row) {
+    contacted += row.contacted || 0;
+    replied += row.replied || 0;
+    auditValid += row.auditValid || 0;
+  });
+  return {
+    contacted: contacted,
+    replied: replied,
+    auditValid: auditValid,
+    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
+    effectiveRate: contacted ? Math.round(auditValid / contacted * 100) : 0
+  };
+}
+
+function aggregateCommStatsChatRows(rows) {
+  var contacted = 0;
+  var replied = 0;
+  var followup2min = 0;
+  rows.forEach(function (row) {
+    contacted += row.contacted || 0;
+    replied += row.replied || 0;
+    followup2min += row.followup2min || 0;
+  });
+  return {
+    contacted: contacted,
+    replied: replied,
+    followup2min: followup2min,
+    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
+    effectiveRate: contacted ? Math.round(followup2min / contacted * 100) : 0
+  };
+}
+
+function aggregateCommStatsSummaryRows(rows) {
+  var assigned = 0;
+  var contacted = 0;
+  var replied = 0;
+  var effective = 0;
+  rows.forEach(function (row) {
+    assigned += row.assigned || 0;
+    contacted += row.contacted || 0;
+    replied += row.replied || 0;
+    effective += row.effective || 0;
+  });
+  return {
+    assigned: assigned,
+    contacted: contacted,
+    replied: replied,
+    effective: effective,
+    reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
+    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
+    effectiveRate: contacted ? Math.round(effective / contacted * 100) : 0
+  };
+}
+
+function renderCommStatsFollowNumCell(count, salesName, metric, linkable) {
+  count = parseInt(count, 10) || 0;
+  if (linkable && salesName) {
+    return '<td class="col-num">' + renderCommStatsFollowCountLink(salesName, count, metric) + '</td>';
+  }
+  return '<td class="col-num">' + (count || '<span class="col-completed-zero">0</span>') + '</td>';
+}
+
+function renderCommStatsFollowRateCell(rate) {
+  return '<td class="' + getFollowModalRateClass(rate) + '">' + rate + '%</td>';
+}
+
+function renderCommStatsFollowNameCell(label, opts) {
+  opts = opts || {};
+  if (opts.groupKey) {
+    return '<td class="col-name">' +
+      '<span class="comm-follow-name-inner comm-follow-name--level-1">' +
+      '<span class="comm-follow-chevron" aria-hidden="true">▾</span>' +
+      '<span>' + label + '</span>' +
+      '</span></td>';
+  }
+  if (opts.isMember) {
+    return '<td class="col-name"><span class="comm-follow-name-inner comm-follow-name--level-2">' + label + '</span></td>';
+  }
+  return '<td class="col-name"><span class="comm-follow-name-inner comm-follow-name--level-0">' + label + '</span></td>';
+}
+
+function buildCommStatsFollowTeamRowOpenTag() {
+  return '<tr class="comm-follow-row--team">';
+}
+
+function buildCommStatsFollowGroupRowOpenTag(groupKey, expanded) {
+  return '<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
+    '" data-comm-follow-group="' + groupKey + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">';
+}
+
+function renderCommStatsFollowSummaryCells(row, salesName, linkable) {
+  return renderCommStatsFollowNumCell(row.assigned, salesName, 'assigned', linkable) +
+    renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
+    renderCommStatsFollowNumCell(row.replied, salesName, 'replied', linkable) +
+    renderCommStatsFollowNumCell(row.effective, salesName, 'effective', linkable) +
+    renderCommStatsFollowRateCell(row.reachRate) +
+    renderCommStatsFollowRateCell(row.replyRate) +
+    renderCommStatsFollowRateCell(row.effectiveRate);
+}
+
+function renderCommStatsFollowTelCells(row, salesName, linkable) {
+  return renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
+    renderCommStatsFollowNumCell(row.connected, salesName, 'connected', linkable) +
+    renderCommStatsFollowNumCell(row.duration60, salesName, 'duration60', linkable) +
+    '<td class="col-num">' + (row.totalDuration || '—') + '</td>' +
+    renderCommStatsFollowRateCell(row.connectRate) +
+    renderCommStatsFollowRateCell(row.effectiveRate);
+}
+
+function renderCommStatsFollowWaCells(row, salesName, linkable) {
+  return renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
+    renderCommStatsFollowNumCell(row.replied, salesName, 'replied', linkable) +
+    renderCommStatsFollowNumCell(row.auditValid, salesName, 'auditValid', linkable) +
+    renderCommStatsFollowRateCell(row.replyRate) +
+    renderCommStatsFollowRateCell(row.effectiveRate);
+}
+
+function renderCommStatsFollowChatCells(row, salesName, linkable) {
+  return renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
+    renderCommStatsFollowNumCell(row.replied, salesName, 'replied', linkable) +
+    renderCommStatsFollowNumCell(row.followup2min, salesName, 'followup2min', linkable) +
+    renderCommStatsFollowRateCell(row.replyRate) +
+    renderCommStatsFollowRateCell(row.effectiveRate);
+}
+
+function renderCommStatsFollowManagerHierarchy() {
+  var period = _commStatsFollowPeriod;
+  var html = [];
+  var teamNames = getCommStatsManagerSalesNames();
+  var teamRows;
+  var teamAgg;
+  var groupKey;
+  var group;
+  var memberRows;
+  var groupAgg;
+  var expanded;
+  var i;
+
+  if (_commStatsFollowScope === 'summary') {
+    teamRows = teamNames.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
+    teamAgg = aggregateCommStatsSummaryRows(teamRows);
+    html.push(buildCommStatsFollowTeamRowOpenTag() +
+      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
+      renderCommStatsFollowSummaryCells(teamAgg, '', false) +
+      '</tr>');
+    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+      group = MANAGER_GOAL_SALES_GROUPS[gk];
+      if (!group) return;
+      memberRows = group.members.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
+      groupAgg = aggregateCommStatsSummaryRows(memberRows);
+      expanded = isCommStatsFollowGroupExpanded(gk);
+      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
+        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+        renderCommStatsFollowSummaryCells(groupAgg, '', false) +
+        '</tr>');
+      if (expanded) {
+        for (i = 0; i < memberRows.length; i++) {
+          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
+            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
+            renderCommStatsFollowSummaryCells(memberRows[i], memberRows[i].name, true) +
+            '</tr>');
+        }
+      }
+    });
+    return html.join('');
+  }
+
+  if (!_commStatsChannelType) return '';
+  teamRows = teamNames.map(function (name) { return buildCommStatsFollowRowForName(name, _commStatsChannelType, period); });
+  if (_commStatsChannelType === 'tel') {
+    teamAgg = aggregateCommStatsTelRows(teamRows);
+    html.push(buildCommStatsFollowTeamRowOpenTag() +
+      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
+      renderCommStatsFollowTelCells(teamAgg, '', false) +
+      '</tr>');
+    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+      group = MANAGER_GOAL_SALES_GROUPS[gk];
+      if (!group) return;
+      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'tel', period); });
+      groupAgg = aggregateCommStatsTelRows(memberRows);
+      expanded = isCommStatsFollowGroupExpanded(gk);
+      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
+        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+        renderCommStatsFollowTelCells(groupAgg, '', false) +
+        '</tr>');
+      if (expanded) {
+        for (i = 0; i < memberRows.length; i++) {
+          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
+            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
+            renderCommStatsFollowTelCells(memberRows[i], memberRows[i].name, true) +
+            '</tr>');
+        }
+      }
+    });
+    return html.join('');
+  }
+  if (_commStatsChannelType === 'wa') {
+    teamAgg = aggregateCommStatsWaRows(teamRows);
+    html.push(buildCommStatsFollowTeamRowOpenTag() +
+      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
+      renderCommStatsFollowWaCells(teamAgg, '', false) +
+      '</tr>');
+    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+      group = MANAGER_GOAL_SALES_GROUPS[gk];
+      if (!group) return;
+      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'wa', period); });
+      groupAgg = aggregateCommStatsWaRows(memberRows);
+      expanded = isCommStatsFollowGroupExpanded(gk);
+      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
+        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+        renderCommStatsFollowWaCells(groupAgg, '', false) +
+        '</tr>');
+      if (expanded) {
+        for (i = 0; i < memberRows.length; i++) {
+          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
+            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
+            renderCommStatsFollowWaCells(memberRows[i], memberRows[i].name, true) +
+            '</tr>');
+        }
+      }
+    });
+    return html.join('');
+  }
+  if (_commStatsChannelType === 'chat') {
+    teamAgg = aggregateCommStatsChatRows(teamRows);
+    html.push(buildCommStatsFollowTeamRowOpenTag() +
+      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
+      renderCommStatsFollowChatCells(teamAgg, '', false) +
+      '</tr>');
+    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+      group = MANAGER_GOAL_SALES_GROUPS[gk];
+      if (!group) return;
+      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'chat', period); });
+      groupAgg = aggregateCommStatsChatRows(memberRows);
+      expanded = isCommStatsFollowGroupExpanded(gk);
+      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
+        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+        renderCommStatsFollowChatCells(groupAgg, '', false) +
+        '</tr>');
+      if (expanded) {
+        for (i = 0; i < memberRows.length; i++) {
+          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
+            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
+            renderCommStatsFollowChatCells(memberRows[i], memberRows[i].name, true) +
+            '</tr>');
+        }
+      }
+    });
+  }
+  return html.join('');
+}
+
 var _commStatsDetailListMode = 'records';
 var _commStatsDetailCustomerMode = 'my-customers';
 
@@ -12988,15 +13473,17 @@ function getCommStatsDetailFilterValues() {
   var nickEl = document.getElementById('commStatsDetailFilterNick');
   var sidEl = document.getElementById('commStatsDetailFilterSid');
   var resultEl = document.getElementById('commStatsDetailFilterResult');
-  var dateStartEl = document.getElementById('commStatsDetailFilterDateStart');
-  var dateEndEl = document.getElementById('commStatsDetailFilterDateEnd');
+  var effectiveEl = document.getElementById('commStatsDetailFilterEffective');
   return {
     nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
     sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
     contactResult: resultEl ? resultEl.value : '',
-    dateStart: dateStartEl ? dateStartEl.value : '',
-    dateEnd: dateEndEl ? dateEndEl.value : ''
+    effective: effectiveEl ? effectiveEl.value : ''
   };
+}
+
+function commStatsRowIsEffective(row) {
+  return row.contactedLabel === 'Yes';
 }
 
 function rowHasChannelContactResult(row, channelType) {
@@ -13014,9 +13501,8 @@ function filterCommStatsDetailRows(rows, filters) {
     if (_commStatsDetailListMode === 'customers') return true;
     if (_commStatsDetailChannelFilter && !rowHasChannelContactResult(row, _commStatsDetailChannelFilter)) return false;
     if (filters.contactResult && row.contactResults.indexOf(filters.contactResult) === -1) return false;
-    var commDate = getCommStatsCommDate(row);
-    if (filters.dateStart && commDate < filters.dateStart) return false;
-    if (filters.dateEnd && commDate > filters.dateEnd) return false;
+    if (filters.effective === 'yes' && !commStatsRowIsEffective(row)) return false;
+    if (filters.effective === 'no' && commStatsRowIsEffective(row)) return false;
     return true;
   });
 }
@@ -13034,13 +13520,11 @@ function clearCommStatsDetailFilterInputs() {
   var nickEl = document.getElementById('commStatsDetailFilterNick');
   var sidEl = document.getElementById('commStatsDetailFilterSid');
   var resultEl = document.getElementById('commStatsDetailFilterResult');
-  var dateStartEl = document.getElementById('commStatsDetailFilterDateStart');
-  var dateEndEl = document.getElementById('commStatsDetailFilterDateEnd');
+  var effectiveEl = document.getElementById('commStatsDetailFilterEffective');
   if (nickEl) nickEl.value = '';
   if (sidEl) sidEl.value = '';
   if (resultEl) resultEl.value = '';
-  if (dateStartEl) dateStartEl.value = '';
-  if (dateEndEl) dateEndEl.value = '';
+  if (effectiveEl) effectiveEl.value = '';
 }
 
 function resetCommStatsDetailFilters() {
@@ -13067,7 +13551,7 @@ function renderCommStatsFollowTableHeader() {
   if (!thead) return;
   if (_commStatsFollowScope === 'summary') {
     thead.innerHTML =
-      '<th>Sales Rep</th>' +
+      '<th>Name</th>' +
       '<th class="col-num">Assigned</th>' +
       '<th class="col-num">Contacted</th>' +
       '<th class="col-num">Replies</th>' +
@@ -13079,7 +13563,7 @@ function renderCommStatsFollowTableHeader() {
   }
   if (_commStatsChannelType === 'tel') {
     thead.innerHTML =
-      '<th>Sales Rep</th>' +
+      '<th>Name</th>' +
       '<th class="col-num">Customers Communicated</th>' +
       '<th class="col-num">Connected</th>' +
       '<th class="col-num">60S+ Duration</th>' +
@@ -13088,7 +13572,7 @@ function renderCommStatsFollowTableHeader() {
       '<th class="col-rate">Effective Rate</th>';
   } else if (_commStatsChannelType === 'wa') {
     thead.innerHTML =
-      '<th>Sales Rep</th>' +
+      '<th>Name</th>' +
       '<th class="col-num">Customers Communicated</th>' +
       '<th class="col-num">Replies</th>' +
       '<th class="col-num">Audit Valid</th>' +
@@ -13096,7 +13580,7 @@ function renderCommStatsFollowTableHeader() {
       '<th class="col-rate">Effective Rate</th>';
   } else if (_commStatsChannelType === 'chat') {
     thead.innerHTML =
-      '<th>Sales Rep</th>' +
+      '<th>Name</th>' +
       '<th class="col-num">Customers Communicated</th>' +
       '<th class="col-num">Replies</th>' +
       '<th class="col-num">Follow-up within 2min</th>' +
@@ -13106,99 +13590,19 @@ function renderCommStatsFollowTableHeader() {
 }
 
 function buildCommStatsFollowRows(channelType, period) {
-  var seed = alertTaskFollowSeed('comm|' + channelType + '|' + period);
-  var periodMul = period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
-  if (channelType === 'tel') {
-    return RANK_SALES_POOL.map(function (name, i) {
-      var s = seed + i * 83;
-      var contacted = Math.max(1, (4 + (s % 15)) * periodMul);
-      var connectRatePct = 55 + (s % 35);
-      var connected = Math.min(contacted, Math.max(0, Math.round(contacted * connectRatePct / 100)));
-      var duration60Pct = 45 + (s % 40);
-      var duration60 = Math.min(connected, Math.max(0, Math.round(connected * duration60Pct / 100)));
-      var totalDurationMin = (18 + (s % 90)) * periodMul + connected * (2 + (s % 6));
-      var connectRate = contacted ? Math.round(connected / contacted * 100) : 0;
-      var effectiveRate = contacted ? Math.round(duration60 / contacted * 100) : 0;
-      return {
-        name: name,
-        contacted: contacted,
-        connected: connected,
-        duration60: duration60,
-        totalDuration: formatCommStatsCallDuration(totalDurationMin),
-        totalDurationMin: totalDurationMin,
-        connectRate: connectRate,
-        effectiveRate: effectiveRate
-      };
-    }).sort(function (a, b) { return b.effectiveRate - a.effectiveRate || b.connected - a.connected; });
-  }
-  if (channelType === 'wa') {
-    return RANK_SALES_POOL.map(function (name, i) {
-      var s = seed + i * 83;
-      var contacted = Math.max(1, (4 + (s % 15)) * periodMul);
-      var replyPct = 48 + (s % 48);
-      var replied = Math.min(contacted, Math.max(0, Math.round(contacted * replyPct / 100)));
-      var auditValidPct = 42 + (s % 38);
-      var auditValid = Math.min(replied, Math.max(0, Math.round(replied * auditValidPct / 100)));
-      var replyRate = contacted ? Math.round(replied / contacted * 100) : 0;
-      var effectiveRate = contacted ? Math.round(auditValid / contacted * 100) : 0;
-      return {
-        name: name,
-        contacted: contacted,
-        replied: replied,
-        auditValid: auditValid,
-        replyRate: replyRate,
-        effectiveRate: effectiveRate
-      };
-    }).sort(function (a, b) { return b.effectiveRate - a.effectiveRate || b.replied - a.replied; });
-  }
-  if (channelType === 'chat') {
-    return RANK_SALES_POOL.map(function (name, i) {
-      var s = seed + i * 83;
-      var contacted = Math.max(1, (4 + (s % 15)) * periodMul);
-      var replyPct = 48 + (s % 48);
-      var replied = Math.min(contacted, Math.max(0, Math.round(contacted * replyPct / 100)));
-      var followup2minPct = 50 + (s % 35);
-      var followup2min = Math.min(replied, Math.max(0, Math.round(replied * followup2minPct / 100)));
-      var replyRate = contacted ? Math.round(replied / contacted * 100) : 0;
-      var effectiveRate = contacted ? Math.round(followup2min / contacted * 100) : 0;
-      return {
-        name: name,
-        contacted: contacted,
-        replied: replied,
-        followup2min: followup2min,
-        replyRate: replyRate,
-        effectiveRate: effectiveRate
-      };
-    }).sort(function (a, b) { return b.effectiveRate - a.effectiveRate || b.replied - a.replied; });
-  }
-  return [];
+  return getCommStatsManagerSalesNames().map(function (name) {
+    return buildCommStatsFollowRowForName(name, channelType, period);
+  }).sort(function (a, b) {
+    return b.effectiveRate - a.effectiveRate || (b.connected || b.replied || 0) - (a.connected || a.replied || 0);
+  });
 }
 
 function buildCommStatsSummaryFollowRows(period) {
-  var seed = alertTaskFollowSeed('comm-summary|' + period);
-  var periodMul = period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
-  return RANK_SALES_POOL.map(function (name, i) {
-    var s = seed + i * 91;
-    var assigned = Math.max(8, (12 + (s % 24)) * periodMul);
-    var contacted = Math.min(assigned, Math.max(1, (5 + (s % 16)) * periodMul));
-    var replyPct = 50 + (s % 40);
-    var replied = Math.min(contacted, Math.max(0, Math.round(contacted * replyPct / 100)));
-    var effectivePct = 38 + (s % 42);
-    var effective = Math.min(contacted, Math.max(0, Math.round(contacted * effectivePct / 100)));
-    var reachRate = assigned ? Math.round(contacted / assigned * 100) : 0;
-    var replyRate = contacted ? Math.round(replied / contacted * 100) : 0;
-    var effectiveRate = contacted ? Math.round(effective / contacted * 100) : 0;
-    return {
-      name: name,
-      assigned: assigned,
-      contacted: contacted,
-      replied: replied,
-      effective: effective,
-      reachRate: reachRate,
-      replyRate: replyRate,
-      effectiveRate: effectiveRate
-    };
-  }).sort(function (a, b) { return b.effectiveRate - a.effectiveRate || b.contacted - a.contacted; });
+  return getCommStatsManagerSalesNames().map(function (name) {
+    return buildCommStatsSummaryFollowRowForName(name, period);
+  }).sort(function (a, b) {
+    return b.effectiveRate - a.effectiveRate || b.contacted - a.contacted;
+  });
 }
 
 function buildCommStatsCommTime(seed) {
@@ -13208,6 +13612,11 @@ function buildCommStatsCommTime(seed) {
   base.setHours(8 + (seed % 10), (seed * 11) % 60, 0, 0);
   return base.getFullYear() + '-' + padAlertTaskNum(base.getMonth() + 1) + '-' + padAlertTaskNum(base.getDate()) +
     ' ' + padAlertTaskNum(base.getHours()) + ':' + padAlertTaskNum(base.getMinutes());
+}
+
+function buildCommStatsContactPhone(seed) {
+  var num = '09' + String(10000000 + (seed % 90000000)).slice(-8);
+  return num.slice(0, 4) + ' ' + num.slice(4, 7) + ' ' + num.slice(7);
 }
 
 function pickCommStatsContactResults(seed) {
@@ -13310,6 +13719,7 @@ function buildCommStatsDetailRows(salesName, rowCount, metric) {
       name: name,
       sid: sid,
       commTime: buildCommStatsCommTime(s),
+      contactPhone: buildCommStatsContactPhone(s),
       contactResults: contactResults,
       contactResultsHtml: buildCommStatsContactResultsHtml(contactResults),
       contactedLabel: buildCommStatsContactedLabel(contactResults),
@@ -13334,73 +13744,26 @@ function renderCommStatsFollowTable() {
   var tbody = document.getElementById('commStatsFollowTbody');
   if (!tbody) return;
   renderCommStatsFollowTableHeader();
-  if (_commStatsFollowScope === 'summary') {
-    var summaryRows = buildCommStatsSummaryFollowRows(_commStatsFollowPeriod);
-    tbody.innerHTML = summaryRows.map(function (row) {
-      return '<tr>' +
-        '<td class="col-name">' + row.name + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.assigned, 'assigned') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.contacted, 'contacted') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.replied, 'replied') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.effective, 'effective') + '</td>' +
-        '<td class="' + getFollowModalRateClass(row.reachRate) + '">' + row.reachRate + '%</td>' +
-        '<td class="' + getFollowModalRateClass(row.replyRate) + '">' + row.replyRate + '%</td>' +
-        '<td class="' + getFollowModalRateClass(row.effectiveRate) + '">' + row.effectiveRate + '%</td>' +
-        '</tr>';
-    }).join('');
-    return;
-  }
-  if (!_commStatsChannelType) return;
-  var rows = buildCommStatsFollowRows(_commStatsChannelType, _commStatsFollowPeriod);
-  if (_commStatsChannelType === 'tel') {
-    tbody.innerHTML = rows.map(function (row) {
-      return '<tr>' +
-        '<td class="col-name">' + row.name + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.contacted, 'contacted') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.connected, 'connected') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.duration60, 'duration60') + '</td>' +
-        '<td class="col-num">' + row.totalDuration + '</td>' +
-        '<td class="' + getFollowModalRateClass(row.connectRate) + '">' + row.connectRate + '%</td>' +
-        '<td class="' + getFollowModalRateClass(row.effectiveRate) + '">' + row.effectiveRate + '%</td>' +
-        '</tr>';
-    }).join('');
-    return;
-  }
-  if (_commStatsChannelType === 'wa') {
-    tbody.innerHTML = rows.map(function (row) {
-      return '<tr>' +
-        '<td class="col-name">' + row.name + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.contacted, 'contacted') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.replied, 'replied') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.auditValid, 'auditValid') + '</td>' +
-        '<td class="' + getFollowModalRateClass(row.replyRate) + '">' + row.replyRate + '%</td>' +
-        '<td class="' + getFollowModalRateClass(row.effectiveRate) + '">' + row.effectiveRate + '%</td>' +
-        '</tr>';
-    }).join('');
-    return;
-  }
-  if (_commStatsChannelType === 'chat') {
-    tbody.innerHTML = rows.map(function (row) {
-      return '<tr>' +
-        '<td class="col-name">' + row.name + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.contacted, 'contacted') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.replied, 'replied') + '</td>' +
-        '<td class="col-num">' + renderCommStatsFollowCountLink(row.name, row.followup2min, 'followup2min') + '</td>' +
-        '<td class="' + getFollowModalRateClass(row.replyRate) + '">' + row.replyRate + '%</td>' +
-        '<td class="' + getFollowModalRateClass(row.effectiveRate) + '">' + row.effectiveRate + '%</td>' +
-        '</tr>';
-    }).join('');
-  }
+  tbody.innerHTML = renderCommStatsFollowManagerHierarchy();
+}
+
+function renderCommStatsDetailActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link comm-stats-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.name + '">Private Chat</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link comm-stats-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.name + '">Log Entry</a>' +
+    '</span>';
 }
 
 function renderCommStatsDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
-    '<td class="col-time">' + row.commTime + '</td>' +
+    '<td class="col-phone">' + (row.contactPhone || '—') + '</td>' +
     '<td class="col-contact-results">' + row.contactResultsHtml + '</td>' +
     '<td class="col-contacted">' + buildCommStatsContactedHtml(row.contactedLabel || 'No') + '</td>' +
     '<td class="col-content">' + row.contentText + '</td>' +
+    '<td class="col-action">' + renderCommStatsDetailActionHtml(row) + '</td>' +
     '</tr>';
 }
 
@@ -13460,10 +13823,11 @@ function renderCommStatsDetailTableHeader() {
     '<tr>' +
     '<th>Customer Name</th>' +
     '<th>SID</th>' +
-    '<th>Communication Time</th>' +
+    '<th>Contact Phone</th>' +
     '<th>Contact Result</th>' +
     '<th>Effective Communication</th>' +
-    '<th>Communication Content</th>' +
+    '<th>Last Communication Content</th>' +
+    '<th class="col-action">Actions</th>' +
     '</tr>';
 }
 
@@ -13775,6 +14139,12 @@ function initCommStatsCardInteractions() {
   if (followTbody && !followTbody.dataset.bound) {
     followTbody.dataset.bound = '1';
     followTbody.addEventListener('click', function (e) {
+      var groupRow = e.target.closest('tr[data-comm-follow-group]');
+      if (groupRow && !e.target.closest('.col-completed-link')) {
+        e.preventDefault();
+        toggleCommStatsFollowGroup(groupRow.getAttribute('data-comm-follow-group'));
+        return;
+      }
       var link = e.target.closest('.col-completed-link');
       if (!link) return;
       e.preventDefault();
@@ -13809,6 +14179,20 @@ function initCommStatsCardInteractions() {
   if (detailTbody && !detailTbody.dataset.bound) {
     detailTbody.dataset.bound = '1';
     detailTbody.addEventListener('click', function (e) {
+      var actionLink = e.target.closest('.comm-stats-detail-action-link');
+      if (actionLink) {
+        e.preventDefault();
+        e.stopPropagation();
+        var action = actionLink.getAttribute('data-action');
+        var sid = actionLink.getAttribute('data-sid');
+        var nick = actionLink.getAttribute('data-nick');
+        if (action === 'log') {
+          openCommFollowEntryModal({ sid: sid, name: nick });
+          return;
+        }
+        handleAlertTaskDetailAction(action, sid, nick);
+        return;
+      }
       var sidLink = e.target.closest('.col-sid-link');
       var nameLink = e.target.closest('.col-nick-link');
       var link = sidLink || nameLink;
@@ -14703,10 +15087,13 @@ function resetCommFollowEntryCustomer() {
   hideCommFollowCustomerSuggest();
 }
 
-function openCommFollowEntryModal() {
+function openCommFollowEntryModal(customer) {
   var modal = document.getElementById('commFollowEntryModal');
   if (!modal) return;
   resetCommFollowEntryCustomer();
+  if (customer && customer.sid && customer.name) {
+    selectCommFollowCustomer(customer);
+  }
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -18102,6 +18489,248 @@ function formatGoalKpiPct(actualPct) {
 }
 
 var _managerGoalSalesFilter = 'all';
+var _managerGoalScopeLevel1 = 'all';
+var _managerGoalScopeLevel2 = '__all__';
+
+var MANAGER_GOAL_SALES_GROUPS = {
+  A: { label: 'TW Sales Team A', members: ['Coulson', 'May', 'Daisy'] },
+  B: { label: 'TW Sales Team B', members: ['Fitz', 'Simmons', 'Mack'] },
+  C: { label: 'TW Sales Team C', members: ['Fury', 'Hunter'] },
+  DA: { label: 'DANA Sales Team A', members: ['Ward', 'Bobbi', 'Skye'] },
+  DB: { label: 'DANA Sales Team B', members: ['Melinda', 'Trip', 'Antoine'] },
+  DC: { label: 'DANA Sales Team C', members: ['Yo-Yo', 'Deke', 'Jemma'] }
+};
+
+function getAllManagerGoalSalesNames() {
+  return MANAGER_GOAL_PERF_RANK_ORDER.slice();
+}
+
+function getManagerGoalScopeDisplayLabel(filter) {
+  if (!filter || filter === 'all') return 'All Team Members';
+  if (filter.indexOf('group:') === 0) {
+    var groupKey = filter.slice(6);
+    var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
+    return group ? group.label + ' · All Group Members' : 'All Group Members';
+  }
+  if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
+    var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
+    if (grp && grp.members.indexOf(filter) !== -1) {
+      return grp.label + ' · ' + filter;
+    }
+  }
+  return filter;
+}
+
+function resolveManagerGoalFilter(level1, level2) {
+  if (level1 === 'all') {
+    if (!level2 || level2 === '__all__') return 'all';
+    return level2;
+  }
+  if (!level2 || level2 === '__group__') return 'group:' + level1;
+  return level2;
+}
+
+function parseManagerGoalFilterToScopes(filter) {
+  if (!filter || filter === 'all') return { level1: 'all', level2: '__all__' };
+  if (filter.indexOf('group:') === 0) {
+    return { level1: filter.slice(6), level2: '__group__' };
+  }
+  var groupKey;
+  for (groupKey in MANAGER_GOAL_SALES_GROUPS) {
+    if (MANAGER_GOAL_SALES_GROUPS[groupKey].members.indexOf(filter) !== -1 && _managerGoalScopeLevel1 === groupKey) {
+      return { level1: groupKey, level2: filter };
+    }
+  }
+  return { level1: 'all', level2: filter };
+}
+
+function rebuildManagerGoalLevel2Options(level1, keepValue) {
+  var select = document.getElementById('managerGoalScopeLevel2');
+  if (!select) return;
+  var html = '';
+  if (level1 === 'all') {
+    html += '<option value="__all__">All Team Summary</option>';
+    getAllManagerGoalSalesNames().forEach(function (name) {
+      html += '<option value="' + name + '">' + name + '</option>';
+    });
+  } else {
+    var group = MANAGER_GOAL_SALES_GROUPS[level1];
+    if (!group) return;
+    html += '<option value="__group__">All Group Members</option>';
+    group.members.forEach(function (name) {
+      html += '<option value="' + name + '">' + name + '</option>';
+    });
+  }
+  select.innerHTML = html;
+  var fallback = level1 === 'all' ? '__all__' : '__group__';
+  select.value = (keepValue && select.querySelector('option[value="' + keepValue + '"]')) ? keepValue : fallback;
+}
+
+function syncManagerGoalScopeSelects(filter) {
+  var scopes = parseManagerGoalFilterToScopes(filter);
+  _managerGoalScopeLevel1 = scopes.level1;
+  _managerGoalScopeLevel2 = scopes.level2;
+  var level1Select = document.getElementById('managerGoalScopeLevel1');
+  var level2Select = document.getElementById('managerGoalScopeLevel2');
+  if (!level1Select || !level2Select) return;
+  if (level1Select.value !== scopes.level1) {
+    level1Select.value = scopes.level1;
+    rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
+    return;
+  }
+  if (!level2Select.querySelector('option[value="' + scopes.level2 + '"]')) {
+    rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
+    return;
+  }
+  level2Select.value = scopes.level2;
+}
+
+function onManagerGoalScopeLevel1Change() {
+  var level1Select = document.getElementById('managerGoalScopeLevel1');
+  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'all';
+  rebuildManagerGoalLevel2Options(_managerGoalScopeLevel1);
+  _managerGoalScopeLevel2 = document.getElementById('managerGoalScopeLevel2').value;
+  applyManagerGoalSalesFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
+}
+
+function onManagerGoalScopeLevel2Change() {
+  var level1Select = document.getElementById('managerGoalScopeLevel1');
+  var level2Select = document.getElementById('managerGoalScopeLevel2');
+  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'all';
+  _managerGoalScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyManagerGoalSalesFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
+}
+
+function aggregateManagerGoalSalesData(members, groupKey, groupLabel) {
+  var agg = {
+    isTeam: true,
+    isGroup: true,
+    groupKey: groupKey,
+    groupLabel: groupLabel,
+    groupMembers: members.slice(),
+    salesName: '',
+    summary: { customerLabel: 'Team Customers', customers: 0, depositCustomers: 0, tradeCustomers: 0, tradeLots: 0, tradeLotsAvg: 0, contacts: 0, contactCoverage: 0, highRisk: 0 },
+    active: { today: 0, week: 0, month: 0, target: 0 },
+    netDeposit: { today: 0, week: 0, month: 0, target: 0 },
+    reach: { contacts: 0, connected: 0, cr: 0, tell: 0 },
+    tradeLots: { today: 0, week: 0, month: 0, teamMonthLots: 0, members: members.length, personalMonth: 0 },
+    risk: { depositNoTrade: 0, tradeNoDeposit: 0, cancelled: 0, marginCall: 0, withdrawAlert: 0, highRisk: 0, uninstalled: 0 },
+    gcaReachTarget: 0,
+    labels: {
+      activeTitle: 'Team Customer Activity',
+      netTitle: 'Team Net Deposit',
+      reachTitle: 'Team Customer Communication',
+      tradeTitle: 'Team Trading Lots',
+      riskTitle: 'Team Risk',
+      riskPrefix: 'Team '
+    },
+    ai: []
+  };
+  members.forEach(function (name) {
+    var d = MANAGER_GOAL_SALES_DATA[name];
+    if (!d) return;
+    agg.summary.customers += d.summary.customers;
+    agg.summary.depositCustomers += d.summary.depositCustomers;
+    agg.summary.tradeCustomers += d.summary.tradeCustomers;
+    agg.summary.tradeLots += d.summary.tradeLots;
+    agg.summary.contacts += d.summary.contacts;
+    agg.summary.highRisk += d.summary.highRisk;
+    agg.active.today += d.active.today;
+    agg.active.week += d.active.week;
+    agg.active.month += d.active.month;
+    agg.active.target += d.active.target;
+    agg.netDeposit.today += d.netDeposit.today;
+    agg.netDeposit.week += d.netDeposit.week;
+    agg.netDeposit.month += d.netDeposit.month;
+    agg.netDeposit.target += d.netDeposit.target;
+    agg.reach.contacts += d.reach.contacts;
+    agg.reach.connected += d.reach.connected;
+    agg.reach.cr += d.reach.cr;
+    agg.reach.tell += d.reach.tell;
+    agg.tradeLots.today += d.tradeLots.today;
+    agg.tradeLots.week += d.tradeLots.week;
+    agg.tradeLots.month += d.tradeLots.month;
+    agg.gcaReachTarget += d.gcaReachTarget;
+    Object.keys(agg.risk).forEach(function (key) {
+      agg.risk[key] += d.risk[key];
+    });
+  });
+  agg.tradeLots.teamMonthLots = agg.tradeLots.month;
+  agg.summary.contactCoverage = agg.summary.customers > 0 ? Math.round(agg.summary.contacts / agg.summary.customers * 100) : 0;
+  agg.summary.tradeLotsAvg = agg.summary.tradeCustomers > 0 ? Math.round(agg.summary.tradeLots / agg.summary.tradeCustomers * 10) / 10 : 0;
+  agg.note = 'Viewing <strong>' + groupLabel + '</strong> customer goal progress across five dimensions — month-to-date summary for this group.';
+  agg.ai = [
+    'Team contact coverage <strong>' + agg.summary.contactCoverage + '%</strong>, still <strong>' + Math.max(0, agg.summary.customers - agg.summary.contacts) + '</strong> customers pending follow-up — reprioritize today outreach by sales workload.',
+    'Team high-risk churn customers <strong>' + agg.summary.highRisk + '</strong> — run a risk resolution session today and track closure.',
+    'Team MTD active customers <strong>' + agg.active.month.toLocaleString('en-US') + '</strong> — coordinate within the group to hit the monthly activity target.'
+  ];
+  return agg;
+}
+
+function buildManagerGoalGroupSidebar(groupKey) {
+  var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
+  if (!group) return null;
+  var members = group.members.slice().sort(function (a, b) {
+    return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+  });
+  var groupData = aggregateManagerGoalSalesData(members, groupKey, group.label);
+  var top3 = members.slice(0, 3).map(function (name) {
+    return { name: name, value: MANAGER_GOAL_SALES_META[name].reward };
+  });
+  var totalReward = members.reduce(function (sum, name) {
+    return sum + parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[name].reward);
+  }, 0);
+  var scale = 0.35 + members.length * 0.08;
+  var topMember = members[0];
+  var teamSb = MANAGER_GOAL_TEAM_SIDEBAR;
+  return {
+    perfTitle: teamSb.perfTitle,
+    perfFootnote: teamSb.perfFootnote,
+    perfItems: [
+      { label: teamSb.perfItems[0].label, desc: teamSb.perfItems[0].desc, value: formatNetDepositUsd(groupData.netDeposit.month) },
+      { label: teamSb.perfItems[1].label, desc: teamSb.perfItems[1].desc, value: groupData.summary.tradeCustomers + ' people' },
+      { label: teamSb.perfItems[2].label, desc: teamSb.perfItems[2].desc, type: 'top3', top3: top3 },
+      { label: teamSb.perfItems[3].label, desc: teamSb.perfItems[3].desc, value: '$' + totalReward.toLocaleString('en-US') }
+    ],
+    customerRankIntro: teamSb.customerRankIntro,
+    customerRank: {
+      'net-deposit': {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, scale, 'K'),
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'net-deposit')
+      },
+      withdraw: {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, scale, 'K'),
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'withdraw')
+      },
+      'trade-lots': {
+        rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, scale, 'lots'),
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'trade-lots')
+      }
+    },
+    revenueIntro: teamSb.revenueIntro,
+    revenueRank: {
+      deposit: Object.assign({}, teamSb.revenueRank.deposit, {
+        teamVal: formatNetDepositUsd(groupData.netDeposit.month),
+        mineVal: formatNetDepositUsd(groupData.netDeposit.month),
+        self: { no: '—', name: 'Team total', val: formatNetDepositUsd(groupData.netDeposit.month), gap: 'Combined across ' + members.length + ' sales reps' }
+      }),
+      fee: Object.assign({}, teamSb.revenueRank.fee, {
+        self: { no: '—', name: 'Team total', val: teamSb.revenueRank.fee.self.val, gap: 'Combined across ' + members.length + ' sales reps' }
+      }),
+      trade: Object.assign({}, teamSb.revenueRank.trade, {
+        teamVal: groupData.tradeLots.month.toLocaleString('en-US') + ' lots',
+        mineVal: groupData.tradeLots.month.toLocaleString('en-US') + ' lots',
+        self: { no: '—', name: 'Team total', val: groupData.tradeLots.month.toLocaleString('en-US') + ' lots', gap: 'Combined across ' + members.length + ' sales reps' }
+      })
+    }
+  };
+}
+
+function buildManagerGoalGroupData(groupKey) {
+  var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
+  if (!group) return MANAGER_GOAL_TEAM_DATA;
+  return aggregateManagerGoalSalesData(group.members, groupKey, group.label);
+}
 
 var MANAGER_GOAL_TEAM_DATA = {
   isTeam: true,
@@ -18286,6 +18915,40 @@ var MANAGER_GOAL_SALES_DATA = {
   }
 };
 
+(function seedDanaManagerGoalSalesData() {
+  var members = ['Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'];
+  var base = MANAGER_GOAL_SALES_DATA.Hunter;
+  if (!base) return;
+  members.forEach(function (name, i) {
+    var f = Math.max(0.55, 0.9 - i * 0.04);
+    var r = function (n) { return Math.max(1, Math.round(n * f)); };
+    MANAGER_GOAL_SALES_DATA[name] = {
+      isTeam: false,
+      salesName: name,
+      note: base.note.replace(/Hunter/g, name),
+      summary: {
+        customerLabel: base.summary.customerLabel,
+        customers: r(base.summary.customers),
+        depositCustomers: r(base.summary.depositCustomers),
+        tradeCustomers: r(base.summary.tradeCustomers),
+        tradeLots: r(base.summary.tradeLots),
+        tradeLotsAvg: base.summary.tradeLotsAvg,
+        contacts: r(base.summary.contacts),
+        contactCoverage: base.summary.contactCoverage,
+        highRisk: r(base.summary.highRisk)
+      },
+      active: { today: r(base.active.today), week: r(base.active.week), month: r(base.active.month), target: base.active.target },
+      netDeposit: { today: r(base.netDeposit.today), week: r(base.netDeposit.week), month: r(base.netDeposit.month), target: base.netDeposit.target },
+      reach: { contacts: r(base.reach.contacts), connected: r(base.reach.connected), cr: r(base.reach.cr), tell: r(base.reach.tell) },
+      tradeLots: { today: r(base.tradeLots.today), week: r(base.tradeLots.week), month: r(base.tradeLots.month), teamMonthLots: base.tradeLots.teamMonthLots, members: 17, personalMonth: r(base.tradeLots.personalMonth) },
+      risk: Object.keys(base.risk).reduce(function (acc, key) { acc[key] = r(base.risk[key]); return acc; }, {}),
+      gcaReachTarget: r(base.gcaReachTarget),
+      labels: Object.assign({}, base.labels),
+      ai: base.ai.map(function (line) { return line.replace(/Hunter/g, name); })
+    };
+  });
+})();
+
 var MANAGER_GOAL_RANK_LIMIT = 7;
 
 var MANAGER_GOAL_CUST_RANK_NAMES = ['Coleman', 'Hayes', 'Griffin', 'Porter', 'Russell', 'Rivera', 'Collins', 'Ward'];
@@ -18331,7 +18994,16 @@ var MANAGER_GOAL_SALES_META = {
   Simmons: { rank: 5, reward: '$2,940', revenueRank: 5, netK: '$176K', feeK: '$10.6K', tradeLots: '892', revShare: '11.6%', topLabel: 'Rank #5' },
   Mack: { rank: 6, reward: '$2,680', revenueRank: 6, netK: '$154K', feeK: '$8.2K', tradeLots: '816', revShare: '10.1%', topLabel: 'Rank #6' },
   Fury: { rank: 7, reward: '$2,420', revenueRank: 7, netK: '$132K', feeK: '$7.1K', tradeLots: '724', revShare: '8.7%', topLabel: 'Rank #7' },
-  Hunter: { rank: 8, reward: '$2,180', revenueRank: 8, netK: '$118K', feeK: '$5.5K', tradeLots: '648', revShare: '7.8%', topLabel: 'Rank #8' }
+  Hunter: { rank: 8, reward: '$2,180', revenueRank: 8, netK: '$118K', feeK: '$5.5K', tradeLots: '648', revShare: '7.8%', topLabel: 'Rank #8' },
+  Ward: { rank: 9, reward: '$1,960', revenueRank: 9, netK: '$106K', feeK: '$4.9K', tradeLots: '584', revShare: '7.0%', topLabel: 'Rank #9' },
+  Bobbi: { rank: 10, reward: '$1,760', revenueRank: 10, netK: '$96K', feeK: '$4.4K', tradeLots: '528', revShare: '6.3%', topLabel: 'Rank #10' },
+  Skye: { rank: 11, reward: '$1,580', revenueRank: 11, netK: '$88K', feeK: '$4.0K', tradeLots: '476', revShare: '5.8%', topLabel: 'Rank #11' },
+  Melinda: { rank: 12, reward: '$1,420', revenueRank: 12, netK: '$80K', feeK: '$3.6K', tradeLots: '428', revShare: '5.2%', topLabel: 'Rank #12' },
+  Trip: { rank: 13, reward: '$1,280', revenueRank: 13, netK: '$72K', feeK: '$3.2K', tradeLots: '384', revShare: '4.7%', topLabel: 'Rank #13' },
+  Antoine: { rank: 14, reward: '$1,150', revenueRank: 14, netK: '$66K', feeK: '$2.9K', tradeLots: '346', revShare: '4.3%', topLabel: 'Rank #14' },
+  'Yo-Yo': { rank: 15, reward: '$1,040', revenueRank: 15, netK: '$60K', feeK: '$2.6K', tradeLots: '312', revShare: '3.9%', topLabel: 'Rank #15' },
+  Deke: { rank: 16, reward: '$940', revenueRank: 16, netK: '$54K', feeK: '$2.3K', tradeLots: '282', revShare: '3.5%', topLabel: 'Rank #16' },
+  Jemma: { rank: 17, reward: '$860', revenueRank: 17, netK: '$48K', feeK: '$2.1K', tradeLots: '256', revShare: '3.2%', topLabel: 'Rank #17' }
 };
 
 var MANAGER_GOAL_TEAM_SIDEBAR = {
@@ -18464,9 +19136,15 @@ function buildManagerGoalSalesSidebar(salesName) {
 }
 
 function getManagerGoalDisplayData(filter) {
-  var isTeam = !filter || filter === 'all';
-  var base = isTeam ? MANAGER_GOAL_TEAM_DATA : (MANAGER_GOAL_SALES_DATA[filter] || MANAGER_GOAL_TEAM_DATA);
-  var sidebar = isTeam ? MANAGER_GOAL_TEAM_SIDEBAR : buildManagerGoalSalesSidebar(filter);
+  if (!filter || filter === 'all') {
+    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { sidebar: MANAGER_GOAL_TEAM_SIDEBAR });
+  }
+  if (filter.indexOf('group:') === 0) {
+    var groupKey = filter.slice(6);
+    return Object.assign({}, buildManagerGoalGroupData(groupKey), { sidebar: buildManagerGoalGroupSidebar(groupKey) || MANAGER_GOAL_TEAM_SIDEBAR });
+  }
+  var base = MANAGER_GOAL_SALES_DATA[filter] || MANAGER_GOAL_TEAM_DATA;
+  var sidebar = buildManagerGoalSalesSidebar(filter);
   return Object.assign({}, base, { sidebar: sidebar || MANAGER_GOAL_TEAM_SIDEBAR });
 }
 
@@ -18536,7 +19214,10 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
   });
 }
 
-var MANAGER_GOAL_PERF_RANK_ORDER = ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
+var MANAGER_GOAL_PERF_RANK_ORDER = [
+  'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter',
+  'Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
+];
 
 function buildManagerGoalPerfTop3() {
   return MANAGER_GOAL_PERF_RANK_ORDER.slice(0, 3).map(function (name) {
@@ -18583,9 +19264,23 @@ function parseManagerGoalRewardUsd(str) {
 
 function applyManagerGoalPerfRankPanel(panel, data) {
   if (!panel) return;
+  var memberSet = null;
+  if (data.isGroup && data.groupMembers) {
+    memberSet = {};
+    data.groupMembers.forEach(function (name) { memberSet[name] = true; });
+  }
   var perfRows = panel.querySelectorAll('tbody tr[data-sales-name]');
-  perfRows.forEach(function (row, i) {
-    row.style.display = i < MANAGER_GOAL_RANK_LIMIT ? '' : 'none';
+  var visibleIndex = 0;
+  perfRows.forEach(function (row) {
+    var name = row.getAttribute('data-sales-name');
+    var inScope = !memberSet || memberSet[name];
+    if (!inScope) {
+      row.style.display = 'none';
+      row.classList.remove('is-active-sales');
+      return;
+    }
+    row.style.display = visibleIndex < MANAGER_GOAL_RANK_LIMIT ? '' : 'none';
+    visibleIndex++;
     row.classList.toggle('is-active-sales', !data.isTeam && row.getAttribute('data-sales-name') === data.salesName);
   });
   var self = panel.querySelector('.rank-self');
@@ -18594,6 +19289,24 @@ function applyManagerGoalPerfRankPanel(panel, data) {
   var nameEl = self.querySelector('.rank-self-name');
   var valEl = self.querySelector('.rank-self-val');
   var gapEl = self.querySelector('.rank-self-gap');
+  if (data.isGroup && data.groupMembers && data.groupMembers.length) {
+    var groupTop = data.groupMembers.slice().sort(function (a, b) {
+      return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+    })[0];
+    var groupTopMeta = MANAGER_GOAL_SALES_META[groupTop];
+    var groupRunnerUp = data.groupMembers.slice().sort(function (a, b) {
+      return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+    })[1];
+    labelEl.textContent = 'Team TOP1';
+    nameEl.textContent = groupTop + ' · Rank #1';
+    valEl.textContent = groupTopMeta.reward;
+    if (gapEl) {
+      gapEl.textContent = groupRunnerUp
+        ? 'Ahead of #2 by $' + (parseManagerGoalRewardUsd(groupTopMeta.reward) - parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[groupRunnerUp].reward)).toLocaleString('en-US')
+        : 'Ahead of #2';
+    }
+    return;
+  }
   if (data.isTeam) {
     labelEl.textContent = 'Team TOP1';
     nameEl.textContent = 'Coulson · Rank #1';
@@ -18641,22 +19354,35 @@ function applyManagerGoalSidebar(data) {
 
   var hintEl = document.getElementById('managerGoalScopeHint');
   if (hintEl) {
-    hintEl.classList.toggle('is-sales-mode', !data.isTeam);
-    hintEl.innerHTML = 'Current management view:<strong>' + (data.isTeam ? 'All Team Members' : data.salesName) + '</strong>';
+    hintEl.classList.toggle('is-sales-mode', !data.isTeam || !!data.isGroup);
+    hintEl.innerHTML = 'Current management view: <strong>' + getManagerGoalScopeDisplayLabel(_managerGoalSalesFilter) + '</strong>';
   }
 
-  renderManagerGoalModuleTitle(
-    document.getElementById('manager-goal-customer-target-title'),
-    'Team Customer Goals', 'Customer Goals', data.salesName, data.isTeam
-  );
-  renderManagerGoalModuleTitle(
-    document.getElementById('manager-goal-customer-rank-title'),
-    'Team Customer Leaderboard', 'Customer Leaderboard', data.salesName, data.isTeam
-  );
+  if (data.isGroup) {
+    renderManagerGoalModuleTitle(
+      document.getElementById('manager-goal-customer-target-title'),
+      '', 'Customer Goals', data.groupLabel, false
+    );
+    renderManagerGoalModuleTitle(
+      document.getElementById('manager-goal-customer-rank-title'),
+      '', 'Customer Leaderboard', data.groupLabel, false
+    );
+  } else {
+    renderManagerGoalModuleTitle(
+      document.getElementById('manager-goal-customer-target-title'),
+      'Team Customer Goals', 'Customer Goals', data.salesName, data.isTeam
+    );
+    renderManagerGoalModuleTitle(
+      document.getElementById('manager-goal-customer-rank-title'),
+      'Team Customer Leaderboard', 'Customer Leaderboard', data.salesName, data.isTeam
+    );
+  }
 
   var perfTitle = document.getElementById('manager-goal-perf-title');
   if (perfTitle) {
-    if (data.isTeam) {
+    if (data.isGroup) {
+      perfTitle.innerHTML = '<span class="manager-goal-perf-sales-name">' + data.groupLabel + '</span> · Performance Estimate';
+    } else if (data.isTeam) {
       perfTitle.textContent = sb.perfTitle;
     } else {
       perfTitle.innerHTML = '<span class="manager-goal-perf-sales-name">' + data.salesName + '</span> · Performance Estimate';
@@ -18710,8 +19436,7 @@ function setManagerGoalRiskLabel(btn, prefix, base) {
 
 function applyManagerGoalSalesFilter(value) {
   _managerGoalSalesFilter = value || 'all';
-  var select = document.getElementById('managerGoalSalesFilter');
-  if (select && select.value !== _managerGoalSalesFilter) select.value = _managerGoalSalesFilter;
+  syncManagerGoalScopeSelects(_managerGoalSalesFilter);
 
   var data = getManagerGoalDisplayData(_managerGoalSalesFilter);
   var root = document.getElementById('view-team');
@@ -18837,8 +19562,9 @@ function applyManagerGoalSalesFilter(value) {
 
 function resetManagerGoalSalesFilter() {
   _managerGoalSalesFilter = 'all';
-  var select = document.getElementById('managerGoalSalesFilter');
-  if (select) select.value = 'all';
+  _managerGoalScopeLevel1 = 'all';
+  _managerGoalScopeLevel2 = '__all__';
+  syncManagerGoalScopeSelects('all');
   if (document.body.dataset.view === 'manager') {
     applyManagerGoalSalesFilter('all');
   } else {
