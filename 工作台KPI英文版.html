@@ -7640,64 +7640,6 @@
 
           <div class="chance-right-col">
           <div class="chance-right-stack">
-          <div class="corral-detail-placeholder" id="corral-detail-placeholder" aria-hidden="true"></div>
-          <aside class="block large corral-detail-panel" id="corral-detail-panel">
-            <div class="module-head">
-              <h2>Filter Results Preview</h2>
-              <p class="kpi-intro" id="corral-detail-intro">Selected pool: V4 Sprint · special segment conditions (AND)</p>
-            </div>
-            <div class="module-body">
-              <div class="corral-detail-empty" id="corral-detail-empty" style="display:none">
-                <span class="corral-detail-empty-icon">◎</span>
-                Select a customer pool or corral on the left<br>Preview filtered customers
-              </div>
-              <div class="corral-detail-active is-visible" id="corral-detail-active">
-                <h3 class="corral-detail-title" id="corral-detail-title">V4 Sprint</h3>
-                <div class="corral-detail-conds-label">Filter Conditions</div>
-                <div class="corral-detail-conds" id="corral-detail-conds">
-                  <span class="corral-detail-cond">VIP Level = V3</span>
-                  <span class="corral-detail-cond">Deposits ≥ 5</span>
-                  <span class="corral-detail-cond">First Deposit ≤ 180 Days</span>
-                  <span class="corral-detail-cond">Last Contact ≤ 7 Days</span>
-                  <span class="corral-detail-cond">Phone Bound: Yes</span>
-                </div>
-                <div class="corral-detail-metrics">
-                  <div class="corral-detail-metric"><span id="corral-metric-label-1">Customers in Pool</span><strong id="corral-detail-count">18</strong></div>
-                  <div class="corral-detail-metric"><span id="corral-metric-label-2">Sprint Target Met</span><strong id="corral-detail-new">6</strong></div>
-                  <div class="corral-detail-metric corral-detail-metric--pending" id="corral-detail-metric-pending" style="display:none"><span id="corral-metric-label-3">Pending Follow-Up</span><strong id="corral-detail-pending">24</strong></div>
-                </div>
-                <table class="corral-preview-table">
-                  <thead><tr><th>Customer</th><th>Level</th><th style="text-align:right">Assets</th></tr></thead>
-                  <tbody id="corral-preview-tbody">
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Stone">Stone</button></td><td>V3</td><td class="rank-val">$720K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Foster">Foster</button></td><td>V3</td><td class="rank-val">$580K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Bryant">Bryant</button></td><td>V3</td><td class="rank-val">$465K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Alexander">Alexander</button></td><td>V3</td><td class="rank-val">$398K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Russell">Russell</button></td><td>V3</td><td class="rank-val">$342K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Mitchell">Mitchell</button></td><td>V3</td><td class="rank-val">$318K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Anderson">Anderson</button></td><td>V3</td><td class="rank-val">$286K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Parker">Parker</button></td><td>V3</td><td class="rank-val">$254K</td></tr>
-                  </tbody>
-                </table>
-                <button type="button" class="corral-enter-btn" id="corral-enter-btn" onclick="enterLeadCorralList()">
-                  Enter customer filter results · <span id="corral-enter-count">18</span>
-                </button>
-              </div>
-              <div class="corral-hot-list sales-only">
-                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">Common Corrals</div>
-                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>High Value, Not Contacted</strong><span>86  people</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>Growth Segment Customers</strong><span>64 people</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>Churn Risk Alert</strong><span>52 people</span></button>
-              </div>
-              <div class="corral-hot-list manager-only">
-                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">Team Popular Corrals</div>
-                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>High Value, Not Contacted</strong><span>688  people</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>Growth Segment Customers</strong><span>512 people</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>Churn Risk Alert</strong><span>416  people</span></button>
-              </div>
-            </div>
-          </aside>
-
           <aside class="block large breakthrough-star-section" id="breakthrough-star-section">
             <div class="module-head">
               <h2>Breakthrough Stars</h2>
@@ -7772,6 +7714,65 @@
             </div>
           </aside>
 
+
+          <div class="corral-detail-placeholder" id="corral-detail-placeholder" aria-hidden="true"></div>
+          <aside class="block large corral-detail-panel" id="corral-detail-panel">
+            <div class="module-head">
+              <h2>Filter Results Preview</h2>
+              <p class="kpi-intro" id="corral-detail-intro">Selected pool: V4 Sprint · special segment conditions (AND)</p>
+            </div>
+            <div class="module-body">
+              <div class="corral-detail-empty" id="corral-detail-empty" style="display:none">
+                <span class="corral-detail-empty-icon">◎</span>
+                Select a customer pool or corral on the left<br>Preview filtered customers
+              </div>
+              <div class="corral-detail-active is-visible" id="corral-detail-active">
+                <h3 class="corral-detail-title" id="corral-detail-title">V4 Sprint</h3>
+                <div class="corral-detail-conds-label">Filter Conditions</div>
+                <div class="corral-detail-conds" id="corral-detail-conds">
+                  <span class="corral-detail-cond">VIP Level = V3</span>
+                  <span class="corral-detail-cond">Deposits ≥ 5</span>
+                  <span class="corral-detail-cond">First Deposit ≤ 180 Days</span>
+                  <span class="corral-detail-cond">Last Contact ≤ 7 Days</span>
+                  <span class="corral-detail-cond">Phone Bound: Yes</span>
+                </div>
+                <div class="corral-detail-metrics">
+                  <div class="corral-detail-metric"><span id="corral-metric-label-1">Customers in Pool</span><strong id="corral-detail-count">18</strong></div>
+                  <div class="corral-detail-metric"><span id="corral-metric-label-2">Sprint Target Met</span><strong id="corral-detail-new">6</strong></div>
+                  <div class="corral-detail-metric corral-detail-metric--pending" id="corral-detail-metric-pending" style="display:none"><span id="corral-metric-label-3">Pending Follow-Up</span><strong id="corral-detail-pending">24</strong></div>
+                </div>
+                <table class="corral-preview-table">
+                  <thead><tr><th>Customer</th><th>Level</th><th style="text-align:right">Assets</th></tr></thead>
+                  <tbody id="corral-preview-tbody">
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Stone">Stone</button></td><td>V3</td><td class="rank-val">$720K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Foster">Foster</button></td><td>V3</td><td class="rank-val">$580K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Bryant">Bryant</button></td><td>V3</td><td class="rank-val">$465K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Alexander">Alexander</button></td><td>V3</td><td class="rank-val">$398K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Russell">Russell</button></td><td>V3</td><td class="rank-val">$342K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Mitchell">Mitchell</button></td><td>V3</td><td class="rank-val">$318K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Anderson">Anderson</button></td><td>V3</td><td class="rank-val">$286K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Parker">Parker</button></td><td>V3</td><td class="rank-val">$254K</td></tr>
+                  </tbody>
+                </table>
+                <button type="button" class="corral-enter-btn" id="corral-enter-btn" onclick="enterLeadCorralList()">
+                  Enter customer filter results · <span id="corral-enter-count">18</span>
+                </button>
+              </div>
+              <div class="corral-hot-list sales-only">
+                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">Common Corrals</div>
+                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>High Value, Not Contacted</strong><span>86  people</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>Growth Segment Customers</strong><span>64 people</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>Churn Risk Alert</strong><span>52 people</span></button>
+              </div>
+              <div class="corral-hot-list manager-only">
+                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">Team Popular Corrals</div>
+                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>High Value, Not Contacted</strong><span>688  people</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>Growth Segment Customers</strong><span>512 people</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>Churn Risk Alert</strong><span>416  people</span></button>
+              </div>
+            </div>
+          </aside>
+
                     <div class="lead-clue-detail-placeholder" id="lead-clue-detail-placeholder" aria-hidden="true"></div>
           <aside class="block large lead-clue-detail-panel" id="lead-clue-detail-panel">
             <div class="module-head">
@@ -7814,7 +7815,7 @@
                 </div>
                 <div class="lead-clue-detail-actions">
                   <button type="button" class="lead-clue-enter-btn" id="lead-clue-enter-btn" onclick="enterLeadClueCustomerDetail()">View Customer Details</button>
-                  <button type="button" class="lead-clue-ai-btn" id="lead-clue-ai-btn" onclick="enterLeadClueAiInsight()">Customer AI Insights</button>
+                  <button type="button" class="lead-clue-ai-btn" id="lead-clue-ai-btn" onclick="enterLeadClueAiInsight()">Customer Trade Analysis</button>
                 </div>
               </div>
             </div>
@@ -17117,7 +17118,7 @@ var leadCluePoolAiReminds = {
     sales: {
       title: 'High-Risk Customers · AI Action Suggestions',
       tips: [
-        'Priority outbound: top 3 of 8 with churn risk + 30+ days no trade must get first touch within 24h',
+        'Priority outbound: top 3 of 4 with churn risk + 30+ days no trade must get first touch within 24h',
         'Retention focus: verify withdrawal/stop-trading reasons; rebates or dedicated support — no guaranteed returns',
         'Not contacted: SMS + phone once each; 3 no-answers must escalate to manager same day'
       ]
@@ -17125,7 +17126,7 @@ var leadCluePoolAiReminds = {
     manager: {
       title: 'Team High-Risk Customers · AI Action Suggestions',
       tips: [
-        'Today\'s recall: each group ≥5 effective callbacks from 8 at-risk pool — report not-reached by 18:00',
+        'Today\'s recall: each group ≥5 effective callbacks from 4 at-risk pool — report not-reached by 18:00',
         'Large outflow: single withdrawal >$10K — manager listens on first call same day; log retention',
         'week target target ：this week high risk pool reply rate target target 20%，each day more new and not contact contact clear list'
       ]
@@ -17214,16 +17215,12 @@ var leadCluePoolBands = [
     title: 'High-Risk Customers',
     desc: 'Churn risk or not yet reached — follow up immediately to prevent loss of trading and funds.',
     tags: ['Inactive', 'Stopped trading', 'Not contacted', 'Churn risk'],
-    countLabel: 'Most urgent 8',
+    countLabel: 'Most urgent 4',
     customers: [
       { name: 'Coleman', tags: ['Churn risk', 'Inactive', 'Stopped trading', 'Not contacted'], action: 'Call now to re-engage', funds: 'Net Worth $42K · 45 days no trade' },
       { name: 'Hayes', tags: ['Inactive', 'Low balance', '30 days zero deposit'], action: 'Send activation package', funds: 'Net Worth $28K · low balance' },
       { name: 'Griffin', tags: ['Not contacted', 'No reply', 'Stopped trading'], action: 'First touch today', funds: 'Net Worth $19K · 3 no-reply attempts' },
-      { name: 'Porter', tags: ['Stopped trading', 'Inactive', '60 Days No Trade', 'Churn risk'], action: 'Schedule trading callback', funds: 'Net Worth $8K · stopped trading 60 days' },
-      { name: 'Russell', tags: ['Churn risk', 'Consecutive net outflow', 'Inactive'], action: 'Submit retention plan', funds: 'Net Worth $3K · consecutive net outflow' },
-      { name: 'Rivera', tags: ['Inactive', '30 days zero deposit'], action: 'Push limited-time rebate', funds: 'Net Worth $2K · 30 days no deposit' },
-      { name: 'Collins', tags: ['Not contacted', 'Registered, no first deposit', 'Inactive', 'No reply', 'Churn risk'], action: 'SMS + phone dual touch', funds: 'Net Worth $1K · registered, no first deposit' },
-      { name: 'Ward', tags: ['Stopped trading', 'Account dormant'], action: 'Manager-assisted callback', funds: 'Net Worth — · dormant account' }
+      { name: 'Porter', tags: ['Stopped trading', 'Inactive', '60 Days No Trade', 'Churn risk'], action: 'Schedule trading callback', funds: 'Net Worth $8K · stopped trading 60 days' }
     ]
   },
   {
@@ -17262,6 +17259,10 @@ var _leadClueBandDrawerPage = 1;
 /** Recommendation drawer details: extra mock data for pagination */
 var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
   risk: [
+    { name: 'Russell', tags: ['Churn risk', 'Consecutive net outflow', 'Inactive'], action: 'Submit retention plan', funds: 'Net Worth $3K · consecutive net outflow' },
+    { name: 'Rivera', tags: ['Inactive', '30 days zero deposit'], action: 'Push limited-time rebate', funds: 'Net Worth $2K · 30 days no deposit' },
+    { name: 'Collins', tags: ['Not contacted', 'Registered, no first deposit', 'Inactive', 'No reply', 'Churn risk'], action: 'SMS + phone dual touch', funds: 'Net Worth $1K · registered, no first deposit' },
+    { name: 'Ward', tags: ['Stopped trading', 'Account dormant'], action: 'Manager-assisted callback', funds: 'Net Worth — · dormant account' },
     { name: 'Bailey', tags: ['Churn risk', 'Inactive'], action: 'today day outside call reply', funds: 'net value $15K · 38 day none submit easy' },
     { name: 'Cooper', tags: ['Not contacted', 'Stopped trading'], action: 'short message touch reach', funds: 'net value $12K · 52 day none submit easy' },
     { name: 'Murphy', tags: ['Consecutive net outflow', 'Inactive'], action: 'Submit retention plan', funds: 'Net worth $6K · Consecutive net outflow' },
@@ -18265,11 +18266,10 @@ function enterLeadClueAiInsight() {
   var b = _leadClueDetailCtx.band;
   var c = _leadClueDetailCtx.customer;
   alert(
-    'customer customer AI part analysis \\npart type ：' + b.title +
-    '\\nCustomer：' + c.name +
-    '\\ntarget ：' + leadClueCustomerTagsList(c).join(', ') +
-    '\\n will at submit easy 、 fund and contact contact record record complete and advance build' +
-    '\\n（original type ，can For connect AI part analysis or ）'
+    'Customer Trade Analysis\nCategory: ' + b.title +
+    '\nCustomer: ' + c.name +
+    '\nTags: ' + leadClueCustomerTagsList(c).join(', ') +
+    '\n(prototype placeholder — connect to trade analysis page)'
   );
 }
 
@@ -18865,7 +18865,7 @@ var MANAGER_GOAL_SALES_DATA = {
     labels: { activeTitle: 'Customer Activity', netTitle: 'Net Deposit', reachTitle: 'Customer Communication', tradeTitle: 'Trading Lots', riskTitle: 'Risk', riskPrefix: '' },
     ai: [
       'Contact coverage <strong>70%</strong>, still <strong>47</strong> customers pending follow-up. Prioritize high-intent and pending KYC customers.',
-      '<strong>8</strong> high-risk customers need action — complete first recovery contact within 2 hours.',
+      '<strong>4</strong> high-risk customers need action — complete first recovery contact within 2 hours.',
       'MTD active customers <strong>152</strong> · KPI at <strong>42%</strong> (target 360) — increase wake-up outreach this week to hit the monthly active goal.'
     ]
   },

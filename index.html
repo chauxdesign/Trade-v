@@ -7639,64 +7639,6 @@
 
           <div class="chance-right-col">
           <div class="chance-right-stack">
-          <div class="corral-detail-placeholder" id="corral-detail-placeholder" aria-hidden="true"></div>
-          <aside class="block large corral-detail-panel" id="corral-detail-panel">
-            <div class="module-head">
-              <h2>筛选结果预览</h2>
-              <p class="kpi-intro" id="corral-detail-intro">已选客户池：V4冲刺 · 特殊分层条件组合（AND）</p>
-            </div>
-            <div class="module-body">
-              <div class="corral-detail-empty" id="corral-detail-empty" style="display:none">
-                <span class="corral-detail-empty-icon">◎</span>
-                请选择左侧客户池或围场<br>查看多条件筛选后的客户预览
-              </div>
-              <div class="corral-detail-active is-visible" id="corral-detail-active">
-                <h3 class="corral-detail-title" id="corral-detail-title">V4冲刺</h3>
-                <div class="corral-detail-conds-label">筛选条件</div>
-                <div class="corral-detail-conds" id="corral-detail-conds">
-                  <span class="corral-detail-cond">VIP等级 = V3</span>
-                  <span class="corral-detail-cond">充值次数 ≥ 5</span>
-                  <span class="corral-detail-cond">首次充值时间 ≤ 180天</span>
-                  <span class="corral-detail-cond">最后联系时间 ≤ 7天</span>
-                  <span class="corral-detail-cond">是否绑定手机：已绑定</span>
-                </div>
-                <div class="corral-detail-metrics">
-                  <div class="corral-detail-metric"><span id="corral-metric-label-1">池内客户</span><strong id="corral-detail-count">18</strong></div>
-                  <div class="corral-detail-metric"><span id="corral-metric-label-2">冲刺达标</span><strong id="corral-detail-new">6</strong></div>
-                  <div class="corral-detail-metric corral-detail-metric--pending" id="corral-detail-metric-pending" style="display:none"><span id="corral-metric-label-3">待跟进</span><strong id="corral-detail-pending">24</strong></div>
-                </div>
-                <table class="corral-preview-table">
-                  <thead><tr><th>客户</th><th>等级</th><th style="text-align:right">资产</th></tr></thead>
-                  <tbody id="corral-preview-tbody">
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Stone">Stone</button></td><td>V3</td><td class="rank-val">$720K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Foster">Foster</button></td><td>V3</td><td class="rank-val">$580K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Bryant">Bryant</button></td><td>V3</td><td class="rank-val">$465K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Alexander">Alexander</button></td><td>V3</td><td class="rank-val">$398K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Russell">Russell</button></td><td>V3</td><td class="rank-val">$342K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Mitchell">Mitchell</button></td><td>V3</td><td class="rank-val">$318K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Anderson">Anderson</button></td><td>V3</td><td class="rank-val">$286K</td></tr>
-                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Parker">Parker</button></td><td>V3</td><td class="rank-val">$254K</td></tr>
-                  </tbody>
-                </table>
-                <button type="button" class="corral-enter-btn" id="corral-enter-btn" onclick="enterLeadCorralList()">
-                  进入客户筛选结果 · <span id="corral-enter-count">18</span> 位
-                </button>
-              </div>
-              <div class="corral-hot-list sales-only">
-                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">常用围场</div>
-                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>高价值未联系</strong><span>86 人</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>成长型客户分层</strong><span>64 人</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>流失风险预警</strong><span>52 人</span></button>
-              </div>
-              <div class="corral-hot-list manager-only">
-                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">团队热门围场</div>
-                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>高价值未联系</strong><span>688 人</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>成长型客户分层</strong><span>512 人</span></button>
-                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>流失风险预警</strong><span>416 人</span></button>
-              </div>
-            </div>
-          </aside>
-
           <aside class="block large breakthrough-star-section" id="breakthrough-star-section">
             <div class="module-head">
               <h2>客户突破之星</h2>
@@ -7771,6 +7713,65 @@
             </div>
           </aside>
 
+
+          <div class="corral-detail-placeholder" id="corral-detail-placeholder" aria-hidden="true"></div>
+          <aside class="block large corral-detail-panel" id="corral-detail-panel">
+            <div class="module-head">
+              <h2>筛选结果预览</h2>
+              <p class="kpi-intro" id="corral-detail-intro">已选客户池：V4冲刺 · 特殊分层条件组合（AND）</p>
+            </div>
+            <div class="module-body">
+              <div class="corral-detail-empty" id="corral-detail-empty" style="display:none">
+                <span class="corral-detail-empty-icon">◎</span>
+                请选择左侧客户池或围场<br>查看多条件筛选后的客户预览
+              </div>
+              <div class="corral-detail-active is-visible" id="corral-detail-active">
+                <h3 class="corral-detail-title" id="corral-detail-title">V4冲刺</h3>
+                <div class="corral-detail-conds-label">筛选条件</div>
+                <div class="corral-detail-conds" id="corral-detail-conds">
+                  <span class="corral-detail-cond">VIP等级 = V3</span>
+                  <span class="corral-detail-cond">充值次数 ≥ 5</span>
+                  <span class="corral-detail-cond">首次充值时间 ≤ 180天</span>
+                  <span class="corral-detail-cond">最后联系时间 ≤ 7天</span>
+                  <span class="corral-detail-cond">是否绑定手机：已绑定</span>
+                </div>
+                <div class="corral-detail-metrics">
+                  <div class="corral-detail-metric"><span id="corral-metric-label-1">池内客户</span><strong id="corral-detail-count">18</strong></div>
+                  <div class="corral-detail-metric"><span id="corral-metric-label-2">冲刺达标</span><strong id="corral-detail-new">6</strong></div>
+                  <div class="corral-detail-metric corral-detail-metric--pending" id="corral-detail-metric-pending" style="display:none"><span id="corral-metric-label-3">待跟进</span><strong id="corral-detail-pending">24</strong></div>
+                </div>
+                <table class="corral-preview-table">
+                  <thead><tr><th>客户</th><th>等级</th><th style="text-align:right">资产</th></tr></thead>
+                  <tbody id="corral-preview-tbody">
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Stone">Stone</button></td><td>V3</td><td class="rank-val">$720K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Foster">Foster</button></td><td>V3</td><td class="rank-val">$580K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Bryant">Bryant</button></td><td>V3</td><td class="rank-val">$465K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Alexander">Alexander</button></td><td>V3</td><td class="rank-val">$398K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Russell">Russell</button></td><td>V3</td><td class="rank-val">$342K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Mitchell">Mitchell</button></td><td>V3</td><td class="rank-val">$318K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Anderson">Anderson</button></td><td>V3</td><td class="rank-val">$286K</td></tr>
+                    <tr><td class="rank-name"><button type="button" class="rank-name-link" data-nick="Parker">Parker</button></td><td>V3</td><td class="rank-val">$254K</td></tr>
+                  </tbody>
+                </table>
+                <button type="button" class="corral-enter-btn" id="corral-enter-btn" onclick="enterLeadCorralList()">
+                  进入客户筛选结果 · <span id="corral-enter-count">18</span> 位
+                </button>
+              </div>
+              <div class="corral-hot-list sales-only">
+                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">常用围场</div>
+                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>高价值未联系</strong><span>86 人</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>成长型客户分层</strong><span>64 人</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>流失风险预警</strong><span>52 人</span></button>
+              </div>
+              <div class="corral-hot-list manager-only">
+                <div style="font-size:11px;font-weight:700;color:#64748b;margin:12px 0 6px">团队热门围场</div>
+                <button type="button" class="corral-hot-item" data-corral-id="high-value" onclick="selectLeadCorralFromHot('high-value')"><strong>高价值未联系</strong><span>688 人</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="cross-oil" onclick="selectLeadCorralFromHot('cross-oil')"><strong>成长型客户分层</strong><span>512 人</span></button>
+                <button type="button" class="corral-hot-item" data-corral-id="churn-risk" onclick="selectLeadCorralFromHot('churn-risk')"><strong>流失风险预警</strong><span>416 人</span></button>
+              </div>
+            </div>
+          </aside>
+
                     <div class="lead-clue-detail-placeholder" id="lead-clue-detail-placeholder" aria-hidden="true"></div>
           <aside class="block large lead-clue-detail-panel" id="lead-clue-detail-panel">
             <div class="module-head">
@@ -7813,7 +7814,7 @@
                 </div>
                 <div class="lead-clue-detail-actions">
                   <button type="button" class="lead-clue-enter-btn" id="lead-clue-enter-btn" onclick="enterLeadClueCustomerDetail()">进入客户详情</button>
-                  <button type="button" class="lead-clue-ai-btn" id="lead-clue-ai-btn" onclick="enterLeadClueAiInsight()">客户AI洞察分析</button>
+                  <button type="button" class="lead-clue-ai-btn" id="lead-clue-ai-btn" onclick="enterLeadClueAiInsight()">客户贸易分析</button>
                 </div>
               </div>
             </div>
@@ -17110,7 +17111,7 @@ var leadCluePoolAiReminds = {
     sales: {
       title: '高风险客户 · AI 行动建议',
       tips: [
-        '今日优先外呼：8 人中「流失风险 + 超 30 日无交易」前 3 位须在 24 小时内完成首次触达',
+        '今日优先外呼：4 人中「流失风险 + 超 30 日无交易」前 3 位须在 24 小时内完成首次触达',
         '挽留重点：核实出金/停交易原因，可提供返佣或专属客服方案，禁止承诺固定收益',
         '未联系客户：短信 + 电话双通道各 1 次，连续 3 次未接通须当日升级主管协同'
       ]
@@ -17118,7 +17119,7 @@ var leadCluePoolAiReminds = {
     manager: {
       title: '团队高风险客户 · AI 行动建议',
       tips: [
-        '今日召回：8 人高风险池各组至少完成 5 通有效回访，未触达名单 18:00 前通报',
+        '今日召回：4 人高风险池各组至少完成 5 通有效回访，未触达名单 18:00 前通报',
         '大额流出：单笔出金 > $10K 客户须主管当日旁听首通，并登记挽留结果',
         '周目标：本周高风险池召回率目标 20%，每日更新红黄榜与未联系清单'
       ]
@@ -17207,16 +17208,12 @@ var leadCluePoolBands = [
     title: '高风险客户',
     desc: '存在流失风险或尚未触达，需要立即跟进和召回，以防损失交易和资金。',
     tags: ['不活跃', '停止交易', '未联系', '流失风险'],
-    countLabel: '最紧急 8',
+    countLabel: '最紧急 4',
     customers: [
       { name: 'Coleman', tags: ['流失风险', '不活跃', '停止交易', '未联系'], action: '立即致电召回', funds: '净值 $42K · 45日无交易' },
       { name: 'Hayes', tags: ['不活跃', '余额偏低', '30日零入金'], action: '发送激活礼包', funds: '净值 $28K · 余额偏低' },
       { name: 'Griffin', tags: ['未联系', '未回复', '停止交易'], action: '今日内首次触达', funds: '净值 $19K · 未回复 3 次' },
-      { name: 'Porter', tags: ['停止交易', '不活跃', '60日无交易', '流失风险'], action: '安排交易回访', funds: '净值 $8K · 已停止交易 60日' },
-      { name: 'Russell', tags: ['流失风险', '连续净流出', '不活跃'], action: '提交挽留方案', funds: '净值 $3K · 连续净流出' },
-      { name: 'Rivera', tags: ['不活跃', '30日零入金'], action: '推送限时返佣', funds: '净值 $2K · 30日零入金' },
-      { name: 'Collins', tags: ['未联系', '注册未首充', '不活跃', '未回复', '流失风险'], action: '短信+电话双触达', funds: '净值 $1K · 注册未首充' },
-      { name: 'Ward', tags: ['停止交易', '账户休眠'], action: '主管协同回访', funds: '净值 — · 账户休眠' }
+      { name: 'Porter', tags: ['停止交易', '不活跃', '60日无交易', '流失风险'], action: '安排交易回访', funds: '净值 $8K · 已停止交易 60日' }
     ]
   },
   {
@@ -17255,6 +17252,10 @@ var _leadClueBandDrawerPage = 1;
 /** 客户智能推荐各分类抽屉明细：在页面卡片基础上补充模拟数据以展示分页 */
 var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
   risk: [
+    { name: 'Russell', tags: ['流失风险', '连续净流出', '不活跃'], action: '提交挽留方案', funds: '净值 $3K · 连续净流出' },
+    { name: 'Rivera', tags: ['不活跃', '30日零入金'], action: '推送限时返佣', funds: '净值 $2K · 30日零入金' },
+    { name: 'Collins', tags: ['未联系', '注册未首充', '不活跃', '未回复', '流失风险'], action: '短信+电话双触达', funds: '净值 $1K · 注册未首充' },
+    { name: 'Ward', tags: ['停止交易', '账户休眠'], action: '主管协同回访', funds: '净值 — · 账户休眠' },
     { name: 'Bailey', tags: ['流失风险', '不活跃'], action: '今日外呼召回', funds: '净值 $15K · 38日无交易' },
     { name: 'Cooper', tags: ['未联系', '停止交易'], action: '短信触达', funds: '净值 $12K · 52日无交易' },
     { name: 'Murphy', tags: ['连续净流出', '不活跃'], action: '提交挽留方案', funds: '净值 $6K · 连续净流出' },
@@ -18258,11 +18259,10 @@ function enterLeadClueAiInsight() {
   var b = _leadClueDetailCtx.band;
   var c = _leadClueDetailCtx.customer;
   alert(
-    '客户AI洞察分析\n分类：' + b.title +
+    '客户贸易分析\n分类：' + b.title +
     '\n客户：' + c.name +
     '\n标签：' + leadClueCustomerTagsList(c).join('、') +
-    '\n将基于交易、资金与联系记录生成洞察摘要与跟进建议' +
-    '\n（原型占位，可对接 AI 分析页或侧栏）'
+    '\n（原型占位，可对接贸易分析页）'
   );
 }
 
@@ -18858,7 +18858,7 @@ var MANAGER_GOAL_SALES_DATA = {
     labels: { activeTitle: '客户活跃', netTitle: '净入金', reachTitle: '客户沟通', tradeTitle: '交易手数', riskTitle: '风险', riskPrefix: '' },
     ai: [
       '联系覆盖率 <strong>70%</strong>，仍有 <strong>47</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
-      '有 <strong>8</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+      '有 <strong>4</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
       '本月活跃客户 <strong>152</strong> 人，KPI 完成 <strong>42%</strong>（目标 360 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
     ]
   },
