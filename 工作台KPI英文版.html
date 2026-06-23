@@ -2811,25 +2811,28 @@
       margin-bottom:4px;
     }
     .lead-corral-section .module-head-row h2{flex:1;min-width:0;margin:0}
+    .lead-corral-section .module-head-actions{
+      display:flex;align-items:center;gap:8px;flex-shrink:0;
+    }
     .lead-corral-add-btn{
       flex-shrink:0;display:inline-flex;align-items:center;gap:4px;
-      padding:6px 12px;border-radius:8px;border:1px solid #c4b5fd;
-      background:linear-gradient(135deg,#f5f3ff,#fff);
-      color:#7c3aed;font-size:12px;font-weight:700;cursor:pointer;
+      padding:6px 12px;border-radius:8px;border:1px solid #bfdbfe;
+      background:linear-gradient(135deg,#eff6ff,#fff);
+      color:#2563eb;font-size:12px;font-weight:700;cursor:pointer;
       font-family:inherit;white-space:nowrap;
       transition:border-color .15s,box-shadow .15s,filter .15s;
     }
     .lead-corral-add-btn:hover{
-      border-color:#a78bfa;box-shadow:0 2px 8px rgba(124,58,237,.18);filter:brightness(1.02);
+      border-color:#93c5fd;box-shadow:0 2px 8px rgba(37,99,235,.18);filter:brightness(1.02);
     }
     .lead-corral-add-btn::before{
       content:"+";font-size:14px;font-weight:800;line-height:1;
     }
     .lead-corral-section .module-head h2::before{
-      background:linear-gradient(180deg,#7c3aed,#4f46e5);
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
     }
     .customer-pool-section .module-head h2::before{
-      background:linear-gradient(180deg,#3b82f6,#2563eb);
+      background:linear-gradient(180deg,#7c3aed,#4f46e5);
     }
     .customer-pool-section .module-head-row{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -3346,16 +3349,16 @@
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .customer-pool-card:hover{
-      border-color:#93c5fd;box-shadow:0 4px 12px rgba(37,99,235,.12);
+      border-color:#a78bfa;box-shadow:0 4px 12px rgba(124,58,237,.12);
     }
     .customer-pool-card.active{
-      border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2);
+      border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.2);
     }
-    .customer-pool-card--hot{border-color:#bfdbfe}
+    .customer-pool-card--hot{border-color:#c4b5fd}
     .customer-pool-card-head{
       display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #dbeafe;
-      background:linear-gradient(135deg,#eff6ff,#fff);
+      padding:8px 10px;border-bottom:1px solid #f3e8ff;
+      background:linear-gradient(135deg,#f5f3ff,#fff);
     }
     .customer-pool-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3369,20 +3372,20 @@
       display:flex;flex-direction:column;align-items:center;gap:2px;
       padding:4px 2px;text-align:center;
     }
-    .customer-pool-stat + .customer-pool-stat{border-left:1px solid #dbeafe}
+    .customer-pool-stat + .customer-pool-stat{border-left:1px solid #f3e8ff}
     .customer-pool-stat-label{font-size:9px;color:#64748b;line-height:1.2}
     .customer-pool-stat-val{
       font-size:13px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
-    .customer-pool-stat--hot .customer-pool-stat-val{color:#2563eb}
+    .customer-pool-stat--hot .customer-pool-stat-val{color:#7c3aed}
     .customer-pool-card-foot{
       padding:5px 10px 7px;font-size:9px;color:#94a3b8;text-align:left;
-      border-top:1px dashed #dbeafe;background:#f8fbff;
+      border-top:1px dashed #f3e8ff;background:#faf5ff;
       font-variant-numeric:tabular-nums;
     }
     .customer-pool-card-time{color:#64748b;font-weight:600}
-    .customer-pool-card-time strong{color:#1d4ed8;font-weight:700}
+    .customer-pool-card-time strong{color:#7c3aed;font-weight:700}
     .corral-detail-panel .module-head h2::before{
       background:linear-gradient(180deg,#3b82f6,#2563eb);
     }
@@ -3402,21 +3405,21 @@
     }
     .chance-ai-remind{
       margin-top:12px;padding:10px 12px;border-radius:10px;
-      border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f0f9ff);
+      border:1px solid #ddd6fe;background:linear-gradient(135deg,#faf5ff,#f5f3ff);
     }
     .chance-ai-remind--corral{
-      border-color:#ddd6fe;background:linear-gradient(135deg,#faf5ff,#f5f3ff);
+      border-color:#bfdbfe;background:linear-gradient(135deg,#eff6ff,#f0f9ff);
     }
     .chance-ai-remind-head{
       display:flex;align-items:center;gap:8px;margin-bottom:6px;
     }
     .chance-ai-remind-badge{
       flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:.04em;
-      padding:2px 6px;border-radius:4px;color:#1d4ed8;
-      background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+      padding:2px 6px;border-radius:4px;color:#5b21b6;
+      background:linear-gradient(135deg,#ede9fe,#ddd6fe);
     }
     .chance-ai-remind--corral .chance-ai-remind-badge{
-      color:#5b21b6;background:linear-gradient(135deg,#ede9fe,#ddd6fe);
+      color:#1d4ed8;background:linear-gradient(135deg,#dbeafe,#bfdbfe);
     }
     .chance-ai-remind-title{
       font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3508,23 +3511,23 @@
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
     }
     .lead-corral-card{
-      position:relative;border:1px solid #e9d5ff;border-radius:8px;
+      position:relative;border:1px solid #e8ecf1;border-radius:8px;
       background:#fff;padding:0;cursor:pointer;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .lead-corral-card:hover{
-      border-color:#a78bfa;box-shadow:0 4px 12px rgba(124,58,237,.14);
+      border-color:#93c5fd;box-shadow:0 4px 12px rgba(37,99,235,.12);
     }
     .lead-corral-card.active{
-      border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.2);
+      border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2);
     }
-    .lead-corral-card--hot{border-color:#c4b5fd}
+    .lead-corral-card--hot{border-color:#bfdbfe}
     .lead-corral-card--warn{border-color:#fde68a;background:#fffef5}
     .lead-corral-card-head{
       display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #f3e8ff;
-      background:linear-gradient(135deg,#f5f3ff,#fff);
+      padding:8px 10px;border-bottom:1px solid #dbeafe;
+      background:linear-gradient(135deg,#eff6ff,#fff);
     }
     .lead-corral-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3538,20 +3541,20 @@
       display:flex;flex-direction:column;align-items:center;gap:2px;
       padding:4px 2px;text-align:center;
     }
-    .lead-corral-stat + .lead-corral-stat{border-left:1px solid #f3e8ff}
+    .lead-corral-stat + .lead-corral-stat{border-left:1px solid #dbeafe}
     .lead-corral-stat-label{font-size:9px;color:#64748b;line-height:1.2}
     .lead-corral-stat-val{
       font-size:13px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
-    .lead-corral-stat--hot .lead-corral-stat-val{color:#7c3aed}
+    .lead-corral-stat--hot .lead-corral-stat-val{color:#2563eb}
     .lead-corral-card-foot{
       padding:5px 10px 7px;font-size:9px;color:#94a3b8;text-align:left;
-      border-top:1px dashed #f3e8ff;background:#faf5ff;
+      border-top:1px dashed #dbeafe;background:#f8fbff;
       font-variant-numeric:tabular-nums;
     }
     .lead-corral-card-foot strong{color:#64748b;font-weight:600}
-    .lead-corral-card-id{color:#7c3aed;font-weight:700}
+    .lead-corral-card-id{color:#1d4ed8;font-weight:700}
     .corral-detail-empty{
       padding:24px 12px;text-align:center;color:#94a3b8;font-size:12px;line-height:1.6;
       border:1px dashed #e2e8f0;border-radius:8px;background:#f8fafc;
@@ -7301,10 +7304,7 @@
           <div class="chance-left-stack">
           <section class="block large customer-pool-section">
             <div class="module-head">
-              <div class="module-head-row">
-                <h2>Quick Customer Lookup</h2>
-                <button type="button" class="lead-clue-my-follow-btn" onclick="openMyFollowDrawer()">My Watchlist</button>
-              </div>
+              <h2>Quick Customer Lookup</h2>
               <p class="kpi-intro sales-only">Special segment conditions · focused pool follow-up and sprint</p>
               <p class="kpi-intro manager-only">Team special segment pools · multi-condition high-potential sprint</p>
             </div>
@@ -7427,7 +7427,10 @@
             <div class="module-head">
               <div class="module-head-row">
                 <h2>Customer Lead Corrals</h2>
-                <button type="button" class="lead-corral-add-btn" onclick="addLeadCorral()">New Corral</button>
+                <div class="module-head-actions">
+                  <button type="button" class="lead-corral-add-btn" onclick="addLeadCorral()">New Corral</button>
+                  <button type="button" class="lead-clue-my-follow-btn" onclick="openMyFollowDrawer()">My Watchlist</button>
+                </div>
               </div>
               <p class="kpi-intro sales-only">Save lead sets by conditions · click to view filter results</p>
               <p class="kpi-intro manager-only">Team lead corrals · multi-condition filters with drill-down to individual sales</p>

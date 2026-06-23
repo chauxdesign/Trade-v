@@ -2810,25 +2810,28 @@
       margin-bottom:4px;
     }
     .lead-corral-section .module-head-row h2{flex:1;min-width:0;margin:0}
+    .lead-corral-section .module-head-actions{
+      display:flex;align-items:center;gap:8px;flex-shrink:0;
+    }
     .lead-corral-add-btn{
       flex-shrink:0;display:inline-flex;align-items:center;gap:4px;
-      padding:6px 12px;border-radius:8px;border:1px solid #c4b5fd;
-      background:linear-gradient(135deg,#f5f3ff,#fff);
-      color:#7c3aed;font-size:12px;font-weight:700;cursor:pointer;
+      padding:6px 12px;border-radius:8px;border:1px solid #bfdbfe;
+      background:linear-gradient(135deg,#eff6ff,#fff);
+      color:#2563eb;font-size:12px;font-weight:700;cursor:pointer;
       font-family:inherit;white-space:nowrap;
       transition:border-color .15s,box-shadow .15s,filter .15s;
     }
     .lead-corral-add-btn:hover{
-      border-color:#a78bfa;box-shadow:0 2px 8px rgba(124,58,237,.18);filter:brightness(1.02);
+      border-color:#93c5fd;box-shadow:0 2px 8px rgba(37,99,235,.18);filter:brightness(1.02);
     }
     .lead-corral-add-btn::before{
       content:"+";font-size:14px;font-weight:800;line-height:1;
     }
     .lead-corral-section .module-head h2::before{
-      background:linear-gradient(180deg,#7c3aed,#4f46e5);
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
     }
     .customer-pool-section .module-head h2::before{
-      background:linear-gradient(180deg,#3b82f6,#2563eb);
+      background:linear-gradient(180deg,#7c3aed,#4f46e5);
     }
     .customer-pool-section .module-head-row{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
@@ -3345,16 +3348,16 @@
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .customer-pool-card:hover{
-      border-color:#93c5fd;box-shadow:0 4px 12px rgba(37,99,235,.12);
+      border-color:#a78bfa;box-shadow:0 4px 12px rgba(124,58,237,.12);
     }
     .customer-pool-card.active{
-      border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2);
+      border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.2);
     }
-    .customer-pool-card--hot{border-color:#bfdbfe}
+    .customer-pool-card--hot{border-color:#c4b5fd}
     .customer-pool-card-head{
       display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #dbeafe;
-      background:linear-gradient(135deg,#eff6ff,#fff);
+      padding:8px 10px;border-bottom:1px solid #f3e8ff;
+      background:linear-gradient(135deg,#f5f3ff,#fff);
     }
     .customer-pool-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3368,20 +3371,20 @@
       display:flex;flex-direction:column;align-items:center;gap:2px;
       padding:4px 2px;text-align:center;
     }
-    .customer-pool-stat + .customer-pool-stat{border-left:1px solid #dbeafe}
+    .customer-pool-stat + .customer-pool-stat{border-left:1px solid #f3e8ff}
     .customer-pool-stat-label{font-size:9px;color:#64748b;line-height:1.2}
     .customer-pool-stat-val{
       font-size:13px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
-    .customer-pool-stat--hot .customer-pool-stat-val{color:#2563eb}
+    .customer-pool-stat--hot .customer-pool-stat-val{color:#7c3aed}
     .customer-pool-card-foot{
       padding:5px 10px 7px;font-size:9px;color:#94a3b8;text-align:left;
-      border-top:1px dashed #dbeafe;background:#f8fbff;
+      border-top:1px dashed #f3e8ff;background:#faf5ff;
       font-variant-numeric:tabular-nums;
     }
     .customer-pool-card-time{color:#64748b;font-weight:600}
-    .customer-pool-card-time strong{color:#1d4ed8;font-weight:700}
+    .customer-pool-card-time strong{color:#7c3aed;font-weight:700}
     .corral-detail-panel .module-head h2::before{
       background:linear-gradient(180deg,#3b82f6,#2563eb);
     }
@@ -3401,21 +3404,21 @@
     }
     .chance-ai-remind{
       margin-top:12px;padding:10px 12px;border-radius:10px;
-      border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#f0f9ff);
+      border:1px solid #ddd6fe;background:linear-gradient(135deg,#faf5ff,#f5f3ff);
     }
     .chance-ai-remind--corral{
-      border-color:#ddd6fe;background:linear-gradient(135deg,#faf5ff,#f5f3ff);
+      border-color:#bfdbfe;background:linear-gradient(135deg,#eff6ff,#f0f9ff);
     }
     .chance-ai-remind-head{
       display:flex;align-items:center;gap:8px;margin-bottom:6px;
     }
     .chance-ai-remind-badge{
       flex-shrink:0;font-size:10px;font-weight:800;letter-spacing:.04em;
-      padding:2px 6px;border-radius:4px;color:#1d4ed8;
-      background:linear-gradient(135deg,#dbeafe,#bfdbfe);
+      padding:2px 6px;border-radius:4px;color:#5b21b6;
+      background:linear-gradient(135deg,#ede9fe,#ddd6fe);
     }
     .chance-ai-remind--corral .chance-ai-remind-badge{
-      color:#5b21b6;background:linear-gradient(135deg,#ede9fe,#ddd6fe);
+      color:#1d4ed8;background:linear-gradient(135deg,#dbeafe,#bfdbfe);
     }
     .chance-ai-remind-title{
       font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3507,23 +3510,23 @@
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
     }
     .lead-corral-card{
-      position:relative;border:1px solid #e9d5ff;border-radius:8px;
+      position:relative;border:1px solid #e8ecf1;border-radius:8px;
       background:#fff;padding:0;cursor:pointer;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .lead-corral-card:hover{
-      border-color:#a78bfa;box-shadow:0 4px 12px rgba(124,58,237,.14);
+      border-color:#93c5fd;box-shadow:0 4px 12px rgba(37,99,235,.12);
     }
     .lead-corral-card.active{
-      border-color:#7c3aed;box-shadow:0 0 0 2px rgba(124,58,237,.2);
+      border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2);
     }
-    .lead-corral-card--hot{border-color:#c4b5fd}
+    .lead-corral-card--hot{border-color:#bfdbfe}
     .lead-corral-card--warn{border-color:#fde68a;background:#fffef5}
     .lead-corral-card-head{
       display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #f3e8ff;
-      background:linear-gradient(135deg,#f5f3ff,#fff);
+      padding:8px 10px;border-bottom:1px solid #dbeafe;
+      background:linear-gradient(135deg,#eff6ff,#fff);
     }
     .lead-corral-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
@@ -3537,20 +3540,20 @@
       display:flex;flex-direction:column;align-items:center;gap:2px;
       padding:4px 2px;text-align:center;
     }
-    .lead-corral-stat + .lead-corral-stat{border-left:1px solid #f3e8ff}
+    .lead-corral-stat + .lead-corral-stat{border-left:1px solid #dbeafe}
     .lead-corral-stat-label{font-size:9px;color:#64748b;line-height:1.2}
     .lead-corral-stat-val{
       font-size:13px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
-    .lead-corral-stat--hot .lead-corral-stat-val{color:#7c3aed}
+    .lead-corral-stat--hot .lead-corral-stat-val{color:#2563eb}
     .lead-corral-card-foot{
       padding:5px 10px 7px;font-size:9px;color:#94a3b8;text-align:left;
-      border-top:1px dashed #f3e8ff;background:#faf5ff;
+      border-top:1px dashed #dbeafe;background:#f8fbff;
       font-variant-numeric:tabular-nums;
     }
     .lead-corral-card-foot strong{color:#64748b;font-weight:600}
-    .lead-corral-card-id{color:#7c3aed;font-weight:700}
+    .lead-corral-card-id{color:#1d4ed8;font-weight:700}
     .corral-detail-empty{
       padding:24px 12px;text-align:center;color:#94a3b8;font-size:12px;line-height:1.6;
       border:1px dashed #e2e8f0;border-radius:8px;background:#f8fafc;
@@ -7298,135 +7301,14 @@
         <div class="chance-split" id="sec-chance">
           <div class="chance-left-col" id="chance-customer-area">
           <div class="chance-left-stack">
-          <section class="block large customer-pool-section">
-            <div class="module-head">
-              <div class="module-head-row">
-                <h2>客户快捷定位</h2>
-                <button type="button" class="lead-clue-my-follow-btn" onclick="openMyFollowDrawer()">我的关注</button>
-              </div>
-              <p class="kpi-intro sales-only">特殊分层条件组合 · 目标客群池集中跟进与冲刺运营</p>
-              <p class="kpi-intro manager-only">团队特殊分层客群池 · 多条件组合锁定高潜冲刺客户</p>
-            </div>
-            <div class="module-body">
-              <div class="sales-only">
-                <div class="customer-pool-cards" role="list">
-                  <button type="button" class="customer-pool-card customer-pool-card--hot active" role="listitem" data-pool-id="v4-sprint" data-conds="VIP等级 = V3|充值次数 ≥ 5|首次充值时间 ≤ 180天|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openCustomerPool('v4-sprint', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">18</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">6</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">22</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">9</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="vip-maintain" data-conds="VIP等级 ≥ V4|最后联系时间 ≤ 7天|是否绑定手机：已绑定|充值次数 ≥ 3" onclick="openCustomerPool('vip-maintain', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">大V维护</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">12</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">维护达标</span><span class="customer-pool-stat-val">5</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">15</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">已唤醒</span><span class="customer-pool-stat-val">4</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 08:45</strong></span></div>
-                  </button>
-                </div>
-                <div class="chance-ai-remind" id="customer-pool-ai-remind" role="note">
-                  <div class="chance-ai-remind-head">
-                    <span class="chance-ai-remind-badge">AI</span>
-                    <strong class="chance-ai-remind-title">V4 冲刺 · AI 行动建议</strong>
-                  </div>
-                  <ol class="chance-ai-remind-list">
-                    <li>冲刺名单：18 人中 6 人「差 1 次充值」达标，今日全部联系</li>
-                    <li>动作组合：推送 V4 升级权益 + 限时入金奖励 + 开仓辅导</li>
-                    <li>达标客户：已达标 6 人发送祝贺并引导下一档权益</li>
-                  </ol>
-                </div>
-              </div>
-              <div class="manager-only">
-                <div class="customer-pool-cards" role="list">
-                  <button type="button" class="customer-pool-card customer-pool-card--hot active" role="listitem" data-pool-id="v4-sprint" data-conds="VIP等级 = V3|充值次数 ≥ 5|首次充值时间 ≤ 180天|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openCustomerPool('v4-sprint', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">144</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">48</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">176</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">72</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="vip-maintain" data-conds="VIP等级 ≥ V4|最后联系时间 ≤ 7天|是否绑定手机：已绑定|充值次数 ≥ 3" onclick="openCustomerPool('vip-maintain', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">大V维护</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">96</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">维护达标</span><span class="customer-pool-stat-val">40</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
-                  </button>
-                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
-                    <div class="customer-pool-card-body">
-                      <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">120</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">已唤醒</span><span class="customer-pool-stat-val">32</span></div>
-                      </div>
-                    </div>
-                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 08:45</strong></span></div>
-                  </button>
-                </div>
-                <div class="chance-ai-remind" id="customer-pool-ai-remind-mgr" role="note">
-                  <div class="chance-ai-remind-head">
-                    <span class="chance-ai-remind-badge">AI</span>
-                    <strong class="chance-ai-remind-title">团队 V4 冲刺 · AI 行动建议</strong>
-                  </div>
-                  <ol class="chance-ai-remind-list">
-                    <li>任务拆分：144 人中 48 人接近达标，按 8 人/销售今日冲刺</li>
-                    <li>资源支持：开放 V4 冲刺专项权益审批绿色通道</li>
-                    <li>进度看板：每日更新「已达标 / 进行中 / 停滞」人数</li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </section>
-
-
           <section class="block large lead-corral-section">
             <div class="module-head">
               <div class="module-head-row">
                 <h2>客户线索围场</h2>
-                <button type="button" class="lead-corral-add-btn" onclick="addLeadCorral()">新增围场</button>
+                <div class="module-head-actions">
+                  <button type="button" class="lead-corral-add-btn" onclick="addLeadCorral()">新增围场</button>
+                  <button type="button" class="lead-clue-my-follow-btn" onclick="openMyFollowDrawer()">我的关注</button>
+                </div>
               </div>
               <p class="kpi-intro sales-only">按多条件组合保存线索合集 · 点击进入客户筛选结果</p>
               <p class="kpi-intro manager-only">团队客户线索围场 · 多条件组合筛选，支持下钻至销售个人结果</p>
@@ -7619,6 +7501,127 @@
                     <li>今日协同：688 匹配客户中建议 SHIELD 组承接 40% 新增触达任务</li>
                     <li>重点监控：今日新增 64 人里 V4 潜客 8 人，需 48 小时内主管旁听首通</li>
                     <li>分配规则：按净值分层，&gt; $100K 客户指定资深销售维护</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section class="block large customer-pool-section">
+            <div class="module-head">
+              <h2>客户快捷定位</h2>
+              <p class="kpi-intro sales-only">特殊分层条件组合 · 目标客群池集中跟进与冲刺运营</p>
+              <p class="kpi-intro manager-only">团队特殊分层客群池 · 多条件组合锁定高潜冲刺客户</p>
+            </div>
+            <div class="module-body">
+              <div class="sales-only">
+                <div class="customer-pool-cards" role="list">
+                  <button type="button" class="customer-pool-card customer-pool-card--hot active" role="listitem" data-pool-id="v4-sprint" data-conds="VIP等级 = V3|充值次数 ≥ 5|首次充值时间 ≤ 180天|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openCustomerPool('v4-sprint', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">18</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">6</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">22</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">9</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="vip-maintain" data-conds="VIP等级 ≥ V4|最后联系时间 ≤ 7天|是否绑定手机：已绑定|充值次数 ≥ 3" onclick="openCustomerPool('vip-maintain', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">大V维护</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">12</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">维护达标</span><span class="customer-pool-stat-val">5</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">15</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">已唤醒</span><span class="customer-pool-stat-val">4</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 08:45</strong></span></div>
+                  </button>
+                </div>
+                <div class="chance-ai-remind" id="customer-pool-ai-remind" role="note">
+                  <div class="chance-ai-remind-head">
+                    <span class="chance-ai-remind-badge">AI</span>
+                    <strong class="chance-ai-remind-title">V4 冲刺 · AI 行动建议</strong>
+                  </div>
+                  <ol class="chance-ai-remind-list">
+                    <li>冲刺名单：18 人中 6 人「差 1 次充值」达标，今日全部联系</li>
+                    <li>动作组合：推送 V4 升级权益 + 限时入金奖励 + 开仓辅导</li>
+                    <li>达标客户：已达标 6 人发送祝贺并引导下一档权益</li>
+                  </ol>
+                </div>
+              </div>
+              <div class="manager-only">
+                <div class="customer-pool-cards" role="list">
+                  <button type="button" class="customer-pool-card customer-pool-card--hot active" role="listitem" data-pool-id="v4-sprint" data-conds="VIP等级 = V3|充值次数 ≥ 5|首次充值时间 ≤ 180天|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openCustomerPool('v4-sprint', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">144</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">48</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">176</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">72</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="vip-maintain" data-conds="VIP等级 ≥ V4|最后联系时间 ≤ 7天|是否绑定手机：已绑定|充值次数 ≥ 3" onclick="openCustomerPool('vip-maintain', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">大V维护</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">96</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">维护达标</span><span class="customer-pool-stat-val">40</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
+                  </button>
+                  <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
+                    <div class="customer-pool-card-body">
+                      <div class="customer-pool-card-stats">
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">120</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">已唤醒</span><span class="customer-pool-stat-val">32</span></div>
+                      </div>
+                    </div>
+                    <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 08:45</strong></span></div>
+                  </button>
+                </div>
+                <div class="chance-ai-remind" id="customer-pool-ai-remind-mgr" role="note">
+                  <div class="chance-ai-remind-head">
+                    <span class="chance-ai-remind-badge">AI</span>
+                    <strong class="chance-ai-remind-title">团队 V4 冲刺 · AI 行动建议</strong>
+                  </div>
+                  <ol class="chance-ai-remind-list">
+                    <li>任务拆分：144 人中 48 人接近达标，按 8 人/销售今日冲刺</li>
+                    <li>资源支持：开放 V4 冲刺专项权益审批绿色通道</li>
+                    <li>进度看板：每日更新「已达标 / 进行中 / 停滞」人数</li>
                   </ol>
                 </div>
               </div>
