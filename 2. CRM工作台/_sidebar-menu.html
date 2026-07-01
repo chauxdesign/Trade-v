@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>销售工作台 2.0 统一菜单</title>
+  <style>
+    :root{
+      --sidebar:#f0f2f5;--sidebar-border:#e5e7eb;
+      --menu-text:#333333;--menu-muted:#6b7280;--menu-icon:#4b5563;
+      --menu-hover:#f5f7fa;--menu-active-bg:#eff6ff;--menu-active-text:#2563eb;
+      --submenu-bg:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;overflow:hidden;background:var(--sidebar)}
+    .sidebar{
+      width:200px;height:100vh;overflow-y:auto;
+      background:var(--sidebar);color:var(--menu-text);
+      border-right:1px solid var(--sidebar-border);
+      box-shadow:2px 0 8px rgba(15,23,42,.04);
+    }
+    .logo-box{
+      height:64px;display:flex;align-items:center;gap:10px;
+      padding:0 16px;border-bottom:1px solid #e8eaed;background:#fff;
+    }
+    .shield{
+      width:32px;height:32px;border-radius:8px;flex-shrink:0;
+      background:linear-gradient(135deg,#2563eb 0%,#22c55e 100%);
+      color:#fff;font-size:14px;font-weight:900;
+      display:grid;place-items:center;
+    }
+    .logo-text{font-size:24px;font-weight:900;color:#111827;letter-spacing:.5px}
+    .menu{padding:6px 0 12px;font-size:13px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    .menu-item{
+      height:36px;display:flex;align-items:center;gap:10px;
+      padding:0 14px;color:var(--menu-text);cursor:default;
+      border-left:3px solid transparent;
+    }
+    .menu-item.has-submenu{cursor:pointer;user-select:none}
+    .menu-item:hover{background:var(--menu-hover)}
+    .menu-item.active{
+      background:linear-gradient(90deg,var(--menu-active-bg),#f8fbff);
+      border-left-color:#3b82f6;color:var(--menu-active-text);font-weight:700;
+    }
+    .menu-icon{width:16px;text-align:center;color:var(--menu-icon);font-size:12px}
+    .menu-item.active .menu-icon{color:var(--menu-active-text)}
+    .menu-item .arrow{margin-left:auto;color:#9ca3af;font-size:14px}
+    .submenu-wrap{display:none;background:var(--submenu-bg);border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
+    .menu-item.active + .submenu-wrap,
+    .menu-item.is-expanded + .submenu-wrap{display:block}
+    .submenu{padding:6px 0 8px 44px;font-size:12px;color:#374151;line-height:28px}
+    .submenu-item{
+      display:block;padding:0 8px;margin:0 -8px;border-radius:4px;cursor:default;
+    }
+    a.submenu-item{color:inherit;text-decoration:none;cursor:pointer}
+    .submenu-item:hover{color:#1d4ed8}
+    .submenu-item.active{color:#2563eb;font-weight:700;background:#eff6ff}
+    .menu-divider{height:1px;background:#58a9f7;margin:8px 12px;opacity:.85}
+  </style>
+</head>
+<body>
+<!--
+  销售工作台 2.0 统一侧边栏菜单（纯静态，无需本地服务）
+  仅维护本文件即可；各页面通过 iframe 引入。
+  所有链接以导航根目录（1. 本地最新修订/）为基准的绝对路径书写，例如：
+  2. CRM工作台/1. KPI管理/1. 员工目标绩效.html
+  <iframe class="wb-sidebar-frame" src="2. CRM工作台/_sidebar-menu.html#lang=zh&active=workbench-home" title="侧边菜单"></iframe>
+-->
+<div id="wb-sidebar-root"></div>
+
+<template id="wb-sidebar-zh">
+  <aside class="sidebar">
+    <div class="logo-box">
+      <div class="shield">✓</div>
+      <div class="logo-text">CRM</div>
+    </div>
+    <nav class="menu">
+      <div class="menu-item is-expanded" data-wb-menu-group="workbench"><span class="menu-icon">⌂</span>工作台 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" data-wb-menu="workbench-home" target="_parent" href="2. CRM工作台/工作台KPI中文版.html">销售工作台</a>
+          <span class="submenu-item">系统仪表盘</span>
+        </div>
+      </div>
+      <div class="menu-item is-expanded" data-wb-menu-group="perf"><span class="menu-icon">◎</span>目标绩效管理 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 员工目标绩效.html">员工目标绩效</a>
+          <a class="submenu-item" data-wb-menu="perf-commission-rules" target="_parent" href="2. CRM工作台/1. KPI管理/2. KPI提成规则.html">KPI提成规则</a>
+        </div>
+      </div>
+      <div class="menu-item is-expanded"><span class="menu-icon">●</span>用户管理 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <span class="submenu-item">用户列表</span>
+          <span class="submenu-item">我的客户</span>
+          <span class="submenu-item">客户分配</span>
+          <span class="submenu-item">实名认证</span>
+          <span class="submenu-item">客户申请</span>
+        </div>
+      </div>
+      <div class="menu-item"><span class="menu-icon">▣</span>订单管理 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">▦</span>运营管理 <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">▤</span>数据报表 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◫</span>商城管理 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◇</span>内容信息 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◌</span>通知中心 <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">ⓘ</span>风控管理 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">✓</span>质检管理 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">↗</span>配置管理 <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">✚</span>支付中台 <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">⚙</span>系统管理 <span class="arrow">›</span></div>
+    </nav>
+  </aside>
+</template>
+
+<template id="wb-sidebar-en">
+  <aside class="sidebar">
+    <div class="logo-box">
+      <div class="shield">✓</div>
+      <div class="logo-text">CRM</div>
+    </div>
+    <nav class="menu">
+      <div class="menu-item is-expanded" data-wb-menu-group="workbench"><span class="menu-icon">⌂</span>Workbench <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" data-wb-menu="workbench-home" target="_parent" href="2. CRM工作台/工作台KPI英文版.html">Sales Workbench</a>
+          <span class="submenu-item">System Dashboard</span>
+        </div>
+      </div>
+      <div class="menu-item is-expanded" data-wb-menu-group="perf"><span class="menu-icon">◎</span>Target Performance Management <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 员工目标绩效.html">Employee Target Performance</a>
+          <a class="submenu-item" data-wb-menu="perf-commission-rules" target="_parent" href="2. CRM工作台/1. KPI管理/2. KPI提成规则.html">KPI Commission Rules</a>
+        </div>
+      </div>
+      <div class="menu-item is-expanded"><span class="menu-icon">●</span>User Management <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <span class="submenu-item">User List</span>
+          <span class="submenu-item">My Customers</span>
+          <span class="submenu-item">Customer Assignment</span>
+          <span class="submenu-item">Identity Verification</span>
+          <span class="submenu-item">Customer Applications</span>
+        </div>
+      </div>
+      <div class="menu-item"><span class="menu-icon">▣</span>Order Management <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">▦</span>Operations Management <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">▤</span>Data Reports <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◫</span>Mall Management <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◇</span>Content <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">◌</span>Notification Center <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">ⓘ</span>Risk Control <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">✓</span>QA Management <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">↗</span>Configuration <span class="arrow">›</span></div>
+      <div class="menu-item"><span class="menu-icon">✚</span>Payment Hub <span class="arrow">›</span></div>
+      <div class="menu-divider"></div>
+      <div class="menu-item"><span class="menu-icon">⚙</span>System Management <span class="arrow">›</span></div>
+    </nav>
+  </aside>
+</template>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search || window.location.hash.replace(/^#/, ''));
+  var active = params.get('active') || '';
+  var lang = params.get('lang') || 'zh';
+  var templateId = lang === 'en' ? 'wb-sidebar-en' : 'wb-sidebar-zh';
+  var template = document.getElementById(templateId);
+  var root = document.getElementById('wb-sidebar-root');
+  if (!template || !root) return;
+
+  var sidebar = template.content.firstElementChild.cloneNode(true);
+
+  if (active) {
+    var menuItem = sidebar.querySelector('[data-wb-menu="' + active + '"]');
+    if (menuItem) {
+      menuItem.classList.add('active');
+      var group = menuItem.closest('.submenu-wrap');
+      if (group && group.previousElementSibling) {
+        group.previousElementSibling.classList.add('active', 'is-expanded');
+      }
+    } else {
+      var groupItem = sidebar.querySelector('[data-wb-menu-group="' + active + '"]');
+      if (groupItem) groupItem.classList.add('active', 'is-expanded');
+    }
+  }
+
+  root.appendChild(sidebar);
+
+  sidebar.querySelectorAll('.menu-item').forEach(function (item) {
+    var submenu = item.nextElementSibling;
+    if (!submenu || !submenu.classList.contains('submenu-wrap')) return;
+    item.classList.add('has-submenu');
+    item.addEventListener('click', function () {
+      item.classList.toggle('is-expanded');
+    });
+  });
+})();
+</script>
+</body>
+</html>
