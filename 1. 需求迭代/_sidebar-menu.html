@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>CRM需求原型 统一菜单</title>
+  <style>
+    :root{
+      --sidebar:#f0f2f5;--sidebar-border:#e5e7eb;
+      --menu-text:#333333;--menu-muted:#6b7280;--menu-icon:#4b5563;
+      --menu-hover:#f5f7fa;--menu-active-bg:#eff6ff;--menu-active-text:#2563eb;
+      --submenu-bg:#ffffff;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;overflow:hidden;background:var(--sidebar)}
+    .sidebar{
+      width:250px;height:100vh;overflow-y:auto;
+      background:var(--sidebar);color:var(--menu-text);
+      border-right:1px solid var(--sidebar-border);
+      box-shadow:2px 0 8px rgba(15,23,42,.04);
+    }
+    .logo-box{
+      height:64px;display:flex;align-items:center;gap:10px;
+      padding:0 16px;border-bottom:1px solid #e8eaed;background:#fff;
+    }
+    .shield{
+      width:32px;height:32px;border-radius:8px;flex-shrink:0;
+      background:linear-gradient(135deg,#2563eb 0%,#22c55e 100%);
+      color:#fff;font-size:14px;font-weight:900;
+      display:grid;place-items:center;
+    }
+    .logo-text{font-size:18px;font-weight:900;color:#111827;letter-spacing:.5px;line-height:1.3}
+    .menu{padding:6px 0 12px;font-size:13px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    .menu-item{
+      height:36px;display:flex;align-items:center;gap:10px;
+      padding:0 14px;color:var(--menu-text);cursor:default;
+      border-left:3px solid transparent;white-space:nowrap;
+    }
+    .menu-item.has-submenu{cursor:pointer;user-select:none}
+    .menu-item:hover{background:var(--menu-hover)}
+    .menu-item.active{
+      background:linear-gradient(90deg,var(--menu-active-bg),#f8fbff);
+      border-left-color:#3b82f6;color:var(--menu-active-text);font-weight:700;
+    }
+    .menu-icon{width:16px;text-align:center;color:var(--menu-icon);font-size:12px}
+    .menu-item.active .menu-icon{color:var(--menu-active-text)}
+    .menu-item .arrow{margin-left:auto;color:#9ca3af;font-size:14px}
+    .submenu-wrap{display:none;background:var(--submenu-bg);border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
+    .menu-item.active + .submenu-wrap,
+    .menu-item.is-expanded + .submenu-wrap{display:block}
+    .submenu{padding:6px 0 8px 44px;font-size:12px;color:#374151;line-height:28px}
+    .submenu-item{
+      display:block;padding:0 8px;margin:0 -8px;border-radius:4px;cursor:default;white-space:nowrap;
+    }
+    a.submenu-item{color:inherit;text-decoration:none;cursor:pointer}
+    .submenu-item:hover{color:#1d4ed8}
+    .submenu-item.active{color:#2563eb;font-weight:700;background:#eff6ff}
+    .submenu-empty{padding:4px 8px;color:#9ca3af;font-style:italic}
+  </style>
+</head>
+<body>
+<!--
+  CRM需求原型 统一侧边栏菜单（纯静态，无需本地服务）
+  仅维护本文件即可；各页面通过 iframe 引入。
+  所有链接以导航根目录（1. 本地最新修订/）为基准的绝对路径书写，例如：
+  1. 需求迭代/CRM需求原型迭代.html
+  <iframe class="wb-sidebar-frame" src="1. 需求迭代/_sidebar-menu.html#active=q2-sales-region" title="侧边菜单"></iframe>
+  <iframe class="wb-topbar-frame" src="1. 需求迭代/_topbar.html#active=q2-sales-region" title="顶部导航"></iframe>
+-->
+<div id="req-sidebar-root"></div>
+
+<template id="req-sidebar-zh">
+  <aside class="sidebar">
+    <div class="logo-box">
+      <div class="shield">✓</div>
+      <div class="logo-text">CRM需求原型</div>
+    </div>
+    <nav class="menu">
+      <div class="menu-item is-expanded" data-req-menu-group="q2"><span class="menu-icon">◈</span>26年Q2季度需求 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <a class="submenu-item" data-req-menu="q2-sales-region" target="_parent" href="1. 需求迭代/CRM需求原型迭代.html#active=q2-sales-region">1. 销售多国家地区改造</a>
+          <a class="submenu-item" data-req-menu="q2-private-chat" target="_parent" href="1. 需求迭代/CRM需求原型迭代.html#active=q2-private-chat">2. 私聊群发新增手数</a>
+          <a class="submenu-item" data-req-menu="q2-first-deposit" target="_parent" href="1. 需求迭代/过去4周首充客户快速定位.html">3. 过去4周首充客户快速定位</a>
+        </div>
+      </div>
+
+      <div class="menu-item" data-req-menu-group="q3"><span class="menu-icon">◈</span>26年Q3季度需求 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <span class="submenu-empty">暂无需求项，待规划</span>
+        </div>
+      </div>
+
+      <div class="menu-item" data-req-menu-group="q4"><span class="menu-icon">◈</span>26年Q4季度需求 <span class="arrow">›</span></div>
+      <div class="submenu-wrap">
+        <div class="submenu">
+          <span class="submenu-empty">暂无需求项，待规划</span>
+        </div>
+      </div>
+    </nav>
+  </aside>
+</template>
+
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search || window.location.hash.replace(/^#/, ''));
+  var active = params.get('active') || '';
+  var template = document.getElementById('req-sidebar-zh');
+  var root = document.getElementById('req-sidebar-root');
+  if (!template || !root) return;
+
+  var sidebar = template.content.firstElementChild.cloneNode(true);
+
+  if (active) {
+    var menuItem = sidebar.querySelector('[data-req-menu="' + active + '"]');
+    if (menuItem) {
+      menuItem.classList.add('active');
+      var group = menuItem.closest('.submenu-wrap');
+      if (group && group.previousElementSibling) {
+        group.previousElementSibling.classList.add('active', 'is-expanded');
+      }
+    } else {
+      var groupItem = sidebar.querySelector('[data-req-menu-group="' + active + '"]');
+      if (groupItem) groupItem.classList.add('active', 'is-expanded');
+    }
+  }
+
+  root.appendChild(sidebar);
+
+  sidebar.querySelectorAll('.menu-item').forEach(function (item) {
+    var submenu = item.nextElementSibling;
+    if (!submenu || !submenu.classList.contains('submenu-wrap')) return;
+    item.classList.add('has-submenu');
+    item.addEventListener('click', function () {
+      item.classList.toggle('is-expanded');
+    });
+  });
+})();
+</script>
+</body>
+</html>

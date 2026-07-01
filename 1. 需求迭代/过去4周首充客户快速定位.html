@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>过去4周首充客户快速定位（客服）</title>
+  <style>
+    :root {
+      --bg: #eceff3;
+      --wire: #d1d5db;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e8ecf1;
+      --panel: #fff;
+      --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --card-radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .wb-sidebar-frame {
+      width: 250px;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    .wb-topbar-frame {
+      width: 100%;
+      height: 80px;
+      border: none;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .scroll-wrap {
+      flex: 1;
+      overflow: auto;
+      padding: 12px 14px 24px;
+      background: var(--bg);
+    }
+
+    .page-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 1680px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #f8fafc;
+      color: #64748b;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover td { background: #f8fbff; }
+
+    .col-sid {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+    }
+
+    .sid-link {
+      color: #2563eb;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .sid-link:hover { text-decoration: underline; }
+
+    td.col-record {
+      white-space: normal;
+      min-width: 180px;
+      max-width: 240px;
+      line-height: 1.5;
+      color: #475569;
+    }
+
+    th.col-action,
+    td.col-action {
+      position: sticky;
+      right: 0;
+      z-index: 2;
+      white-space: nowrap;
+      width: 1%;
+      min-width: max-content;
+      padding-left: 14px;
+      padding-right: 12px;
+      border-left: 2px solid #bfdbfe;
+      background: linear-gradient(90deg, #eef2ff 0, #eef2ff 10px, #fff 32px);
+      box-shadow: -10px 0 18px rgba(37, 99, 235, 0.1);
+    }
+
+    th.col-action::before,
+    td.col-action::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #94a3b8;
+      pointer-events: none;
+    }
+
+    th.col-action {
+      z-index: 4;
+      border-left-color: #93c5fd;
+      background: linear-gradient(90deg, #dbeafe 0, #dbeafe 10px, #f8fafc 32px);
+      box-shadow: -10px 0 18px rgba(37, 99, 235, 0.12);
+    }
+
+    tr:hover td.col-action {
+      background: linear-gradient(90deg, #dbeafe 0, #dbeafe 10px, #f8fbff 32px);
+    }
+
+    .action-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-link {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .action-link:hover { text-decoration: underline; }
+
+    .table-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fafbfc;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .wb-sidebar-frame {
+        width: 100%;
+        height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="1. 需求迭代/_sidebar-menu.html#active=q2-first-deposit" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <iframe class="wb-topbar-frame" src="1. 需求迭代/_topbar.html#active=q2-first-deposit" title="顶部导航"></iframe>
+
+    <div class="scroll-wrap">
+      <section class="page-card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>SID</th>
+                <th>手机号</th>
+                <th>累计入金金额</th>
+                <th>首充时间</th>
+                <th>最后活跃时间</th>
+                <th>最后交易时间</th>
+                <th>最后充值时间</th>
+                <th>总盈亏</th>
+                <th>充值次数</th>
+                <th>是否真的联系上</th>
+                <th>最后跟进时间</th>
+                <th>最后跟进记录</th>
+                <th class="col-action">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323775', event)">20008323775</a></td>
+                <td>13812345621</td>
+                <td>$500</td>
+                <td>06-28-2026 14:32</td>
+                <td>06-30-2026 11:05</td>
+                <td>—</td>
+                <td>06-28-2026 14:32</td>
+                <td>$0</td>
+                <td>1</td>
+                <td>--</td>
+                <td>—</td>
+                <td class="col-record">—</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323775', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008323775', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323775', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323812', event)">20008323812</a></td>
+                <td>18690234567</td>
+                <td>$2,800</td>
+                <td>06-27-2026 09:15</td>
+                <td>07-01-2026 08:20</td>
+                <td>06-30-2026 16:42</td>
+                <td>06-29-2026 10:08</td>
+                <td>$420</td>
+                <td>3</td>
+                <td>已接通</td>
+                <td>06-28-2026 15:30</td>
+                <td class="col-record">电话回访，客户已了解开仓流程，计划本周尝试小额交易</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323812', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008323812', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323812', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323906', event)">20008323906</a></td>
+                <td>15921876543</td>
+                <td>$300</td>
+                <td>06-26-2026 18:44</td>
+                <td>06-27-2026 09:33</td>
+                <td>—</td>
+                <td>06-26-2026 18:44</td>
+                <td>$0</td>
+                <td>1</td>
+                <td>已接通</td>
+                <td>06-27-2026 10:15</td>
+                <td class="col-record">在线客服触达，发送首充引导话术及开仓教程链接</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323906', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008323906', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323906', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324018', event)">20008324018</a></td>
+                <td>17766408892</td>
+                <td>$3,600</td>
+                <td>06-25-2026 11:20</td>
+                <td>06-30-2026 19:42</td>
+                <td>06-29-2026 14:18</td>
+                <td>06-28-2026 14:00</td>
+                <td>$185</td>
+                <td>4</td>
+                <td>已接通</td>
+                <td>06-29-2026 09:00</td>
+                <td class="col-record">已完成首单，客户反馈平台体验良好，暂无其他问题</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324018', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008324018', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324018', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324155', event)">20008324155</a></td>
+                <td>13588925678</td>
+                <td>$4,500</td>
+                <td>06-22-2026 16:08</td>
+                <td>06-26-2026 22:10</td>
+                <td>06-25-2026 20:35</td>
+                <td>06-24-2026 11:30</td>
+                <td>$96</td>
+                <td>2</td>
+                <td>已接通</td>
+                <td>06-25-2026 16:45</td>
+                <td class="col-record">核实出金原因，客户表示短期资金周转，已登记挽留方案待跟进</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324155', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008324155', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324155', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324203', event)">20008324203</a></td>
+                <td>18833150987</td>
+                <td>$600</td>
+                <td>06-18-2026 08:55</td>
+                <td>06-19-2026 07:18</td>
+                <td>—</td>
+                <td>06-18-2026 08:55</td>
+                <td>$0</td>
+                <td>1</td>
+                <td>--</td>
+                <td>—</td>
+                <td class="col-record">—</td>
+                <td class="col-action">
+                  <span class="action-links">
+                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324203', event)">私聊</a>
+                    <a href="#" class="action-link" onclick="handleAction('log', '20008324203', event)">录入</a>
+                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324203', event)">提交AI总结</a>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <span>共 6 条</span>
+          <span>更新时间：07-01-2026 10:30</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+<script>
+  function openCustomerDetail(sid, e) {
+    if (e) e.preventDefault();
+    alert('进入个人详情页\nSID：' + sid + '\n（原型占位，可对接客户详情页）');
+  }
+
+  function handleAction(action, sid, e) {
+    if (e) e.preventDefault();
+    if (action === 'chat') {
+      alert('打开私聊\nSID：' + sid + '\n（原型占位，可对接私聊入口）');
+      return;
+    }
+    if (action === 'log') {
+      alert('打开录入\nSID：' + sid + '\n（原型占位，可对接跟进录入）');
+      return;
+    }
+    if (action === 'ai-summary') {
+      alert('提交 AI 总结\nSID：' + sid + '\n（原型占位，可对接 AI 总结提交）');
+    }
+  }
+</script>
+</body>
+</html>
