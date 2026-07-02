@@ -1,0 +1,4683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../../" />
+  <title>印尼KPI提成规则</title>
+  <style>
+    :root{
+      --bg:#eceff3;
+      --wire:#d1d5db;--text:#1f2937;--muted:#6b7280;
+      --line:#e8ecf1;--panel:#fff;
+      --accent:#2563eb;--danger:#dc2626;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+    .app{display:grid;grid-template-columns:200px 1fr;height:100vh;overflow:hidden}
+    .wb-sidebar-frame{width:200px;height:100vh;border:none;display:block}
+
+    .main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+    .topbar{background:#fff;border-bottom:1px solid var(--wire)}
+    .top-line{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:12px;color:var(--muted)}
+    .top-left{display:flex;align-items:center;gap:12px}
+    .hamburger{font-size:18px;color:#374151}
+    .top-actions{display:flex;gap:12px;align-items:center}
+    .lang-select{
+      border:none;background:transparent;
+      font-size:12px;color:var(--muted);cursor:pointer;
+      padding:0 14px 0 0;font-family:inherit;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right center;
+    }
+    .lang-select:hover{color:#374151}
+    .lang-select:focus{outline:none;color:#374151}
+    .tab-row{height:44px;display:flex;align-items:center;gap:12px;padding:0 14px;border-top:1px solid #f0f0f0;background:#fafafa}
+    .tab-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .tab{padding:4px 12px;font-size:12px;border:1px solid var(--wire);background:#fff;border-radius:4px}
+    .tab.active{border-color:#2563eb;background:#eff6ff;color:#1d4ed8;font-weight:700}
+    .tab span{margin-left:6px;color:#64748b}
+
+    .scroll-wrap{
+      flex:1;overflow:auto;padding:12px 14px 24px;background:var(--bg);
+      display:flex;flex-direction:column;gap:12px;
+    }
+
+    .filter-panel{
+      background:var(--panel);border:1px solid var(--line);border-radius:14px;
+      box-shadow:0 4px 20px rgba(15,23,42,.06);overflow:hidden;flex-shrink:0;
+    }
+    .filter-bar{padding:12px 16px}
+    .board-filter-form{
+      display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 18px;
+    }
+    .board-filter-field{
+      display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 10px;align-items:center;
+    }
+    .board-filter-label{
+      font-size:12px;font-weight:700;color:#475569;line-height:34px;white-space:nowrap;
+    }
+    .board-filter-select{
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      font-size:12px;color:#0f172a;font-family:inherit;box-sizing:border-box;
+      height:34px;padding:0 28px 0 12px;cursor:pointer;
+      width:150px;transition:border-color .15s ease,box-shadow .15s ease;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;
+    }
+    .board-filter-select:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .board-filter-select--group{width:170px}
+    .board-filter-select--period{width:160px}
+    .board-filter-reset{
+      height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;
+      background:#fff;color:#475569;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+    }
+    .board-filter-reset:hover{border-color:#cbd5e1;background:#f8fafc}
+    .board-filter-actions{
+      margin-left:auto;display:flex;align-items:center;gap:8px;
+    }
+    .board-filter-query{
+      height:34px;padding:0 16px;border:1px solid var(--accent);border-radius:8px;
+      background:var(--accent);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+    }
+    .board-filter-query:hover{background:#1d4ed8;border-color:#1d4ed8}
+
+    .table-panel{
+      background:var(--panel);border:1px solid var(--line);border-radius:14px;
+      box-shadow:0 4px 20px rgba(15,23,42,.06);overflow:hidden;flex:1;
+      display:flex;flex-direction:column;min-height:0;
+    }
+    .table-panel-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 18px;border-bottom:1px solid #f1f5f9;
+      font-size:14px;font-weight:800;color:#0f172a;
+      background:linear-gradient(180deg,#fafbfc,#fff);
+    }
+    .btn-add-kpi-rule{
+      height:34px;padding:0 14px;border:1px solid var(--accent);border-radius:8px;
+      background:var(--accent);color:#fff;font-size:12px;font-weight:700;
+      cursor:pointer;font-family:inherit;white-space:nowrap;
+    }
+    .btn-add-kpi-rule:hover{background:#1d4ed8;border-color:#1d4ed8}
+    .table-wrap{overflow:auto;flex:1}
+    .rules-table{
+      width:100%;min-width:1100px;border-collapse:collapse;font-size:12px;
+    }
+    .rules-table th,.rules-table td{
+      padding:12px 14px;border-bottom:1px solid #f1f5f9;text-align:left;vertical-align:middle;
+    }
+    .rules-table th{
+      background:#f8fafc;color:#475569;font-weight:700;white-space:nowrap;
+      position:sticky;top:0;z-index:1;
+    }
+    .rules-table tbody tr:hover td{background:#f8fbff}
+    .rules-table tr:last-child td{border-bottom:none}
+    .rules-table td.col-id{color:#64748b;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .rules-table td.col-name{font-weight:700;color:#0f172a;white-space:nowrap}
+    .rules-table td.col-role{white-space:nowrap}
+    .rules-table td.col-period,
+    .rules-table td.col-month{white-space:nowrap}
+    .rules-table td.col-target{
+      white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700;color:#0f172a;
+    }
+    .rules-table td.col-target--incomplete{color:#dc2626}
+    .rules-table td.col-status{white-space:nowrap}
+    .rule-status-tag{
+      display:inline-block;padding:2px 10px;border-radius:999px;
+      font-size:11px;font-weight:700;line-height:1.6;
+    }
+    .rule-status-tag--active{background:#ecfdf5;color:#047857}
+    .rule-status-tag--disabled{background:#f1f5f9;color:#64748b}
+    .rules-table td.col-formula{
+      white-space:normal;min-width:260px;max-width:400px;
+      font-size:11px;color:#334155;line-height:1.5;
+    }
+    .rule-role-tag{
+      display:inline-block;padding:2px 10px;border-radius:999px;
+      font-size:11px;font-weight:700;line-height:1.6;
+    }
+    .rule-role-tag--sales{background:#eff6ff;color:#1d4ed8}
+    .rule-role-tag--leader{background:#fdf4ff;color:#7e22ce}
+    .kpi-rule-detail-dialog{width:min(800px,100%);max-height:min(88vh,760px)}
+    #kpiRuleDetailBody{padding:10px 14px 14px}
+    #kpiRuleDetailBody .kpi-rule-form-section{margin-bottom:8px}
+    #kpiRuleDetailBody .kpi-rule-form-section-head{
+      padding:7px 12px;font-size:12px;
+    }
+    #kpiRuleDetailBody .kpi-rule-form-section-body{padding:8px 12px 2px}
+    #kpiRuleDetailBody .kpi-rule-field{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+      gap:4px 10px;margin-bottom:6px;
+    }
+    #kpiRuleDetailBody .kpi-rule-label{line-height:1.4}
+    #kpiRuleDetailBody .kpi-rule-field--top .kpi-rule-label{
+      padding-top:2px;line-height:1.4;
+    }
+    #kpiRuleDetailBody .kpi-rule-detail-text{
+      min-height:24px;display:flex;align-items:center;
+      font-size:12px;color:#0f172a;line-height:1.45;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--top .kpi-rule-detail-text{
+      align-items:flex-start;padding-top:2px;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--middle{
+      align-items:center;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--middle .kpi-rule-label{
+      padding-top:0;align-self:center;line-height:1.4;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--middle .kpi-rule-control{
+      display:flex;align-items:center;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--middle .kpi-rule-detail-text{
+      align-items:center;padding-top:0;min-height:0;
+    }
+    #kpiRuleDetailBody .kpi-rule-field--perf{
+      gap:6px;margin-bottom:8px;
+    }
+    #kpiRuleDetailBody .kpi-rule-formula-expr,
+    #kpiRuleDetailBody .kpi-rule-formula-preview{
+      min-height:28px;padding:6px 10px;line-height:1.45;
+    }
+    #kpiRuleDetailBody .kpi-rule-formula-example{
+      max-width:100%;width:100%;padding:8px 10px;line-height:1.55;
+    }
+    .rules-table td.col-action{white-space:nowrap}
+    .action-group{display:inline-flex;align-items:center;gap:2px;flex-wrap:wrap}
+    .action-link{
+      border:none;background:none;padding:0 4px;
+      font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;font-family:inherit;
+    }
+    .action-link:hover{color:#1d4ed8;text-decoration:underline}
+    .action-link--muted{color:#94a3b8}
+    .action-link--muted:hover{color:#64748b;text-decoration:underline}
+    .action-link--danger{color:var(--danger)}
+    .action-link--danger:hover{color:#b91c1c;text-decoration:underline}
+    .dim-tag{
+      display:inline-block;margin:2px 4px 2px 0;padding:2px 8px;border-radius:999px;
+      font-size:11px;font-weight:700;background:#eff6ff;color:#1d4ed8;
+    }
+    .action-sep{color:#cbd5e1;font-size:12px;user-select:none}
+    .table-empty{
+      padding:48px 20px;text-align:center;font-size:13px;color:#94a3b8;
+    }
+    .table-foot{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 18px;border-top:1px solid #f1f5f9;background:#fafafa;
+      font-size:12px;color:#64748b;flex-wrap:wrap;
+    }
+    .table-pager-info{white-space:nowrap}
+    .table-pager-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .pager-btn,.pager-page{
+      border:1px solid var(--wire);background:#fff;padding:5px 10px;
+      font-size:12px;border-radius:6px;cursor:pointer;color:#374151;
+      font-family:inherit;line-height:1.2;
+    }
+    .pager-btn:hover,.pager-page:hover{border-color:#93c5fd;background:#f8fafc}
+    .pager-btn:disabled,.pager-page:disabled{
+      opacity:.45;cursor:not-allowed;background:#f8fafc;
+    }
+    .pager-page.active{
+      background:#2563eb;border-color:#2563eb;color:#fff;font-weight:700;
+    }
+    .pager-ellipsis{padding:0 4px;color:#94a3b8}
+
+    .alert-task-follow-modal{
+      position:fixed;inset:0;z-index:1400;
+      display:flex;align-items:center;justify-content:center;padding:20px;
+    }
+    .alert-task-follow-modal[hidden]{display:none}
+    .alert-task-follow-backdrop{
+      position:absolute;inset:0;background:rgba(15,23,42,.45);
+    }
+    .alert-task-follow-dialog{
+      position:relative;z-index:1;width:min(800px,100%);
+      max-height:min(88vh,760px);background:#fff;border-radius:12px;
+      box-shadow:0 20px 50px rgba(15,23,42,.18);
+      display:flex;flex-direction:column;overflow:hidden;
+    }
+    .alert-task-follow-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:14px 18px;border-bottom:1px solid #eef2f7;
+      background:linear-gradient(180deg,#f8fafc,#fff);
+    }
+    .alert-task-follow-head h3{
+      margin:0;font-size:15px;font-weight:800;color:#0f172a;line-height:1.35;
+      display:flex;align-items:center;gap:8px;
+    }
+    .comm-follow-entry-modal .alert-task-follow-head h3::before{
+      content:"";width:4px;height:16px;border-radius:4px;flex-shrink:0;
+      background:linear-gradient(180deg,#0891b2,#2563eb);
+    }
+    .alert-task-follow-close{
+      flex-shrink:0;width:28px;height:28px;border:none;border-radius:6px;
+      background:#f1f5f9;color:#64748b;font-size:18px;line-height:1;cursor:pointer;
+    }
+    .alert-task-follow-close:hover{background:#e2e8f0;color:#0f172a}
+    .alert-task-follow-body{padding:14px 18px 18px;overflow:auto;flex:1;min-height:0}
+    .kpi-rule-entry-form{
+      display:flex;flex-direction:column;flex:1;min-height:0;padding:0;
+    }
+    .kpi-rule-form-section{
+      border:1px solid #e8ecf1;border-radius:10px;overflow:hidden;margin-bottom:14px;
+    }
+    .kpi-rule-form-section-head{
+      padding:10px 14px;border-bottom:1px solid #f1f5f9;
+      font-size:13px;font-weight:800;color:#0f172a;
+      background:linear-gradient(180deg,#fafbfc,#fff);
+    }
+    .kpi-rule-form-section-body{padding:14px 14px 4px}
+    .kpi-target-employee-section-body{padding:14px}
+    .kpi-target-employee-tabs{
+      display:flex;align-items:center;gap:8px;margin-bottom:12px;
+    }
+    .kpi-target-employee-tab{
+      border:1px solid #e2e8f0;background:#fff;color:#64748b;
+      padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;
+      cursor:pointer;font-family:inherit;line-height:1.4;
+    }
+    .kpi-target-employee-tab:hover{border-color:#93c5fd;color:#2563eb;background:#f8fbff}
+    .kpi-target-employee-tab.is-active{
+      border-color:#2563eb;background:#eff6ff;color:#1d4ed8;
+      box-shadow:inset 0 0 0 1px #bfdbfe;
+    }
+    .kpi-target-employee-tab-count{
+      margin-left:6px;color:#94a3b8;font-variant-numeric:tabular-nums;font-weight:700;
+    }
+    .kpi-target-employee-tab.is-active .kpi-target-employee-tab-count{color:#3b82f6}
+    .kpi-target-employee-table-wrap{
+      border:1px solid #e8ecf1;border-radius:8px;overflow:auto;max-height:320px;background:#fff;
+    }
+    .kpi-target-employee-selected-summary{
+      padding:10px 2px 0;font-size:13px;line-height:1.5;color:#2563eb;font-weight:600;
+    }
+    .kpi-target-employee-table{
+      width:100%;min-width:480px;border-collapse:collapse;table-layout:fixed;
+    }
+    .kpi-target-employee-table th,
+    .kpi-target-employee-table td{
+      padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:left;
+      font-size:12px;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .kpi-target-employee-table th{
+      background:#f8fafc;font-weight:800;color:#0f172a;position:sticky;top:0;z-index:1;
+    }
+    .kpi-target-employee-table .col-check{
+      width:42px;min-width:42px;text-align:left;padding-left:10px;padding-right:8px;
+    }
+    .kpi-target-emp-name-level{display:inline-flex;align-items:center;max-width:100%}
+    .kpi-target-emp-name-level.is-alert .kpi-target-emp-name-text{color:#dc2626;font-weight:700}
+    .kpi-target-emp-alert{
+      display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+      width:14px;height:14px;margin-right:6px;cursor:help;line-height:0;position:relative;
+    }
+    .kpi-target-emp-alert-icon{display:block;width:14px;height:14px;pointer-events:none}
+    .kpi-target-employee-table .col-name-level{overflow:visible}
+    .kpi-target-emp-alert-tooltip{
+      position:fixed;z-index:1600;max-width:300px;padding:8px 10px;
+      background:#1f2937;color:#fff;font-size:12px;font-weight:500;line-height:1.5;border-radius:8px;
+      box-shadow:0 10px 24px rgba(15,23,42,.22);pointer-events:none;white-space:normal;
+    }
+    .kpi-target-employee-table .col-check input{
+      width:15px;height:15px;margin:0;accent-color:var(--accent);cursor:pointer;
+    }
+    .kpi-target-employee-table .col-check input:disabled{
+      cursor:not-allowed;opacity:.45;accent-color:#cbd5e1;
+    }
+    #kpiTargetEmployeeCheckAll:disabled{
+      cursor:not-allowed;opacity:.45;accent-color:#cbd5e1;
+    }
+    .kpi-target-employee-table tbody tr:hover td{background:#f8fbff}
+    .kpi-target-employee-table tbody tr:last-child td{border-bottom:none}
+    .kpi-target-employee-table .col-sid{
+      width:88px;min-width:88px;color:#64748b;font-variant-numeric:tabular-nums;
+    }
+    .kpi-target-employee-table .col-name-level{
+      width:160px;min-width:160px;font-weight:700;color:#0f172a;
+    }
+    .kpi-target-employee-table .col-goals{
+      width:140px;min-width:140px;font-variant-numeric:tabular-nums;
+    }
+    .kpi-target-employee-table .col-group{min-width:120px}
+    .kpi-target-employee-table .col-goal-empty{color:#94a3b8}
+    .kpi-target-detail-dialog{width:min(980px,100%);max-height:min(88vh,820px)}
+    .kpi-target-detail-subtitle{
+      margin:4px 0 0;font-size:12px;font-weight:600;color:#64748b;line-height:1.4;
+    }
+    .kpi-target-detail-filter{
+      margin-bottom:12px;padding:12px;border:1px solid #e8ecf1;border-radius:8px;background:#fafbfc;
+    }
+    .kpi-target-detail-filter .board-filter-form{align-items:flex-end}
+    .kpi-target-detail-filter .board-filter-field{grid-template-columns:auto minmax(0,1fr)}
+    .kpi-target-detail-filter .board-filter-select{width:132px}
+    .kpi-target-detail-filter .board-filter-select--group{width:150px}
+    .kpi-target-detail-filter .board-filter-input{
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      font-size:12px;color:#0f172a;font-family:inherit;box-sizing:border-box;
+      height:34px;padding:0 12px;width:132px;
+      transition:border-color .15s ease,box-shadow .15s ease;
+    }
+    .kpi-target-detail-filter .board-filter-input:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .kpi-target-detail-filter .board-filter-input--wide{width:168px}
+    .kpi-target-detail-filter .board-filter-actions{margin-left:auto}
+    .kpi-target-detail-table-wrap{
+      border:1px solid #e8ecf1;border-radius:8px;overflow:auto;max-height:min(56vh,520px);background:#fff;
+    }
+    .kpi-target-detail-table{
+      width:100%;border-collapse:collapse;table-layout:fixed;
+    }
+    .kpi-target-detail-table th,
+    .kpi-target-detail-table td{
+      padding:10px 12px;border-bottom:1px solid #f1f5f9;text-align:center;
+      font-size:12px;color:#334155;white-space:nowrap;
+    }
+    .kpi-target-detail-table th{
+      background:#f8fafc;font-weight:800;color:#0f172a;position:sticky;top:0;z-index:1;
+    }
+    .kpi-target-detail-table tbody tr:hover td{background:#f8fbff}
+    .kpi-target-detail-table tbody tr:last-child td{border-bottom:none}
+    .kpi-target-detail-table .col-sid{
+      width:110px;color:#64748b;font-variant-numeric:tabular-nums;
+    }
+    .kpi-target-detail-table .col-name{font-weight:700;color:#0f172a;overflow:visible;text-align:left}
+    .kpi-target-detail-table .col-level{width:72px}
+    .kpi-target-detail-table .col-group{min-width:120px}
+    .kpi-target-detail-table .col-month{width:96px}
+    .kpi-target-detail-table .col-active-goal,
+    .kpi-target-detail-table .col-deposit-goal{
+      width:120px;font-variant-numeric:tabular-nums;
+    }
+    .kpi-target-detail-table .col-goal-empty{color:#94a3b8}
+    .kpi-target-detail-foot{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 0 0;border-top:1px solid #f1f5f9;margin-top:12px;
+      font-size:12px;color:#64748b;flex-wrap:wrap;
+    }
+    #kpiRuleBasicSection .kpi-rule-field,
+    #kpiTargetScopeSection .kpi-rule-field,
+    #kpiTargetGoalSection .kpi-rule-field{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+    }
+    #kpiTargetScopeSection .kpi-rule-field--employee-select{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+      align-items:start;
+    }
+    #kpiTargetScopeSection .kpi-rule-field--employee-select .kpi-rule-label{
+      line-height:1.5;padding-top:8px;
+    }
+    .kpi-target-employee-panel{
+      min-width:0;width:100%;
+    }
+    #kpiRuleWeightSection .kpi-rule-field--weight,
+    #kpiTargetWeightSection .kpi-rule-field--weight{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+    }
+    #kpiRuleWeightSection .kpi-rule-weight-sum,
+    #kpiTargetWeightSection .kpi-rule-weight-sum{
+      margin-left:calc(30% + 14px);
+    }
+    #kpiRuleSchemeSection .kpi-rule-field,
+    #kpiTargetSchemeSection .kpi-rule-field{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+    }
+    .kpi-rule-field{
+      display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px 14px;
+      align-items:center;margin-bottom:14px;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--period,
+    #kpiTargetScopeSection .kpi-rule-field--period{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+      grid-template-rows:auto auto;
+      align-items:start;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-label,
+    #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-label{
+      grid-column:1;grid-row:1;
+      align-self:center;
+      padding-top:0;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-period-row,
+    #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-period-row{
+      grid-column:2;grid-row:1;
+      align-self:center;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-month-list,
+    #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-month-list{
+      grid-column:2;grid-row:2;
+      margin-top:8px;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--group,
+    #kpiTargetScopeSection .kpi-rule-field--group{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+      grid-template-rows:auto auto;
+      align-items:start;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-label,
+    #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-label{
+      grid-column:1;grid-row:1;
+      align-self:center;
+      padding-top:0;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-group-row,
+    #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-group-row{
+      grid-column:2;grid-row:1;
+      align-self:center;
+    }
+    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-employee-count,
+    #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-employee-count{
+      grid-column:2;grid-row:2;
+      margin-top:8px;
+    }
+    .kpi-rule-employee-count{
+      font-size:12px;color:#1d4ed8;line-height:1.5;font-weight:700;
+    }
+    .kpi-rule-field--top{align-items:flex-start}
+    .kpi-rule-field--top .kpi-rule-label{line-height:1.5;padding-top:8px}
+    .kpi-rule-label{
+      font-size:12px;font-weight:700;color:#475569;line-height:34px;text-align:right;white-space:nowrap;
+    }
+    .kpi-rule-label .req{color:var(--danger);margin-right:2px}
+    .kpi-rule-control{min-width:0}
+    .kpi-rule-select{
+      width:260px;max-width:100%;height:34px;padding:0 28px 0 12px;
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      font-size:12px;color:#0f172a;font-family:inherit;cursor:pointer;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;
+    }
+    .kpi-rule-select:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .kpi-rule-select:disabled{
+      background-color:#f8fafc;color:#64748b;cursor:not-allowed;
+      background-image:none;padding-right:12px;
+    }
+    .kpi-rule-input{
+      width:260px;max-width:100%;height:34px;padding:0 12px;
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      font-size:12px;color:#0f172a;font-family:inherit;box-sizing:border-box;
+    }
+    .kpi-rule-input:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .kpi-rule-input::placeholder{color:#94a3b8}
+    .kpi-rule-period-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px}
+    .kpi-rule-split-check{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:12px;color:#334155;white-space:nowrap;cursor:pointer;
+    }
+    .kpi-rule-split-check input{width:14px;height:14px;accent-color:var(--accent)}
+    .kpi-rule-month-list{display:flex;flex-wrap:wrap;gap:8px}
+    .kpi-rule-month-list[hidden]{display:none}
+    .kpi-rule-month-tag{
+      display:inline-flex;align-items:center;gap:2px;height:28px;padding:0 4px 0 10px;
+      border-radius:6px;border:1px solid #bfdbfe;background:#eff6ff;
+      font-size:12px;font-weight:700;color:#1d4ed8;
+    }
+    .kpi-rule-month-tag-text{line-height:1}
+    .kpi-rule-month-tag-remove{
+      display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+      width:18px;height:18px;padding:0;border:none;border-radius:4px;
+      background:transparent;color:#64748b;font-size:14px;font-weight:700;line-height:1;
+      cursor:pointer;font-family:inherit;
+    }
+    .kpi-rule-month-tag-remove:hover{background:#dbeafe;color:#1d4ed8}
+    .kpi-rule-month-empty{font-size:12px;color:#94a3b8;line-height:28px}
+    .kpi-rule-dimension-group{
+      display:inline-flex;flex-wrap:wrap;gap:10px 16px;padding:10px 12px;
+      border:1px solid var(--line);border-radius:8px;background:#fafbfc;
+      width:100%;max-width:520px;box-sizing:border-box;
+    }
+    .kpi-rule-dimension-item{
+      display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#334155;cursor:pointer;
+    }
+    .kpi-rule-dimension-item input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+    .kpi-rule-field--weight{
+      grid-template-columns:minmax(148px,auto) minmax(0,1fr);
+    }
+    .kpi-rule-field--weight[hidden]{display:none}
+    .kpi-rule-weight-sum[hidden]{display:none}
+    .kpi-rule-weight-empty{
+      margin-bottom:14px;padding:12px 14px;border-radius:8px;
+      font-size:12px;color:#94a3b8;background:#f8fafc;border:1px dashed #e2e8f0;
+    }
+    .kpi-rule-weight-empty[hidden]{display:none}
+    .kpi-rule-weight-input-wrap{display:inline-flex;align-items:center;gap:4px}
+    .kpi-rule-weight-field-actions{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    }
+    .kpi-rule-weight-remove-link{
+      font-size:12px;font-weight:700;color:#dc2626;text-decoration:none;white-space:nowrap;
+    }
+    .kpi-rule-weight-remove-link:hover{color:#b91c1c;text-decoration:underline}
+    .kpi-rule-weight-input-suffix{font-size:12px;font-weight:700;color:#475569;line-height:34px}
+    .kpi-rule-weight-input{
+      width:120px;height:34px;padding:0 12px;
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      font-size:12px;font-weight:700;color:#0f172a;font-family:inherit;
+      transition:border-color .15s ease,box-shadow .15s ease;
+      -moz-appearance:textfield;appearance:textfield;
+    }
+    .kpi-rule-weight-input::-webkit-outer-spin-button,
+    .kpi-rule-weight-input::-webkit-inner-spin-button{
+      -webkit-appearance:none;margin:0;
+    }
+    .kpi-rule-weight-input:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .kpi-rule-formula-radio-group{
+      display:flex;flex-direction:column;gap:0;
+      border:1px solid var(--line);border-radius:8px;background:#fff;
+      width:260px;max-width:100%;overflow:hidden;box-sizing:border-box;
+    }
+    .kpi-rule-formula-radio-item{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 12px;font-size:12px;color:#334155;cursor:pointer;
+      border-bottom:1px solid #f1f5f9;
+    }
+    .kpi-rule-formula-radio-item:last-child{border-bottom:none}
+    .kpi-rule-formula-radio-item input{
+      width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0;margin:0;
+    }
+    .kpi-rule-formula-expr,
+    .kpi-rule-formula-preview{
+      display:inline-flex;align-items:center;min-height:34px;padding:8px 12px;box-sizing:border-box;
+      border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;
+      font-size:12px;color:#334155;line-height:1.6;max-width:520px;width:100%;
+    }
+    .kpi-rule-formula-expr.is-empty{color:#94a3b8;font-weight:400}
+    .kpi-rule-formula-expr-percent{color:#dc2626;font-weight:700}
+    .kpi-rule-formula-preview{
+      background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a;font-weight:700;
+      display:block;
+    }
+    .kpi-rule-formula-preview-op{display:inline;padding:0 0.15em;white-space:pre}
+    .kpi-rule-formula-preview-placeholder{color:#94a3b8;font-weight:400}
+    .kpi-rule-formula-preview-num{color:#dc2626;font-weight:700}
+    .kpi-rule-formula-example{
+      border:1px solid #e2e8f0;border-radius:8px;background:#fff;
+      padding:10px 12px;font-size:12px;color:#475569;line-height:1.7;max-width:520px;width:100%;
+    }
+    .kpi-rule-formula-example.is-empty{color:#94a3b8;background:#f8fafc}
+    .kpi-rule-formula-example-title{
+      font-size:12px;font-weight:800;color:#0f172a;margin-bottom:6px;
+    }
+    .kpi-rule-formula-example-line + .kpi-rule-formula-example-line{margin-top:4px}
+    .kpi-rule-formula-example-line strong{color:#0f172a;font-weight:700}
+    .kpi-rule-formula-example-result{color:#dc2626;font-size:13px}
+    .kpi-rule-formula-example-total-label{color:#1d4ed8;font-weight:700}
+    .kpi-rule-extra-bonus-check{align-self:center;line-height:1.5}
+    #kpiRuleExtraBonusField[hidden],
+    #kpiTargetExtraBonusField[hidden],
+    #kpiRuleLeaderRatioField[hidden]{display:none}
+    .kpi-rule-field--perf{
+      display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+      margin-bottom:14px;
+    }
+    .kpi-rule-field--perf[hidden]{display:none}
+    .kpi-rule-field--perf .kpi-rule-label{
+      padding-top:0;line-height:1.5;text-align:left;
+      color:#1d4ed8;font-weight:800;
+    }
+    .kpi-rule-field--perf .kpi-rule-control{width:100%}
+    .kpi-rule-perf-module-head{
+      display:flex;align-items:center;justify-content:space-between;
+      width:100%;gap:12px;
+    }
+    .kpi-rule-perf-remove-module-link{
+      font-size:12px;font-weight:700;color:#dc2626;text-decoration:none;
+      white-space:nowrap;flex-shrink:0;
+    }
+    .kpi-rule-perf-remove-module-link:hover{color:#b91c1c;text-decoration:underline}
+    .kpi-rule-perf-table-wrap{
+      display:inline-block;width:100%;max-width:100%;
+      border:1px solid #e2e8f0;border-radius:8px;background:#fff;box-sizing:border-box;
+      overflow-x:auto;
+    }
+    .kpi-rule-perf-table{
+      width:100%;border-collapse:collapse;table-layout:fixed;
+    }
+    .kpi-rule-perf-table th,
+    .kpi-rule-perf-table td{
+      padding:8px 10px;border:1px solid #e2e8f0;text-align:center;vertical-align:middle;
+      font-size:12px;color:#334155;white-space:nowrap;
+    }
+    .kpi-rule-perf-table thead th{
+      background:#f8fafc;font-weight:800;color:#0f172a;
+    }
+    .kpi-rule-perf-table tbody tr:nth-child(even){background:#fafbfc}
+    .kpi-rule-perf-table .col-no{width:48px;font-weight:700;color:#475569}
+    .kpi-rule-perf-table .col-range{
+      width:170px;max-width:170px;text-align:left;font-weight:700;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .kpi-rule-perf-table .col-perf{width:100px;font-weight:700;color:#0f172a}
+    .kpi-rule-perf-table .col-action{width:100px}
+    .kpi-rule-perf-table tr.is-form-row td{white-space:normal;overflow:hidden}
+    .kpi-rule-perf-table tr.is-form-row .col-no{color:#94a3b8;font-weight:700}
+    .kpi-rule-perf-table tr.is-form-row .kpi-rule-perf-form-cell{
+      text-align:left;padding:8px 6px;width:auto;max-width:none;overflow:hidden;
+    }
+    .kpi-rule-perf-interval-form{
+      display:flex;flex-direction:column;gap:0;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+      font-size:12px;
+    }
+    .kpi-rule-perf-interval-form-row{
+      display:flex;align-items:center;gap:4px 8px;min-width:0;
+    }
+    .kpi-rule-perf-interval-form-row + .kpi-rule-perf-interval-form-row{
+      margin-top:6px;padding-top:6px;border-top:1px dashed #e2e8f0;
+    }
+    .kpi-rule-perf-interval-form-row--range{
+      flex-wrap:nowrap;gap:0;align-items:center;
+    }
+    .kpi-rule-perf-interval-form-row--range .kpi-rule-perf-interval-form-divider{
+      flex-shrink:0;margin:0 2px;font-size:12px;font-weight:800;color:#0f172a;line-height:28px;
+    }
+    .kpi-rule-perf-interval-form-row--range .kpi-rule-perf-interval-form-group{
+      flex:0 0 auto;gap:2px 3px;min-width:0;
+    }
+    .kpi-rule-perf-interval-form-row--range .kpi-rule-perf-interval-form-group--start{
+      gap:2px;max-width:max-content;
+    }
+    .kpi-rule-perf-interval-form-group{
+      display:flex;flex-direction:row;align-items:center;gap:3px 4px;flex:1;min-width:0;
+    }
+    .kpi-rule-perf-interval-form-label{
+      font-size:12px;font-weight:700;color:#475569;white-space:nowrap;line-height:28px;flex-shrink:0;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input-wrap{
+      position:relative;display:inline-flex;flex-shrink:0;gap:0;align-items:stretch;
+    }
+    .kpi-rule-perf-interval-form-row--range .kpi-rule-weight-input{
+      width:46px;padding:0 14px 0 3px;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input{
+      width:52px;height:28px;padding:0 16px 0 4px;font-size:12px;
+      -moz-appearance:textfield;appearance:textfield;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input:disabled{
+      background:#f1f5f9;border-color:#e2e8f0;color:#94a3b8;cursor:not-allowed;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input-wrap.is-disabled .kpi-rule-weight-input-suffix{
+      color:#cbd5e1;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input::-webkit-outer-spin-button,
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input::-webkit-inner-spin-button{
+      -webkit-appearance:none;margin:0;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-weight-input-suffix{
+      position:absolute;right:5px;top:50%;transform:translateY(-50%);
+      line-height:1;font-size:12px;font-weight:700;color:#94a3b8;
+      pointer-events:none;user-select:none;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-split-check{
+      gap:2px;margin-left:0;font-size:12px;flex-shrink:0;
+    }
+    .kpi-rule-perf-interval-form-row .kpi-rule-split-check input{
+      width:13px;height:13px;margin:0;flex-shrink:0;
+    }
+    .kpi-rule-perf-actions{
+      display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;
+    }
+    .kpi-rule-perf-action-link{
+      font-size:12px;font-weight:700;color:#2563eb;text-decoration:none;cursor:pointer;
+    }
+    .kpi-rule-perf-action-link:hover{text-decoration:underline;color:#1d4ed8}
+    .kpi-rule-perf-action-link--danger{color:#dc2626}
+    .kpi-rule-perf-action-link--danger:hover{color:#b91c1c}
+    .kpi-rule-perf-action-link.is-disabled{
+      pointer-events:none;opacity:.45;cursor:not-allowed;text-decoration:none;
+    }
+    .kpi-rule-perf-table-foot{
+      display:flex;justify-content:flex-end;width:100%;box-sizing:border-box;
+      padding:8px 10px;border-top:1px solid #e2e8f0;background:#fafbfc;border-radius:0 0 8px 8px;
+    }
+    .kpi-rule-weight-sum{
+      margin-left:162px;margin-bottom:14px;padding:10px 12px;border-radius:8px;
+      font-size:12px;font-weight:700;background:#f8fafc;border:1px solid var(--line);color:#475569;
+      max-width:360px;box-sizing:border-box;
+    }
+    .kpi-rule-weight-sum.is-error{
+      background:#fef2f2;border-color:#fecaca;color:var(--danger);
+    }
+    .kpi-rule-weight-sum-hint{margin-top:4px;font-size:11px;font-weight:600;color:#94a3b8}
+    .kpi-rule-weight-sum.is-error .kpi-rule-weight-sum-hint{color:var(--danger)}
+    .kpi-rule-form-actions{
+      display:flex;justify-content:flex-end;gap:8px;flex-shrink:0;
+      padding:12px 18px 14px;border-top:1px solid #eef2f7;background:#fff;
+    }
+    .kpi-rule-form-btn{
+      min-width:76px;height:34px;padding:0 16px;border-radius:6px;
+      font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+      transition:all .15s ease;
+    }
+    .kpi-rule-form-btn--ghost{border:1px solid var(--wire);background:#fff;color:#374151}
+    .kpi-rule-form-btn--ghost:hover{border-color:#93c5fd;background:#f8fafc}
+    .kpi-rule-form-btn--primary{border:1px solid #2563eb;background:#2563eb;color:#fff}
+    .kpi-rule-form-btn--primary:hover{background:#1d4ed8;border-color:#1d4ed8}
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="2. CRM工作台/_sidebar-menu.html#lang=zh&amp;active=perf-commission-rules-indonesia" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-line">
+        <div class="top-left">
+          <span class="hamburger">≡</span>
+          <strong>印尼KPI提成规则</strong>
+        </div>
+        <div class="top-actions">
+          <span>🔍</span>
+          <span>默认模式 ▾</span>
+          <select class="lang-select" id="langSelect" aria-label="语言" onchange="switchLanguage(this)">
+            <option value="zh" selected>简体</option>
+            <option value="en">English</option>
+          </select>
+          <span>GMT+08:00 ▾</span>
+          <span>◐ Steve Jobs ▾</span>
+          <span>⛶</span>
+        </div>
+      </div>
+      <div class="tab-row">
+        <div class="tab-group">
+          <div class="tab active">印尼KPI提成规则 <span>×</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="scroll-wrap">
+      <section class="filter-panel">
+        <div class="filter-bar">
+          <div class="board-filter-form">
+            <div class="board-filter-field">
+              <label class="board-filter-label" for="filterRole">考核角色</label>
+              <select class="board-filter-select" id="filterRole">
+                <option value="">全部</option>
+                <option value="销售">销售</option>
+                <option value="组长">组长</option>
+              </select>
+            </div>
+            <div class="board-filter-field">
+              <label class="board-filter-label" for="filterGroup">考核员工范围</label>
+              <select class="board-filter-select board-filter-select--group" id="filterGroup">
+                <option value="">全部</option>
+                <option value="TW销售A组">TW销售A组</option>
+                <option value="TW销售B组">TW销售B组</option>
+                <option value="TW销售C组">TW销售C组</option>
+                <option value="TW销售D组">TW销售D组</option>
+                <option value="DANA销售A组">DANA销售A组</option>
+                <option value="DANA销售B组">DANA销售B组</option>
+                <option value="DANA销售C组">DANA销售C组</option>
+                <option value="DANA销售D组">DANA销售D组</option>
+              </select>
+            </div>
+            <div class="board-filter-field">
+              <label class="board-filter-label" for="filterPeriod">考核时间范围</label>
+              <select class="board-filter-select board-filter-select--period" id="filterPeriod">
+                <option value="">全部</option>
+              </select>
+            </div>
+            <div class="board-filter-actions">
+              <button type="button" class="board-filter-reset" onclick="resetFilters()">重置</button>
+              <button type="button" class="board-filter-query" onclick="applyFilters()">查询</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="table-panel">
+        <div class="table-panel-head">
+          <span>印尼KPI提成规则管理</span>
+          <button type="button" class="btn-add-kpi-rule" onclick="openKpiRuleEntryModal()">+ 新增 KPI 提成规则</button>
+        </div>
+        <div class="table-wrap">
+          <table class="rules-table">
+            <thead>
+              <tr>
+                <th>编号</th>
+                <th>绩效名称</th>
+                <th>角色</th>
+                <th>考核月份</th>
+                <th>目标设定进度</th>
+                <th>状态</th>
+                <th>绩效公式预览</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="rulesTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <div class="table-pager-info" id="rulesPagerInfo"></div>
+          <div class="table-pager-actions" id="rulesPagerActions"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div id="kpiRuleEntryModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeKpiRuleEntryModal()"></div>
+  <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleEntryTitle">
+    <div class="alert-task-follow-head">
+      <h3 id="kpiRuleEntryTitle">新增KPI提成规则</h3>
+      <button type="button" class="alert-task-follow-close" onclick="closeKpiRuleEntryModal()" aria-label="关闭">×</button>
+    </div>
+<form class="kpi-rule-entry-form" id="kpiRuleEntryForm" onsubmit="submitKpiRuleEntryForm(event)">
+      <div class="alert-task-follow-body">
+        <section class="kpi-rule-form-section" id="kpiRuleBasicSection">
+          <div class="kpi-rule-form-section-head">1. 基础考核设置</div>
+          <div class="kpi-rule-form-section-body">
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiRuleRegion"><span class="req">*</span>考核地区：</label>
+              <div class="kpi-rule-control">
+                <select class="kpi-rule-select" id="kpiRuleRegion" required onchange="onKpiRuleRegionChange()">
+                  <option value="印尼" selected>印尼</option>
+                  <option value="尼日">尼日</option>
+                  <option value="巴西">巴西</option>
+                  <option value="印度">印度</option>
+                  <option value="泰国">泰国</option>
+                </select>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--group">
+              <label class="kpi-rule-label" for="kpiRuleGroup">考核员工范围：</label>
+              <div class="kpi-rule-control kpi-rule-group-row">
+                <select class="kpi-rule-select" id="kpiRuleGroup" onchange="onKpiRuleGroupChange()">
+                  <option value="">当前地区所有人</option>
+                  <option value="TW销售A组">TW销售A组</option>
+                  <option value="TW销售B组">TW销售B组</option>
+                  <option value="TW销售C组">TW销售C组</option>
+                  <option value="TW销售D组">TW销售D组</option>
+                  <option value="DANA销售A组">DANA销售A组</option>
+                  <option value="DANA销售B组">DANA销售B组</option>
+                  <option value="DANA销售C组">DANA销售C组</option>
+                  <option value="DANA销售D组">DANA销售D组</option>
+                </select>
+              </div>
+              <div class="kpi-rule-employee-count" id="kpiRuleEmployeeCount">涉及销售总人数为 0 人</div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--period">
+              <label class="kpi-rule-label" for="kpiRulePeriod"><span class="req">*</span>考核时间范围：</label>
+              <div class="kpi-rule-period-row">
+                <select class="kpi-rule-select" id="kpiRulePeriod" required onchange="updateKpiRuleSplitMonths(); updateKpiRuleDefaultName();">
+                  <option value="">请选择考核季度</option>
+                </select>
+                <label class="kpi-rule-split-check">
+                  <input type="checkbox" id="kpiRuleSplitByMonth" checked onchange="updateKpiRuleSplitMonths()">按月拆分考核目标
+                </label>
+              </div>
+              <div class="kpi-rule-month-list" id="kpiRuleMonthList"></div>
+            </div>
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiRuleName"><span class="req">*</span>提成规则名称：</label>
+              <div class="kpi-rule-control">
+                <input class="kpi-rule-input" type="text" id="kpiRuleName" required placeholder="请选择时间与员工范围后自动生成" maxlength="100">
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--top">
+              <span class="kpi-rule-label"><span class="req">*</span>KPI考核维度：</span>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-dimension-group" id="kpiRuleDimensionGroup">
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleDimension" value="充值活跃" checked onchange="syncKpiRuleWeightFields()">充值活跃</label>
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleDimension" value="净入金" checked onchange="syncKpiRuleWeightFields()">净入金</label>
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleDimension" value="联系率" onchange="syncKpiRuleWeightFields()">联系率</label>
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleDimension" value="交易手数" onchange="syncKpiRuleWeightFields()">交易手数</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="kpi-rule-form-section" id="kpiRuleWeightSection">
+          <div class="kpi-rule-form-section-head">2. 考核权重系数设置</div>
+          <div class="kpi-rule-form-section-body" id="kpiRuleWeightSectionBody">
+            <div class="kpi-rule-weight-empty" id="kpiRuleWeightEmpty" hidden>请先在上方选择 KPI 考核维度</div>
+            <div class="kpi-rule-field kpi-rule-field--weight" id="kpiRuleWeightFieldActive" data-kpi-dimension="充值活跃">
+              <label class="kpi-rule-label" for="kpiRuleWeightActive"><span class="req">*</span>充值活跃权重系数：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-field-actions">
+                  <div class="kpi-rule-weight-input-wrap">
+                    <input class="kpi-rule-weight-input" type="number" id="kpiRuleWeightActive" min="0" max="100" step="0.01" value="30" oninput="validateKpiRuleWeights()">
+                    <span class="kpi-rule-weight-input-suffix">%</span>
+                  </div>
+                  <a href="#" class="kpi-rule-weight-remove-link" onclick="removeKpiRuleWeightModule(event, '充值活跃')">-移除此权重</a>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--weight" id="kpiRuleWeightFieldDeposit" data-kpi-dimension="净入金">
+              <label class="kpi-rule-label" for="kpiRuleWeightDeposit"><span class="req">*</span>净入金权重系数：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-field-actions">
+                  <div class="kpi-rule-weight-input-wrap">
+                    <input class="kpi-rule-weight-input" type="number" id="kpiRuleWeightDeposit" min="0" max="100" step="0.01" value="70" oninput="validateKpiRuleWeights()">
+                    <span class="kpi-rule-weight-input-suffix">%</span>
+                  </div>
+                  <a href="#" class="kpi-rule-weight-remove-link" onclick="removeKpiRuleWeightModule(event, '净入金')">-移除此权重</a>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--weight" id="kpiRuleWeightFieldComm" data-kpi-dimension="联系率" hidden>
+              <label class="kpi-rule-label" for="kpiRuleWeightComm"><span class="req">*</span>联系率权重系数：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-field-actions">
+                  <div class="kpi-rule-weight-input-wrap">
+                    <input class="kpi-rule-weight-input" type="number" id="kpiRuleWeightComm" min="0" max="100" step="0.01" value="0" oninput="validateKpiRuleWeights()">
+                    <span class="kpi-rule-weight-input-suffix">%</span>
+                  </div>
+                  <a href="#" class="kpi-rule-weight-remove-link" onclick="removeKpiRuleWeightModule(event, '联系率')">-移除此权重</a>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--weight" id="kpiRuleWeightFieldLots" data-kpi-dimension="交易手数" hidden>
+              <label class="kpi-rule-label" for="kpiRuleWeightLots"><span class="req">*</span>交易手数权重系数：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-field-actions">
+                  <div class="kpi-rule-weight-input-wrap">
+                    <input class="kpi-rule-weight-input" type="number" id="kpiRuleWeightLots" min="0" max="100" step="0.01" value="0" oninput="validateKpiRuleWeights()">
+                    <span class="kpi-rule-weight-input-suffix">%</span>
+                  </div>
+                  <a href="#" class="kpi-rule-weight-remove-link" onclick="removeKpiRuleWeightModule(event, '交易手数')">-移除此权重</a>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-weight-sum" id="kpiRuleWeightSumBox">
+              <span id="kpiRuleWeightSumText">权重合计：100.00%</span>
+              <div class="kpi-rule-weight-sum-hint" id="kpiRuleWeightSumHint">校验检测：已选维度权重系数之和须等于 100%</div>
+            </div>
+          </div>
+        </section>
+        <section class="kpi-rule-form-section" id="kpiRulePerfSection">
+          <div class="kpi-rule-form-section-head">3. KPI完成率设置</div>
+          <div class="kpi-rule-form-section-body" id="kpiRulePerfSectionBody">
+            <div class="kpi-rule-weight-empty" id="kpiRulePerfEmpty" hidden>请先在上方选择 KPI 考核维度</div>
+            <div class="kpi-rule-field kpi-rule-field--perf" id="kpiRulePerfFieldActive" data-kpi-dimension="充值活跃">
+              <div class="kpi-rule-perf-module-head">
+                <label class="kpi-rule-label">充值活跃完成率：</label>
+                <a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRulePerfModule(event, '充值活跃')">-移除此模块</a>
+              </div>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-perf-table-wrap">
+                  <table class="kpi-rule-perf-table" data-perf-section="perf" data-perf-dimension="充值活跃">
+                    <thead>
+                      <tr><th class="col-no">编号</th><th class="col-range">区间</th><th class="col-perf">绩效完成率</th><th class="col-action">操作</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div class="kpi-rule-perf-table-foot">
+                    <a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="perf" data-perf-dimension="充值活跃">+ 新增区间</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--perf" id="kpiRulePerfFieldDeposit" data-kpi-dimension="净入金">
+              <div class="kpi-rule-perf-module-head">
+                <label class="kpi-rule-label">净入金完成率：</label>
+                <a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRulePerfModule(event, '净入金')">-移除此模块</a>
+              </div>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-perf-table-wrap">
+                  <table class="kpi-rule-perf-table" data-perf-section="perf" data-perf-dimension="净入金">
+                    <thead>
+                      <tr><th class="col-no">编号</th><th class="col-range">区间</th><th class="col-perf">绩效完成率</th><th class="col-action">操作</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div class="kpi-rule-perf-table-foot">
+                    <a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="perf" data-perf-dimension="净入金">+ 新增区间</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--perf" id="kpiRulePerfFieldComm" data-kpi-dimension="联系率" hidden>
+              <div class="kpi-rule-perf-module-head">
+                <label class="kpi-rule-label">联系率完成率：</label>
+                <a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRulePerfModule(event, '联系率')">-移除此模块</a>
+              </div>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-perf-table-wrap">
+                  <table class="kpi-rule-perf-table" data-perf-section="perf" data-perf-dimension="联系率">
+                    <thead>
+                      <tr><th class="col-no">编号</th><th class="col-range">区间</th><th class="col-perf">绩效完成率</th><th class="col-action">操作</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div class="kpi-rule-perf-table-foot">
+                    <a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="perf" data-perf-dimension="联系率">+ 新增区间</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--perf" id="kpiRulePerfFieldLots" data-kpi-dimension="交易手数" hidden>
+              <div class="kpi-rule-perf-module-head">
+                <label class="kpi-rule-label">交易手数完成率：</label>
+                <a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRulePerfModule(event, '交易手数')">-移除此模块</a>
+              </div>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-perf-table-wrap">
+                  <table class="kpi-rule-perf-table" data-perf-section="perf" data-perf-dimension="交易手数">
+                    <thead>
+                      <tr><th class="col-no">编号</th><th class="col-range">区间</th><th class="col-perf">绩效完成率</th><th class="col-action">操作</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <div class="kpi-rule-perf-table-foot">
+                    <a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="perf" data-perf-dimension="交易手数">+ 新增区间</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="kpi-rule-form-section" id="kpiRuleSchemeSection">
+          <div class="kpi-rule-form-section-head">4. 绩效方案设置</div>
+          <div class="kpi-rule-form-section-body">
+            <div class="kpi-rule-field kpi-rule-field--top">
+              <span class="kpi-rule-label">KPI完成率：</span>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-formula-expr is-empty" id="kpiRuleKpiCompletionFormula">请先设置权重大于 0 的考核维度</div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--top">
+              <span class="kpi-rule-label"><span class="req">*</span>绩效核算公式选择：</span>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-formula-radio-group" role="radiogroup" aria-label="绩效核算公式选择">
+                  <label class="kpi-rule-formula-radio-item">
+                    <input type="radio" name="kpiRuleFormulaType" id="kpiRuleFormulaSales" value="销售提成规则" checked required onchange="onKpiRuleFormulaTypeChange()">
+                    <span>销售提成规则</span>
+                  </label>
+                  <label class="kpi-rule-formula-radio-item">
+                    <input type="radio" name="kpiRuleFormulaType" id="kpiRuleFormulaLeader" value="组长提成规则" onchange="onKpiRuleFormulaTypeChange()">
+                    <span>组长提成规则</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiRuleBaseAmount"><span class="req">*</span>基础提成金额：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-input-wrap">
+                  <input class="kpi-rule-weight-input" type="number" id="kpiRuleBaseAmount" min="0" step="0.01" value="0.3" required oninput="updateKpiRuleSchemeSection()">
+                  <span class="kpi-rule-weight-input-suffix">$</span>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field" id="kpiRuleLeaderRatioField" hidden>
+              <label class="kpi-rule-label" for="kpiRuleLeaderRatio"><span class="req">*</span>组长提成比例：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-input-wrap">
+                  <input class="kpi-rule-weight-input" type="number" id="kpiRuleLeaderRatio" min="0" max="100" step="0.01" value="25" oninput="updateKpiRuleSchemeSection()">
+                  <span class="kpi-rule-weight-input-suffix">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field" id="kpiRuleExtraBonusField" hidden>
+              <span class="kpi-rule-label">额外提成奖励：</span>
+              <div class="kpi-rule-control">
+                <label class="kpi-rule-split-check kpi-rule-extra-bonus-check">
+                  <input type="checkbox" id="kpiRuleExtraBonus" checked onchange="updateKpiRuleSchemeSection()">
+                  <span>净入金完成率≥100%，整体提成额外增加20%</span>
+                </label>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--top">
+              <span class="kpi-rule-label">绩效公式预览：</span>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-formula-preview" id="kpiRuleFormulaPreview">总交易手数 × 基础提成金额 × KPI完成率</div>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--top">
+              <span class="kpi-rule-label">案例说明：</span>
+              <div class="kpi-rule-control">
+                <div id="kpiRuleFormulaExample" class="kpi-rule-formula-example is-empty">请先设置权重大于 0 的考核维度，查看计算案例</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="kpi-rule-form-actions">
+        <button type="button" class="kpi-rule-form-btn kpi-rule-form-btn--ghost"  onclick="closeKpiRuleEntryModal()">取消</button>
+        <button type="submit" class="kpi-rule-form-btn kpi-rule-form-btn--primary" >确认提交</button>
+      </div>
+</form>
+  </div>
+</div>
+
+<div id="kpiRuleTargetModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeKpiRuleTargetModal()"></div>
+  <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleTargetTitle">
+    <div class="alert-task-follow-head">
+      <h3 id="kpiRuleTargetTitle">设置员工考核目标</h3>
+      <button type="button" class="alert-task-follow-close" onclick="closeKpiRuleTargetModal()" aria-label="关闭">×</button>
+    </div>
+<form class="kpi-rule-entry-form" id="kpiTargetEntryForm" onsubmit="submitKpiTargetForm(event)">
+      <div class="alert-task-follow-body">
+        <section class="kpi-rule-form-section" id="kpiTargetScopeSection">
+          <div class="kpi-rule-form-section-head">1. 选择考核员工范围</div>
+          <div class="kpi-rule-form-section-body">
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiTargetRegion"><span class="req">*</span>考核地区：</label>
+              <div class="kpi-rule-control">
+                <select class="kpi-rule-select" id="kpiTargetRegion" disabled aria-readonly="true">
+                  <option value="印尼" selected>印尼</option>
+                </select>
+              </div>
+            </div>
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiTargetGroup">考核员工范围：</label>
+              <div class="kpi-rule-control">
+                <select class="kpi-rule-select" id="kpiTargetGroup" disabled aria-readonly="true">
+                  <option value="">当前地区所有人</option>
+                  <option value="TW销售A组">TW销售A组</option>
+                  <option value="TW销售B组">TW销售B组</option>
+                  <option value="TW销售C组">TW销售C组</option>
+                  <option value="TW销售D组">TW销售D组</option>
+                  <option value="DANA销售A组">DANA销售A组</option>
+                  <option value="DANA销售B组">DANA销售B组</option>
+                  <option value="DANA销售C组">DANA销售C组</option>
+                  <option value="DANA销售D组">DANA销售D组</option>
+                </select>
+              </div>
+            </div>
+            <div class="kpi-rule-field kpi-rule-field--top kpi-rule-field--employee-select">
+              <label class="kpi-rule-label" for="kpiTargetEmployeeTableBody">选择考核员工：</label>
+              <div class="kpi-rule-control kpi-target-employee-panel">
+                <div class="kpi-target-employee-tabs" role="tablist" aria-label="员工分配筛选">
+                  <button type="button" class="kpi-target-employee-tab is-active" data-tab="unassigned" onclick="switchKpiTargetEmployeeTab('unassigned')">未分配<span class="kpi-target-employee-tab-count">0</span></button>
+                  <button type="button" class="kpi-target-employee-tab" data-tab="assigned" onclick="switchKpiTargetEmployeeTab('assigned')">已分配（不可选）<span class="kpi-target-employee-tab-count">0</span></button>
+                  <button type="button" class="kpi-target-employee-tab" data-tab="all" onclick="switchKpiTargetEmployeeTab('all')">全部<span class="kpi-target-employee-tab-count">0</span></button>
+                </div>
+                <div class="kpi-target-employee-table-wrap">
+                  <table class="kpi-target-employee-table">
+                    <thead>
+                      <tr>
+                        <th class="col-check">
+                          <input type="checkbox" id="kpiTargetEmployeeCheckAll" aria-label="全选" onchange="toggleKpiTargetEmployeeCheckAll(this.checked)">
+                        </th>
+                        <th class="col-sid">SID</th>
+                        <th class="col-name-level">销售/等级</th>
+                        <th class="col-goals">充值活跃/净入金</th>
+                      </tr>
+                    </thead>
+                    <tbody id="kpiTargetEmployeeTableBody"></tbody>
+                  </table>
+                </div>
+                <div class="kpi-target-employee-selected-summary" id="kpiTargetEmployeeSelectedSummary">已选择考核员工 0 人</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="kpi-rule-form-section" id="kpiTargetGoalSection">
+          <div class="kpi-rule-form-section-head">2. 考核目标设置</div>
+          <div class="kpi-rule-form-section-body">
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiTargetActiveGoal"><span class="req">*</span>充值活跃目标：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-input-wrap">
+                  <input class="kpi-rule-weight-input" type="number" id="kpiTargetActiveGoal" min="0" step="1" required placeholder="请输入充值活跃目标">
+                  <span class="kpi-rule-weight-input-suffix">人</span>
+                </div>
+              </div>
+            </div>
+            <div class="kpi-rule-field">
+              <label class="kpi-rule-label" for="kpiTargetDepositGoal"><span class="req">*</span>净入金总额目标：</label>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-weight-input-wrap">
+                  <input class="kpi-rule-weight-input" type="number" id="kpiTargetDepositGoal" min="0" step="0.01" required placeholder="请输入净入金总额目标">
+                  <span class="kpi-rule-weight-input-suffix">$</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="kpi-rule-form-actions">
+        <button type="button" class="kpi-rule-form-btn kpi-rule-form-btn--ghost" id="kpiTargetFormCancelBtn" onclick="closeKpiRuleTargetModal()">取消</button>
+        <button type="submit" class="kpi-rule-form-btn kpi-rule-form-btn--primary" id="kpiTargetFormSubmitBtn">确认提交</button>
+      </div>
+</form>
+  </div>
+</div>
+
+<div id="kpiTargetDetailModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeKpiTargetDetailModal()"></div>
+  <div class="alert-task-follow-dialog kpi-target-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiTargetDetailTitle">
+    <div class="alert-task-follow-head">
+      <div>
+        <h3 id="kpiTargetDetailTitle">销售KPI目标明细</h3>
+        <p class="kpi-target-detail-subtitle" id="kpiTargetDetailSubtitle"></p>
+      </div>
+      <button type="button" class="alert-task-follow-close" onclick="closeKpiTargetDetailModal()" aria-label="关闭">×</button>
+    </div>
+    <div class="alert-task-follow-body">
+      <div class="kpi-target-detail-filter">
+        <div class="board-filter-form">
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="kpiTargetDetailFilterSid">SID</label>
+            <input class="board-filter-input" type="text" id="kpiTargetDetailFilterSid" placeholder="请输入 SID">
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="kpiTargetDetailFilterName">销售</label>
+            <input class="board-filter-input" type="text" id="kpiTargetDetailFilterName" placeholder="请输入销售姓名">
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="kpiTargetDetailFilterLevel">等级</label>
+            <select class="board-filter-select" id="kpiTargetDetailFilterLevel">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="kpiTargetDetailFilterMonth">月份</label>
+            <select class="board-filter-select" id="kpiTargetDetailFilterMonth">
+              <option value="">全部</option>
+            </select>
+          </div>
+          <div class="board-filter-actions">
+            <button type="button" class="board-filter-reset" onclick="resetKpiTargetDetailFiltersAndQuery()">重置</button>
+            <button type="button" class="board-filter-query" onclick="applyKpiTargetDetailFilters()">查询</button>
+          </div>
+        </div>
+      </div>
+      <div class="kpi-target-detail-table-wrap">
+        <table class="kpi-target-detail-table">
+          <thead>
+            <tr>
+              <th class="col-sid">SID</th>
+              <th class="col-name">销售</th>
+              <th class="col-level">等级</th>
+              <th class="col-group">组别</th>
+              <th class="col-month">月份</th>
+              <th class="col-active-goal">充值活跃目标</th>
+              <th class="col-deposit-goal">净入金目标</th>
+            </tr>
+          </thead>
+          <tbody id="kpiTargetDetailTableBody"></tbody>
+        </table>
+      </div>
+      <div class="kpi-target-detail-foot">
+        <div class="table-pager-info" id="kpiTargetDetailPagerInfo"></div>
+        <div class="table-pager-actions" id="kpiTargetDetailPagerActions"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="kpiRuleDetailModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeKpiRuleDetailModal()"></div>
+  <div class="alert-task-follow-dialog kpi-rule-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleDetailTitle">
+    <div class="alert-task-follow-head">
+      <div>
+        <h3 id="kpiRuleDetailTitle">KPI提成规则明细</h3>
+        <p class="kpi-target-detail-subtitle" id="kpiRuleDetailSubtitle"></p>
+      </div>
+      <button type="button" class="alert-task-follow-close" onclick="closeKpiRuleDetailModal()" aria-label="关闭">×</button>
+    </div>
+    <div class="alert-task-follow-body" id="kpiRuleDetailBody"></div>
+  </div>
+</div>
+
+
+<script>
+function switchLanguage(sel) {
+  if (sel.value === 'en') window.location.href = '2. CRM工作台/工作台KPI英文版.html';
+  else sel.value = 'zh';
+}
+
+var KPI_RULE_QUARTER_MONTHS = {
+  '26年Q1季度': ['26年1月', '26年2月', '26年3月'],
+  '26年Q2季度': ['26年4月', '26年5月', '26年6月'],
+  '26年Q3季度': ['26年7月', '26年8月', '26年9月'],
+  '26年Q4季度': ['26年10月', '26年11月', '26年12月']
+};
+
+function getKpiRuleFullYearFromYy(yy) {
+  return yy < 100 ? 2000 + yy : yy;
+}
+
+function formatKpiRuleQuarterKey(year, quarter) {
+  var yy = year % 100;
+  return yy + '年Q' + quarter + '季度';
+}
+
+function getKpiRuleQuarterMonthLabels(year, quarter) {
+  var yy = year % 100;
+  var startMonth = (quarter - 1) * 3 + 1;
+  var months = [];
+  for (var m = startMonth; m < startMonth + 3; m += 1) {
+    months.push(yy + '年' + m + '月');
+  }
+  return months;
+}
+
+function parseKpiRuleQuarterKey(key) {
+  var match = String(key || '').match(/^(\d+)年Q([1-4])季度$/);
+  if (!match) return null;
+  return { yy: parseInt(match[1], 10), quarter: parseInt(match[2], 10) };
+}
+
+function getKpiRuleQuarterMonths(key) {
+  if (!key) return [];
+  if (KPI_RULE_QUARTER_MONTHS[key]) return KPI_RULE_QUARTER_MONTHS[key];
+  var parsed = parseKpiRuleQuarterKey(key);
+  if (!parsed) return [];
+  var months = getKpiRuleQuarterMonthLabels(getKpiRuleFullYearFromYy(parsed.yy), parsed.quarter);
+  KPI_RULE_QUARTER_MONTHS[key] = months;
+  return months;
+}
+
+function getKpiRuleCurrentQuarterInfo() {
+  var now = new Date();
+  return {
+    year: now.getFullYear(),
+    quarter: Math.ceil((now.getMonth() + 1) / 3)
+  };
+}
+
+function getKpiRuleSelectableQuarters(count) {
+  var total = count == null ? 4 : count;
+  var info = getKpiRuleCurrentQuarterInfo();
+  var list = [];
+  var year = info.year;
+  var quarter = info.quarter;
+  for (var i = 0; i < total; i += 1) {
+    var key = formatKpiRuleQuarterKey(year, quarter);
+    var months = getKpiRuleQuarterMonthLabels(year, quarter);
+    KPI_RULE_QUARTER_MONTHS[key] = months;
+    list.push({ key: key, months: months });
+    quarter += 1;
+    if (quarter > 4) {
+      quarter = 1;
+      year += 1;
+    }
+  }
+  return list;
+}
+
+function getKpiRuleRecentQuarters(years) {
+  var totalQuarters = (years == null ? 3 : years) * 4;
+  var info = getKpiRuleCurrentQuarterInfo();
+  var list = [];
+  var year = info.year;
+  var quarter = info.quarter;
+  for (var i = 0; i < totalQuarters; i += 1) {
+    var key = formatKpiRuleQuarterKey(year, quarter);
+    var months = getKpiRuleQuarterMonthLabels(year, quarter);
+    KPI_RULE_QUARTER_MONTHS[key] = months;
+    list.push({ key: key, months: months });
+    quarter -= 1;
+    if (quarter < 1) {
+      quarter = 4;
+      year -= 1;
+    }
+  }
+  return list;
+}
+
+function initKpiRulePeriodOptions() {
+  var select = document.getElementById('kpiRulePeriod');
+  if (!select) return;
+  var previous = select.value;
+  var quarters = getKpiRuleSelectableQuarters(4);
+  var options = ['<option value="">请选择考核季度</option>'];
+  quarters.forEach(function (q) {
+    options.push('<option value="' + q.key + '">' + q.key + '</option>');
+  });
+  select.innerHTML = options.join('');
+  if (previous && quarters.some(function (q) { return q.key === previous; })) {
+    select.value = previous;
+  }
+}
+
+function initKpiRuleFilterPeriodOptions() {
+  var select = document.getElementById('filterPeriod');
+  if (!select) return;
+  var previous = select.value;
+  var quarters = getKpiRuleRecentQuarters(3);
+  var options = ['<option value="">全部</option>'];
+  quarters.forEach(function (q) {
+    options.push('<option value="' + q.key + '">' + q.key + '</option>');
+  });
+  select.innerHTML = options.join('');
+  if (previous && quarters.some(function (q) { return q.key === previous; })) {
+    select.value = previous;
+  }
+}
+
+function getKpiRuleQuarterByMonth(month) {
+  var keys = Object.keys(KPI_RULE_QUARTER_MONTHS);
+  for (var i = 0; i < keys.length; i += 1) {
+    if (KPI_RULE_QUARTER_MONTHS[keys[i]].indexOf(month) > -1) return keys[i];
+  }
+  var match = String(month || '').match(/^(\d+)年(\d+)月$/);
+  if (!match) return '';
+  var quarter = Math.ceil(parseInt(match[2], 10) / 3);
+  return match[1] + '年Q' + quarter + '季度';
+}
+
+var KPI_RULE_GROUP_EMPLOYEE_COUNTS = {
+  'TW销售A组': 18,
+  'TW销售B组': 16,
+  'TW销售C组': 15,
+  'TW销售D组': 14,
+  'DANA销售A组': 20,
+  'DANA销售B组': 19,
+  'DANA销售C组': 17,
+  'DANA销售D组': 16
+};
+
+var KPI_RULE_REGION_EMPLOYEE_TOTALS = {
+  '印尼': 135,
+  '尼日': 98,
+  '巴西': 112,
+  '印度': 126,
+  '泰国': 104
+};
+
+function getKpiRuleListEmployeeTotal(row) {
+  if (row.targetTotal != null) return row.targetTotal;
+  if (row.group) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[row.group] || 0;
+  return KPI_RULE_REGION_EMPLOYEE_TOTALS[row.region] || 0;
+}
+
+function buildKpiRuleListId(monthLabel, seq) {
+  var match = String(monthLabel || '').match(/^(\d+)年(\d+)月$/);
+  var year = match ? match[1] : '00';
+  var month = match ? String(match[2]).padStart(2, '0') : '00';
+  var seqNum = Math.max(0, Math.min(9999, Number(seq) || 0));
+  return year + month + String(seqNum).padStart(4, '0');
+}
+
+var KPI_RULE_STANDARD_DIMENSIONS = ['充值活跃', '净入金'];
+
+var KPI_RULE_LIST_WEIGHT_PRESETS = {
+  '充值活跃,净入金': { '充值活跃': 30, '净入金': 70 }
+};
+
+var KPI_RULES_DATA = (function () {
+  var groups = [
+    'TW销售A组', 'TW销售B组', 'TW销售C组', 'TW销售D组',
+    'DANA销售A组', 'DANA销售B组', 'DANA销售C组', 'DANA销售D组'
+  ];
+  var dimensions = KPI_RULE_STANDARD_DIMENSIONS.slice();
+  var weights = KPI_RULE_LIST_WEIGHT_PRESETS['充值活跃,净入金'];
+  var roles = ['销售', '组长'];
+  var list = [];
+  var ruleIndex = 0;
+  var monthCursor = { year: 26, month: 5 };
+  var incompleteMonths = ['26年7月', '26年8月', '27年1月', '27年2月', '27年6月'];
+
+  function formatKpiRuleMonthLabel(year, month) {
+    return year + '年' + month + '月';
+  }
+
+  function advanceKpiRuleMonthCursor(cursor) {
+    cursor.month += 1;
+    if (cursor.month > 12) {
+      cursor.month = 1;
+      cursor.year += 1;
+    }
+  }
+
+  while (list.length < 30) {
+    var monthLabel = formatKpiRuleMonthLabel(monthCursor.year, monthCursor.month);
+    var quarter = getKpiRuleQuarterByMonth(monthLabel);
+    var group = groups[ruleIndex % groups.length];
+    var region = '印尼';
+    var employeeTotal = KPI_RULE_GROUP_EMPLOYEE_COUNTS[group] || 0;
+    var isTargetComplete = incompleteMonths.indexOf(monthLabel) === -1;
+
+    roles.forEach(function (role, roleIndex) {
+      if (list.length >= 30) return;
+      var seq = roleIndex + 1;
+      var targetSetCount = isTargetComplete
+        ? employeeTotal
+        : Math.max(1, employeeTotal - (2 + ((ruleIndex + roleIndex) % 6)));
+      var name = region + group + quarter + role + '绩效方案';
+      var schemeKey = region + '|' + group + '|' + quarter + '|' + role;
+
+      list.push({
+        id: buildKpiRuleListId(monthLabel, seq),
+        name: name,
+        schemeKey: schemeKey,
+        group: group,
+        dimensions: dimensions.slice(),
+        region: region,
+        period: monthLabel,
+        quarter: quarter,
+        splitByMonth: true,
+        targetTotal: employeeTotal,
+        targetSetCount: targetSetCount,
+        activeGoal: isTargetComplete ? 400 : null,
+        depositGoal: isTargetComplete ? 64000 : null,
+        status: 'active',
+        role: role,
+        weights: Object.assign({}, weights),
+        baseAmount: '0.3',
+        leaderRatio: '25'
+      });
+    });
+
+    ruleIndex += 1;
+    advanceKpiRuleMonthCursor(monthCursor);
+  }
+
+  var voidedCount = 3 + (list.length % 3);
+  var voidedSlots = [5, 11, 17, 23, 28];
+  voidedSlots.slice(0, voidedCount).forEach(function (slot) {
+    if (list[slot]) list[slot].status = 'disabled';
+  });
+
+  return list;
+})();
+
+var KPI_RULE_DIMENSION_COMPLETION_LABELS = {
+  '充值活跃': '充值活跃完成率',
+  '净入金': '净入金完成率',
+  '交易手数': '交易手数完成率',
+  '联系率': '联系率完成率'
+};
+
+var KPI_RULE_FORMULA_DEFAULTS = {
+  '销售提成规则': { amount: '0.3', leaderRatio: '25' },
+  '组长提成规则': { amount: '0.3', leaderRatio: '25' },
+  '印尼提成规则': { amount: '0.3', ratio: '100' },
+  '尼日提成规则': { amount: '15', ratio: '1.5' },
+  '印度提成规则': { amount: '14', ratio: '1.1' }
+};
+
+var KPI_RULE_FORMULA_EXAMPLE_FIXED = {
+  tradeLots: 1200,
+  teamCommission: 8000,
+  activeRate: 80,
+  depositRate: 90,
+  contactBonus: 110,
+  depositBonus: 120
+};
+
+function getKpiRuleExampleCompletionRate(dim) {
+  if (dim === '充值活跃') return KPI_RULE_FORMULA_EXAMPLE_FIXED.activeRate;
+  if (dim === '净入金') return KPI_RULE_FORMULA_EXAMPLE_FIXED.depositRate;
+  return 85;
+}
+
+function formatKpiRuleWeightPercent(weight) {
+  var text = weight.toFixed(2);
+  if (text.indexOf('.') > -1) text = text.replace(/0+$/, '').replace(/\.$/, '');
+  return text + '%';
+}
+
+function getKpiRuleFormulaTypeByRegion(region) {
+  if (region === '尼日') return '尼日提成规则';
+  if (region === '印度') return '印度提成规则';
+  return '印尼提成规则';
+}
+
+var KPI_RULE_LIST_FORMULA_DISPLAY_DIMENSIONS = KPI_RULE_STANDARD_DIMENSIONS;
+
+function getKpiRuleListDisplayDimensions(row) {
+  return KPI_RULE_STANDARD_DIMENSIONS.slice();
+}
+
+function filterKpiRuleListFormulaDimensions(dimensions) {
+  return getKpiRuleListDisplayDimensions();
+}
+
+function buildKpiRuleListKpiCompletionFormula(dimensions, weights) {
+  return dimensions.map(function (dim) {
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    var weight = weights[dim] != null ? weights[dim] : 0;
+    return label + ' × ' + formatKpiRuleWeightPercent(weight);
+  }).join(' + ');
+}
+
+function getKpiRuleListRole(row) {
+  if (row && row.role) return row.role;
+  if (row && row.formulaType === '组长提成规则') return '组长';
+  return '销售';
+}
+
+function isKpiRuleLeaderRole(row) {
+  return getKpiRuleListRole(row) === '组长';
+}
+
+function getKpiRuleListWeights(row) {
+  var preset = KPI_RULE_LIST_WEIGHT_PRESETS['充值活跃,净入金'] || {};
+  if (row && row.weights) {
+    var weights = {};
+    KPI_RULE_STANDARD_DIMENSIONS.forEach(function (dim) {
+      weights[dim] = row.weights[dim] != null ? row.weights[dim] : preset[dim];
+    });
+    return weights;
+  }
+  return Object.assign({}, preset);
+}
+
+function getKpiRuleListRowSchemeDefaults(row) {
+  var defaults = KPI_RULE_FORMULA_DEFAULTS['组长提成规则'];
+  return {
+    baseAmount: row.baseAmount != null ? String(row.baseAmount) : defaults.amount,
+    leaderRatio: row.leaderRatio != null ? String(row.leaderRatio) : defaults.leaderRatio
+  };
+}
+
+function buildKpiRuleListSalesFormula(row, dimensionsOverride) {
+  var schemeDefaults = getKpiRuleListRowSchemeDefaults(row);
+  var weights = getKpiRuleListWeights(row);
+  var dimensions = dimensionsOverride || getKpiRuleListDisplayDimensions(row);
+  var kpiFormula = buildKpiRuleListKpiCompletionFormula(dimensions, weights);
+  var kpiPart = kpiFormula ? '（' + kpiFormula + '）' : 'KPI完成率';
+  return '总交易手数 × ' + schemeDefaults.baseAmount + ' × ' + kpiPart;
+}
+
+function buildKpiRuleListFormula(row, dimensionsOverride) {
+  var salesFormula = buildKpiRuleListSalesFormula(row, dimensionsOverride);
+  if (!isKpiRuleLeaderRole(row)) return salesFormula;
+  var schemeDefaults = getKpiRuleListRowSchemeDefaults(row);
+  return '团队所有提成 × ' + formatKpiRuleWeightPercent(parseFloat(schemeDefaults.leaderRatio)) + ' + ' + salesFormula;
+}
+
+function buildKpiRuleListFormulaPreview(row) {
+  var dimensions = filterKpiRuleListFormulaDimensions(row.dimensions);
+  return buildKpiRuleListFormula(row, dimensions);
+}
+
+function renderKpiRuleListRole(row) {
+  var role = getKpiRuleListRole(row);
+  var cls = role === '组长' ? 'rule-role-tag rule-role-tag--leader' : 'rule-role-tag rule-role-tag--sales';
+  return '<span class="' + cls + '">' + role + '</span>';
+}
+
+function buildKpiRuleDetailField(label, valueHtml, options) {
+  options = options || {};
+  var fieldClass = 'kpi-rule-field';
+  if (options.top) fieldClass += ' kpi-rule-field--top';
+  if (options.middle) fieldClass += ' kpi-rule-field--middle';
+  return (
+    '<div class="' + fieldClass + '">' +
+      '<span class="kpi-rule-label">' + label + '：</span>' +
+      '<div class="kpi-rule-control">' + valueHtml + '</div>' +
+    '</div>'
+  );
+}
+
+function buildKpiRuleDetailText(value) {
+  return '<div class="kpi-rule-detail-text">' + value + '</div>';
+}
+
+function getKpiRuleDetailPerfRows(dim) {
+  if (kpiRulePerfStore && kpiRulePerfStore.perf && kpiRulePerfStore.perf[dim] && kpiRulePerfStore.perf[dim].length) {
+    return kpiRulePerfStore.perf[dim];
+  }
+  return cloneKpiRulePerfDefaultRows();
+}
+
+function renderKpiRuleDetailPerfTable(dim) {
+  var rows = getKpiRuleDetailPerfRows(dim);
+  var body = rows.map(function (item, index) {
+    var range = item.type === 'static' ? item.range : buildKpiRulePerfRangeText(item);
+    var perf = item.equalsCompletion ? '等于完成率' : formatKpiRulePerfValue(item.perf);
+    return '<tr><td>' + (index + 1) + '</td><td>' + range + '</td><td>' + perf + '</td></tr>';
+  }).join('');
+  return (
+    '<div class="kpi-rule-field kpi-rule-field--perf">' +
+      '<div class="kpi-rule-perf-module-head">' +
+        '<label class="kpi-rule-label">' + dim + '完成率：</label>' +
+      '</div>' +
+      '<div class="kpi-rule-control">' +
+        '<div class="kpi-rule-perf-table-wrap">' +
+          '<table class="kpi-rule-perf-table">' +
+            '<thead><tr><th class="col-no">编号</th><th class="col-range">区间</th><th class="col-perf">绩效完成率</th></tr></thead>' +
+            '<tbody>' + body + '</tbody>' +
+          '</table>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function buildKpiRuleDetailExampleHtml(row) {
+  var dimensions = getKpiRuleListDisplayDimensions(row);
+  var weights = getKpiRuleListWeights(row);
+  var schemeDefaults = getKpiRuleListRowSchemeDefaults(row);
+  var baseAmount = parseFloat(schemeDefaults.baseAmount);
+  var leaderRatio = parseFloat(schemeDefaults.leaderRatio);
+  if (isNaN(baseAmount)) baseAmount = 0;
+  if (isNaN(leaderRatio)) leaderRatio = 0;
+  var fixed = KPI_RULE_FORMULA_EXAMPLE_FIXED;
+  var kpiParts = [];
+  var kpiTotal = 0;
+
+  dimensions.forEach(function (dim) {
+    var weight = weights[dim] != null ? weights[dim] : 0;
+    if (weight <= 0) return;
+    var rate = getKpiRuleExampleCompletionRate(dim);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    kpiParts.push({ label: label, rate: rate, weight: weight });
+    kpiTotal += rate * weight / 100;
+  });
+
+  if (!kpiParts.length) {
+    return '<div class="kpi-rule-formula-example is-empty">暂无案例说明</div>';
+  }
+
+  var html = '<div class="kpi-rule-formula-example"><div class="kpi-rule-formula-example-title">以一组示例数据计算</div>';
+  var assumptionParts = [
+    '总交易手数 <strong>' + fixed.tradeLots.toLocaleString('en-US') + '</strong> 手',
+    '基础提成金额 <strong>' + formatKpiRuleExampleMoney(baseAmount) + '</strong>'
+  ];
+  if (isKpiRuleLeaderRole(row)) {
+    assumptionParts.unshift('团队所有提成 <strong>' + formatKpiRuleExampleMoney(fixed.teamCommission) + '</strong>');
+    assumptionParts.push('组长提成比例 <strong>' + formatKpiRuleExamplePercent(leaderRatio) + '</strong>');
+  }
+  kpiParts.forEach(function (part) {
+    assumptionParts.push(part.label + ' <strong>' + formatKpiRuleExamplePercent(part.rate) + '</strong>');
+  });
+  html += '<div class="kpi-rule-formula-example-line">假设 ' + assumptionParts.join('，') + '</div>';
+
+  if (kpiParts.length === 1) {
+    html += '<div class="kpi-rule-formula-example-line">KPI完成率 = <strong>' + formatKpiRuleExamplePercent(kpiTotal) + '</strong></div>';
+  } else {
+    var kpiExpr = kpiParts.map(function (part) {
+      return formatKpiRuleExamplePercent(part.rate) + ' × ' + formatKpiRuleExamplePercent(part.weight);
+    }).join(' + ');
+    html += '<div class="kpi-rule-formula-example-line">KPI完成率 = ' + kpiExpr + ' = <strong>' + formatKpiRuleExamplePercent(kpiTotal) + '</strong></div>';
+  }
+
+  var salesExpr = fixed.tradeLots.toLocaleString('en-US') + ' × ' + formatKpiRuleExampleMoney(baseAmount) + ' × ' + formatKpiRuleExamplePercent(kpiTotal);
+  var salesResult = fixed.tradeLots * baseAmount * (kpiTotal / 100);
+
+  if (isKpiRuleLeaderRole(row)) {
+    var leaderExpr = formatKpiRuleExampleMoney(fixed.teamCommission) + ' × ' + formatKpiRuleExamplePercent(leaderRatio);
+    var leaderResult = fixed.teamCommission * leaderRatio / 100;
+    var totalResult = salesResult + leaderResult;
+    html += '<div class="kpi-rule-formula-example-line">销售提成 = ' + salesExpr + ' = <strong>' + formatKpiRuleExampleMoney(salesResult) + '</strong></div>';
+    html += '<div class="kpi-rule-formula-example-line">组长提成 = ' + leaderExpr + ' = <strong>' + formatKpiRuleExampleMoney(leaderResult) + '</strong></div>';
+    html += '<div class="kpi-rule-formula-example-line"><span class="kpi-rule-formula-example-total-label">总提成</span> = ' + formatKpiRuleExampleMoney(salesResult) + ' + ' + formatKpiRuleExampleMoney(leaderResult) + ' = <strong class="kpi-rule-formula-example-result">' + formatKpiRuleExampleMoney(totalResult) + '</strong></div>';
+  } else {
+    html += '<div class="kpi-rule-formula-example-line"><span class="kpi-rule-formula-example-total-label">提成</span> = ' + salesExpr + ' = <strong class="kpi-rule-formula-example-result">' + formatKpiRuleExampleMoney(salesResult) + '</strong></div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
+function buildKpiRuleDetailHtml(row) {
+  var dimensions = getKpiRuleListDisplayDimensions(row);
+  var weights = getKpiRuleListWeights(row);
+  var schemeDefaults = getKpiRuleListRowSchemeDefaults(row);
+  var role = getKpiRuleListRole(row);
+  var kpiFormula = buildKpiRuleListKpiCompletionFormula(dimensions, weights);
+  var formulaPreview = buildKpiRuleListFormulaPreview(row);
+  var formulaTypeLabel = role === '组长' ? '组长提成规则' : '销售提成规则';
+  var weightRows = dimensions.map(function (dim) {
+    var weight = weights[dim] != null ? weights[dim] : 0;
+    return buildKpiRuleDetailField(dim + '权重系数', buildKpiRuleDetailText(formatKpiRuleWeightPercent(weight)));
+  }).join('');
+  var perfBlocks = dimensions.map(renderKpiRuleDetailPerfTable).join('');
+  var schemeRows = buildKpiRuleDetailField('KPI完成率', '<div class="kpi-rule-formula-expr">' + (kpiFormula || '—') + '</div>', { middle: true }) +
+    buildKpiRuleDetailField('绩效核算公式选择', buildKpiRuleDetailText(formulaTypeLabel)) +
+    buildKpiRuleDetailField('基础提成金额', buildKpiRuleDetailText('$' + schemeDefaults.baseAmount));
+
+  if (isKpiRuleLeaderRole(row)) {
+    schemeRows += buildKpiRuleDetailField('组长提成比例', buildKpiRuleDetailText(formatKpiRuleWeightPercent(parseFloat(schemeDefaults.leaderRatio))));
+  }
+
+  schemeRows += buildKpiRuleDetailField('绩效公式预览', '<div class="kpi-rule-formula-preview">' + formulaPreview + '</div>', { top: true });
+
+  return (
+    '<section class="kpi-rule-form-section">' +
+      '<div class="kpi-rule-form-section-head">1. 基础考核设置</div>' +
+      '<div class="kpi-rule-form-section-body">' +
+        buildKpiRuleDetailField('考核地区', buildKpiRuleDetailText(row.region)) +
+        buildKpiRuleDetailField('考核员工范围', buildKpiRuleDetailText(row.group || '当前地区所有人')) +
+        buildKpiRuleDetailField('考核月份', buildKpiRuleDetailText(formatKpiRuleListAssessmentMonth(row))) +
+        buildKpiRuleDetailField('提成规则名称', buildKpiRuleDetailText(row.name)) +
+        buildKpiRuleDetailField('角色', buildKpiRuleDetailText(renderKpiRuleListRole(row)), { middle: true }) +
+        buildKpiRuleDetailField('KPI考核维度', renderDimensionTags(dimensions), { middle: true }) +
+      '</div>' +
+    '</section>' +
+    '<section class="kpi-rule-form-section">' +
+      '<div class="kpi-rule-form-section-head">2. 考核权重系数设置</div>' +
+      '<div class="kpi-rule-form-section-body">' + weightRows + '</div>' +
+    '</section>' +
+    '<section class="kpi-rule-form-section">' +
+      '<div class="kpi-rule-form-section-head">3. KPI完成率设置</div>' +
+      '<div class="kpi-rule-form-section-body">' + perfBlocks + '</div>' +
+    '</section>' +
+    '<section class="kpi-rule-form-section">' +
+      '<div class="kpi-rule-form-section-head">4. 绩效方案设置</div>' +
+      '<div class="kpi-rule-form-section-body">' +
+        schemeRows +
+        buildKpiRuleDetailField('案例说明', buildKpiRuleDetailExampleHtml(row), { top: true }) +
+      '</div>' +
+    '</section>'
+  );
+}
+
+function openKpiRuleDetailModal(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row) return;
+
+  var subtitle = document.getElementById('kpiRuleDetailSubtitle');
+  var body = document.getElementById('kpiRuleDetailBody');
+  if (subtitle) subtitle.textContent = row.name + ' · ' + getKpiRuleListRole(row);
+  if (body) body.innerHTML = buildKpiRuleDetailHtml(row);
+
+  var modal = document.getElementById('kpiRuleDetailModal');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiRuleDetailModal() {
+  var modal = document.getElementById('kpiRuleDetailModal');
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+var PAGE_SIZE = 12;
+var currentPage = 1;
+
+function isKpiRuleVoided(row) {
+  return !!(row && row.status === 'disabled');
+}
+
+function parseKpiRuleMonthLabel(monthLabel) {
+  var match = String(monthLabel || '').match(/^(\d+)年(\d+)月$/);
+  if (!match) return null;
+  return {
+    year: getKpiRuleFullYearFromYy(parseInt(match[1], 10)),
+    month: parseInt(match[2], 10)
+  };
+}
+
+function isKpiRulePeriodStarted(row) {
+  var parsed = parseKpiRuleMonthLabel(row && row.period);
+  if (!parsed) return false;
+  var now = new Date();
+  var currentYear = now.getFullYear();
+  var currentMonth = now.getMonth() + 1;
+  if (parsed.year < currentYear) return true;
+  if (parsed.year > currentYear) return false;
+  return parsed.month <= currentMonth;
+}
+
+function canEditKpiRule(row) {
+  return row && !isKpiRuleVoided(row) && !isKpiRulePeriodStarted(row);
+}
+
+function canVoidKpiRule(row) {
+  return row && !isKpiRuleVoided(row) && !isKpiRulePeriodStarted(row);
+}
+
+function renderActions(row) {
+  var html = '<div class="action-group">';
+  if (isKpiRuleVoided(row)) {
+    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">目标明细</button>';
+    html += '<span class="action-sep">|</span>' +
+      '<button type="button" class="action-link" onclick="openKpiRuleDetailModal(\'' + row.id + '\')">规则</button>';
+    html += '</div>';
+    return html;
+  }
+
+  if (!isKpiRuleTargetComplete(row)) {
+    html += '<button type="button" class="action-link action-link--danger" onclick="setTarget(\'' + row.id + '\')">设定目标</button>';
+  } else {
+    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">目标明细</button>';
+  }
+  html += '<span class="action-sep">|</span>' +
+    '<button type="button" class="action-link" onclick="openKpiRuleDetailModal(\'' + row.id + '\')">规则</button>';
+  if (canEditKpiRule(row)) {
+    html += '<span class="action-sep">|</span>' +
+      '<button type="button" class="action-link" onclick="editRule(\'' + row.id + '\')">编辑</button>';
+  }
+  if (canVoidKpiRule(row)) {
+    html += '<span class="action-sep">|</span>' +
+      '<button type="button" class="action-link action-link--muted" onclick="toggleRuleStatus(\'' + row.id + '\')">作废</button>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function getFilteredRules() {
+  var role = document.getElementById('filterRole').value;
+  var group = document.getElementById('filterGroup').value;
+  var period = document.getElementById('filterPeriod').value;
+  var periodMonths = period ? KPI_RULE_QUARTER_MONTHS[period] || [] : null;
+  return KPI_RULES_DATA.filter(function (row) {
+    if (role && getKpiRuleListRole(row) !== role) return false;
+    if (group && row.group !== group) return false;
+    if (periodMonths && periodMonths.indexOf(row.period) === -1) return false;
+    return true;
+  });
+}
+
+function getPageRows(page, rows) {
+  var start = (page - 1) * PAGE_SIZE;
+  return rows.slice(start, start + PAGE_SIZE);
+}
+
+function buildPageNumbers(totalPages, page) {
+  var pages = [];
+  if (totalPages <= 7) {
+    for (var i = 1; i <= totalPages; i += 1) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+  if (page > 3) pages.push('...');
+
+  var start = Math.max(2, page - 1);
+  var end = Math.min(totalPages - 1, page + 1);
+  for (var j = start; j <= end; j += 1) pages.push(j);
+
+  if (page < totalPages - 2) pages.push('...');
+  pages.push(totalPages);
+  return pages;
+}
+
+function renderPagination(totalPages, page, total) {
+  var info = document.getElementById('rulesPagerInfo');
+  var actions = document.getElementById('rulesPagerActions');
+  var start = total ? (page - 1) * PAGE_SIZE + 1 : 0;
+  var end = Math.min(page * PAGE_SIZE, total);
+
+  info.textContent = '共 ' + total + ' 条 · 第 ' + start + '-' + end + ' 条 · 每页 ' + PAGE_SIZE + ' 条';
+
+  if (!total) {
+    actions.innerHTML = '';
+    return;
+  }
+
+  var html = '<button type="button" class="pager-btn" onclick="goToPage(' + (page - 1) + ')"' + (page <= 1 ? ' disabled' : '') + '>上一页</button>';
+
+  buildPageNumbers(totalPages, page).forEach(function (item) {
+    if (item === '...') {
+      html += '<span class="pager-ellipsis">...</span>';
+      return;
+    }
+    html += '<button type="button" class="pager-page' + (item === page ? ' active' : '') + '" onclick="goToPage(' + item + ')">' + item + '</button>';
+  });
+
+  html += '<button type="button" class="pager-btn" onclick="goToPage(' + (page + 1) + ')"' + (page >= totalPages ? ' disabled' : '') + '>下一页</button>';
+  actions.innerHTML = html;
+}
+
+function goToPage(page) {
+  var rows = getFilteredRules();
+  var totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+  currentPage = Math.min(Math.max(page || 1, 1), totalPages);
+  renderRulesTable();
+}
+
+function renderRuleTargetSetting(row) {
+  var total = getKpiRuleListEmployeeTotal(row);
+  var setCount = row.targetSetCount != null ? row.targetSetCount : 0;
+  return setCount + '/' + total;
+}
+
+function isKpiRuleTargetComplete(row) {
+  var total = getKpiRuleListEmployeeTotal(row);
+  var setCount = row.targetSetCount != null ? row.targetSetCount : 0;
+  return total > 0 && setCount >= total;
+}
+
+function formatKpiRuleListAssessmentMonth(row) {
+  return row.period || '—';
+}
+
+function renderRuleStatus(row) {
+  if (row.status === 'disabled') {
+    return '<span class="rule-status-tag rule-status-tag--disabled">作废</span>';
+  }
+  return '<span class="rule-status-tag rule-status-tag--active">使用中</span>';
+}
+
+function renderRulesTable() {
+  var rows = getFilteredRules();
+  var tbody = document.getElementById('rulesTableBody');
+  var total = rows.length;
+  var totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  if (!total) {
+    tbody.innerHTML = '<tr><td colspan="8"><div class="table-empty">暂无符合条件的 KPI 提成规则</div></td></tr>';
+    renderPagination(1, 1, 0);
+    return;
+  }
+
+  var pageRows = getPageRows(currentPage, rows);
+
+  tbody.innerHTML = pageRows.map(function (row) {
+    return (
+      '<tr>' +
+        '<td class="col-id">' + row.id + '</td>' +
+        '<td class="col-name">' + row.name + '</td>' +
+        '<td class="col-role">' + renderKpiRuleListRole(row) + '</td>' +
+        '<td class="col-month">' + formatKpiRuleListAssessmentMonth(row) + '</td>' +
+        '<td class="col-target' + (isKpiRuleTargetComplete(row) ? '' : ' col-target--incomplete') + '">' + renderRuleTargetSetting(row) + '</td>' +
+        '<td class="col-status">' + renderRuleStatus(row) + '</td>' +
+        '<td class="col-formula">' + buildKpiRuleListFormulaPreview(row) + '</td>' +
+        '<td class="col-action">' + renderActions(row) + '</td>' +
+      '</tr>'
+    );
+  }).join('');
+
+  renderPagination(totalPages, currentPage, total);
+}
+
+function applyFilters() {
+  currentPage = 1;
+  renderRulesTable();
+}
+
+function resetFilters() {
+  document.getElementById('filterRole').value = '';
+  document.getElementById('filterGroup').value = '';
+  document.getElementById('filterPeriod').value = '';
+  currentPage = 1;
+  renderRulesTable();
+}
+
+function renderDimensionTags(dimensions) {
+  return dimensions.map(function (d) {
+    return '<span class="dim-tag">' + d + '</span>';
+  }).join('');
+}
+
+function setTarget(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row || isKpiRuleVoided(row)) return;
+  openKpiRuleTargetModal(id);
+}
+
+function openKpiTargetDetailModal(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row) return;
+
+  KPI_TARGET_DETAIL_ROW_ID = id;
+  kpiTargetDetailListAll = getKpiTargetDetailRowsForScheme(row);
+  resetKpiTargetDetailFilters();
+  populateKpiTargetDetailFilterOptions();
+  kpiTargetDetailPage = 1;
+  initKpiTargetDetailAlerts(row);
+
+  var subtitle = document.getElementById('kpiTargetDetailSubtitle');
+  if (subtitle) {
+    subtitle.textContent = row.name;
+  }
+
+  renderKpiTargetDetailTable();
+
+  var modal = document.getElementById('kpiTargetDetailModal');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiTargetDetailModal() {
+  var modal = document.getElementById('kpiTargetDetailModal');
+  if (!modal || modal.hidden) return;
+  hideKpiTargetEmpAlertTooltip();
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  KPI_TARGET_DETAIL_ROW_ID = null;
+  document.body.style.overflow = '';
+}
+
+function editRule(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row || !canEditKpiRule(row)) return;
+  alert('编辑：' + row.name + '（原型演示）');
+}
+
+function toggleRuleStatus(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row || !canVoidKpiRule(row)) return;
+  if (!confirm('确认作废「' + row.name + '」？')) return;
+  row.status = 'disabled';
+  alert('已作废：' + row.name + '（原型演示）');
+  renderRulesTable();
+}
+
+var KPI_RULE_DIMENSION_WEIGHTS = {
+  '充值活跃': { fieldId: 'kpiRuleWeightFieldActive', inputId: 'kpiRuleWeightActive' },
+  '净入金': { fieldId: 'kpiRuleWeightFieldDeposit', inputId: 'kpiRuleWeightDeposit' },
+  '交易手数': { fieldId: 'kpiRuleWeightFieldLots', inputId: 'kpiRuleWeightLots' },
+  '联系率': { fieldId: 'kpiRuleWeightFieldComm', inputId: 'kpiRuleWeightComm' }
+};
+
+var kpiRuleWeightRemovedModules = {};
+
+var KPI_RULE_PERF_SECTIONS = {
+  perf: {
+    bodyId: 'kpiRulePerfSectionBody',
+    emptyId: 'kpiRulePerfEmpty',
+    settings: {
+      '充值活跃': { fieldId: 'kpiRulePerfFieldActive' },
+      '净入金': { fieldId: 'kpiRulePerfFieldDeposit' },
+      '交易手数': { fieldId: 'kpiRulePerfFieldLots' },
+      '联系率': { fieldId: 'kpiRulePerfFieldComm' }
+    }
+  }
+};
+
+var KPI_RULE_PERF_DEFAULT_ROWS = [
+  { range: '＜40%', perf: 0 },
+  { range: '40%≤ N ＜60%', perf: 40 },
+  { range: '60%≤ N ＜80%', perf: 60 },
+  { range: '80%≤ N ＜90%', perf: 80 },
+  { range: ' N ≥90%', equalsCompletion: true }
+];
+
+var kpiRulePerfStore = {};
+var kpiRulePerfRemovedModules = {};
+
+function cloneKpiRulePerfDefaultRows() {
+  return KPI_RULE_PERF_DEFAULT_ROWS.map(function (row) {
+    var cloned = { type: 'static', range: row.range };
+    if (row.equalsCompletion) {
+      cloned.equalsCompletion = true;
+    } else {
+      cloned.perf = row.perf;
+    }
+    return cloned;
+  });
+}
+
+function getKpiRulePerfIntervalFormHtml(rowData) {
+  var min = rowData.min != null && rowData.min !== '' ? rowData.min : '';
+  var max = rowData.max != null && rowData.max !== '' ? rowData.max : '';
+  var perf = rowData.perf != null && rowData.perf !== '' ? rowData.perf : '';
+  var includeStart = !!rowData.includeStart;
+  var includeEnd = !!rowData.includeEnd;
+  var equalsCompletion = !!rowData.equalsCompletion;
+
+  return '<div class="kpi-rule-perf-interval-form">' +
+      '<div class="kpi-rule-perf-interval-form-row kpi-rule-perf-interval-form-row--range">' +
+        '<div class="kpi-rule-perf-interval-form-group kpi-rule-perf-interval-form-group--start">' +
+          '<span class="kpi-rule-perf-interval-form-label">起始完成率：</span>' +
+          '<div class="kpi-rule-weight-input-wrap">' +
+            '<input class="kpi-rule-weight-input" type="number" data-field="min" min="0" max="100" step="0.01" placeholder="0" value="' + min + '">' +
+            '<span class="kpi-rule-weight-input-suffix">%</span>' +
+          '</div>' +
+          '<label class="kpi-rule-split-check">' +
+            '<input type="checkbox" data-field="includeStart"' + (includeStart ? ' checked' : '') + '>包含起始' +
+          '</label>' +
+        '</div>' +
+        '<span class="kpi-rule-perf-interval-form-divider" aria-hidden="true">，</span>' +
+        '<div class="kpi-rule-perf-interval-form-group">' +
+          '<span class="kpi-rule-perf-interval-form-label">结束完成率：</span>' +
+          '<div class="kpi-rule-weight-input-wrap">' +
+            '<input class="kpi-rule-weight-input" type="number" data-field="max" min="0" max="100" step="0.01" placeholder="0" value="' + max + '">' +
+            '<span class="kpi-rule-weight-input-suffix">%</span>' +
+          '</div>' +
+          '<label class="kpi-rule-split-check">' +
+            '<input type="checkbox" data-field="includeEnd"' + (includeEnd ? ' checked' : '') + '>包含结束' +
+          '</label>' +
+        '</div>' +
+      '</div>' +
+      '<div class="kpi-rule-perf-interval-form-row">' +
+        '<span class="kpi-rule-perf-interval-form-label">绩效完成率为：</span>' +
+        '<div class="kpi-rule-weight-input-wrap' + (equalsCompletion ? ' is-disabled' : '') + '">' +
+          '<input class="kpi-rule-weight-input" type="number" data-field="perf" min="0" max="100" step="0.01" placeholder="0" value="' + perf + '"' + (equalsCompletion ? ' disabled' : '') + '>' +
+          '<span class="kpi-rule-weight-input-suffix">%</span>' +
+        '</div>' +
+        '<label class="kpi-rule-split-check">' +
+          '<input type="checkbox" data-field="equalsCompletion"' + (equalsCompletion ? ' checked' : '') + '>等于完成率' +
+        '</label>' +
+      '</div>' +
+    '</div>';
+}
+
+function buildKpiRulePerfRangeText(row) {
+  var min = row.min;
+  var max = row.max;
+  var opLeft = row.includeStart ? '≤' : '＜';
+  var opRight = row.includeEnd ? '≤' : '＜';
+  var hasMin = min !== '' && min != null;
+  var hasMax = max !== '' && max != null;
+  if (hasMin && hasMax) return min + '%' + opLeft + ' N ' + opRight + max + '%';
+  if (hasMax && !hasMin) return ' N ' + opRight + max + '%';
+  if (hasMin && !hasMax) return ' N ' + (row.includeStart ? '≥' : '＞') + min + '%';
+  return '待配置';
+}
+
+function formatKpiRulePerfCellValue(row) {
+  if (row.equalsCompletion) return ' N ';
+  return formatKpiRulePerfValue(row.perf);
+}
+
+function setKpiRulePerfEqualsCompletionState(tr, checked) {
+  var perfInput = tr.querySelector('[data-field="perf"]');
+  if (!perfInput) return;
+  var wrap = perfInput.closest('.kpi-rule-weight-input-wrap');
+  perfInput.disabled = checked;
+  if (wrap) wrap.classList.toggle('is-disabled', checked);
+  if (checked) perfInput.value = '';
+}
+
+function renderKpiRulePerfFormRow(dim, row, index) {
+  var formHtml = getKpiRulePerfIntervalFormHtml(row);
+  return '<tr class="is-form-row" data-row-index="' + index + '" data-row-type="form">' +
+    '<td class="col-no">—</td>' +
+    '<td colspan="2" class="kpi-rule-perf-form-cell">' + formHtml + '</td>' +
+    '<td class="col-action">' +
+      '<div class="kpi-rule-perf-actions">' +
+        '<a href="#" class="kpi-rule-perf-action-link" data-action="save">保存</a>' +
+        '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-action-link--danger" data-action="delete">删除</a>' +
+      '</div>' +
+    '</td>' +
+  '</tr>';
+}
+
+function getKpiRulePerfTable(dim, sectionKey) {
+  return document.querySelector('#kpiRuleEntryForm .kpi-rule-perf-table[data-perf-section="' + sectionKey + '"][data-perf-dimension="' + dim + '"]');
+}
+
+function getKpiRulePerfRows(dim, sectionKey) {
+  if (!kpiRulePerfStore[sectionKey]) kpiRulePerfStore[sectionKey] = {};
+  if (!kpiRulePerfStore[sectionKey][dim]) {
+    kpiRulePerfStore[sectionKey][dim] = cloneKpiRulePerfDefaultRows();
+  }
+  return kpiRulePerfStore[sectionKey][dim];
+}
+
+function formatKpiRulePerfValue(perf) {
+  if (perf === '' || perf == null) return '—';
+  return String(perf).indexOf('%') > -1 ? perf : perf + '%';
+}
+
+function renderKpiRulePerfTable(dim, sectionKey) {
+  var table = getKpiRulePerfTable(dim, sectionKey);
+  if (!table) return;
+  var tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  var rows = getKpiRulePerfRows(dim, sectionKey);
+  tbody.innerHTML = rows.map(function (row, index) {
+    if (row.type === 'form') return renderKpiRulePerfFormRow(dim, row, index);
+    return '<tr data-row-index="' + index + '" data-row-type="static">' +
+      '<td class="col-no">' + (index + 1) + '</td>' +
+      '<td class="col-range">' + row.range + '</td>' +
+      '<td class="col-perf">' + formatKpiRulePerfCellValue(row) + '</td>' +
+      '<td class="col-action">' +
+        '<div class="kpi-rule-perf-actions">' +
+          '<a href="#" class="kpi-rule-perf-action-link" data-action="edit">编辑</a>' +
+          '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-action-link--danger" data-action="delete">删除</a>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function syncKpiRulePerfFormRowData(tr) {
+  var index = parseInt(tr.getAttribute('data-row-index'), 10);
+  var table = tr.closest('.kpi-rule-perf-table');
+  if (!table) return;
+  var dim = table.getAttribute('data-perf-dimension');
+  var sectionKey = table.getAttribute('data-perf-section');
+  var rows = getKpiRulePerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type !== 'form') return;
+  var minInput = tr.querySelector('[data-field="min"]');
+  var maxInput = tr.querySelector('[data-field="max"]');
+  var perfInput = tr.querySelector('[data-field="perf"]');
+  var opLeft = tr.querySelector('[data-field="opLeft"]');
+  var opRight = tr.querySelector('[data-field="opRight"]');
+  var includeStart = tr.querySelector('[data-field="includeStart"]');
+  var includeEnd = tr.querySelector('[data-field="includeEnd"]');
+  var equalsCompletion = tr.querySelector('[data-field="equalsCompletion"]');
+  if (minInput) row.min = minInput.value;
+  if (maxInput) row.max = maxInput.value;
+  if (perfInput) row.perf = perfInput.value;
+  if (opLeft) row.opLeft = opLeft.value;
+  if (opRight) row.opRight = opRight.value;
+  if (includeStart) row.includeStart = includeStart.checked;
+  if (includeEnd) row.includeEnd = includeEnd.checked;
+  if (equalsCompletion) row.equalsCompletion = equalsCompletion.checked;
+}
+
+function saveKpiRulePerfRow(dim, index, sectionKey) {
+  var table = getKpiRulePerfTable(dim, sectionKey);
+  var tr = table && table.querySelector('tr[data-row-index="' + index + '"]');
+  if (!tr) return;
+  syncKpiRulePerfFormRowData(tr);
+  var rows = getKpiRulePerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type !== 'form') return;
+  var equalsCompletion = !!row.equalsCompletion;
+  row.type = 'static';
+  row.range = buildKpiRulePerfRangeText(row);
+  if (equalsCompletion) {
+    row.equalsCompletion = true;
+    delete row.perf;
+  } else {
+    var perfVal = parseFloat(row.perf);
+    row.perf = isNaN(perfVal) ? 0 : perfVal;
+    delete row.equalsCompletion;
+  }
+  delete row.min;
+  delete row.max;
+  delete row.opLeft;
+  delete row.opRight;
+  delete row.includeStart;
+  delete row.includeEnd;
+  renderKpiRulePerfTable(dim, sectionKey);
+}
+
+function editKpiRulePerfRow(dim, index, sectionKey) {
+  var rows = getKpiRulePerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type === 'form') return;
+  row.type = 'form';
+  row.min = '';
+  row.max = '';
+  row.includeStart = false;
+  row.includeEnd = false;
+  row.equalsCompletion = !!row.equalsCompletion;
+  row.perf = row.equalsCompletion ? '' : (row.perf != null ? row.perf : '');
+  renderKpiRulePerfTable(dim, sectionKey);
+}
+
+function deleteKpiRulePerfRow(dim, index, sectionKey) {
+  var rows = getKpiRulePerfRows(dim, sectionKey);
+  if (rows.length <= 1) return;
+  if (!confirm('确认删除该区间？')) return;
+  var table = getKpiRulePerfTable(dim, sectionKey);
+  var tr = table && table.querySelector('tr[data-row-index="' + index + '"]');
+  if (tr && tr.getAttribute('data-row-type') === 'form') syncKpiRulePerfFormRowData(tr);
+  rows.splice(index, 1);
+  renderKpiRulePerfTable(dim, sectionKey);
+}
+
+function bindKpiRulePerfTableActions(dim, sectionKey) {
+  var table = getKpiRulePerfTable(dim, sectionKey);
+  if (!table || table.dataset.perfActionsBound === '1') return;
+  table.dataset.perfActionsBound = '1';
+  var tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  tbody.addEventListener('click', function (event) {
+    var link = event.target.closest('[data-action]');
+    if (!link) return;
+    event.preventDefault();
+    var tr = event.target.closest('tr[data-row-index]');
+    if (!tr) return;
+    var index = parseInt(tr.getAttribute('data-row-index'), 10);
+    if (link.getAttribute('data-action') === 'edit') editKpiRulePerfRow(dim, index, sectionKey);
+    if (link.getAttribute('data-action') === 'save') saveKpiRulePerfRow(dim, index, sectionKey);
+    if (link.getAttribute('data-action') === 'delete') deleteKpiRulePerfRow(dim, index, sectionKey);
+  });
+  tbody.addEventListener('change', function (event) {
+    var checkbox = event.target.closest('[data-field="equalsCompletion"]');
+    if (!checkbox) return;
+    var tr = checkbox.closest('tr');
+    if (!tr) return;
+    setKpiRulePerfEqualsCompletionState(tr, checkbox.checked);
+  });
+}
+
+function addKpiRulePerfRow(dim, sectionKey) {
+  getKpiRulePerfRows(dim, sectionKey).push({
+    type: 'form',
+    min: '',
+    max: '',
+    includeStart: false,
+    includeEnd: false,
+    perf: '',
+    equalsCompletion: false
+  });
+  renderKpiRulePerfTable(dim, sectionKey);
+}
+
+function resetKpiRulePerfStore() {
+  kpiRulePerfStore = {};
+  kpiRulePerfRemovedModules = {};
+}
+
+function updateKpiRulePerfEmptyState() {
+  var empty = document.getElementById('kpiRulePerfEmpty');
+  if (!empty) return;
+  var hasVisibleModule = getSelectedKpiRuleDimensions().some(function (dim) {
+    if (kpiRulePerfRemovedModules[dim]) return false;
+    var conf = KPI_RULE_PERF_SECTIONS.perf.settings[dim];
+    var field = conf && document.getElementById(conf.fieldId);
+    return !!field;
+  });
+  empty.hidden = hasVisibleModule;
+}
+
+function initKpiRulePerfTables() {
+  document.querySelectorAll('#kpiRuleEntryForm .kpi-rule-perf-add-btn').forEach(function (btn) {
+    if (btn.dataset.perfAddBound === '1') return;
+    btn.dataset.perfAddBound = '1';
+    btn.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (btn.classList.contains('is-disabled')) return;
+      var dim = btn.getAttribute('data-perf-dimension');
+      var sectionKey = btn.getAttribute('data-perf-section');
+      if (dim && sectionKey) addKpiRulePerfRow(dim, sectionKey);
+    });
+  });
+  Object.keys(KPI_RULE_PERF_SECTIONS).forEach(function (sectionKey) {
+    Object.keys(KPI_RULE_PERF_SECTIONS[sectionKey].settings).forEach(function (dim) {
+      bindKpiRulePerfTableActions(dim, sectionKey);
+      renderKpiRulePerfTable(dim, sectionKey);
+    });
+  });
+}
+
+function syncKpiRulePerfFieldOrder(sectionKey) {
+  var section = KPI_RULE_PERF_SECTIONS[sectionKey];
+  if (!section) return;
+  var body = document.getElementById(section.bodyId);
+  var empty = document.getElementById(section.emptyId);
+  if (!body) return;
+
+  getSelectedKpiRuleDimensions().forEach(function (dim) {
+    var conf = section.settings[dim];
+    if (!conf) return;
+    var field = document.getElementById(conf.fieldId);
+    if (field) body.appendChild(field);
+  });
+
+  if (empty) body.insertBefore(empty, body.firstChild);
+}
+
+function syncKpiRulePerfSectionSettings(sectionKey) {
+  var section = KPI_RULE_PERF_SECTIONS[sectionKey];
+  if (!section) return;
+  var selected = getSelectedKpiRuleDimensions();
+  var selectedMap = {};
+  selected.forEach(function (dim) { selectedMap[dim] = true; });
+
+  Object.keys(section.settings).forEach(function (dim) {
+    var conf = section.settings[dim];
+    var field = document.getElementById(conf.fieldId);
+    if (!field) return;
+    var isSelected = !!selectedMap[dim];
+    var isRemoved = !!kpiRulePerfRemovedModules[dim];
+    field.hidden = !isSelected || isRemoved;
+    field.querySelectorAll('.kpi-rule-perf-add-btn').forEach(function (btn) {
+      var isActive = isSelected && !isRemoved;
+      btn.classList.toggle('is-disabled', !isActive);
+      btn.setAttribute('aria-disabled', isActive ? 'false' : 'true');
+    });
+  });
+
+  updateKpiRulePerfEmptyState();
+  syncKpiRulePerfFieldOrder(sectionKey);
+}
+
+function removeKpiRulePerfModule(event, dim) {
+  if (event) event.preventDefault();
+  var conf = KPI_RULE_PERF_SECTIONS.perf.settings[dim];
+  if (!conf) return;
+  var field = document.getElementById(conf.fieldId);
+  if (!field || field.hidden) return;
+  if (!confirm('确认移除此模块？')) return;
+  kpiRulePerfRemovedModules[dim] = true;
+  field.hidden = true;
+  updateKpiRulePerfEmptyState();
+}
+
+function syncKpiRulePerfSettings() {
+  Object.keys(KPI_RULE_PERF_SECTIONS).forEach(function (sectionKey) {
+    syncKpiRulePerfSectionSettings(sectionKey);
+  });
+}
+
+function syncKpiRuleWeightFields() {
+  var result = syncKpiRuleLinkedFields(KPI_RULE_DIMENSION_WEIGHTS, { clearOnHide: '0' });
+
+  Object.keys(KPI_RULE_DIMENSION_WEIGHTS).forEach(function (dim) {
+    if (!kpiRuleWeightRemovedModules[dim]) return;
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var field = document.getElementById(conf.fieldId);
+    if (field) field.hidden = true;
+  });
+
+  Object.keys(KPI_RULE_DIMENSION_WEIGHTS).forEach(function (dim) {
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var field = document.getElementById(conf.fieldId);
+    var input = document.getElementById(conf.inputId);
+    if (!input) return;
+    var isActive = field && !field.hidden && !kpiRuleWeightRemovedModules[dim];
+    input.required = isActive;
+  });
+
+  updateKpiRuleWeightEmptyState();
+  syncKpiRulePerfSettings();
+  validateKpiRuleWeights();
+  updateKpiRuleSchemeSection();
+}
+
+function updateKpiRuleWeightEmptyState() {
+  var hasVisibleModule = getSelectedKpiRuleDimensions().some(function (dim) {
+    return !kpiRuleWeightRemovedModules[dim];
+  });
+  var empty = document.getElementById('kpiRuleWeightEmpty');
+  var sumBox = document.getElementById('kpiRuleWeightSumBox');
+  if (empty) empty.hidden = hasVisibleModule;
+  if (sumBox) sumBox.hidden = !hasVisibleModule;
+}
+
+function removeKpiRuleWeightModule(event, dim) {
+  if (event) event.preventDefault();
+  var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+  if (!conf) return;
+  var field = document.getElementById(conf.fieldId);
+  if (!field || field.hidden) return;
+  if (!confirm('确认移除此权重？')) return;
+  kpiRuleWeightRemovedModules[dim] = true;
+  field.hidden = true;
+  updateKpiRuleWeightEmptyState();
+  validateKpiRuleWeights();
+}
+
+function getKpiRuleLinkedInputIds(conf) {
+  if (conf.inputIds && conf.inputIds.length) return conf.inputIds;
+  return conf.inputId ? [conf.inputId] : [];
+}
+
+function syncKpiRuleLinkedFields(config, options) {
+  var selected = getSelectedKpiRuleDimensions();
+  var selectedMap = {};
+  selected.forEach(function (dim) { selectedMap[dim] = true; });
+
+  Object.keys(config).forEach(function (dim) {
+    var conf = config[dim];
+    var field = document.getElementById(conf.fieldId);
+    var isSelected = !!selectedMap[dim];
+    if (field) field.hidden = !isSelected;
+    getKpiRuleLinkedInputIds(conf).forEach(function (inputId) {
+      var input = document.getElementById(inputId);
+      if (!input) return;
+      input.disabled = !isSelected;
+      if (!isSelected && options) {
+        if (input.tagName === 'SELECT') {
+          input.value = '<';
+        } else if (options.clearOnHide !== undefined) {
+          input.value = options.clearOnHide;
+        }
+      }
+    });
+  });
+
+  return { selected: selected, selectedMap: selectedMap };
+}
+
+function getSelectedKpiRuleDimensions() {
+  var form = document.getElementById('kpiRuleEntryForm');
+  if (!form) return [];
+  return Array.prototype.map.call(
+    form.querySelectorAll('input[name="kpiRuleDimension"]:checked'),
+    function (cb) { return cb.value; }
+  );
+}
+
+function parseKpiRuleWeight(id) {
+  var el = document.getElementById(id);
+  if (!el || el.disabled) return 0;
+  var val = parseFloat(el.value);
+  return isNaN(val) ? 0 : val;
+}
+
+function validateKpiRuleWeights() {
+  var selected = getSelectedKpiRuleDimensions();
+  var box = document.getElementById('kpiRuleWeightSumBox');
+  var text = document.getElementById('kpiRuleWeightSumText');
+  var hint = document.getElementById('kpiRuleWeightSumHint');
+
+  if (!selected.length) {
+    if (box) box.classList.remove('is-error');
+    return false;
+  }
+
+  var sum = selected.reduce(function (total, dim) {
+    if (kpiRuleWeightRemovedModules[dim]) return total;
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    return total + (conf ? parseKpiRuleWeight(conf.inputId) : 0);
+  }, 0);
+
+  var activeCount = selected.filter(function (dim) {
+    return !kpiRuleWeightRemovedModules[dim];
+  }).length;
+
+  if (!activeCount) {
+    if (box) box.classList.remove('is-error');
+    return false;
+  }
+
+  var isValid = Math.abs(sum - 100) < 0.01;
+
+  if (text) text.textContent = '权重合计：' + sum.toFixed(2) + '%';
+  if (box) box.classList.toggle('is-error', !isValid);
+  if (hint) {
+    hint.textContent = isValid
+      ? '校验检测：已选维度权重系数之和须等于 100%'
+      : '校验检测：已选维度权重系数之和不等于 100%';
+  }
+  updateKpiRuleSchemeSection();
+  return isValid;
+}
+
+function getKpiRuleWeightedDimensions() {
+  return getSelectedKpiRuleDimensions().filter(function (dim) {
+    if (kpiRuleWeightRemovedModules[dim]) return false;
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    if (!conf) return false;
+    return parseKpiRuleWeight(conf.inputId) > 0;
+  });
+}
+
+function kpiRuleFormulaPreviewOp(symbol) {
+  return '<span class="kpi-rule-formula-preview-op"> ' + symbol + ' </span>';
+}
+
+function buildKpiRuleKpiCompletionFormula() {
+  var dims = getKpiRuleWeightedDimensions();
+  if (!dims.length) return '';
+  return dims.map(function (dim) {
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var weight = parseKpiRuleWeight(conf.inputId);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    return label + ' × <span class="kpi-rule-formula-expr-percent">' + formatKpiRuleWeightPercent(weight) + '</span>';
+  }).join(' + ');
+}
+
+function buildKpiRuleFormulaPreviewNum(text) {
+  return '<span class="kpi-rule-formula-preview-num">' + text + '</span>';
+}
+
+function buildKpiRuleKpiCompletionFormulaForPreview() {
+  var dims = getKpiRuleWeightedDimensions();
+  if (!dims.length) return '';
+  return dims.map(function (dim) {
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var weight = parseKpiRuleWeight(conf.inputId);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    return label + kpiRuleFormulaPreviewOp('×') + buildKpiRuleFormulaPreviewNum(formatKpiRuleWeightPercent(weight));
+  }).join(kpiRuleFormulaPreviewOp('+'));
+}
+
+function buildKpiRuleFormulaPreviewPart(value, placeholder, options) {
+  var opts = options || {};
+  if (value === '' || value == null) {
+    return '<span class="kpi-rule-formula-preview-placeholder">' + placeholder + '</span>';
+  }
+  if (opts.asPercent) {
+    var num = parseFloat(value);
+    if (isNaN(num)) {
+      return '<span class="kpi-rule-formula-preview-placeholder">' + placeholder + '</span>';
+    }
+    return buildKpiRuleFormulaPreviewNum(formatKpiRuleWeightPercent(num));
+  }
+  return buildKpiRuleFormulaPreviewNum(value);
+}
+
+function buildKpiRuleFormulaPreviewPlaceholder(label) {
+  return '<span class="kpi-rule-formula-preview-placeholder">' + label + '</span>';
+}
+
+function getSelectedKpiRuleFormulaType() {
+  var checked = document.querySelector('input[name="kpiRuleFormulaType"]:checked');
+  return checked ? checked.value : '销售提成规则';
+}
+
+function isKpiRuleLeaderFormulaType() {
+  return getSelectedKpiRuleFormulaType() === '组长提成规则';
+}
+
+function applyKpiRuleFormulaDefaults(formulaType) {
+  var defaults = KPI_RULE_FORMULA_DEFAULTS[formulaType] || KPI_RULE_FORMULA_DEFAULTS['销售提成规则'];
+  var baseAmount = document.getElementById('kpiRuleBaseAmount');
+  var leaderRatio = document.getElementById('kpiRuleLeaderRatio');
+  if (baseAmount) baseAmount.value = defaults.amount;
+  if (leaderRatio && defaults.leaderRatio != null) leaderRatio.value = defaults.leaderRatio;
+}
+
+function syncKpiRuleExtraBonusVisibility() {
+  var field = document.getElementById('kpiRuleExtraBonusField');
+  if (!field) return;
+  field.hidden = true;
+}
+
+function syncKpiRuleLeaderRatioVisibility() {
+  var field = document.getElementById('kpiRuleLeaderRatioField');
+  var leaderRatio = document.getElementById('kpiRuleLeaderRatio');
+  var isLeader = isKpiRuleLeaderFormulaType();
+  if (field) field.hidden = !isLeader;
+  if (leaderRatio) {
+    if (isLeader) leaderRatio.setAttribute('required', 'required');
+    else leaderRatio.removeAttribute('required');
+  }
+}
+
+function onKpiRuleFormulaTypeChange() {
+  var formulaType = getSelectedKpiRuleFormulaType();
+  applyKpiRuleFormulaDefaults(formulaType);
+  syncKpiRuleExtraBonusVisibility();
+  syncKpiRuleLeaderRatioVisibility();
+  updateKpiRuleSchemeSection();
+}
+
+function formatKpiRuleExampleNum(num, decimals) {
+  var d = decimals == null ? 2 : decimals;
+  return Number(num).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+
+function formatKpiRuleExampleMoney(num) {
+  return '$' + formatKpiRuleExampleNum(num, 2);
+}
+
+function formatKpiRuleExamplePercent(num) {
+  var text = formatKpiRuleExampleNum(num, Math.abs(num % 1) < 0.001 ? 0 : 1);
+  return text + '%';
+}
+
+function buildKpiRuleExampleKpiDetail() {
+  var dims = getKpiRuleWeightedDimensions();
+  var parts = [];
+  var total = 0;
+  dims.forEach(function (dim) {
+    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var weight = parseKpiRuleWeight(conf.inputId);
+    var rate = getKpiRuleExampleCompletionRate(dim);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    parts.push({ label: label, rate: rate, weight: weight, value: rate * weight / 100 });
+    total += rate * weight / 100;
+  });
+  return { parts: parts, total: total };
+}
+
+function buildKpiRuleSalesCommissionExampleExpr(tradeLots, baseAmount, kpiTotal) {
+  return tradeLots.toLocaleString('en-US') + ' × ' + formatKpiRuleExampleMoney(baseAmount) + ' × ' +
+    formatKpiRuleExamplePercent(kpiTotal);
+}
+
+function buildKpiRuleSalesCommissionExampleValue(tradeLots, baseAmount, kpiTotal) {
+  return tradeLots * baseAmount * (kpiTotal / 100);
+}
+
+function buildKpiRuleFormulaExample() {
+  var dims = getKpiRuleWeightedDimensions();
+  if (!dims.length) {
+    return { empty: true, html: '请先设置权重大于 0 的考核维度，查看计算案例' };
+  }
+
+  var formulaType = getSelectedKpiRuleFormulaType();
+  var fixed = KPI_RULE_FORMULA_EXAMPLE_FIXED;
+  var defaults = KPI_RULE_FORMULA_DEFAULTS[formulaType] || KPI_RULE_FORMULA_DEFAULTS['销售提成规则'];
+  var baseAmountEl = document.getElementById('kpiRuleBaseAmount');
+  var leaderRatioEl = document.getElementById('kpiRuleLeaderRatio');
+  var baseAmount = baseAmountEl ? parseFloat(baseAmountEl.value) : parseFloat(defaults.amount);
+  var leaderRatio = leaderRatioEl ? parseFloat(leaderRatioEl.value) : parseFloat(defaults.leaderRatio);
+  if (isNaN(baseAmount)) baseAmount = 0;
+  if (isNaN(leaderRatio)) leaderRatio = 0;
+
+  var kpiDetail = buildKpiRuleExampleKpiDetail();
+  var tradeLots = fixed.tradeLots;
+  var html = '<div class="kpi-rule-formula-example-title">以一组示例数据计算</div>';
+
+  var assumptionParts = [
+    '总交易手数 <strong>' + tradeLots.toLocaleString('en-US') + '</strong> 手',
+    '基础提成金额 <strong>' + formatKpiRuleExampleMoney(baseAmount) + '</strong>'
+  ];
+  kpiDetail.parts.forEach(function (part) {
+    assumptionParts.push(part.label + ' <strong>' + formatKpiRuleExamplePercent(part.rate) + '</strong>');
+  });
+  if (isKpiRuleLeaderFormulaType()) {
+    assumptionParts.unshift('团队所有提成 <strong>' + formatKpiRuleExampleMoney(fixed.teamCommission) + '</strong>');
+    assumptionParts.push('组长提成比例 <strong>' + formatKpiRuleExamplePercent(leaderRatio) + '</strong>');
+  }
+  html += '<div class="kpi-rule-formula-example-line">假设 ' + assumptionParts.join('，') + '</div>';
+
+  if (kpiDetail.parts.length === 1) {
+    html += '<div class="kpi-rule-formula-example-line">KPI完成率 = <strong>' + formatKpiRuleExamplePercent(kpiDetail.total) + '</strong></div>';
+  } else {
+    var kpiExpr = kpiDetail.parts.map(function (part) {
+      return formatKpiRuleExamplePercent(part.rate) + ' × ' + formatKpiRuleExamplePercent(part.weight);
+    }).join(' + ');
+    html += '<div class="kpi-rule-formula-example-line">KPI完成率 = ' + kpiExpr + ' = <strong>' + formatKpiRuleExamplePercent(kpiDetail.total) + '</strong></div>';
+  }
+
+  var salesExpr = buildKpiRuleSalesCommissionExampleExpr(tradeLots, baseAmount, kpiDetail.total);
+  var salesResult = buildKpiRuleSalesCommissionExampleValue(tradeLots, baseAmount, kpiDetail.total);
+
+  if (isKpiRuleLeaderFormulaType()) {
+    var leaderExpr = formatKpiRuleExampleMoney(fixed.teamCommission) + ' × ' + formatKpiRuleExamplePercent(leaderRatio);
+    var leaderResult = fixed.teamCommission * leaderRatio / 100;
+    var totalResult = leaderResult + salesResult;
+    html += '<div class="kpi-rule-formula-example-line">销售提成 = ' + salesExpr + ' = <strong>' + formatKpiRuleExampleMoney(salesResult) + '</strong></div>';
+    html += '<div class="kpi-rule-formula-example-line">组长提成 = ' + leaderExpr + ' = <strong>' + formatKpiRuleExampleMoney(leaderResult) + '</strong></div>';
+    html += '<div class="kpi-rule-formula-example-line"><span class="kpi-rule-formula-example-total-label">总提成</span> = ' + formatKpiRuleExampleMoney(salesResult) + ' + ' + formatKpiRuleExampleMoney(leaderResult) + ' = <strong class="kpi-rule-formula-example-result">' + formatKpiRuleExampleMoney(totalResult) + '</strong></div>';
+  } else {
+    html += '<div class="kpi-rule-formula-example-line"><span class="kpi-rule-formula-example-total-label">提成</span> = ' + salesExpr + ' = <strong class="kpi-rule-formula-example-result">' + formatKpiRuleExampleMoney(salesResult) + '</strong></div>';
+  }
+
+  return { empty: false, html: html };
+}
+
+function buildKpiRuleSalesCommissionPreview(lotsPart, amountPart, kpiPart) {
+  return lotsPart + kpiRuleFormulaPreviewOp('×') + amountPart + kpiRuleFormulaPreviewOp('×') + kpiPart;
+}
+
+function buildKpiRuleFormulaPreview() {
+  var baseAmountEl = document.getElementById('kpiRuleBaseAmount');
+  var leaderRatioEl = document.getElementById('kpiRuleLeaderRatio');
+  var baseAmount = baseAmountEl ? baseAmountEl.value.trim() : '';
+  var leaderRatio = leaderRatioEl ? leaderRatioEl.value.trim() : '';
+  var kpiFormula = buildKpiRuleKpiCompletionFormulaForPreview();
+
+  var amountPart = buildKpiRuleFormulaPreviewPart(baseAmount, '基础提成金额');
+  var kpiPart = kpiFormula
+    ? '（' + kpiFormula + '）'
+    : buildKpiRuleFormulaPreviewPlaceholder('KPI完成率');
+  var lotsPart = buildKpiRuleFormulaPreviewPlaceholder('总交易手数');
+  var salesPreview = buildKpiRuleSalesCommissionPreview(lotsPart, amountPart, kpiPart);
+
+  if (!isKpiRuleLeaderFormulaType()) {
+    return salesPreview;
+  }
+
+  var teamPart = buildKpiRuleFormulaPreviewPlaceholder('团队所有提成');
+  var leaderRatioPart = buildKpiRuleFormulaPreviewPart(leaderRatio, '组长提成比例', { asPercent: true });
+  return teamPart + kpiRuleFormulaPreviewOp('×') + leaderRatioPart + ' + ' + salesPreview;
+}
+
+function updateKpiRuleSchemeSection() {
+  var formulaEl = document.getElementById('kpiRuleKpiCompletionFormula');
+  var previewEl = document.getElementById('kpiRuleFormulaPreview');
+  var exampleEl = document.getElementById('kpiRuleFormulaExample');
+  if (!formulaEl) return;
+
+  var formula = buildKpiRuleKpiCompletionFormula();
+  if (formula) {
+    formulaEl.innerHTML = formula;
+    formulaEl.classList.remove('is-empty');
+  } else {
+    formulaEl.textContent = '请先设置权重大于 0 的考核维度';
+    formulaEl.classList.add('is-empty');
+  }
+
+  if (previewEl) {
+    previewEl.innerHTML = buildKpiRuleFormulaPreview();
+  }
+  if (exampleEl) {
+    var example = buildKpiRuleFormulaExample();
+    exampleEl.className = 'kpi-rule-formula-example' + (example.empty ? ' is-empty' : '');
+    exampleEl.innerHTML = example.html;
+  }
+}
+
+function resetKpiRuleSchemeSettings() {
+  var formulaSales = document.getElementById('kpiRuleFormulaSales');
+  var extraBonus = document.getElementById('kpiRuleExtraBonus');
+  if (formulaSales) formulaSales.checked = true;
+  if (extraBonus) extraBonus.checked = true;
+  applyKpiRuleFormulaDefaults('销售提成规则');
+  syncKpiRuleExtraBonusVisibility();
+  syncKpiRuleLeaderRatioVisibility();
+  updateKpiRuleSchemeSection();
+}
+
+function resetKpiRuleWeights() {
+  document.getElementById('kpiRuleWeightActive').value = '30';
+  document.getElementById('kpiRuleWeightDeposit').value = '70';
+  document.getElementById('kpiRuleWeightLots').value = '0';
+  document.getElementById('kpiRuleWeightComm').value = '0';
+  kpiRuleWeightRemovedModules = {};
+  resetKpiRulePerfStore();
+  initKpiRulePerfTables();
+  syncKpiRuleWeightFields();
+  resetKpiRuleSchemeSettings();
+}
+
+var KPI_RULE_CURRENT_USER_REGION = '印尼';
+
+function getKpiRuleRegionValue() {
+  var region = document.getElementById('kpiRuleRegion');
+  if (region && region.value) return region.value;
+  return KPI_RULE_CURRENT_USER_REGION;
+}
+
+function onKpiRuleRegionChange() {
+  updateKpiRuleDefaultName();
+  updateKpiRuleEmployeeCount();
+}
+
+function initKpiRuleBasicFields() {
+  var region = document.getElementById('kpiRuleRegion');
+  if (region) {
+    region.value = KPI_RULE_CURRENT_USER_REGION;
+  }
+  var group = document.getElementById('kpiRuleGroup');
+  if (group) group.value = '';
+  updateKpiRuleEmployeeCount();
+}
+
+function getKpiRuleEmployeeCount() {
+  var group = document.getElementById('kpiRuleGroup');
+  var groupVal = group && group.value;
+  if (groupVal) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
+}
+
+function updateKpiRuleEmployeeCount() {
+  var el = document.getElementById('kpiRuleEmployeeCount');
+  if (!el) return;
+  var count = getKpiRuleEmployeeCount();
+  el.textContent = '涉及销售总人数为 ' + count + ' 人';
+}
+
+function onKpiRuleGroupChange() {
+  updateKpiRuleDefaultName();
+  updateKpiRuleEmployeeCount();
+}
+
+function buildKpiRuleDefaultName() {
+  var group = document.getElementById('kpiRuleGroup');
+  var period = document.getElementById('kpiRulePeriod');
+  var regionVal = getKpiRuleRegionValue();
+  var groupVal = group && group.value;
+  var periodVal = period && period.value;
+  if (!periodVal) return '';
+  var groupPart = groupVal || '所有人';
+  return regionVal + groupPart + periodVal + '绩效方案';
+}
+
+function updateKpiRuleDefaultName() {
+  var nameInput = document.getElementById('kpiRuleName');
+  if (!nameInput) return;
+  nameInput.value = buildKpiRuleDefaultName();
+}
+
+var kpiRuleSplitMonthSelection = [];
+var kpiRuleSplitMonthPeriodKey = '';
+
+function resetKpiRuleSplitMonthSelection(period) {
+  kpiRuleSplitMonthPeriodKey = period || '';
+  kpiRuleSplitMonthSelection = period ? (getKpiRuleQuarterMonths(period) || []).slice() : [];
+}
+
+function buildKpiRuleMonthTagHtml(month) {
+  return (
+    '<span class="kpi-rule-month-tag">' +
+      '<span class="kpi-rule-month-tag-text">' + month + '</span>' +
+      '<button type="button" class="kpi-rule-month-tag-remove" onclick="removeKpiRuleSplitMonth(\'' + month + '\')" aria-label="删除' + month + '">×</button>' +
+    '</span>'
+  );
+}
+
+function renderKpiRuleMonthList() {
+  var list = document.getElementById('kpiRuleMonthList');
+  if (!list) return;
+  if (!kpiRuleSplitMonthSelection.length) {
+    list.innerHTML = '<span class="kpi-rule-month-empty">暂无拆分月份，请重新选择考核时间范围</span>';
+    return;
+  }
+  list.innerHTML = kpiRuleSplitMonthSelection.map(buildKpiRuleMonthTagHtml).join('');
+}
+
+function removeKpiRuleSplitMonth(month) {
+  kpiRuleSplitMonthSelection = kpiRuleSplitMonthSelection.filter(function (m) { return m !== month; });
+  renderKpiRuleMonthList();
+}
+
+function updateKpiRuleSplitMonths() {
+  var periodEl = document.getElementById('kpiRulePeriod');
+  var splitEl = document.getElementById('kpiRuleSplitByMonth');
+  var list = document.getElementById('kpiRuleMonthList');
+  var period = periodEl && periodEl.value;
+  var splitChecked = splitEl && splitEl.checked;
+
+  if (!splitChecked || !period) {
+    if (list) {
+      list.hidden = true;
+      list.innerHTML = '';
+    }
+    kpiRuleSplitMonthSelection = [];
+    kpiRuleSplitMonthPeriodKey = '';
+    return;
+  }
+
+  if (period !== kpiRuleSplitMonthPeriodKey) {
+    resetKpiRuleSplitMonthSelection(period);
+  }
+
+  if (list) list.hidden = false;
+  renderKpiRuleMonthList();
+}
+
+function validateKpiRuleSchemeSection() {
+  if (!buildKpiRuleKpiCompletionFormula()) {
+    alert('请先设置权重大于 0 的考核维度，生成 KPI 完成率');
+    return false;
+  }
+  return true;
+}
+
+function hasKpiRuleDimensionSelected() {
+  var form = document.getElementById('kpiRuleEntryForm');
+  if (!form) return false;
+  return form.querySelectorAll('input[name="kpiRuleDimension"]:checked').length > 0;
+}
+
+function submitKpiRuleEntryForm(event) {
+  if (event) event.preventDefault();
+  var form = document.getElementById('kpiRuleEntryForm');
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  if (!hasKpiRuleDimensionSelected()) {
+    alert('请至少选择一个 KPI 考核维度');
+    return;
+  }
+  if (!validateKpiRuleWeights()) {
+    alert('已选维度的权重系数之和须等于 100%，请调整后再确认提交');
+    return;
+  }
+  if (!validateKpiRuleSchemeSection()) {
+    return;
+  }
+  alert('KPI 提成规则已确认提交（原型演示）');
+  closeKpiRuleEntryModal();
+}
+
+
+
+var KPI_TARGET_ROW_ID = null;
+
+function setKpiTargetRegionDisplay(region) {
+  var regionEl = document.getElementById('kpiTargetRegion');
+  if (!regionEl || !region) return;
+  var hasOption = Array.prototype.some.call(regionEl.options, function (opt) { return opt.value === region; });
+  if (!hasOption) {
+    var option = document.createElement('option');
+    option.value = region;
+    option.textContent = region;
+    regionEl.appendChild(option);
+  }
+  regionEl.value = region;
+  regionEl.disabled = true;
+}
+
+function applyKpiTargetWeightsFromRow(row) {
+  var weights = getKpiRuleListWeights(row);
+  Object.keys(KPI_TARGET_DIMENSION_WEIGHTS).forEach(function (dim) {
+    var cfg = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    var input = document.getElementById(cfg.inputId);
+    if (input) input.value = weights[dim] != null ? String(weights[dim]) : '0';
+  });
+}
+
+function applyKpiTargetFormulaFromRow(row) {
+  var formulaType = getKpiRuleFormulaTypeByRegion(row.region);
+  var radio = document.querySelector('#kpiTargetEntryForm input[name="kpiTargetFormulaType"][value="' + formulaType + '"]');
+  if (radio) radio.checked = true;
+  applyKpiTargetFormulaDefaults(formulaType);
+  syncKpiTargetExtraBonusVisibility();
+}
+
+function setKpiTargetGroupDisplay(group) {
+  var groupEl = document.getElementById('kpiTargetGroup');
+  if (!groupEl) return;
+  var groupVal = group || '';
+  var hasOption = Array.prototype.some.call(groupEl.options, function (opt) { return opt.value === groupVal; });
+  if (!hasOption && groupVal) {
+    var option = document.createElement('option');
+    option.value = groupVal;
+    option.textContent = groupVal;
+    groupEl.appendChild(option);
+  }
+  groupEl.value = groupVal;
+  groupEl.disabled = true;
+}
+
+var KPI_TARGET_EMPLOYEE_DATA = [
+  { id: '100050', name: 'Coulson', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售A组' },
+  { id: '100051', name: 'May', dept: 'TW销售部', region: '泰国', level: 'V1', group: 'TW销售A组' },
+  { id: '100052', name: 'Daisy', dept: 'TW销售部', region: '印度', level: 'V4', group: 'TW销售A组' },
+  { id: '100053', name: 'Fitz', dept: 'TW销售部', region: '印尼', level: 'V2-3', group: 'TW销售A组' },
+  { id: '100054', name: 'Simmons', dept: 'TW销售部', region: '巴西', level: 'V1', group: 'TW销售A组' },
+  { id: '100055', name: 'Mack', dept: 'TW销售部', region: '尼日', level: 'V2-3', group: 'TW销售A组' },
+  { id: '100056', name: 'Fury', dept: 'TW销售部', region: '泰国', level: 'V4', group: 'TW销售A组' },
+  { id: '100057', name: 'Hunter', dept: 'TW销售部', region: '印度', level: 'V1', group: 'TW销售B组' },
+  { id: '100058', name: 'Ward', dept: 'TW销售部', region: '印尼', level: '沉默户', group: 'TW销售B组' },
+  { id: '100059', name: 'Bobbi', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售B组' },
+  { id: '100060', name: 'Skye', dept: 'TW销售部', region: '巴西', level: 'V4', group: 'TW销售B组' },
+  { id: '100061', name: 'Melinda', dept: 'TW销售部', region: '尼日', level: 'V1', group: 'TW销售B组' },
+  { id: '100062', name: 'Trip', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售B组' },
+  { id: '100063', name: 'Antoine', dept: 'TW销售部', region: '泰国', level: 'V1', group: 'TW销售C组' },
+  { id: '100064', name: 'Yo-Yo', dept: 'TW销售部', region: '印尼', level: 'V4', group: 'TW销售C组' },
+  { id: '100065', name: 'Deke', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售C组' },
+  { id: '100066', name: 'Jemma', dept: 'TW销售部', region: '巴西', level: 'V1', group: 'TW销售C组' },
+  { id: '100067', name: 'Lincoln', dept: 'TW销售部', region: '尼日', level: 'V4', group: 'TW销售C组' },
+  { id: '100068', name: 'Raina', dept: 'TW销售部', region: '泰国', level: '沉默户', group: 'TW销售C组' },
+  { id: '100069', name: 'Alphonso', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售C组' },
+  { id: '100070', name: 'Quake', dept: 'TW销售部', region: '印尼', level: 'V1', group: 'TW销售C组' },
+  { id: '100071', name: 'Steve', dept: 'TW销售部', region: '巴西', level: 'V4', group: 'TW销售D组' },
+  { id: '100072', name: 'Natasha', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售D组' },
+  { id: '100073', name: 'Clint', dept: 'TW销售部', region: '印度', level: 'V1', group: 'TW销售D组' },
+  { id: '100074', name: 'Wanda', dept: 'TW销售部', region: '尼日', level: 'V2-3', group: 'TW销售D组' },
+  { id: '100075', name: 'Vision', dept: 'TW销售部', region: '印尼', level: 'V4', group: 'TW销售D组' },
+  { id: '100076', name: 'Peter', dept: 'DANA销售部', region: '印度', level: 'V1', group: 'DANA销售A组' },
+  { id: '100077', name: 'Gwen', dept: 'DANA销售部', region: '泰国', level: 'V2-3', group: 'DANA销售A组' },
+  { id: '100078', name: 'Miles', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售A组' },
+  { id: '100079', name: 'Kate', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售A组' },
+  { id: '100080', name: 'Logan', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售A组' },
+  { id: '100081', name: 'Jean', dept: 'DANA销售部', region: '印度', level: '沉默户', group: 'DANA销售A组' },
+  { id: '100082', name: 'Scott', dept: 'DANA销售部', region: '泰国', level: 'V4', group: 'DANA销售A组' },
+  { id: '100083', name: 'Ororo', dept: 'DANA销售部', region: '巴西', level: 'V2-3', group: 'DANA销售A组' },
+  { id: '100084', name: 'Kurt', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售A组' },
+  { id: '100085', name: 'Bruce', dept: 'DANA销售部', region: '印尼', level: 'V4', group: 'DANA销售B组' },
+  { id: '100086', name: 'Diana', dept: 'DANA销售部', region: '印度', level: 'V1', group: 'DANA销售B组' },
+  { id: '100087', name: 'Barry', dept: 'DANA销售部', region: '泰国', level: 'V2-3', group: 'DANA销售B组' },
+  { id: '100088', name: 'Arthur', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售B组' },
+  { id: '100089', name: 'Selina', dept: 'DANA销售部', region: '尼日', level: '沉默户', group: 'DANA销售B组' },
+  { id: '100090', name: 'Oliver', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售B组' },
+  { id: '100091', name: 'Felicity', dept: 'DANA销售部', region: '泰国', level: 'V1', group: 'DANA销售C组' },
+  { id: '100092', name: 'Laurel', dept: 'DANA销售部', region: '印度', level: 'V2-3', group: 'DANA销售C组' },
+  { id: '100093', name: 'Thea', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售C组' },
+  { id: '100094', name: 'John', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售C组' },
+  { id: '100095', name: 'Sara', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售C组' },
+  { id: '100096', name: 'Ray', dept: 'DANA销售部', region: '泰国', level: '沉默户', group: 'DANA销售C组' },
+  { id: '100097', name: 'Cisco', dept: 'DANA销售部', region: '印度', level: 'V4', group: 'DANA销售C组' },
+  { id: '100098', name: 'Kara', dept: 'DANA销售部', region: '巴西', level: 'V1', group: 'DANA销售D组' },
+  { id: '100099', name: 'Clark', dept: 'DANA销售部', region: '尼日', level: 'V2-3', group: 'DANA销售D组' },
+  { id: '100100', name: 'Lois', dept: 'DANA销售部', region: '印尼', level: 'V4', group: 'DANA销售D组' },
+  { id: '100101', name: 'Lex', dept: 'DANA销售部', region: '泰国', level: 'V1', group: 'DANA销售D组' },
+  { id: '100102', name: 'Hal', dept: 'DANA销售部', region: '印度', level: 'V2-3', group: 'DANA销售D组' },
+  { id: '100103', name: 'Carol', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售D组' },
+  { id: '100104', name: 'Victor', dept: 'DANA销售部', region: '尼日', level: '沉默户', group: 'DANA销售D组' },
+  { id: '100105', name: 'Dick', dept: 'DANA销售部', region: '印尼', level: 'V1', group: 'DANA销售D组' }
+];
+var kpiTargetEmployeeTab = 'unassigned';
+var kpiTargetEmployeeList = [];
+var kpiTargetEmployeeSelected = {};
+var kpiTargetEmployeeAlertByTab = { unassigned: {}, assigned: {} };
+var KPI_TARGET_DEFAULT_ACTIVE_GOAL = 400;
+var KPI_TARGET_DEFAULT_DEPOSIT_GOAL = 64000;
+var KPI_TARGET_EMPLOYEE_LEVELS = ['V1', 'V2-3', 'V4', '沉默户'];
+var KPI_TARGET_SHIELD_AGENT_NAMES = [
+  'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Ward', 'Trip', 'Bobbi', 'Hunter', 'Mack',
+  'Yo-Yo', 'Deke', 'Piper', 'Davis', 'Antoine', 'Garrett', 'Raina', 'Lincoln', 'Talbot',
+  'Sitwell', 'Fury', 'Hill', 'Hand', 'Weaver', 'Blake', 'Ruby', 'Radcliffe', 'Koenig',
+  'Melinda', 'Alphonso', 'Robbie', 'Creel', 'Aida', 'Jiaying', 'Bakshi', 'Triplett',
+  'Deathlok', 'Quake', 'Skye', 'Agent 33', 'Giyera', 'Von Strucker', 'Malick', 'Whitehall'
+];
+
+function getKpiTargetEmployeePool(row) {
+  if (!row) return [];
+  var region = row.region || '';
+  var group = row.group || '';
+  var pool = KPI_TARGET_EMPLOYEE_DATA.filter(function (emp) {
+    if (region && emp.region !== region) return false;
+    if (group && emp.group !== group) return false;
+    return true;
+  });
+  if (!pool.length && region) {
+    pool = KPI_TARGET_EMPLOYEE_DATA.filter(function (emp) {
+      return emp.region === region;
+    });
+  }
+  return pool.length ? pool : KPI_TARGET_EMPLOYEE_DATA.slice();
+}
+
+function getKpiTargetEmployeesForRow(row) {
+  if (!row) return [];
+  var total = getKpiRuleListEmployeeTotal(row);
+  var setCount = row.targetSetCount != null ? row.targetSetCount : 0;
+  var goals = getKpiTargetGoalValuesForRow(row);
+  var pool = getKpiTargetEmployeePool(row);
+  var groupLabel = row.group || (pool[0] && pool[0].group) || '';
+  var list = [];
+  var usedNames = {};
+
+  pool.forEach(function (src) {
+    if (list.length >= total || usedNames[src.name]) return;
+    usedNames[src.name] = true;
+    list.push({
+      sid: src.id,
+      name: src.name,
+      level: src.level,
+      group: src.group || groupLabel,
+      targetSet: list.length < setCount,
+      activeGoal: list.length < setCount ? goals.activeGoal : null,
+      depositGoal: list.length < setCount ? goals.depositGoal : null
+    });
+  });
+
+  var shieldIdx = 0;
+  while (list.length < total) {
+    var baseName = KPI_TARGET_SHIELD_AGENT_NAMES[shieldIdx % KPI_TARGET_SHIELD_AGENT_NAMES.length];
+    var round = Math.floor(shieldIdx / KPI_TARGET_SHIELD_AGENT_NAMES.length);
+    var name = round > 0 ? baseName + '-' + (round + 1) : baseName;
+    shieldIdx += 1;
+    if (usedNames[name]) continue;
+    usedNames[name] = true;
+    list.push({
+      sid: String(100050 + list.length),
+      name: name,
+      level: KPI_TARGET_EMPLOYEE_LEVELS[list.length % KPI_TARGET_EMPLOYEE_LEVELS.length],
+      group: groupLabel,
+      targetSet: list.length < setCount,
+      activeGoal: list.length < setCount ? goals.activeGoal : null,
+      depositGoal: list.length < setCount ? goals.depositGoal : null
+    });
+  }
+
+  return list;
+}
+
+function formatKpiTargetEmployeeLevelDisplay(level) {
+  if (level == null || level === '') return '--';
+  return String(level).replace('V2-3', 'V23');
+}
+
+function getSeededRandom(seed) {
+  var x = Math.sin(seed * 9999) * 10000;
+  return x - Math.floor(x);
+}
+
+function pickKpiTargetAlertEmployees(employees, count, seed) {
+  var list = employees.slice();
+  var i = list.length;
+  while (i > 1) {
+    i -= 1;
+    var j = Math.floor(getSeededRandom(seed + i) * (i + 1));
+    var tmp = list[i];
+    list[i] = list[j];
+    list[j] = tmp;
+  }
+  return list.slice(0, count);
+}
+
+function getKpiTargetOtherPerfName(currentRow, seed) {
+  var currentName = currentRow && currentRow.name ? currentRow.name : '';
+  var currentId = currentRow && currentRow.id ? currentRow.id : '';
+  var others = KPI_RULES_DATA.filter(function (r) {
+    return r.name && r.name !== currentName && r.id !== currentId && r.status !== 'disabled';
+  });
+  if (!others.length) {
+    others = KPI_RULES_DATA.filter(function (r) {
+      return r.name && r.name !== currentName;
+    });
+  }
+  if (!others.length) return '其他绩效方案';
+  var index = Math.floor(getSeededRandom(seed) * others.length);
+  return others[index].name;
+}
+
+function boostKpiTargetUnassignedEmployees(list, extraCount) {
+  if (!list || !list.length || !extraCount) return;
+  var assignedIndexes = [];
+  list.forEach(function (emp, index) {
+    if (emp.targetSet) assignedIndexes.push(index);
+  });
+  assignedIndexes.slice(-extraCount).forEach(function (index) {
+    list[index].targetSet = false;
+    list[index].activeGoal = null;
+    list[index].depositGoal = null;
+  });
+}
+
+function initKpiTargetEmployeeAlerts(row) {
+  kpiTargetEmployeeAlertByTab = { unassigned: {}, assigned: {} };
+  if (!row || !kpiTargetEmployeeList.length) return;
+  var seed = parseInt(String(row.id || '1').replace(/\D/g, ''), 10) || 1;
+  var goals = getKpiTargetGoalValuesForRow(row);
+  [
+    { tab: 'unassigned', alertCount: 2, filter: function (emp) { return !emp.targetSet; } },
+    { tab: 'assigned', alertCount: null, filter: function (emp) { return emp.targetSet; } }
+  ].forEach(function (cfg, idx) {
+    var pool = kpiTargetEmployeeList.filter(cfg.filter);
+    if (!pool.length) return;
+    var count = cfg.alertCount != null
+      ? Math.min(pool.length, cfg.alertCount)
+      : Math.min(pool.length, 1 + Math.floor(getSeededRandom(seed + idx * 17) * 3));
+    var picked = pickKpiTargetAlertEmployees(pool, count, seed + idx * 31);
+    picked.forEach(function (emp, pickIdx) {
+      kpiTargetEmployeeAlertByTab[cfg.tab][emp.sid] = {
+        perfName: getKpiTargetOtherPerfName(row, seed + idx * 41 + pickIdx * 13),
+        activeGoal: emp.activeGoal != null ? emp.activeGoal : (goals.activeGoal + pickIdx * 20),
+        depositGoal: emp.depositGoal != null ? emp.depositGoal : (goals.depositGoal + pickIdx * 500)
+      };
+    });
+  });
+}
+
+function buildKpiTargetEmployeeAlertTitle(emp, alertInfo) {
+  if (!emp || !alertInfo) return '';
+  var perfName = alertInfo.perfName || '其他绩效方案';
+  return '已为 【' + emp.name + '】 设置过 【' + perfName + '】的KPI目标：充值活跃：' + alertInfo.activeGoal + '，净入金：' + alertInfo.depositGoal + '，';
+}
+
+function formatKpiTargetEmployeeNameLevel(emp) {
+  if (!emp) return '--';
+  return emp.name + ' / ' + formatKpiTargetEmployeeLevelDisplay(emp.level);
+}
+
+function escapeHtmlAttr(value) {
+  return String(value || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
+function renderKpiTargetEmployeeAlertIcon(tipText) {
+  var titleEl = tipText ? '<title>' + String(tipText).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</title>' : '';
+  return '<svg class="kpi-target-emp-alert-icon" viewBox="0 0 16 16" width="14" height="14" role="img" aria-label="' + escapeHtmlAttr(tipText) + '">' + titleEl + '<circle cx="8" cy="8" r="6.5" fill="#fff5f5" stroke="#f87171" stroke-width="1"/><rect x="7.35" y="4.5" width="1.3" height="5" rx="0.65" fill="#ef4444"/><circle cx="8" cy="11.45" r="0.8" fill="#ef4444"/></svg>';
+}
+
+function ensureKpiTargetEmpAlertTooltip() {
+  var tip = document.getElementById('kpiTargetEmpAlertTooltip');
+  if (tip) return tip;
+  tip = document.createElement('div');
+  tip.id = 'kpiTargetEmpAlertTooltip';
+  tip.className = 'kpi-target-emp-alert-tooltip';
+  tip.hidden = true;
+  document.body.appendChild(tip);
+  return tip;
+}
+
+function hideKpiTargetEmpAlertTooltip() {
+  var tip = document.getElementById('kpiTargetEmpAlertTooltip');
+  if (tip) tip.hidden = true;
+}
+
+function showKpiTargetEmpAlertTooltip(el) {
+  if (!el) return;
+  var text = el.getAttribute('data-tip') || '';
+  if (!text) return;
+  var tip = ensureKpiTargetEmpAlertTooltip();
+  tip.textContent = text;
+  tip.hidden = false;
+  var rect = el.getBoundingClientRect();
+  var left = rect.left;
+  var top = rect.top - tip.offsetHeight - 8;
+  if (top < 8) top = rect.bottom + 8;
+  if (left + tip.offsetWidth > window.innerWidth - 8) {
+    left = Math.max(8, window.innerWidth - tip.offsetWidth - 8);
+  }
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+}
+
+function bindKpiTargetAlertTooltips() {
+  ['#kpiRuleTargetModal', '#kpiTargetDetailModal'].forEach(function (selector) {
+    document.querySelectorAll(selector + ' .kpi-target-emp-alert[data-tip]').forEach(function (el) {
+      el.onmouseenter = function () { showKpiTargetEmpAlertTooltip(el); };
+      el.onmouseleave = hideKpiTargetEmpAlertTooltip;
+    });
+  });
+}
+
+function formatKpiTargetDetailNameCell(item) {
+  if (!item) return '';
+  var alertInfo = kpiTargetDetailAlertBySid[item.sid];
+  if (!alertInfo) return item.name;
+  var tipText = buildKpiTargetEmployeeAlertTitle({ name: item.name }, alertInfo);
+  return '<span class="kpi-target-emp-name-level is-alert"><span class="kpi-target-emp-alert" data-tip="' + escapeHtmlAttr(tipText) + '">' + renderKpiTargetEmployeeAlertIcon(tipText) + '</span><span class="kpi-target-emp-name-text">' + item.name + '</span></span>';
+}
+
+function getKpiTargetEmployeeAlertInfo(emp) {
+  if (!emp) return null;
+  var tabKey = emp.targetSet ? 'assigned' : 'unassigned';
+  return (kpiTargetEmployeeAlertByTab[tabKey] && kpiTargetEmployeeAlertByTab[tabKey][emp.sid]) || null;
+}
+
+function formatKpiTargetEmployeeNameLevelCell(emp) {
+  var label = formatKpiTargetEmployeeNameLevel(emp);
+  if (!emp) return label;
+  var alertInfo = getKpiTargetEmployeeAlertInfo(emp);
+  if (!alertInfo) return label;
+  var tipText = buildKpiTargetEmployeeAlertTitle(emp, alertInfo);
+  return '<span class="kpi-target-emp-name-level is-alert"><span class="kpi-target-emp-alert" data-tip="' + escapeHtmlAttr(tipText) + '">' + renderKpiTargetEmployeeAlertIcon(tipText) + '</span><span class="kpi-target-emp-name-text">' + label + '</span></span>';
+}
+
+function formatKpiTargetEmployeeGoalsCell(emp) {
+  if (!emp || (emp.activeGoal == null && emp.depositGoal == null)) {
+    return '<span class="col-goal-empty">--</span>';
+  }
+  var activeText = emp.activeGoal == null || emp.activeGoal === '' ? '--' : String(emp.activeGoal);
+  var depositText = emp.depositGoal == null || emp.depositGoal === '' ? '--' : String(emp.depositGoal);
+  return activeText + ' / ' + depositText;
+}
+
+function formatKpiTargetEmployeeGoalValue(value) {
+  if (value == null || value === '') {
+    return '<span class="col-goal-empty">--</span>';
+  }
+  return String(value);
+}
+
+function formatKpiTargetDetailGoalValue(item, field) {
+  if (!item || !item.targetSet) {
+    return '<span class="col-goal-empty">--</span>';
+  }
+  return formatKpiTargetEmployeeGoalValue(item[field]);
+}
+
+function getKpiTargetGoalValuesForRow(row) {
+  return {
+    activeGoal: row && row.activeGoal != null ? row.activeGoal : KPI_TARGET_DEFAULT_ACTIVE_GOAL,
+    depositGoal: row && row.depositGoal != null ? row.depositGoal : KPI_TARGET_DEFAULT_DEPOSIT_GOAL
+  };
+}
+
+function getKpiTargetDetailMonthsForRow(row) {
+  if (!row) return [];
+  if (row.period) return [row.period];
+  var months = getKpiRuleQuarterMonths(row.quarter);
+  if (months.length) return months;
+  return [];
+}
+
+function getKpiTargetDetailRowsForRow(row) {
+  var employees = getKpiTargetEmployeesForRow(row);
+  var months = getKpiTargetDetailMonthsForRow(row);
+  if (!months.length) return [];
+  var rows = [];
+  employees.forEach(function (emp) {
+    months.forEach(function (month) {
+      rows.push({
+        sid: emp.sid,
+        name: emp.name,
+        level: emp.level,
+        group: emp.group,
+        month: month,
+        targetSet: emp.targetSet,
+        activeGoal: emp.activeGoal,
+        depositGoal: emp.depositGoal
+      });
+    });
+  });
+  return rows;
+}
+
+function getKpiTargetDetailRowsForScheme(row) {
+  if (!row) return [];
+  var schemeRows = KPI_RULES_DATA.filter(function (item) {
+    if (row.schemeKey) return item.schemeKey === row.schemeKey;
+    return item.id === row.id;
+  });
+  var rows = [];
+  schemeRows.forEach(function (schemeRow) {
+    rows = rows.concat(getKpiTargetDetailRowsForRow(schemeRow));
+  });
+  return rows;
+}
+
+var KPI_TARGET_DETAIL_PAGE_SIZE = 12;
+var kpiTargetDetailListAll = [];
+var kpiTargetDetailPage = 1;
+var KPI_TARGET_DETAIL_ROW_ID = null;
+var kpiTargetDetailAlertBySid = {};
+
+function initKpiTargetDetailAlerts(row) {
+  kpiTargetDetailAlertBySid = {};
+  if (!row || !kpiTargetDetailListAll.length) return;
+  var seed = parseInt(String(row.id || '1').replace(/\D/g, ''), 10) || 1;
+  var seen = {};
+  var employees = [];
+  kpiTargetDetailListAll.forEach(function (item) {
+    if (seen[item.sid]) return;
+    seen[item.sid] = true;
+    employees.push(item);
+  });
+  if (!employees.length) return;
+  var count = Math.min(employees.length, 3 + Math.floor(getSeededRandom(seed + 59) * 3));
+  var picked = pickKpiTargetAlertEmployees(employees, count, seed + 73);
+  picked.forEach(function (emp, pickIdx) {
+    kpiTargetDetailAlertBySid[emp.sid] = {
+      perfName: getKpiTargetOtherPerfName(row, seed + 89 + pickIdx * 17),
+      activeGoal: emp.activeGoal != null ? emp.activeGoal : (KPI_TARGET_DEFAULT_ACTIVE_GOAL + pickIdx * 20),
+      depositGoal: emp.depositGoal != null ? emp.depositGoal : (KPI_TARGET_DEFAULT_DEPOSIT_GOAL + pickIdx * 500)
+    };
+  });
+}
+
+function resetKpiTargetDetailFilters() {
+  var sid = document.getElementById('kpiTargetDetailFilterSid');
+  var name = document.getElementById('kpiTargetDetailFilterName');
+  var level = document.getElementById('kpiTargetDetailFilterLevel');
+  var month = document.getElementById('kpiTargetDetailFilterMonth');
+  if (sid) sid.value = '';
+  if (name) name.value = '';
+  if (level) level.value = '';
+  if (month) month.value = '';
+}
+
+function getKpiTargetDetailUniqueValues(prop) {
+  var seen = {};
+  var list = [];
+  kpiTargetDetailListAll.forEach(function (item) {
+    var val = item[prop];
+    if (val != null && val !== '' && !seen[val]) {
+      seen[val] = true;
+      list.push(val);
+    }
+  });
+  return list.sort();
+}
+
+function populateKpiTargetDetailSelect(id, values) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  var current = el.value;
+  var html = '<option value="">全部</option>';
+  values.forEach(function (value) {
+    html += '<option value="' + value + '">' + value + '</option>';
+  });
+  el.innerHTML = html;
+  if (current && values.indexOf(current) > -1) el.value = current;
+}
+
+function populateKpiTargetDetailFilterOptions() {
+  populateKpiTargetDetailSelect('kpiTargetDetailFilterLevel', getKpiTargetDetailUniqueValues('level'));
+  populateKpiTargetDetailSelect('kpiTargetDetailFilterMonth', getKpiTargetDetailUniqueValues('month'));
+}
+
+function getFilteredKpiTargetDetailList() {
+  var sidEl = document.getElementById('kpiTargetDetailFilterSid');
+  var nameEl = document.getElementById('kpiTargetDetailFilterName');
+  var levelEl = document.getElementById('kpiTargetDetailFilterLevel');
+  var monthEl = document.getElementById('kpiTargetDetailFilterMonth');
+  var sid = sidEl ? sidEl.value.trim() : '';
+  var name = nameEl ? nameEl.value.trim() : '';
+  var level = levelEl ? levelEl.value : '';
+  var month = monthEl ? monthEl.value : '';
+
+  return kpiTargetDetailListAll.filter(function (item) {
+    if (sid && item.sid.indexOf(sid) === -1) return false;
+    if (name && item.name.indexOf(name) === -1) return false;
+    if (level && item.level !== level) return false;
+    if (month && item.month !== month) return false;
+    return true;
+  });
+}
+
+function applyKpiTargetDetailFilters() {
+  kpiTargetDetailPage = 1;
+  renderKpiTargetDetailTable();
+}
+
+function resetKpiTargetDetailFiltersAndQuery() {
+  resetKpiTargetDetailFilters();
+  applyKpiTargetDetailFilters();
+}
+
+function getKpiTargetDetailPageRows(page, rows) {
+  var start = (page - 1) * KPI_TARGET_DETAIL_PAGE_SIZE;
+  return rows.slice(start, start + KPI_TARGET_DETAIL_PAGE_SIZE);
+}
+
+function renderKpiTargetDetailPagination(totalPages, page, total) {
+  var info = document.getElementById('kpiTargetDetailPagerInfo');
+  var actions = document.getElementById('kpiTargetDetailPagerActions');
+  if (!info || !actions) return;
+
+  var start = total ? (page - 1) * KPI_TARGET_DETAIL_PAGE_SIZE + 1 : 0;
+  var end = Math.min(page * KPI_TARGET_DETAIL_PAGE_SIZE, total);
+  info.textContent = '共 ' + total + ' 条 · 第 ' + start + '-' + end + ' 条 · 每页 ' + KPI_TARGET_DETAIL_PAGE_SIZE + ' 条';
+
+  if (!total) {
+    actions.innerHTML = '';
+    return;
+  }
+
+  var html = '<button type="button" class="pager-btn" onclick="goToKpiTargetDetailPage(' + (page - 1) + ')"' + (page <= 1 ? ' disabled' : '') + '>上一页</button>';
+  buildPageNumbers(totalPages, page).forEach(function (item) {
+    if (item === '...') {
+      html += '<span class="pager-ellipsis">...</span>';
+      return;
+    }
+    html += '<button type="button" class="pager-page' + (item === page ? ' active' : '') + '" onclick="goToKpiTargetDetailPage(' + item + ')">' + item + '</button>';
+  });
+  html += '<button type="button" class="pager-btn" onclick="goToKpiTargetDetailPage(' + (page + 1) + ')"' + (page >= totalPages ? ' disabled' : '') + '>下一页</button>';
+  actions.innerHTML = html;
+}
+
+function goToKpiTargetDetailPage(page) {
+  var filtered = getFilteredKpiTargetDetailList();
+  var totalPages = Math.max(1, Math.ceil(filtered.length / KPI_TARGET_DETAIL_PAGE_SIZE));
+  kpiTargetDetailPage = Math.min(Math.max(page || 1, 1), totalPages);
+  renderKpiTargetDetailTable();
+}
+
+function renderKpiTargetDetailTable() {
+  var tbody = document.getElementById('kpiTargetDetailTableBody');
+  if (!tbody) return;
+
+  var filtered = getFilteredKpiTargetDetailList();
+  var total = filtered.length;
+  var totalPages = Math.max(1, Math.ceil(total / KPI_TARGET_DETAIL_PAGE_SIZE));
+  if (kpiTargetDetailPage > totalPages) kpiTargetDetailPage = totalPages;
+
+  if (!total) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="table-empty">暂无符合条件的目标明细</div></td></tr>';
+    renderKpiTargetDetailPagination(1, 1, 0);
+    return;
+  }
+
+  var pageRows = getKpiTargetDetailPageRows(kpiTargetDetailPage, filtered);
+  tbody.innerHTML = pageRows.map(function (item) {
+    return '<tr>' +
+      '<td class="col-sid">' + item.sid + '</td>' +
+      '<td class="col-name">' + formatKpiTargetDetailNameCell(item) + '</td>' +
+      '<td class="col-level">' + item.level + '</td>' +
+      '<td class="col-group">' + item.group + '</td>' +
+      '<td class="col-month">' + item.month + '</td>' +
+      '<td class="col-active-goal">' + formatKpiTargetDetailGoalValue(item, 'activeGoal') + '</td>' +
+      '<td class="col-deposit-goal">' + formatKpiTargetDetailGoalValue(item, 'depositGoal') + '</td>' +
+    '</tr>';
+  }).join('');
+
+  renderKpiTargetDetailPagination(totalPages, kpiTargetDetailPage, total);
+  bindKpiTargetAlertTooltips();
+}
+
+function getKpiTargetEmployeeTabCounts() {
+  var list = kpiTargetEmployeeList || [];
+  var assigned = 0;
+  list.forEach(function (emp) {
+    if (emp.targetSet) assigned += 1;
+  });
+  return {
+    unassigned: list.length - assigned,
+    assigned: assigned,
+    all: list.length
+  };
+}
+
+function updateKpiTargetEmployeeTabCounts() {
+  var counts = getKpiTargetEmployeeTabCounts();
+  document.querySelectorAll('.kpi-target-employee-tab').forEach(function (btn) {
+    var tab = btn.getAttribute('data-tab');
+    var countEl = btn.querySelector('.kpi-target-employee-tab-count');
+    if (countEl) countEl.textContent = String(counts[tab] || 0);
+  });
+}
+
+function getFilteredKpiTargetEmployees() {
+  if (kpiTargetEmployeeTab === 'assigned') {
+    return kpiTargetEmployeeList.filter(function (emp) { return emp.targetSet; });
+  }
+  if (kpiTargetEmployeeTab === 'unassigned') {
+    return kpiTargetEmployeeList.filter(function (emp) { return !emp.targetSet; });
+  }
+  return kpiTargetEmployeeList.slice();
+}
+
+function isKpiTargetEmployeeSelectable(emp) {
+  return emp && !emp.targetSet;
+}
+
+function getSelectableKpiTargetEmployees(employees) {
+  return (employees || getFilteredKpiTargetEmployees()).filter(isKpiTargetEmployeeSelectable);
+}
+
+function switchKpiTargetEmployeeTab(tab) {
+  kpiTargetEmployeeTab = tab;
+  document.querySelectorAll('.kpi-target-employee-tab').forEach(function (btn) {
+    btn.classList.toggle('is-active', btn.getAttribute('data-tab') === tab);
+  });
+  renderKpiTargetEmployeeTable();
+}
+
+function toggleKpiTargetEmployeeCheckAll(checked) {
+  getSelectableKpiTargetEmployees().forEach(function (emp) {
+    if (checked) kpiTargetEmployeeSelected[emp.sid] = true;
+    else delete kpiTargetEmployeeSelected[emp.sid];
+  });
+  renderKpiTargetEmployeeTable();
+}
+
+function toggleKpiTargetEmployeeRow(sid, checked) {
+  var emp = kpiTargetEmployeeList.find(function (item) { return item.sid === sid; });
+  if (!isKpiTargetEmployeeSelectable(emp)) return;
+  if (checked) kpiTargetEmployeeSelected[sid] = true;
+  else delete kpiTargetEmployeeSelected[sid];
+  updateKpiTargetEmployeeCheckAllState();
+  updateKpiTargetEmployeeSelectedSummary();
+}
+
+function updateKpiTargetEmployeeSelectedSummary() {
+  var el = document.getElementById('kpiTargetEmployeeSelectedSummary');
+  if (!el) return;
+  var count = Object.keys(kpiTargetEmployeeSelected).length;
+  el.textContent = '已选择考核员工 ' + count + ' 人';
+}
+
+function updateKpiTargetEmployeeCheckAllState() {
+  var checkAll = document.getElementById('kpiTargetEmployeeCheckAll');
+  var selectable = getSelectableKpiTargetEmployees();
+  if (!checkAll) return;
+  if (!selectable.length) {
+    checkAll.checked = false;
+    checkAll.indeterminate = false;
+    checkAll.disabled = true;
+    return;
+  }
+  checkAll.disabled = false;
+  var selectedCount = selectable.filter(function (emp) {
+    return !!kpiTargetEmployeeSelected[emp.sid];
+  }).length;
+  checkAll.checked = selectedCount > 0 && selectedCount === selectable.length;
+  checkAll.indeterminate = selectedCount > 0 && selectedCount < selectable.length;
+}
+
+function renderKpiTargetEmployeeTable() {
+  var tbody = document.getElementById('kpiTargetEmployeeTableBody');
+  if (!tbody) return;
+  kpiTargetEmployeeList.forEach(function (emp) {
+    if (emp.targetSet) delete kpiTargetEmployeeSelected[emp.sid];
+  });
+  var employees = getFilteredKpiTargetEmployees();
+  if (!employees.length) {
+    tbody.innerHTML = '<tr><td colspan="4"><div class="table-empty">当前筛选条件下暂无员工</div></td></tr>';
+    updateKpiTargetEmployeeCheckAllState();
+    updateKpiTargetEmployeeSelectedSummary();
+    return;
+  }
+  tbody.innerHTML = employees.map(function (emp) {
+    var selectable = isKpiTargetEmployeeSelectable(emp);
+    var checked = selectable && !!kpiTargetEmployeeSelected[emp.sid];
+    var disabledAttr = selectable ? '' : ' disabled';
+    var rowClass = selectable ? '' : ' class="is-assigned"';
+    return '<tr' + rowClass + '>' +
+      '<td class="col-check"><input type="checkbox" class="kpi-target-employee-check" data-sid="' + emp.sid + '"' + (checked ? ' checked' : '') + disabledAttr + (selectable ? ' onchange="toggleKpiTargetEmployeeRow(\'' + emp.sid + '\', this.checked)"' : '') + ' aria-label="选择员工 ' + emp.name + '"' + (selectable ? '' : ' aria-disabled="true"') + '></td>' +
+      '<td class="col-sid">' + emp.sid + '</td>' +
+      '<td class="col-name-level">' + formatKpiTargetEmployeeNameLevelCell(emp) + '</td>' +
+      '<td class="col-goals">' + formatKpiTargetEmployeeGoalsCell(emp) + '</td>' +
+    '</tr>';
+  }).join('');
+  updateKpiTargetEmployeeCheckAllState();
+  updateKpiTargetEmployeeSelectedSummary();
+  bindKpiTargetAlertTooltips();
+}
+
+function initKpiTargetEmployeeTable(row) {
+  kpiTargetEmployeeList = getKpiTargetEmployeesForRow(row);
+  boostKpiTargetUnassignedEmployees(kpiTargetEmployeeList, 3);
+  kpiTargetEmployeeSelected = {};
+  initKpiTargetEmployeeAlerts(row);
+  updateKpiTargetEmployeeTabCounts();
+  switchKpiTargetEmployeeTab('unassigned');
+}
+
+function populateKpiTargetFormFromRow(row) {
+  if (!row) return;
+  setKpiTargetRegionDisplay(row.region || KPI_RULE_CURRENT_USER_REGION);
+  setKpiTargetGroupDisplay(row.group || '');
+
+  var activeGoal = document.getElementById('kpiTargetActiveGoal');
+  var depositGoal = document.getElementById('kpiTargetDepositGoal');
+  if (activeGoal) activeGoal.value = row.activeGoal != null ? String(row.activeGoal) : String(KPI_TARGET_DEFAULT_ACTIVE_GOAL);
+  if (depositGoal) depositGoal.value = row.depositGoal != null ? String(row.depositGoal) : String(KPI_TARGET_DEFAULT_DEPOSIT_GOAL);
+  initKpiTargetEmployeeTable(row);
+}
+
+function openKpiRuleTargetModal(id) {
+  var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
+  if (!row || isKpiRuleVoided(row)) return;
+
+  var form = document.getElementById('kpiTargetEntryForm');
+  if (form) form.reset();
+
+  KPI_TARGET_ROW_ID = id;
+  populateKpiTargetFormFromRow(row);
+
+  var modal = document.getElementById('kpiRuleTargetModal');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiRuleTargetModal() {
+  var modal = document.getElementById('kpiRuleTargetModal');
+  if (!modal || modal.hidden) return;
+  hideKpiTargetEmpAlertTooltip();
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  KPI_TARGET_ROW_ID = null;
+  document.body.style.overflow = '';
+}
+
+function initKpiTargetPeriodOptions() {
+  var select = document.getElementById('kpiTargetPeriod');
+  if (!select) return;
+  var previous = select.value;
+  var quarters = getKpiRuleSelectableQuarters(4);
+  var options = ['<option value="">请选择考核季度</option>'];
+  quarters.forEach(function (q) {
+    options.push('<option value="' + q.key + '">' + q.key + '</option>');
+  });
+  select.innerHTML = options.join('');
+  if (previous && quarters.some(function (q) { return q.key === previous; })) {
+    select.value = previous;
+  }
+}
+
+function openKpiRuleEntryModal() {
+  var modal = document.getElementById('kpiRuleEntryModal');
+  var form = document.getElementById('kpiRuleEntryForm');
+  if (!modal) return;
+  if (form) form.reset();
+  var splitByMonth = document.getElementById('kpiRuleSplitByMonth');
+  if (splitByMonth) splitByMonth.checked = true;
+  initKpiRulePeriodOptions();
+  initKpiRuleBasicFields();
+  resetKpiRuleWeights();
+  updateKpiRuleSplitMonths();
+  updateKpiRuleDefaultName();
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiRuleEntryModal() {
+  var modal = document.getElementById('kpiRuleEntryModal');
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function submitKpiTargetForm(event) {
+  if (event) event.preventDefault();
+  var form = document.getElementById('kpiTargetEntryForm');
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+  var targetRow = KPI_RULES_DATA.find(function (r) { return r.id === KPI_TARGET_ROW_ID; });
+  alert('员工考核目标已确认提交（原型演示）' + (targetRow ? '：' + targetRow.name : ''));
+  closeKpiRuleTargetModal();
+}
+
+var KPI_TARGET_DIMENSION_WEIGHTS = {
+  '充值活跃': { fieldId: 'kpiTargetWeightFieldActive', inputId: 'kpiTargetWeightActive' },
+  '净入金': { fieldId: 'kpiTargetWeightFieldDeposit', inputId: 'kpiTargetWeightDeposit' },
+  '交易手数': { fieldId: 'kpiTargetWeightFieldLots', inputId: 'kpiTargetWeightLots' },
+  '联系率': { fieldId: 'kpiTargetWeightFieldComm', inputId: 'kpiTargetWeightComm' }
+};
+
+var kpiTargetWeightRemovedModules = {};
+
+var KPI_TARGET_PERF_SECTIONS = {
+  perf: {
+    bodyId: 'kpiTargetPerfSectionBody',
+    emptyId: 'kpiTargetPerfEmpty',
+    settings: {
+      '充值活跃': { fieldId: 'kpiTargetPerfFieldActive' },
+      '净入金': { fieldId: 'kpiTargetPerfFieldDeposit' },
+      '交易手数': { fieldId: 'kpiTargetPerfFieldLots' },
+      '联系率': { fieldId: 'kpiTargetPerfFieldComm' }
+    }
+  }
+};
+
+var KPI_TARGET_PERF_DEFAULT_ROWS = [
+  { range: '＜40%', perf: 0 },
+  { range: '40%≤ N ＜60%', perf: 40 },
+  { range: '60%≤ N ＜80%', perf: 60 },
+  { range: '80%≤ N ＜90%', perf: 80 },
+  { range: ' N ≥90%', equalsCompletion: true }
+];
+
+var kpiTargetPerfStore = {};
+var kpiTargetPerfRemovedModules = {};
+
+function cloneKpiTargetPerfDefaultRows() {
+  return KPI_TARGET_PERF_DEFAULT_ROWS.map(function (row) {
+    var cloned = { type: 'static', range: row.range };
+    if (row.equalsCompletion) {
+      cloned.equalsCompletion = true;
+    } else {
+      cloned.perf = row.perf;
+    }
+    return cloned;
+  });
+}
+
+function getKpiTargetPerfIntervalFormHtml(rowData) {
+  var min = rowData.min != null && rowData.min !== '' ? rowData.min : '';
+  var max = rowData.max != null && rowData.max !== '' ? rowData.max : '';
+  var perf = rowData.perf != null && rowData.perf !== '' ? rowData.perf : '';
+  var includeStart = !!rowData.includeStart;
+  var includeEnd = !!rowData.includeEnd;
+  var equalsCompletion = !!rowData.equalsCompletion;
+
+  return '<div class="kpi-rule-perf-interval-form">' +
+      '<div class="kpi-rule-perf-interval-form-row kpi-rule-perf-interval-form-row--range">' +
+        '<div class="kpi-rule-perf-interval-form-group kpi-rule-perf-interval-form-group--start">' +
+          '<span class="kpi-rule-perf-interval-form-label">起始完成率：</span>' +
+          '<div class="kpi-rule-weight-input-wrap">' +
+            '<input class="kpi-rule-weight-input" type="number" data-field="min" min="0" max="100" step="0.01" placeholder="0" value="' + min + '">' +
+            '<span class="kpi-rule-weight-input-suffix">%</span>' +
+          '</div>' +
+          '<label class="kpi-rule-split-check">' +
+            '<input type="checkbox" data-field="includeStart"' + (includeStart ? ' checked' : '') + '>包含起始' +
+          '</label>' +
+        '</div>' +
+        '<span class="kpi-rule-perf-interval-form-divider" aria-hidden="true">，</span>' +
+        '<div class="kpi-rule-perf-interval-form-group">' +
+          '<span class="kpi-rule-perf-interval-form-label">结束完成率：</span>' +
+          '<div class="kpi-rule-weight-input-wrap">' +
+            '<input class="kpi-rule-weight-input" type="number" data-field="max" min="0" max="100" step="0.01" placeholder="0" value="' + max + '">' +
+            '<span class="kpi-rule-weight-input-suffix">%</span>' +
+          '</div>' +
+          '<label class="kpi-rule-split-check">' +
+            '<input type="checkbox" data-field="includeEnd"' + (includeEnd ? ' checked' : '') + '>包含结束' +
+          '</label>' +
+        '</div>' +
+      '</div>' +
+      '<div class="kpi-rule-perf-interval-form-row">' +
+        '<span class="kpi-rule-perf-interval-form-label">绩效完成率为：</span>' +
+        '<div class="kpi-rule-weight-input-wrap' + (equalsCompletion ? ' is-disabled' : '') + '">' +
+          '<input class="kpi-rule-weight-input" type="number" data-field="perf" min="0" max="100" step="0.01" placeholder="0" value="' + perf + '"' + (equalsCompletion ? ' disabled' : '') + '>' +
+          '<span class="kpi-rule-weight-input-suffix">%</span>' +
+        '</div>' +
+        '<label class="kpi-rule-split-check">' +
+          '<input type="checkbox" data-field="equalsCompletion"' + (equalsCompletion ? ' checked' : '') + '>等于完成率' +
+        '</label>' +
+      '</div>' +
+    '</div>';
+}
+
+function buildKpiTargetPerfRangeText(row) {
+  var min = row.min;
+  var max = row.max;
+  var opLeft = row.includeStart ? '≤' : '＜';
+  var opRight = row.includeEnd ? '≤' : '＜';
+  var hasMin = min !== '' && min != null;
+  var hasMax = max !== '' && max != null;
+  if (hasMin && hasMax) return min + '%' + opLeft + ' N ' + opRight + max + '%';
+  if (hasMax && !hasMin) return ' N ' + opRight + max + '%';
+  if (hasMin && !hasMax) return ' N ' + (row.includeStart ? '≥' : '＞') + min + '%';
+  return '待配置';
+}
+
+function formatKpiTargetPerfCellValue(row) {
+  if (row.equalsCompletion) return ' N ';
+  return formatKpiTargetPerfValue(row.perf);
+}
+
+function setKpiTargetPerfEqualsCompletionState(tr, checked) {
+  var perfInput = tr.querySelector('[data-field="perf"]');
+  if (!perfInput) return;
+  var wrap = perfInput.closest('.kpi-rule-weight-input-wrap');
+  perfInput.disabled = checked;
+  if (wrap) wrap.classList.toggle('is-disabled', checked);
+  if (checked) perfInput.value = '';
+}
+
+function renderKpiTargetPerfFormRow(dim, row, index) {
+  var formHtml = getKpiTargetPerfIntervalFormHtml(row);
+  return '<tr class="is-form-row" data-row-index="' + index + '" data-row-type="form">' +
+    '<td class="col-no">—</td>' +
+    '<td colspan="2" class="kpi-rule-perf-form-cell">' + formHtml + '</td>' +
+    '<td class="col-action">' +
+      '<div class="kpi-rule-perf-actions">' +
+        '<a href="#" class="kpi-rule-perf-action-link" data-action="save">保存</a>' +
+        '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-action-link--danger" data-action="delete">删除</a>' +
+      '</div>' +
+    '</td>' +
+  '</tr>';
+}
+
+function getKpiTargetPerfTable(dim, sectionKey) {
+  return document.querySelector('#kpiTargetEntryForm .kpi-rule-perf-table[data-perf-section="' + sectionKey + '"][data-perf-dimension="' + dim + '"]');
+}
+
+function getKpiTargetPerfRows(dim, sectionKey) {
+  if (!kpiTargetPerfStore[sectionKey]) kpiTargetPerfStore[sectionKey] = {};
+  if (!kpiTargetPerfStore[sectionKey][dim]) {
+    kpiTargetPerfStore[sectionKey][dim] = cloneKpiTargetPerfDefaultRows();
+  }
+  return kpiTargetPerfStore[sectionKey][dim];
+}
+
+function formatKpiTargetPerfValue(perf) {
+  if (perf === '' || perf == null) return '—';
+  return String(perf).indexOf('%') > -1 ? perf : perf + '%';
+}
+
+function renderKpiTargetPerfTable(dim, sectionKey) {
+  var table = getKpiTargetPerfTable(dim, sectionKey);
+  if (!table) return;
+  var tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  var rows = getKpiTargetPerfRows(dim, sectionKey);
+  tbody.innerHTML = rows.map(function (row, index) {
+    if (row.type === 'form') return renderKpiTargetPerfFormRow(dim, row, index);
+    return '<tr data-row-index="' + index + '" data-row-type="static">' +
+      '<td class="col-no">' + (index + 1) + '</td>' +
+      '<td class="col-range">' + row.range + '</td>' +
+      '<td class="col-perf">' + formatKpiTargetPerfCellValue(row) + '</td>' +
+      '<td class="col-action">' +
+        '<div class="kpi-rule-perf-actions">' +
+          '<a href="#" class="kpi-rule-perf-action-link" data-action="edit">编辑</a>' +
+          '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-action-link--danger" data-action="delete">删除</a>' +
+        '</div>' +
+      '</td>' +
+    '</tr>';
+  }).join('');
+}
+
+function syncKpiTargetPerfFormRowData(tr) {
+  var index = parseInt(tr.getAttribute('data-row-index'), 10);
+  var table = tr.closest('.kpi-rule-perf-table');
+  if (!table) return;
+  var dim = table.getAttribute('data-perf-dimension');
+  var sectionKey = table.getAttribute('data-perf-section');
+  var rows = getKpiTargetPerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type !== 'form') return;
+  var minInput = tr.querySelector('[data-field="min"]');
+  var maxInput = tr.querySelector('[data-field="max"]');
+  var perfInput = tr.querySelector('[data-field="perf"]');
+  var opLeft = tr.querySelector('[data-field="opLeft"]');
+  var opRight = tr.querySelector('[data-field="opRight"]');
+  var includeStart = tr.querySelector('[data-field="includeStart"]');
+  var includeEnd = tr.querySelector('[data-field="includeEnd"]');
+  var equalsCompletion = tr.querySelector('[data-field="equalsCompletion"]');
+  if (minInput) row.min = minInput.value;
+  if (maxInput) row.max = maxInput.value;
+  if (perfInput) row.perf = perfInput.value;
+  if (opLeft) row.opLeft = opLeft.value;
+  if (opRight) row.opRight = opRight.value;
+  if (includeStart) row.includeStart = includeStart.checked;
+  if (includeEnd) row.includeEnd = includeEnd.checked;
+  if (equalsCompletion) row.equalsCompletion = equalsCompletion.checked;
+}
+
+function saveKpiTargetPerfRow(dim, index, sectionKey) {
+  var table = getKpiTargetPerfTable(dim, sectionKey);
+  var tr = table && table.querySelector('tr[data-row-index="' + index + '"]');
+  if (!tr) return;
+  syncKpiTargetPerfFormRowData(tr);
+  var rows = getKpiTargetPerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type !== 'form') return;
+  var equalsCompletion = !!row.equalsCompletion;
+  row.type = 'static';
+  row.range = buildKpiTargetPerfRangeText(row);
+  if (equalsCompletion) {
+    row.equalsCompletion = true;
+    delete row.perf;
+  } else {
+    var perfVal = parseFloat(row.perf);
+    row.perf = isNaN(perfVal) ? 0 : perfVal;
+    delete row.equalsCompletion;
+  }
+  delete row.min;
+  delete row.max;
+  delete row.opLeft;
+  delete row.opRight;
+  delete row.includeStart;
+  delete row.includeEnd;
+  renderKpiTargetPerfTable(dim, sectionKey);
+}
+
+function editKpiTargetPerfRow(dim, index, sectionKey) {
+  var rows = getKpiTargetPerfRows(dim, sectionKey);
+  var row = rows[index];
+  if (!row || row.type === 'form') return;
+  row.type = 'form';
+  row.min = '';
+  row.max = '';
+  row.includeStart = false;
+  row.includeEnd = false;
+  row.equalsCompletion = !!row.equalsCompletion;
+  row.perf = row.equalsCompletion ? '' : (row.perf != null ? row.perf : '');
+  renderKpiTargetPerfTable(dim, sectionKey);
+}
+
+function deleteKpiTargetPerfRow(dim, index, sectionKey) {
+  var rows = getKpiTargetPerfRows(dim, sectionKey);
+  if (rows.length <= 1) return;
+  if (!confirm('确认删除该区间？')) return;
+  var table = getKpiTargetPerfTable(dim, sectionKey);
+  var tr = table && table.querySelector('tr[data-row-index="' + index + '"]');
+  if (tr && tr.getAttribute('data-row-type') === 'form') syncKpiTargetPerfFormRowData(tr);
+  rows.splice(index, 1);
+  renderKpiTargetPerfTable(dim, sectionKey);
+}
+
+function bindKpiTargetPerfTableActions(dim, sectionKey) {
+  var table = getKpiTargetPerfTable(dim, sectionKey);
+  if (!table || table.dataset.perfActionsBound === '1') return;
+  table.dataset.perfActionsBound = '1';
+  var tbody = table.querySelector('tbody');
+  if (!tbody) return;
+  tbody.addEventListener('click', function (event) {
+    var link = event.target.closest('[data-action]');
+    if (!link) return;
+    event.preventDefault();
+    var tr = event.target.closest('tr[data-row-index]');
+    if (!tr) return;
+    var index = parseInt(tr.getAttribute('data-row-index'), 10);
+    if (link.getAttribute('data-action') === 'edit') editKpiTargetPerfRow(dim, index, sectionKey);
+    if (link.getAttribute('data-action') === 'save') saveKpiTargetPerfRow(dim, index, sectionKey);
+    if (link.getAttribute('data-action') === 'delete') deleteKpiTargetPerfRow(dim, index, sectionKey);
+  });
+  tbody.addEventListener('change', function (event) {
+    var checkbox = event.target.closest('[data-field="equalsCompletion"]');
+    if (!checkbox) return;
+    var tr = checkbox.closest('tr');
+    if (!tr) return;
+    setKpiTargetPerfEqualsCompletionState(tr, checkbox.checked);
+  });
+}
+
+function addKpiTargetPerfRow(dim, sectionKey) {
+  getKpiTargetPerfRows(dim, sectionKey).push({
+    type: 'form',
+    min: '',
+    max: '',
+    includeStart: false,
+    includeEnd: false,
+    perf: '',
+    equalsCompletion: false
+  });
+  renderKpiTargetPerfTable(dim, sectionKey);
+}
+
+function resetKpiTargetPerfStore() {
+  kpiTargetPerfStore = {};
+  kpiTargetPerfRemovedModules = {};
+}
+
+function updateKpiTargetPerfEmptyState() {
+  var empty = document.getElementById('kpiTargetPerfEmpty');
+  if (!empty) return;
+  var hasVisibleModule = getSelectedKpiTargetDimensions().some(function (dim) {
+    if (kpiTargetPerfRemovedModules[dim]) return false;
+    var conf = KPI_TARGET_PERF_SECTIONS.perf.settings[dim];
+    var field = conf && document.getElementById(conf.fieldId);
+    return !!field;
+  });
+  empty.hidden = hasVisibleModule;
+}
+
+function initKpiTargetPerfTables() {
+  document.querySelectorAll('#kpiTargetEntryForm .kpi-rule-perf-add-btn').forEach(function (btn) {
+    if (btn.dataset.perfAddBound === '1') return;
+    btn.dataset.perfAddBound = '1';
+    btn.addEventListener('click', function (event) {
+      event.preventDefault();
+      if (btn.classList.contains('is-disabled')) return;
+      var dim = btn.getAttribute('data-perf-dimension');
+      var sectionKey = btn.getAttribute('data-perf-section');
+      if (dim && sectionKey) addKpiTargetPerfRow(dim, sectionKey);
+    });
+  });
+  Object.keys(KPI_TARGET_PERF_SECTIONS).forEach(function (sectionKey) {
+    Object.keys(KPI_TARGET_PERF_SECTIONS[sectionKey].settings).forEach(function (dim) {
+      bindKpiTargetPerfTableActions(dim, sectionKey);
+      renderKpiTargetPerfTable(dim, sectionKey);
+    });
+  });
+}
+
+function syncKpiTargetPerfFieldOrder(sectionKey) {
+  var section = KPI_TARGET_PERF_SECTIONS[sectionKey];
+  if (!section) return;
+  var body = document.getElementById(section.bodyId);
+  var empty = document.getElementById(section.emptyId);
+  if (!body) return;
+
+  getSelectedKpiTargetDimensions().forEach(function (dim) {
+    var conf = section.settings[dim];
+    if (!conf) return;
+    var field = document.getElementById(conf.fieldId);
+    if (field) body.appendChild(field);
+  });
+
+  if (empty) body.insertBefore(empty, body.firstChild);
+}
+
+function syncKpiTargetPerfSectionSettings(sectionKey) {
+  var section = KPI_TARGET_PERF_SECTIONS[sectionKey];
+  if (!section) return;
+  var selected = getSelectedKpiTargetDimensions();
+  var selectedMap = {};
+  selected.forEach(function (dim) { selectedMap[dim] = true; });
+
+  Object.keys(section.settings).forEach(function (dim) {
+    var conf = section.settings[dim];
+    var field = document.getElementById(conf.fieldId);
+    if (!field) return;
+    var isSelected = !!selectedMap[dim];
+    var isRemoved = !!kpiTargetPerfRemovedModules[dim];
+    field.hidden = !isSelected || isRemoved;
+    field.querySelectorAll('.kpi-rule-perf-add-btn').forEach(function (btn) {
+      var isActive = isSelected && !isRemoved;
+      btn.classList.toggle('is-disabled', !isActive);
+      btn.setAttribute('aria-disabled', isActive ? 'false' : 'true');
+    });
+  });
+
+  updateKpiTargetPerfEmptyState();
+  syncKpiTargetPerfFieldOrder(sectionKey);
+}
+
+function removeKpiTargetPerfModule(event, dim) {
+  if (event) event.preventDefault();
+  var conf = KPI_TARGET_PERF_SECTIONS.perf.settings[dim];
+  if (!conf) return;
+  var field = document.getElementById(conf.fieldId);
+  if (!field || field.hidden) return;
+  if (!confirm('确认移除此模块？')) return;
+  kpiTargetPerfRemovedModules[dim] = true;
+  field.hidden = true;
+  updateKpiTargetPerfEmptyState();
+}
+
+function syncKpiTargetPerfSettings() {
+  Object.keys(KPI_TARGET_PERF_SECTIONS).forEach(function (sectionKey) {
+    syncKpiTargetPerfSectionSettings(sectionKey);
+  });
+}
+
+function syncKpiTargetWeightFields() {
+  var result = syncKpiTargetLinkedFields(KPI_TARGET_DIMENSION_WEIGHTS, { clearOnHide: '0' });
+
+  Object.keys(KPI_TARGET_DIMENSION_WEIGHTS).forEach(function (dim) {
+    if (!kpiTargetWeightRemovedModules[dim]) return;
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    var field = document.getElementById(conf.fieldId);
+    if (field) field.hidden = true;
+  });
+
+  Object.keys(KPI_TARGET_DIMENSION_WEIGHTS).forEach(function (dim) {
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    var field = document.getElementById(conf.fieldId);
+    var input = document.getElementById(conf.inputId);
+    if (!input) return;
+    var isActive = field && !field.hidden && !kpiTargetWeightRemovedModules[dim];
+    input.required = isActive;
+  });
+
+  updateKpiTargetWeightEmptyState();
+  syncKpiTargetPerfSettings();
+  validateKpiTargetWeights();
+  updateKpiTargetSchemeSection();
+}
+
+function updateKpiTargetWeightEmptyState() {
+  var hasVisibleModule = getSelectedKpiTargetDimensions().some(function (dim) {
+    return !kpiTargetWeightRemovedModules[dim];
+  });
+  var empty = document.getElementById('kpiTargetWeightEmpty');
+  var sumBox = document.getElementById('kpiTargetWeightSumBox');
+  if (empty) empty.hidden = hasVisibleModule;
+  if (sumBox) sumBox.hidden = !hasVisibleModule;
+}
+
+function removeKpiTargetWeightModule(event, dim) {
+  if (event) event.preventDefault();
+  var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+  if (!conf) return;
+  var field = document.getElementById(conf.fieldId);
+  if (!field || field.hidden) return;
+  if (!confirm('确认移除此权重？')) return;
+  kpiTargetWeightRemovedModules[dim] = true;
+  field.hidden = true;
+  updateKpiTargetWeightEmptyState();
+  validateKpiTargetWeights();
+}
+
+function getKpiTargetLinkedInputIds(conf) {
+  if (conf.inputIds && conf.inputIds.length) return conf.inputIds;
+  return conf.inputId ? [conf.inputId] : [];
+}
+
+function syncKpiTargetLinkedFields(config, options) {
+  var selected = getSelectedKpiTargetDimensions();
+  var selectedMap = {};
+  selected.forEach(function (dim) { selectedMap[dim] = true; });
+
+  Object.keys(config).forEach(function (dim) {
+    var conf = config[dim];
+    var field = document.getElementById(conf.fieldId);
+    var isSelected = !!selectedMap[dim];
+    if (field) field.hidden = !isSelected;
+    getKpiTargetLinkedInputIds(conf).forEach(function (inputId) {
+      var input = document.getElementById(inputId);
+      if (!input) return;
+      input.disabled = !isSelected;
+      if (!isSelected && options) {
+        if (input.tagName === 'SELECT') {
+          input.value = '<';
+        } else if (options.clearOnHide !== undefined) {
+          input.value = options.clearOnHide;
+        }
+      }
+    });
+  });
+
+  return { selected: selected, selectedMap: selectedMap };
+}
+
+function getSelectedKpiTargetDimensions() {
+  var form = document.getElementById('kpiTargetEntryForm');
+  if (!form) return [];
+  return Array.prototype.map.call(
+    form.querySelectorAll('input[name="kpiTargetDimension"]:checked'),
+    function (cb) { return cb.value; }
+  );
+}
+
+function parseKpiTargetWeight(id) {
+  var el = document.getElementById(id);
+  if (!el || el.disabled) return 0;
+  var val = parseFloat(el.value);
+  return isNaN(val) ? 0 : val;
+}
+
+function validateKpiTargetWeights() {
+  var selected = getSelectedKpiTargetDimensions();
+  var box = document.getElementById('kpiTargetWeightSumBox');
+  var text = document.getElementById('kpiTargetWeightSumText');
+  var hint = document.getElementById('kpiTargetWeightSumHint');
+
+  if (!selected.length) {
+    if (box) box.classList.remove('is-error');
+    return false;
+  }
+
+  var sum = selected.reduce(function (total, dim) {
+    if (kpiTargetWeightRemovedModules[dim]) return total;
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    return total + (conf ? parseKpiTargetWeight(conf.inputId) : 0);
+  }, 0);
+
+  var activeCount = selected.filter(function (dim) {
+    return !kpiTargetWeightRemovedModules[dim];
+  }).length;
+
+  if (!activeCount) {
+    if (box) box.classList.remove('is-error');
+    return false;
+  }
+
+  var isValid = Math.abs(sum - 100) < 0.01;
+
+  if (text) text.textContent = '权重合计：' + sum.toFixed(2) + '%';
+  if (box) box.classList.toggle('is-error', !isValid);
+  if (hint) {
+    hint.textContent = isValid
+      ? '校验检测：已选维度权重系数之和须等于 100%'
+      : '校验检测：已选维度权重系数之和不等于 100%';
+  }
+  updateKpiTargetSchemeSection();
+  return isValid;
+}
+
+function getKpiTargetWeightedDimensions() {
+  return getSelectedKpiTargetDimensions().filter(function (dim) {
+    if (kpiTargetWeightRemovedModules[dim]) return false;
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    if (!conf) return false;
+    return parseKpiTargetWeight(conf.inputId) > 0;
+  });
+}
+
+
+function buildKpiTargetKpiCompletionFormula() {
+  var dims = getKpiTargetWeightedDimensions();
+  if (!dims.length) return '';
+  return dims.map(function (dim) {
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    var weight = parseKpiTargetWeight(conf.inputId);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    return label + ' × <span class="kpi-rule-formula-expr-percent">' + formatKpiRuleWeightPercent(weight) + '</span>';
+  }).join(' + ');
+}
+
+function buildKpiTargetFormulaPreviewNum(text) {
+  return '<span class="kpi-rule-formula-preview-num">' + text + '</span>';
+}
+
+function buildKpiTargetKpiCompletionFormulaForPreview() {
+  var dims = getKpiTargetWeightedDimensions();
+  if (!dims.length) return '';
+  return dims.map(function (dim) {
+    var conf = KPI_TARGET_DIMENSION_WEIGHTS[dim];
+    var weight = parseKpiTargetWeight(conf.inputId);
+    var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
+    return label + kpiRuleFormulaPreviewOp('×') + buildKpiTargetFormulaPreviewNum(formatKpiRuleWeightPercent(weight));
+  }).join(kpiRuleFormulaPreviewOp('+'));
+}
+
+function buildKpiTargetFormulaPreviewPart(value, placeholder, options) {
+  var opts = options || {};
+  if (value === '' || value == null) {
+    return '<span class="kpi-rule-formula-preview-placeholder">' + placeholder + '</span>';
+  }
+  if (opts.asPercent) {
+    var num = parseFloat(value);
+    if (isNaN(num)) {
+      return '<span class="kpi-rule-formula-preview-placeholder">' + placeholder + '</span>';
+    }
+    return buildKpiTargetFormulaPreviewNum(formatKpiRuleWeightPercent(num));
+  }
+  return buildKpiTargetFormulaPreviewNum(value);
+}
+
+function buildKpiTargetFormulaPreviewPlaceholder(label) {
+  return '<span class="kpi-rule-formula-preview-placeholder">' + label + '</span>';
+}
+
+function getSelectedKpiTargetFormulaType() {
+  var checked = document.querySelector('#kpiTargetEntryForm input[name="kpiTargetFormulaType"]:checked');
+  return checked ? checked.value : '印尼提成规则';
+}
+
+function applyKpiTargetFormulaDefaults(formulaType) {
+  var defaults = KPI_RULE_FORMULA_DEFAULTS[formulaType] || KPI_RULE_FORMULA_DEFAULTS['印尼提成规则'];
+  var baseAmount = document.getElementById('kpiTargetBaseAmount');
+  var baseRatio = document.getElementById('kpiTargetBaseRatio');
+  if (baseAmount) baseAmount.value = defaults.amount;
+  if (baseRatio) baseRatio.value = defaults.ratio;
+}
+
+function syncKpiTargetExtraBonusVisibility() {
+  var field = document.getElementById('kpiTargetExtraBonusField');
+  if (!field) return;
+  field.hidden = getSelectedKpiTargetFormulaType() !== '印度提成规则';
+}
+
+function onKpiTargetFormulaTypeChange() {
+  var formulaType = getSelectedKpiTargetFormulaType();
+  applyKpiTargetFormulaDefaults(formulaType);
+  syncKpiTargetExtraBonusVisibility();
+  if (formulaType === '印度提成规则') {
+    var extraBonus = document.getElementById('kpiTargetExtraBonus');
+    if (extraBonus) extraBonus.checked = true;
+  }
+  updateKpiTargetSchemeSection();
+}
+
+function buildKpiTargetFormulaPreview() {
+  var baseAmountEl = document.getElementById('kpiTargetBaseAmount');
+  var baseRatioEl = document.getElementById('kpiTargetBaseRatio');
+  var baseAmount = baseAmountEl ? baseAmountEl.value.trim() : '';
+  var baseRatio = baseRatioEl ? baseRatioEl.value.trim() : '';
+  var kpiFormula = buildKpiTargetKpiCompletionFormulaForPreview();
+
+  var amountPart = buildKpiTargetFormulaPreviewPart(baseAmount, '基础提成金额');
+  var ratioPart = buildKpiTargetFormulaPreviewPart(baseRatio, '基础提成比例', { asPercent: true });
+  var kpiPart = kpiFormula
+    ? '（' + kpiFormula + '）'
+    : buildKpiTargetFormulaPreviewPlaceholder('KPI完成率');
+
+  var lotsPart = buildKpiTargetFormulaPreviewPlaceholder('总交易手数');
+
+  if (getSelectedKpiTargetFormulaType() === '印尼提成规则') {
+    return lotsPart + kpiRuleFormulaPreviewOp('×') + amountPart + kpiRuleFormulaPreviewOp('×') + kpiPart;
+  }
+
+  var preview = lotsPart + kpiRuleFormulaPreviewOp('×') + amountPart + kpiRuleFormulaPreviewOp('×') + ratioPart + kpiRuleFormulaPreviewOp('×') + kpiPart;
+
+  if (getSelectedKpiTargetFormulaType() === '印度提成规则') {
+    var indiaPreview = preview +
+      kpiRuleFormulaPreviewOp('×') + buildKpiTargetFormulaPreviewPlaceholder('联系率加成比例');
+    var extraBonus = document.getElementById('kpiTargetExtraBonus');
+    if (extraBonus && extraBonus.checked) {
+      indiaPreview += kpiRuleFormulaPreviewOp('×') + buildKpiTargetFormulaPreviewPlaceholder('净入金加成比例');
+    }
+    return indiaPreview;
+  }
+
+  return preview;
+}
+
+function updateKpiTargetSchemeSection() {
+  var formulaEl = document.getElementById('kpiTargetKpiCompletionFormula');
+  var previewEl = document.getElementById('kpiTargetFormulaPreview');
+  if (!formulaEl) return;
+
+  var formula = buildKpiTargetKpiCompletionFormula();
+  if (formula) {
+    formulaEl.innerHTML = formula;
+    formulaEl.classList.remove('is-empty');
+  } else {
+    formulaEl.textContent = '请先设置权重大于 0 的考核维度';
+    formulaEl.classList.add('is-empty');
+  }
+
+  if (previewEl) {
+    previewEl.innerHTML = buildKpiTargetFormulaPreview();
+  }
+}
+
+function resetKpiTargetSchemeSettings() {
+  var formulaIndonesia = document.getElementById('kpiTargetFormulaIndonesia');
+  var extraBonus = document.getElementById('kpiTargetExtraBonus');
+  if (formulaIndonesia) formulaIndonesia.checked = true;
+  if (extraBonus) extraBonus.checked = true;
+  applyKpiTargetFormulaDefaults('印尼提成规则');
+  syncKpiTargetExtraBonusVisibility();
+  updateKpiTargetSchemeSection();
+}
+
+function resetKpiTargetWeights() {
+  document.getElementById('kpiTargetWeightActive').value = '30';
+  document.getElementById('kpiTargetWeightDeposit').value = '70';
+  document.getElementById('kpiTargetWeightLots').value = '0';
+  document.getElementById('kpiTargetWeightComm').value = '0';
+  kpiTargetWeightRemovedModules = {};
+  resetKpiTargetPerfStore();
+  initKpiTargetPerfTables();
+  syncKpiTargetWeightFields();
+  resetKpiTargetSchemeSettings();
+}
+
+var KPI_RULE_CURRENT_USER_REGION = '印尼';
+
+function getKpiTargetRegionValue() {
+  return KPI_RULE_CURRENT_USER_REGION;
+}
+
+function initKpiTargetBasicFields() {
+  var region = document.getElementById('kpiTargetRegion');
+  if (region) {
+    region.value = KPI_RULE_CURRENT_USER_REGION;
+    region.disabled = true;
+  }
+  var group = document.getElementById('kpiTargetGroup');
+  if (group) group.value = '';
+  updateKpiTargetEmployeeCount();
+}
+
+function getKpiTargetEmployeeCount() {
+  var group = document.getElementById('kpiTargetGroup');
+  var groupVal = group && group.value;
+  if (groupVal) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiTargetRegionValue()] || 0;
+}
+
+function updateKpiTargetEmployeeCount() {
+  var el = document.getElementById('kpiTargetEmployeeCount');
+  if (!el) return;
+  var count = getKpiTargetEmployeeCount();
+  el.textContent = '涉及销售总人数为 ' + count + ' 人';
+}
+
+function onKpiTargetGroupChange() {
+  updateKpiTargetDefaultName();
+  updateKpiTargetEmployeeCount();
+}
+
+function buildKpiTargetDefaultName() {
+  var group = document.getElementById('kpiTargetGroup');
+  var period = document.getElementById('kpiTargetPeriod');
+  var regionVal = getKpiTargetRegionValue();
+  var groupVal = group && group.value;
+  var periodVal = period && period.value;
+  if (!periodVal) return '';
+  var groupPart = groupVal || '所有人';
+  return regionVal + groupPart + periodVal + '绩效方案';
+}
+
+function updateKpiTargetDefaultName() {
+  var nameInput = document.getElementById('kpiTargetName');
+  if (!nameInput) return;
+  nameInput.value = buildKpiTargetDefaultName();
+}
+
+function updateKpiTargetSplitMonths() {
+  var period = document.getElementById('kpiTargetPeriod').value;
+  var splitChecked = document.getElementById('kpiTargetSplitByMonth').checked;
+  var list = document.getElementById('kpiTargetMonthList');
+
+  if (!splitChecked || !period) {
+    list.hidden = true;
+    list.innerHTML = '';
+    return;
+  }
+
+  var months = getKpiRuleQuarterMonths(period) || [];
+  list.hidden = false;
+  list.innerHTML = months.length
+    ? months.map(function (m) { return '<span class="kpi-rule-month-tag">' + m + '</span>'; }).join('')
+    : '<span class="kpi-rule-month-empty">请先选择考核时间范围</span>';
+}
+
+function validateKpiTargetSchemeSection() {
+  if (!buildKpiTargetKpiCompletionFormula()) {
+    alert('请先设置权重大于 0 的考核维度，生成 KPI 完成率');
+    return false;
+  }
+  return true;
+}
+
+resetKpiRulePerfStore();
+initKpiRulePerfTables();
+initKpiRulePeriodOptions();
+initKpiRuleFilterPeriodOptions();
+syncKpiRuleWeightFields();
+syncKpiRuleExtraBonusVisibility();
+syncKpiRuleLeaderRatioVisibility();
+renderRulesTable();
+</script>
+</body>
+</html>
