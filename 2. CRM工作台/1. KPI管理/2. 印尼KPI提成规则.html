@@ -35,9 +35,73 @@
     .lang-select:focus{outline:none;color:#374151}
     .tab-row{height:44px;display:flex;align-items:center;gap:12px;padding:0 14px;border-top:1px solid #f0f0f0;background:#fafafa}
     .tab-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .tab-group--right{margin-left:auto}
     .tab{padding:4px 12px;font-size:12px;border:1px solid var(--wire);background:#fff;border-radius:4px}
     .tab.active{border-color:#2563eb;background:#eff6ff;color:#1d4ed8;font-weight:700}
     .tab span{margin-left:6px;color:#64748b}
+    .tab--alert-test{
+      cursor:pointer;font-family:inherit;line-height:1.4;
+      border-color:#fecaca;background:#fff7ed;color:#c2410c;font-weight:700;
+    }
+    .tab--alert-test:hover{border-color:#f87171;background:#ffedd5}
+    .kpi-rule-alert-overlay{
+      position:fixed;inset:0;z-index:2000;
+      display:flex;align-items:center;justify-content:center;padding:24px;
+      background:rgba(15,23,42,.55);backdrop-filter:blur(2px);
+    }
+    .kpi-rule-alert-overlay[hidden]{display:none}
+    .kpi-rule-alert-panel{
+      width:min(560px,100%);background:#fff;border-radius:16px;
+      box-shadow:0 24px 60px rgba(15,23,42,.22);padding:32px 28px 24px;text-align:center;
+    }
+    .kpi-rule-alert-icon{
+      width:56px;height:56px;margin:0 auto 18px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      background:#fef2f2;color:#dc2626;font-size:28px;font-weight:800;line-height:1;
+    }
+    .kpi-rule-alert-title{
+      margin:0 0 12px;font-size:18px;font-weight:800;color:#0f172a;line-height:1.4;
+    }
+    .kpi-rule-alert-text{
+      margin:0 0 24px;font-size:14px;line-height:1.7;color:#334155;text-align:left;
+    }
+    .kpi-rule-alert-text strong{color:#dc2626;font-weight:800}
+    .kpi-rule-alert-actions{
+      display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+    }
+    .kpi-rule-alert-btn{
+      min-width:120px;height:38px;padding:0 20px;border-radius:8px;
+      font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+    }
+    .kpi-rule-alert-btn--primary{
+      border:1px solid var(--accent);background:var(--accent);color:#fff;
+    }
+    .kpi-rule-alert-btn--primary:hover{background:#1d4ed8;border-color:#1d4ed8}
+    .kpi-rule-alert-btn--ghost{
+      border:1px solid var(--line);background:#fff;color:#475569;
+    }
+    .kpi-rule-alert-btn--ghost:hover{border-color:#cbd5e1;background:#f8fafc}
+    .kpi-target-submit-alert-panel{
+      width:min(640px,100%);max-height:min(80vh,720px);
+      display:flex;flex-direction:column;text-align:left;
+    }
+    .kpi-target-submit-alert-panel .kpi-rule-alert-title{text-align:center}
+    .kpi-target-submit-alert-intro{
+      margin:0 0 12px;font-size:14px;line-height:1.6;color:#334155;
+    }
+    .kpi-target-submit-alert-list{
+      margin:0 0 16px;padding:12px 14px 12px 28px;
+      border-radius:8px;background:#fef2f2;border:1px solid #fecaca;
+      max-height:220px;overflow:auto;
+    }
+    .kpi-target-submit-alert-list li{
+      font-size:13px;line-height:1.6;color:#7f1d1d;margin-bottom:8px;
+    }
+    .kpi-target-submit-alert-list li:last-child{margin-bottom:0}
+    .kpi-target-submit-alert-confirm{
+      margin:0 0 20px;font-size:14px;font-weight:700;color:#0f172a;text-align:center;
+    }
+    .kpi-target-submit-alert-panel .kpi-rule-alert-actions{justify-content:center}
 
     .scroll-wrap{
       flex:1;overflow:auto;padding:12px 14px 24px;background:var(--bg);
@@ -332,6 +396,8 @@
       cursor:not-allowed;opacity:.45;accent-color:#cbd5e1;
     }
     .kpi-target-employee-table tbody tr:hover td{background:#f8fbff}
+    .kpi-target-employee-table tbody tr.is-alert-disabled td{background:#fffafa}
+    .kpi-target-employee-table tbody tr.is-alert-disabled:hover td{background:#fef2f2}
     .kpi-target-employee-table tbody tr:last-child td{border-bottom:none}
     .kpi-target-employee-table .col-sid{
       width:88px;min-width:88px;color:#64748b;font-variant-numeric:tabular-nums;
@@ -530,6 +596,7 @@
     }
     .kpi-rule-month-tag-remove:hover{background:#dbeafe;color:#1d4ed8}
     .kpi-rule-month-empty{font-size:12px;color:#94a3b8;line-height:28px}
+    .kpi-rule-month-empty--alert{color:#dc2626;font-weight:700}
     .kpi-rule-dimension-group{
       display:inline-flex;flex-wrap:wrap;gap:10px 16px;padding:10px 12px;
       border:1px solid var(--line);border-radius:8px;background:#fafbfc;
@@ -546,7 +613,8 @@
     .kpi-rule-weight-sum[hidden]{display:none}
     .kpi-rule-weight-empty{
       margin-bottom:14px;padding:12px 14px;border-radius:8px;
-      font-size:12px;color:#94a3b8;background:#f8fafc;border:1px dashed #e2e8f0;
+      font-size:12px;color:#dc2626;font-weight:700;
+      background:#fef2f2;border:1px dashed #fecaca;
     }
     .kpi-rule-weight-empty[hidden]{display:none}
     .kpi-rule-weight-input-wrap{display:inline-flex;align-items:center;gap:4px}
@@ -792,6 +860,9 @@
         <div class="tab-group">
           <div class="tab active">印尼KPI提成规则 <span>×</span></div>
         </div>
+        <div class="tab-group tab-group--right">
+          <button type="button" class="tab tab--alert-test" onclick="openKpiRuleAlertTest()">预警测试（评审用）</button>
+        </div>
       </div>
     </header>
 
@@ -891,10 +962,11 @@
               </div>
             </div>
             <div class="kpi-rule-field kpi-rule-field--group">
-              <label class="kpi-rule-label" for="kpiRuleGroup">考核员工范围：</label>
+              <label class="kpi-rule-label" for="kpiRuleGroup"><span class="req">*</span>考核员工范围：</label>
               <div class="kpi-rule-control kpi-rule-group-row">
-                <select class="kpi-rule-select" id="kpiRuleGroup" onchange="onKpiRuleGroupChange()">
-                  <option value="">当前地区所有人</option>
+                <select class="kpi-rule-select" id="kpiRuleGroup" required onchange="onKpiRuleGroupChange()">
+                  <option value="">请选择考核员工范围</option>
+                  <option value="当前地区所有人">当前地区所有人</option>
                   <option value="TW销售A组">TW销售A组</option>
                   <option value="TW销售B组">TW销售B组</option>
                   <option value="TW销售C组">TW销售C组</option>
@@ -905,7 +977,7 @@
                   <option value="DANA销售D组">DANA销售D组</option>
                 </select>
               </div>
-              <div class="kpi-rule-employee-count" id="kpiRuleEmployeeCount">涉及销售总人数为 0 人</div>
+              <div class="kpi-rule-employee-count" id="kpiRuleEmployeeCount">所选员工范围总人数为 0 人</div>
             </div>
             <div class="kpi-rule-field kpi-rule-field--period">
               <label class="kpi-rule-label" for="kpiRulePeriod"><span class="req">*</span>考核时间范围：</label>
@@ -1275,12 +1347,6 @@
               <option value="">全部</option>
             </select>
           </div>
-          <div class="board-filter-field">
-            <label class="board-filter-label" for="kpiTargetDetailFilterMonth">月份</label>
-            <select class="board-filter-select" id="kpiTargetDetailFilterMonth">
-              <option value="">全部</option>
-            </select>
-          </div>
           <div class="board-filter-actions">
             <button type="button" class="board-filter-reset" onclick="resetKpiTargetDetailFiltersAndQuery()">重置</button>
             <button type="button" class="board-filter-query" onclick="applyKpiTargetDetailFilters()">查询</button>
@@ -1311,6 +1377,32 @@
   </div>
 </div>
 
+<div id="kpiRuleAlertOverlay" class="kpi-rule-alert-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="kpiRuleAlertTitle">
+  <div class="kpi-rule-alert-panel">
+    <div class="kpi-rule-alert-icon" aria-hidden="true">!</div>
+    <h2 class="kpi-rule-alert-title" id="kpiRuleAlertTitle">KPI 提成规则预警</h2>
+    <p class="kpi-rule-alert-text">您好，您<strong>【26年8月】</strong>的提成规则仍未设置，为避免影响系统核算，请尽快新增<strong>【26年8月】</strong>KPI提成规则，同时尽快完成员工的KPI目标设置！</p>
+    <div class="kpi-rule-alert-actions">
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--ghost" onclick="closeKpiRuleAlertTest()">忽略</button>
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--primary" onclick="openKpiRuleEntryFromAlert()">新增KPI提成规则</button>
+    </div>
+  </div>
+</div>
+
+<div id="kpiTargetSubmitAlertModal" class="kpi-rule-alert-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="kpiTargetSubmitAlertTitle">
+  <div class="kpi-rule-alert-panel kpi-target-submit-alert-panel">
+    <div class="kpi-rule-alert-icon" aria-hidden="true">!</div>
+    <h2 class="kpi-rule-alert-title" id="kpiTargetSubmitAlertTitle">预警销售提醒</h2>
+    <p class="kpi-target-submit-alert-intro" id="kpiTargetSubmitAlertIntro"></p>
+    <ul class="kpi-target-submit-alert-list" id="kpiTargetSubmitAlertList"></ul>
+    <p class="kpi-target-submit-alert-confirm">是否确认继续提交？</p>
+    <div class="kpi-rule-alert-actions">
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--ghost" onclick="closeKpiTargetSubmitAlertModal(false)">取消</button>
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--primary" onclick="closeKpiTargetSubmitAlertModal(true)">确认提交</button>
+    </div>
+  </div>
+</div>
+
 <div id="kpiRuleDetailModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
   <div class="alert-task-follow-backdrop" onclick="closeKpiRuleDetailModal()"></div>
   <div class="alert-task-follow-dialog kpi-rule-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleDetailTitle">
@@ -1330,6 +1422,27 @@
 function switchLanguage(sel) {
   if (sel.value === 'en') window.location.href = '2. CRM工作台/工作台KPI英文版.html';
   else sel.value = 'zh';
+}
+
+function openKpiRuleAlertTest() {
+  var overlay = document.getElementById('kpiRuleAlertOverlay');
+  if (!overlay) return;
+  overlay.hidden = false;
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiRuleAlertTest() {
+  var overlay = document.getElementById('kpiRuleAlertOverlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function openKpiRuleEntryFromAlert() {
+  closeKpiRuleAlertTest();
+  openKpiRuleEntryModal();
 }
 
 var KPI_RULE_QUARTER_MONTHS = {
@@ -1925,7 +2038,7 @@ function canVoidKpiRule(row) {
 function renderActions(row) {
   var html = '<div class="action-group">';
   if (isKpiRuleVoided(row)) {
-    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">目标明细</button>';
+    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">销售目标</button>';
     html += '<span class="action-sep">|</span>' +
       '<button type="button" class="action-link" onclick="openKpiRuleDetailModal(\'' + row.id + '\')">规则</button>';
     html += '</div>';
@@ -1935,7 +2048,7 @@ function renderActions(row) {
   if (!isKpiRuleTargetComplete(row)) {
     html += '<button type="button" class="action-link action-link--danger" onclick="setTarget(\'' + row.id + '\')">设定目标</button>';
   } else {
-    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">目标明细</button>';
+    html += '<button type="button" class="action-link" onclick="openKpiTargetDetailModal(\'' + row.id + '\')">销售目标</button>';
   }
   html += '<span class="action-sep">|</span>' +
     '<button type="button" class="action-link" onclick="openKpiRuleDetailModal(\'' + row.id + '\')">规则</button>';
@@ -2973,7 +3086,7 @@ function initKpiRuleBasicFields() {
 function getKpiRuleEmployeeCount() {
   var group = document.getElementById('kpiRuleGroup');
   var groupVal = group && group.value;
-  if (groupVal) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  if (groupVal && groupVal !== '当前地区所有人') return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
   return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
 }
 
@@ -2981,7 +3094,7 @@ function updateKpiRuleEmployeeCount() {
   var el = document.getElementById('kpiRuleEmployeeCount');
   if (!el) return;
   var count = getKpiRuleEmployeeCount();
-  el.textContent = '涉及销售总人数为 ' + count + ' 人';
+  el.textContent = '所选员工范围总人数为 ' + count + ' 人';
 }
 
 function onKpiRuleGroupChange() {
@@ -2996,7 +3109,7 @@ function buildKpiRuleDefaultName() {
   var groupVal = group && group.value;
   var periodVal = period && period.value;
   if (!periodVal) return '';
-  var groupPart = groupVal || '所有人';
+  var groupPart = (!groupVal || groupVal === '当前地区所有人') ? '所有人' : groupVal;
   return regionVal + groupPart + periodVal + '绩效方案';
 }
 
@@ -3027,7 +3140,7 @@ function renderKpiRuleMonthList() {
   var list = document.getElementById('kpiRuleMonthList');
   if (!list) return;
   if (!kpiRuleSplitMonthSelection.length) {
-    list.innerHTML = '<span class="kpi-rule-month-empty">暂无拆分月份，请重新选择考核时间范围</span>';
+    list.innerHTML = '<span class="kpi-rule-month-empty kpi-rule-month-empty--alert">暂无拆分月份，请重新选择考核时间范围</span>';
     return;
   }
   list.innerHTML = kpiRuleSplitMonthSelection.map(buildKpiRuleMonthTagHtml).join('');
@@ -3063,6 +3176,16 @@ function updateKpiRuleSplitMonths() {
   renderKpiRuleMonthList();
 }
 
+function validateKpiRuleSplitMonths() {
+  var splitEl = document.getElementById('kpiRuleSplitByMonth');
+  var periodEl = document.getElementById('kpiRulePeriod');
+  if (!splitEl || !splitEl.checked) return true;
+  if (!periodEl || !periodEl.value) return true;
+  if (kpiRuleSplitMonthSelection.length > 0) return true;
+  alert('暂无拆分月份，请重新选择考核时间范围');
+  return false;
+}
+
 function validateKpiRuleSchemeSection() {
   if (!buildKpiRuleKpiCompletionFormula()) {
     alert('请先设置权重大于 0 的考核维度，生成 KPI 完成率');
@@ -3090,6 +3213,9 @@ function submitKpiRuleEntryForm(event) {
   }
   if (!validateKpiRuleWeights()) {
     alert('已选维度的权重系数之和须等于 100%，请调整后再确认提交');
+    return;
+  }
+  if (!validateKpiRuleSplitMonths()) {
     return;
   }
   if (!validateKpiRuleSchemeSection()) {
@@ -3239,6 +3365,15 @@ function getKpiTargetEmployeePool(row) {
   return pool.length ? pool : KPI_TARGET_EMPLOYEE_DATA.slice();
 }
 
+function allocKpiTargetEmployeeSid(usedSids, list) {
+  var sid = String(100050 + list.length);
+  while (usedSids[sid]) {
+    sid = String(Number(sid) + 1);
+  }
+  usedSids[sid] = true;
+  return sid;
+}
+
 function getKpiTargetEmployeesForRow(row) {
   if (!row) return [];
   var total = getKpiRuleListEmployeeTotal(row);
@@ -3248,10 +3383,12 @@ function getKpiTargetEmployeesForRow(row) {
   var groupLabel = row.group || (pool[0] && pool[0].group) || '';
   var list = [];
   var usedNames = {};
+  var usedSids = {};
 
   pool.forEach(function (src) {
-    if (list.length >= total || usedNames[src.name]) return;
+    if (list.length >= total || usedNames[src.name] || usedSids[src.id]) return;
     usedNames[src.name] = true;
+    usedSids[src.id] = true;
     list.push({
       sid: src.id,
       name: src.name,
@@ -3272,7 +3409,7 @@ function getKpiTargetEmployeesForRow(row) {
     if (usedNames[name]) continue;
     usedNames[name] = true;
     list.push({
-      sid: String(100050 + list.length),
+      sid: allocKpiTargetEmployeeSid(usedSids, list),
       name: name,
       level: KPI_TARGET_EMPLOYEE_LEVELS[list.length % KPI_TARGET_EMPLOYEE_LEVELS.length],
       group: groupLabel,
@@ -3554,11 +3691,9 @@ function resetKpiTargetDetailFilters() {
   var sid = document.getElementById('kpiTargetDetailFilterSid');
   var name = document.getElementById('kpiTargetDetailFilterName');
   var level = document.getElementById('kpiTargetDetailFilterLevel');
-  var month = document.getElementById('kpiTargetDetailFilterMonth');
   if (sid) sid.value = '';
   if (name) name.value = '';
   if (level) level.value = '';
-  if (month) month.value = '';
 }
 
 function getKpiTargetDetailUniqueValues(prop) {
@@ -3588,24 +3723,20 @@ function populateKpiTargetDetailSelect(id, values) {
 
 function populateKpiTargetDetailFilterOptions() {
   populateKpiTargetDetailSelect('kpiTargetDetailFilterLevel', getKpiTargetDetailUniqueValues('level'));
-  populateKpiTargetDetailSelect('kpiTargetDetailFilterMonth', getKpiTargetDetailUniqueValues('month'));
 }
 
 function getFilteredKpiTargetDetailList() {
   var sidEl = document.getElementById('kpiTargetDetailFilterSid');
   var nameEl = document.getElementById('kpiTargetDetailFilterName');
   var levelEl = document.getElementById('kpiTargetDetailFilterLevel');
-  var monthEl = document.getElementById('kpiTargetDetailFilterMonth');
   var sid = sidEl ? sidEl.value.trim() : '';
   var name = nameEl ? nameEl.value.trim() : '';
   var level = levelEl ? levelEl.value : '';
-  var month = monthEl ? monthEl.value : '';
 
   return kpiTargetDetailListAll.filter(function (item) {
     if (sid && item.sid.indexOf(sid) === -1) return false;
     if (name && item.name.indexOf(name) === -1) return false;
     if (level && item.level !== level) return false;
-    if (month && item.month !== month) return false;
     return true;
   });
 }
@@ -3722,8 +3853,19 @@ function getFilteredKpiTargetEmployees() {
   return kpiTargetEmployeeList.slice();
 }
 
+function isKpiTargetEmployeeAlert(emp) {
+  return !!getKpiTargetEmployeeAlertInfo(emp);
+}
+
 function isKpiTargetEmployeeSelectable(emp) {
-  return emp && !emp.targetSet;
+  return emp && !emp.targetSet && !isKpiTargetEmployeeAlert(emp);
+}
+
+function getKpiTargetEmployeeRowClass(emp) {
+  if (!emp) return '';
+  if (emp.targetSet) return ' class="is-assigned"';
+  if (isKpiTargetEmployeeAlert(emp)) return ' class="is-alert-disabled"';
+  return '';
 }
 
 function getSelectableKpiTargetEmployees(employees) {
@@ -3744,6 +3886,7 @@ function toggleKpiTargetEmployeeCheckAll(checked) {
     else delete kpiTargetEmployeeSelected[emp.sid];
   });
   renderKpiTargetEmployeeTable();
+  updateKpiTargetEmployeeCheckAllState();
 }
 
 function toggleKpiTargetEmployeeRow(sid, checked) {
@@ -3758,7 +3901,9 @@ function toggleKpiTargetEmployeeRow(sid, checked) {
 function updateKpiTargetEmployeeSelectedSummary() {
   var el = document.getElementById('kpiTargetEmployeeSelectedSummary');
   if (!el) return;
-  var count = Object.keys(kpiTargetEmployeeSelected).length;
+  var count = kpiTargetEmployeeList.filter(function (emp) {
+    return isKpiTargetEmployeeSelectable(emp) && kpiTargetEmployeeSelected[emp.sid];
+  }).length;
   el.textContent = '已选择考核员工 ' + count + ' 人';
 }
 
@@ -3784,7 +3929,7 @@ function renderKpiTargetEmployeeTable() {
   var tbody = document.getElementById('kpiTargetEmployeeTableBody');
   if (!tbody) return;
   kpiTargetEmployeeList.forEach(function (emp) {
-    if (emp.targetSet) delete kpiTargetEmployeeSelected[emp.sid];
+    if (!isKpiTargetEmployeeSelectable(emp)) delete kpiTargetEmployeeSelected[emp.sid];
   });
   var employees = getFilteredKpiTargetEmployees();
   if (!employees.length) {
@@ -3797,7 +3942,7 @@ function renderKpiTargetEmployeeTable() {
     var selectable = isKpiTargetEmployeeSelectable(emp);
     var checked = selectable && !!kpiTargetEmployeeSelected[emp.sid];
     var disabledAttr = selectable ? '' : ' disabled';
-    var rowClass = selectable ? '' : ' class="is-assigned"';
+    var rowClass = getKpiTargetEmployeeRowClass(emp);
     return '<tr' + rowClass + '>' +
       '<td class="col-check"><input type="checkbox" class="kpi-target-employee-check" data-sid="' + emp.sid + '"' + (checked ? ' checked' : '') + disabledAttr + (selectable ? ' onchange="toggleKpiTargetEmployeeRow(\'' + emp.sid + '\', this.checked)"' : '') + ' aria-label="选择员工 ' + emp.name + '"' + (selectable ? '' : ' aria-disabled="true"') + '></td>' +
       '<td class="col-sid">' + emp.sid + '</td>' +
@@ -3898,6 +4043,55 @@ function closeKpiRuleEntryModal() {
   document.body.style.overflow = '';
 }
 
+function getSelectedKpiTargetEmployees() {
+  return (kpiTargetEmployeeList || []).filter(function (emp) {
+    return isKpiTargetEmployeeSelectable(emp) && kpiTargetEmployeeSelected[emp.sid];
+  });
+}
+
+function getSelectedKpiTargetAlertEmployees() {
+  return getSelectedKpiTargetEmployees().filter(function (emp) {
+    return !!getKpiTargetEmployeeAlertInfo(emp);
+  });
+}
+
+var kpiTargetSubmitAlertCallback = null;
+
+function openKpiTargetSubmitAlertModal(alertEmployees, onConfirm) {
+  var modal = document.getElementById('kpiTargetSubmitAlertModal');
+  var intro = document.getElementById('kpiTargetSubmitAlertIntro');
+  var list = document.getElementById('kpiTargetSubmitAlertList');
+  if (!modal || !intro || !list) {
+    if (onConfirm) onConfirm();
+    return;
+  }
+  intro.textContent = '所选考核员工中包含 ' + alertEmployees.length + ' 名预警销售，这些员工已在其他绩效方案中设置过 KPI 目标，请留意：';
+  list.innerHTML = alertEmployees.map(function (emp) {
+    var alertInfo = getKpiTargetEmployeeAlertInfo(emp);
+    return '<li>' + buildKpiTargetEmployeeAlertTitle(emp, alertInfo) + '</li>';
+  }).join('');
+  kpiTargetSubmitAlertCallback = onConfirm || null;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeKpiTargetSubmitAlertModal(confirmed) {
+  var modal = document.getElementById('kpiTargetSubmitAlertModal');
+  if (modal) {
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  var callback = kpiTargetSubmitAlertCallback;
+  kpiTargetSubmitAlertCallback = null;
+  if (confirmed && callback) callback();
+}
+
+function finalizeKpiTargetSubmit() {
+  var targetRow = KPI_RULES_DATA.find(function (r) { return r.id === KPI_TARGET_ROW_ID; });
+  alert('员工考核目标已确认提交（原型演示）' + (targetRow ? '：' + targetRow.name : ''));
+  closeKpiRuleTargetModal();
+}
+
 function submitKpiTargetForm(event) {
   if (event) event.preventDefault();
   var form = document.getElementById('kpiTargetEntryForm');
@@ -3905,9 +4099,7 @@ function submitKpiTargetForm(event) {
     form.reportValidity();
     return;
   }
-  var targetRow = KPI_RULES_DATA.find(function (r) { return r.id === KPI_TARGET_ROW_ID; });
-  alert('员工考核目标已确认提交（原型演示）' + (targetRow ? '：' + targetRow.name : ''));
-  closeKpiRuleTargetModal();
+  finalizeKpiTargetSubmit();
 }
 
 var KPI_TARGET_DIMENSION_WEIGHTS = {
@@ -4619,7 +4811,7 @@ function updateKpiTargetEmployeeCount() {
   var el = document.getElementById('kpiTargetEmployeeCount');
   if (!el) return;
   var count = getKpiTargetEmployeeCount();
-  el.textContent = '涉及销售总人数为 ' + count + ' 人';
+  el.textContent = '所选员工范围总人数为 ' + count + ' 人';
 }
 
 function onKpiTargetGroupChange() {
