@@ -1279,15 +1279,10 @@
               <label class="kpi-rule-label" for="kpiTargetGroup">考核员工范围：</label>
               <div class="kpi-rule-control">
                 <select class="kpi-rule-select" id="kpiTargetGroup" disabled aria-readonly="true">
-                  <option value="">当前地区所有人</option>
-                  <option value="TW销售A组">TW销售A组</option>
-                  <option value="TW销售B组">TW销售B组</option>
-                  <option value="TW销售C组">TW销售C组</option>
-                  <option value="TW销售D组">TW销售D组</option>
-                  <option value="DANA销售A组">DANA销售A组</option>
-                  <option value="DANA销售B组">DANA销售B组</option>
-                  <option value="DANA销售C组">DANA销售C组</option>
-                  <option value="DANA销售D组">DANA销售D组</option>
+                  <option value="">请选择考核员工范围</option>
+                  <option value="V1销售">V1销售</option>
+                  <option value="V23销售">V23销售</option>
+                  <option value="V4销售">V4销售</option>
                 </select>
               </div>
             </div>
@@ -1371,12 +1366,6 @@
           <div class="board-filter-field">
             <label class="board-filter-label" for="kpiTargetDetailFilterName">销售</label>
             <input class="board-filter-input" type="text" id="kpiTargetDetailFilterName" placeholder="请输入销售姓名">
-          </div>
-          <div class="board-filter-field">
-            <label class="board-filter-label" for="kpiTargetDetailFilterLevel">等级</label>
-            <select class="board-filter-select" id="kpiTargetDetailFilterLevel">
-              <option value="">全部</option>
-            </select>
           </div>
           <div class="board-filter-actions">
             <button type="button" class="board-filter-reset" onclick="resetKpiTargetDetailFiltersAndQuery()">重置</button>
@@ -2264,7 +2253,6 @@ function openKpiTargetDetailModal(id) {
   KPI_TARGET_DETAIL_ROW_ID = id;
   kpiTargetDetailListAll = getKpiTargetDetailRowsForScheme(row);
   resetKpiTargetDetailFilters();
-  populateKpiTargetDetailFilterOptions();
   kpiTargetDetailPage = 1;
   initKpiTargetDetailAlerts(row);
 
@@ -2509,8 +2497,13 @@ var KPI_RULE_PERF_DEFAULT_ROWS = [
   { range: ' N ≥90%', equalsCompletion: true }
 ];
 
-function cloneKpiRulePerfDefaultRows() {
-  return KPI_RULE_PERF_DEFAULT_ROWS.map(function (row) {
+var KPI_RULE_PERF_DEFAULT_ROWS_NEW = [
+  { range: 'N＜40%', perf: 0 }
+];
+
+function cloneKpiRulePerfDefaultRows(variant) {
+  var source = isKpiRuleNewEntryVariant(variant) ? KPI_RULE_PERF_DEFAULT_ROWS_NEW : KPI_RULE_PERF_DEFAULT_ROWS;
+  return source.map(function (row) {
     var cloned = { type: 'static', range: row.range };
     if (row.equalsCompletion) {
       cloned.equalsCompletion = true;
@@ -2614,7 +2607,7 @@ function getKpiRulePerfTable(dim, sectionKey) {
 function getKpiRulePerfRows(dim, sectionKey) {
   if (!getKpiRuleEntryCtx().perfStore[sectionKey]) getKpiRuleEntryCtx().perfStore[sectionKey] = {};
   if (!getKpiRuleEntryCtx().perfStore[sectionKey][dim]) {
-    getKpiRuleEntryCtx().perfStore[sectionKey][dim] = cloneKpiRulePerfDefaultRows();
+    getKpiRuleEntryCtx().perfStore[sectionKey][dim] = cloneKpiRulePerfDefaultRows(activeKpiRuleEntryVariant);
   }
   return getKpiRuleEntryCtx().perfStore[sectionKey][dim];
 }
@@ -3575,71 +3568,57 @@ function setKpiTargetGroupDisplay(group) {
   groupEl.disabled = true;
 }
 
-var KPI_TARGET_EMPLOYEE_DATA = [
-  { id: '100050', name: 'Coulson', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售A组' },
-  { id: '100051', name: 'May', dept: 'TW销售部', region: '泰国', level: 'V1', group: 'TW销售A组' },
-  { id: '100052', name: 'Daisy', dept: 'TW销售部', region: '印度', level: 'V4', group: 'TW销售A组' },
-  { id: '100053', name: 'Fitz', dept: 'TW销售部', region: '印尼', level: 'V2-3', group: 'TW销售A组' },
-  { id: '100054', name: 'Simmons', dept: 'TW销售部', region: '巴西', level: 'V1', group: 'TW销售A组' },
-  { id: '100055', name: 'Mack', dept: 'TW销售部', region: '尼日', level: 'V2-3', group: 'TW销售A组' },
-  { id: '100056', name: 'Fury', dept: 'TW销售部', region: '泰国', level: 'V4', group: 'TW销售A组' },
-  { id: '100057', name: 'Hunter', dept: 'TW销售部', region: '印度', level: 'V1', group: 'TW销售B组' },
-  { id: '100058', name: 'Ward', dept: 'TW销售部', region: '印尼', level: '沉默户', group: 'TW销售B组' },
-  { id: '100059', name: 'Bobbi', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售B组' },
-  { id: '100060', name: 'Skye', dept: 'TW销售部', region: '巴西', level: 'V4', group: 'TW销售B组' },
-  { id: '100061', name: 'Melinda', dept: 'TW销售部', region: '尼日', level: 'V1', group: 'TW销售B组' },
-  { id: '100062', name: 'Trip', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售B组' },
-  { id: '100063', name: 'Antoine', dept: 'TW销售部', region: '泰国', level: 'V1', group: 'TW销售C组' },
-  { id: '100064', name: 'Yo-Yo', dept: 'TW销售部', region: '印尼', level: 'V4', group: 'TW销售C组' },
-  { id: '100065', name: 'Deke', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售C组' },
-  { id: '100066', name: 'Jemma', dept: 'TW销售部', region: '巴西', level: 'V1', group: 'TW销售C组' },
-  { id: '100067', name: 'Lincoln', dept: 'TW销售部', region: '尼日', level: 'V4', group: 'TW销售C组' },
-  { id: '100068', name: 'Raina', dept: 'TW销售部', region: '泰国', level: '沉默户', group: 'TW销售C组' },
-  { id: '100069', name: 'Alphonso', dept: 'TW销售部', region: '印度', level: 'V2-3', group: 'TW销售C组' },
-  { id: '100070', name: 'Quake', dept: 'TW销售部', region: '印尼', level: 'V1', group: 'TW销售C组' },
-  { id: '100071', name: 'Steve', dept: 'TW销售部', region: '巴西', level: 'V4', group: 'TW销售D组' },
-  { id: '100072', name: 'Natasha', dept: 'TW销售部', region: '泰国', level: 'V2-3', group: 'TW销售D组' },
-  { id: '100073', name: 'Clint', dept: 'TW销售部', region: '印度', level: 'V1', group: 'TW销售D组' },
-  { id: '100074', name: 'Wanda', dept: 'TW销售部', region: '尼日', level: 'V2-3', group: 'TW销售D组' },
-  { id: '100075', name: 'Vision', dept: 'TW销售部', region: '印尼', level: 'V4', group: 'TW销售D组' },
-  { id: '100076', name: 'Peter', dept: 'DANA销售部', region: '印度', level: 'V1', group: 'DANA销售A组' },
-  { id: '100077', name: 'Gwen', dept: 'DANA销售部', region: '泰国', level: 'V2-3', group: 'DANA销售A组' },
-  { id: '100078', name: 'Miles', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售A组' },
-  { id: '100079', name: 'Kate', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售A组' },
-  { id: '100080', name: 'Logan', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售A组' },
-  { id: '100081', name: 'Jean', dept: 'DANA销售部', region: '印度', level: '沉默户', group: 'DANA销售A组' },
-  { id: '100082', name: 'Scott', dept: 'DANA销售部', region: '泰国', level: 'V4', group: 'DANA销售A组' },
-  { id: '100083', name: 'Ororo', dept: 'DANA销售部', region: '巴西', level: 'V2-3', group: 'DANA销售A组' },
-  { id: '100084', name: 'Kurt', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售A组' },
-  { id: '100085', name: 'Bruce', dept: 'DANA销售部', region: '印尼', level: 'V4', group: 'DANA销售B组' },
-  { id: '100086', name: 'Diana', dept: 'DANA销售部', region: '印度', level: 'V1', group: 'DANA销售B组' },
-  { id: '100087', name: 'Barry', dept: 'DANA销售部', region: '泰国', level: 'V2-3', group: 'DANA销售B组' },
-  { id: '100088', name: 'Arthur', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售B组' },
-  { id: '100089', name: 'Selina', dept: 'DANA销售部', region: '尼日', level: '沉默户', group: 'DANA销售B组' },
-  { id: '100090', name: 'Oliver', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售B组' },
-  { id: '100091', name: 'Felicity', dept: 'DANA销售部', region: '泰国', level: 'V1', group: 'DANA销售C组' },
-  { id: '100092', name: 'Laurel', dept: 'DANA销售部', region: '印度', level: 'V2-3', group: 'DANA销售C组' },
-  { id: '100093', name: 'Thea', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售C组' },
-  { id: '100094', name: 'John', dept: 'DANA销售部', region: '尼日', level: 'V1', group: 'DANA销售C组' },
-  { id: '100095', name: 'Sara', dept: 'DANA销售部', region: '印尼', level: 'V2-3', group: 'DANA销售C组' },
-  { id: '100096', name: 'Ray', dept: 'DANA销售部', region: '泰国', level: '沉默户', group: 'DANA销售C组' },
-  { id: '100097', name: 'Cisco', dept: 'DANA销售部', region: '印度', level: 'V4', group: 'DANA销售C组' },
-  { id: '100098', name: 'Kara', dept: 'DANA销售部', region: '巴西', level: 'V1', group: 'DANA销售D组' },
-  { id: '100099', name: 'Clark', dept: 'DANA销售部', region: '尼日', level: 'V2-3', group: 'DANA销售D组' },
-  { id: '100100', name: 'Lois', dept: 'DANA销售部', region: '印尼', level: 'V4', group: 'DANA销售D组' },
-  { id: '100101', name: 'Lex', dept: 'DANA销售部', region: '泰国', level: 'V1', group: 'DANA销售D组' },
-  { id: '100102', name: 'Hal', dept: 'DANA销售部', region: '印度', level: 'V2-3', group: 'DANA销售D组' },
-  { id: '100103', name: 'Carol', dept: 'DANA销售部', region: '巴西', level: 'V4', group: 'DANA销售D组' },
-  { id: '100104', name: 'Victor', dept: 'DANA销售部', region: '尼日', level: '沉默户', group: 'DANA销售D组' },
-  { id: '100105', name: 'Dick', dept: 'DANA销售部', region: '印尼', level: 'V1', group: 'DANA销售D组' }
-];
+var KPI_TARGET_LEVEL_GROUP_LEVEL_MAP = {
+  'V1销售': 'V1',
+  'V23销售': 'V2-3',
+  'V4销售': 'V4'
+};
+
+function buildKpiTargetEmployeeData() {
+  var groups = [
+    {
+      group: 'V1销售',
+      level: 'V1',
+      names: ['May', 'Simmons', 'Hunter', 'Melinda', 'Antoine', 'Jemma', 'Quake', 'Clint', 'Peter', 'Kate', 'Diana', 'Felicity', 'John', 'Kara', 'Lex', 'Dick']
+    },
+    {
+      group: 'V23销售',
+      level: 'V2-3',
+      names: ['Coulson', 'Fitz', 'Mack', 'Bobbi', 'Trip', 'Deke', 'Alphonso', 'Natasha', 'Wanda', 'Gwen', 'Logan', 'Ororo', 'Barry', 'Oliver', 'Laurel', 'Sara', 'Clark', 'Hal', 'Ward', 'Raina']
+    },
+    {
+      group: 'V4销售',
+      level: 'V4',
+      names: ['Daisy', 'Fury', 'Skye', 'Yo-Yo', 'Lincoln', 'Steve', 'Vision', 'Miles', 'Scott', 'Bruce', 'Arthur', 'Thea', 'Cisco', 'Lois', 'Carol', 'Victor']
+    }
+  ];
+  var list = [];
+  var id = 100050;
+  groups.forEach(function (cfg) {
+    cfg.names.forEach(function (name) {
+      list.push({
+        id: String(id),
+        name: name,
+        dept: '印尼销售部',
+        region: '印尼',
+        level: cfg.level,
+        group: cfg.group
+      });
+      id += 1;
+    });
+  });
+  return list;
+}
+
+var KPI_TARGET_EMPLOYEE_DATA = buildKpiTargetEmployeeData();
 var kpiTargetEmployeeTab = 'unassigned';
 var kpiTargetEmployeeList = [];
 var kpiTargetEmployeeSelected = {};
 var kpiTargetEmployeeAlertByTab = { unassigned: {}, assigned: {} };
+var kpiTargetScopeGroup = '';
 var KPI_TARGET_DEFAULT_ACTIVE_GOAL = 400;
 var KPI_TARGET_DEFAULT_DEPOSIT_GOAL = 64000;
-var KPI_TARGET_EMPLOYEE_LEVELS = ['V1', 'V2-3', 'V4', '沉默户'];
+var KPI_TARGET_EMPLOYEE_LEVELS = ['V1', 'V2-3', 'V4'];
 var KPI_TARGET_SHIELD_AGENT_NAMES = [
   'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Ward', 'Trip', 'Bobbi', 'Hunter', 'Mack',
   'Yo-Yo', 'Deke', 'Piper', 'Davis', 'Antoine', 'Garrett', 'Raina', 'Lincoln', 'Talbot',
@@ -3648,21 +3627,53 @@ var KPI_TARGET_SHIELD_AGENT_NAMES = [
   'Deathlok', 'Quake', 'Skye', 'Agent 33', 'Giyera', 'Von Strucker', 'Malick', 'Whitehall'
 ];
 
+function getKpiTargetLevelForGroup(group) {
+  return KPI_TARGET_LEVEL_GROUP_LEVEL_MAP[group] || 'V1';
+}
+
+function getKpiTargetScopeGroup() {
+  if (kpiTargetScopeGroup) return kpiTargetScopeGroup;
+  var groupEl = document.getElementById('kpiTargetGroup');
+  if (groupEl && groupEl.value) return groupEl.value;
+  if (KPI_TARGET_ROW_ID) {
+    var row = KPI_RULES_DATA.find(function (r) { return r.id === KPI_TARGET_ROW_ID; });
+    if (row && row.group) return row.group;
+  }
+  return '';
+}
+
+function matchesKpiTargetEmployeeScope(emp) {
+  if (!emp) return false;
+  var group = getKpiTargetScopeGroup();
+  if (!group) return true;
+  var expectedLevel = getKpiTargetLevelForGroup(group);
+  return emp.group === group && emp.level === expectedLevel;
+}
+
+function enforceKpiTargetEmployeeScope(list, group) {
+  if (!list || !list.length || !group) return list;
+  var expectedLevel = getKpiTargetLevelForGroup(group);
+  list.forEach(function (emp) {
+    emp.group = group;
+    emp.level = expectedLevel;
+  });
+  return list;
+}
+
+function getScopedKpiTargetEmployeeList() {
+  return (kpiTargetEmployeeList || []).filter(matchesKpiTargetEmployeeScope);
+}
+
 function getKpiTargetEmployeePool(row) {
   if (!row) return [];
-  var region = row.region || '';
   var group = row.group || '';
-  var pool = KPI_TARGET_EMPLOYEE_DATA.filter(function (emp) {
-    if (region && emp.region !== region) return false;
-    if (group && emp.group !== group) return false;
+  if (!group) return KPI_TARGET_EMPLOYEE_DATA.slice();
+  var expectedLevel = KPI_TARGET_LEVEL_GROUP_LEVEL_MAP[group];
+  return KPI_TARGET_EMPLOYEE_DATA.filter(function (emp) {
+    if (emp.group !== group) return false;
+    if (expectedLevel && emp.level !== expectedLevel) return false;
     return true;
   });
-  if (!pool.length && region) {
-    pool = KPI_TARGET_EMPLOYEE_DATA.filter(function (emp) {
-      return emp.region === region;
-    });
-  }
-  return pool.length ? pool : KPI_TARGET_EMPLOYEE_DATA.slice();
 }
 
 function allocKpiTargetEmployeeSid(usedSids, list) {
@@ -3692,8 +3703,8 @@ function getKpiTargetEmployeesForRow(row) {
     list.push({
       sid: src.id,
       name: src.name,
-      level: src.level,
-      group: src.group || groupLabel,
+      level: getKpiTargetLevelForGroup(groupLabel),
+      group: groupLabel,
       targetSet: list.length < setCount,
       activeGoal: list.length < setCount ? goals.activeGoal : null,
       depositGoal: list.length < setCount ? goals.depositGoal : null
@@ -3711,7 +3722,7 @@ function getKpiTargetEmployeesForRow(row) {
     list.push({
       sid: allocKpiTargetEmployeeSid(usedSids, list),
       name: name,
-      level: KPI_TARGET_EMPLOYEE_LEVELS[list.length % KPI_TARGET_EMPLOYEE_LEVELS.length],
+      level: getKpiTargetLevelForGroup(groupLabel),
       group: groupLabel,
       targetSet: list.length < setCount,
       activeGoal: list.length < setCount ? goals.activeGoal : null,
@@ -3719,6 +3730,7 @@ function getKpiTargetEmployeesForRow(row) {
     });
   }
 
+  enforceKpiTargetEmployeeScope(list, groupLabel);
   return list;
 }
 
@@ -3783,7 +3795,9 @@ function initKpiTargetEmployeeAlerts(row) {
     { tab: 'unassigned', alertCount: 2, filter: function (emp) { return !emp.targetSet; } },
     { tab: 'assigned', alertCount: null, filter: function (emp) { return emp.targetSet; } }
   ].forEach(function (cfg, idx) {
-    var pool = kpiTargetEmployeeList.filter(cfg.filter);
+    var pool = kpiTargetEmployeeList.filter(function (emp) {
+      return cfg.filter(emp) && matchesKpiTargetEmployeeScope(emp);
+    });
     if (!pool.length) return;
     var count = cfg.alertCount != null
       ? Math.min(pool.length, cfg.alertCount)
@@ -3990,53 +4004,19 @@ function initKpiTargetDetailAlerts(row) {
 function resetKpiTargetDetailFilters() {
   var sid = document.getElementById('kpiTargetDetailFilterSid');
   var name = document.getElementById('kpiTargetDetailFilterName');
-  var level = document.getElementById('kpiTargetDetailFilterLevel');
   if (sid) sid.value = '';
   if (name) name.value = '';
-  if (level) level.value = '';
-}
-
-function getKpiTargetDetailUniqueValues(prop) {
-  var seen = {};
-  var list = [];
-  kpiTargetDetailListAll.forEach(function (item) {
-    var val = item[prop];
-    if (val != null && val !== '' && !seen[val]) {
-      seen[val] = true;
-      list.push(val);
-    }
-  });
-  return list.sort();
-}
-
-function populateKpiTargetDetailSelect(id, values) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var current = el.value;
-  var html = '<option value="">全部</option>';
-  values.forEach(function (value) {
-    html += '<option value="' + value + '">' + value + '</option>';
-  });
-  el.innerHTML = html;
-  if (current && values.indexOf(current) > -1) el.value = current;
-}
-
-function populateKpiTargetDetailFilterOptions() {
-  populateKpiTargetDetailSelect('kpiTargetDetailFilterLevel', getKpiTargetDetailUniqueValues('level'));
 }
 
 function getFilteredKpiTargetDetailList() {
   var sidEl = document.getElementById('kpiTargetDetailFilterSid');
   var nameEl = document.getElementById('kpiTargetDetailFilterName');
-  var levelEl = document.getElementById('kpiTargetDetailFilterLevel');
   var sid = sidEl ? sidEl.value.trim() : '';
   var name = nameEl ? nameEl.value.trim() : '';
-  var level = levelEl ? levelEl.value : '';
 
   return kpiTargetDetailListAll.filter(function (item) {
     if (sid && item.sid.indexOf(sid) === -1) return false;
     if (name && item.name.indexOf(name) === -1) return false;
-    if (level && item.level !== level) return false;
     return true;
   });
 }
@@ -4122,7 +4102,7 @@ function renderKpiTargetDetailTable() {
 }
 
 function getKpiTargetEmployeeTabCounts() {
-  var list = kpiTargetEmployeeList || [];
+  var list = getScopedKpiTargetEmployeeList();
   var assigned = 0;
   list.forEach(function (emp) {
     if (emp.targetSet) assigned += 1;
@@ -4144,13 +4124,14 @@ function updateKpiTargetEmployeeTabCounts() {
 }
 
 function getFilteredKpiTargetEmployees() {
+  var scoped = getScopedKpiTargetEmployeeList();
   if (kpiTargetEmployeeTab === 'assigned') {
-    return kpiTargetEmployeeList.filter(function (emp) { return emp.targetSet; });
+    return scoped.filter(function (emp) { return emp.targetSet; });
   }
   if (kpiTargetEmployeeTab === 'unassigned') {
-    return kpiTargetEmployeeList.filter(function (emp) { return !emp.targetSet; });
+    return scoped.filter(function (emp) { return !emp.targetSet; });
   }
-  return kpiTargetEmployeeList.slice();
+  return scoped.slice();
 }
 
 function isKpiTargetEmployeeAlert(emp) {
@@ -4201,7 +4182,7 @@ function toggleKpiTargetEmployeeRow(sid, checked) {
 function updateKpiTargetEmployeeSelectedSummary() {
   var el = document.getElementById('kpiTargetEmployeeSelectedSummary');
   if (!el) return;
-  var count = kpiTargetEmployeeList.filter(function (emp) {
+  var count = getScopedKpiTargetEmployeeList().filter(function (emp) {
     return isKpiTargetEmployeeSelectable(emp) && kpiTargetEmployeeSelected[emp.sid];
   }).length;
   el.textContent = '已选择考核员工 ' + count + ' 人';
@@ -4256,8 +4237,10 @@ function renderKpiTargetEmployeeTable() {
 }
 
 function initKpiTargetEmployeeTable(row) {
+  kpiTargetScopeGroup = row && row.group ? row.group : '';
   kpiTargetEmployeeList = getKpiTargetEmployeesForRow(row);
   boostKpiTargetUnassignedEmployees(kpiTargetEmployeeList, 3);
+  enforceKpiTargetEmployeeScope(kpiTargetEmployeeList, kpiTargetScopeGroup);
   kpiTargetEmployeeSelected = {};
   initKpiTargetEmployeeAlerts(row);
   updateKpiTargetEmployeeTabCounts();
@@ -4266,6 +4249,7 @@ function initKpiTargetEmployeeTable(row) {
 
 function populateKpiTargetFormFromRow(row) {
   if (!row) return;
+  kpiTargetScopeGroup = row.group || '';
   setKpiTargetGroupDisplay(row.group || '');
 
   var activeGoal = document.getElementById('kpiTargetActiveGoal');
@@ -4355,7 +4339,7 @@ function closeKpiRuleEntryModal(variant) {
 }
 
 function getSelectedKpiTargetEmployees() {
-  return (kpiTargetEmployeeList || []).filter(function (emp) {
+  return getScopedKpiTargetEmployeeList().filter(function (emp) {
     return isKpiTargetEmployeeSelectable(emp) && kpiTargetEmployeeSelected[emp.sid];
   });
 }
@@ -5109,7 +5093,11 @@ function initKpiTargetBasicFields() {
 function getKpiTargetEmployeeCount() {
   var group = document.getElementById('kpiTargetGroup');
   var groupVal = group && group.value;
-  if (groupVal) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  if (groupVal) {
+    return KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal]
+      || KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal]
+      || 0;
+  }
   return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiTargetRegionValue()] || 0;
 }
 
