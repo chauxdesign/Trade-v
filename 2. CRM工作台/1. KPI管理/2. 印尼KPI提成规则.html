@@ -167,6 +167,11 @@
       cursor:pointer;font-family:inherit;white-space:nowrap;
     }
     .btn-add-kpi-rule:hover{background:#1d4ed8;border-color:#1d4ed8}
+    .btn-add-kpi-rule--legacy{
+      border-color:#cbd5e1;background:#fff;color:#475569;
+    }
+    .btn-add-kpi-rule--legacy:hover{background:#f8fafc;border-color:#94a3b8;color:#334155}
+    .table-panel-head-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
     .table-wrap{overflow:auto;flex:1}
     .rules-table{
       width:100%;min-width:1100px;border-collapse:collapse;font-size:12px;
@@ -465,7 +470,7 @@
       padding:12px 0 0;border-top:1px solid #f1f5f9;margin-top:12px;
       font-size:12px;color:#64748b;flex-wrap:wrap;
     }
-    #kpiRuleBasicSection .kpi-rule-field,
+    .kpi-rule-basic-section .kpi-rule-field,
     #kpiTargetScopeSection .kpi-rule-field,
     #kpiTargetGoalSection .kpi-rule-field{
       grid-template-columns:minmax(0,3fr) minmax(0,7fr);
@@ -480,15 +485,15 @@
     .kpi-target-employee-panel{
       min-width:0;width:100%;
     }
-    #kpiRuleWeightSection .kpi-rule-field--weight,
+    .kpi-rule-weight-section .kpi-rule-field--weight,
     #kpiTargetWeightSection .kpi-rule-field--weight{
       grid-template-columns:minmax(0,3fr) minmax(0,7fr);
     }
-    #kpiRuleWeightSection .kpi-rule-weight-sum,
+    .kpi-rule-weight-section .kpi-rule-weight-sum,
     #kpiTargetWeightSection .kpi-rule-weight-sum{
       margin-left:calc(30% + 14px);
     }
-    #kpiRuleSchemeSection .kpi-rule-field,
+    .kpi-rule-scheme-section .kpi-rule-field,
     #kpiTargetSchemeSection .kpi-rule-field{
       grid-template-columns:minmax(0,3fr) minmax(0,7fr);
     }
@@ -496,46 +501,46 @@
       display:grid;grid-template-columns:108px minmax(0,1fr);gap:10px 14px;
       align-items:center;margin-bottom:14px;
     }
-    #kpiRuleBasicSection .kpi-rule-field--period,
+    .kpi-rule-basic-section .kpi-rule-field--period,
     #kpiTargetScopeSection .kpi-rule-field--period{
       grid-template-columns:minmax(0,3fr) minmax(0,7fr);
       grid-template-rows:auto auto;
       align-items:start;
     }
-    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-label,
+    .kpi-rule-basic-section .kpi-rule-field--period .kpi-rule-label,
     #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-label{
       grid-column:1;grid-row:1;
       align-self:center;
       padding-top:0;
     }
-    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-period-row,
+    .kpi-rule-basic-section .kpi-rule-field--period .kpi-rule-period-row,
     #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-period-row{
       grid-column:2;grid-row:1;
       align-self:center;
     }
-    #kpiRuleBasicSection .kpi-rule-field--period .kpi-rule-month-list,
+    .kpi-rule-basic-section .kpi-rule-field--period .kpi-rule-month-list,
     #kpiTargetScopeSection .kpi-rule-field--period .kpi-rule-month-list{
       grid-column:2;grid-row:2;
       margin-top:8px;
     }
-    #kpiRuleBasicSection .kpi-rule-field--group,
+    .kpi-rule-basic-section .kpi-rule-field--group,
     #kpiTargetScopeSection .kpi-rule-field--group{
       grid-template-columns:minmax(0,3fr) minmax(0,7fr);
       grid-template-rows:auto auto;
       align-items:start;
     }
-    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-label,
+    .kpi-rule-basic-section .kpi-rule-field--group .kpi-rule-label,
     #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-label{
       grid-column:1;grid-row:1;
       align-self:center;
       padding-top:0;
     }
-    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-group-row,
+    .kpi-rule-basic-section .kpi-rule-field--group .kpi-rule-group-row,
     #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-group-row{
       grid-column:2;grid-row:1;
       align-self:center;
     }
-    #kpiRuleBasicSection .kpi-rule-field--group .kpi-rule-employee-count,
+    .kpi-rule-basic-section .kpi-rule-field--group .kpi-rule-employee-count,
     #kpiTargetScopeSection .kpi-rule-field--group .kpi-rule-employee-count{
       grid-column:2;grid-row:2;
       margin-top:8px;
@@ -574,6 +579,42 @@
       outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
     }
     .kpi-rule-input::placeholder{color:#94a3b8}
+    .kpi-rule-name-row{
+      display:flex;align-items:center;gap:10px;max-width:100%;
+    }
+    .kpi-rule-name-row .kpi-rule-input{
+      flex:1;min-width:0;width:auto;max-width:none;
+    }
+    .kpi-rule-input.is-readonly{
+      background:#f8fafc;color:#334155;cursor:default;
+    }
+    .kpi-rule-input.is-readonly:focus{
+      border-color:var(--line);box-shadow:none;
+    }
+    .kpi-rule-name-edit-link{
+      flex-shrink:0;font-size:12px;font-weight:700;color:#2563eb;text-decoration:none;white-space:nowrap;
+    }
+    .kpi-rule-name-edit-link:hover{color:#1d4ed8;text-decoration:underline}
+    .kpi-rule-name-edit-link[hidden]{display:none}
+    #kpiRuleEntryModalNew .kpi-rule-name-row .kpi-rule-input{
+      flex:0 0 260px;width:260px;max-width:260px;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-perf-table-foot{
+      display:block;padding:0;border-top:1px solid #e2e8f0;
+      background:#fafbfc;border-radius:0 0 8px 8px;overflow:hidden;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-perf-table-foot-grid{
+      width:100%;margin:0;border:none;border-radius:0;
+      table-layout:fixed;border-collapse:collapse;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-perf-table-foot-grid td{
+      padding:8px 10px;border:none;vertical-align:middle;text-align:center;
+      font-size:12px;color:#334155;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-perf-table-foot-grid td.col-range{text-align:left}
+    #kpiRuleEntryModalNew .kpi-rule-perf-table-foot-grid .kpi-rule-perf-add-btn{
+      display:inline-block;
+    }
     .kpi-rule-period-row{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px}
     .kpi-rule-split-check{
       display:inline-flex;align-items:center;gap:6px;
@@ -682,9 +723,9 @@
     .kpi-rule-formula-example-result{color:#dc2626;font-size:13px}
     .kpi-rule-formula-example-total-label{color:#1d4ed8;font-weight:700}
     .kpi-rule-extra-bonus-check{align-self:center;line-height:1.5}
-    #kpiRuleExtraBonusField[hidden],
+    .kpi-rule-extra-bonus-field[hidden],
     #kpiTargetExtraBonusField[hidden],
-    #kpiRuleLeaderRatioField[hidden]{display:none}
+    .kpi-rule-leader-ratio-field[hidden]{display:none}
     .kpi-rule-field--perf{
       display:flex;flex-direction:column;align-items:flex-start;gap:8px;
       margin-bottom:14px;
@@ -882,14 +923,9 @@
               <label class="board-filter-label" for="filterGroup">考核员工范围</label>
               <select class="board-filter-select board-filter-select--group" id="filterGroup">
                 <option value="">全部</option>
-                <option value="TW销售A组">TW销售A组</option>
-                <option value="TW销售B组">TW销售B组</option>
-                <option value="TW销售C组">TW销售C组</option>
-                <option value="TW销售D组">TW销售D组</option>
-                <option value="DANA销售A组">DANA销售A组</option>
-                <option value="DANA销售B组">DANA销售B组</option>
-                <option value="DANA销售C组">DANA销售C组</option>
-                <option value="DANA销售D组">DANA销售D组</option>
+                <option value="V1销售">V1销售</option>
+                <option value="V23销售">V23销售</option>
+                <option value="V4销售">V4销售</option>
               </select>
             </div>
             <div class="board-filter-field">
@@ -909,7 +945,10 @@
       <section class="table-panel">
         <div class="table-panel-head">
           <span>印尼KPI提成规则管理</span>
-          <button type="button" class="btn-add-kpi-rule" onclick="openKpiRuleEntryModal()">+ 新增 KPI 提成规则</button>
+          <div class="table-panel-head-actions">
+            <button type="button" class="btn-add-kpi-rule" onclick="openKpiRuleEntryModalNew()">+ 新增KPI提成规则（新）</button>
+            <button type="button" class="btn-add-kpi-rule btn-add-kpi-rule--legacy" onclick="openKpiRuleEntryModal()">+ 新增KPI提成规则（旧）</button>
+          </div>
         </div>
         <div class="table-wrap">
           <table class="rules-table">
@@ -941,12 +980,12 @@
   <div class="alert-task-follow-backdrop" onclick="closeKpiRuleEntryModal()"></div>
   <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleEntryTitle">
     <div class="alert-task-follow-head">
-      <h3 id="kpiRuleEntryTitle">新增KPI提成规则</h3>
+      <h3 id="kpiRuleEntryTitle">新增KPI提成规则（旧）</h3>
       <button type="button" class="alert-task-follow-close" onclick="closeKpiRuleEntryModal()" aria-label="关闭">×</button>
     </div>
 <form class="kpi-rule-entry-form" id="kpiRuleEntryForm" onsubmit="submitKpiRuleEntryForm(event)">
       <div class="alert-task-follow-body">
-        <section class="kpi-rule-form-section" id="kpiRuleBasicSection">
+        <section class="kpi-rule-form-section kpi-rule-basic-section" id="kpiRuleBasicSection">
           <div class="kpi-rule-form-section-head">1. 基础考核设置</div>
           <div class="kpi-rule-form-section-body">
             <div class="kpi-rule-field">
@@ -1010,7 +1049,7 @@
             </div>
           </div>
         </section>
-        <section class="kpi-rule-form-section" id="kpiRuleWeightSection">
+        <section class="kpi-rule-form-section kpi-rule-weight-section" id="kpiRuleWeightSection">
           <div class="kpi-rule-form-section-head">2. 考核权重系数设置</div>
           <div class="kpi-rule-form-section-body" id="kpiRuleWeightSectionBody">
             <div class="kpi-rule-weight-empty" id="kpiRuleWeightEmpty" hidden>请先在上方选择 KPI 考核维度</div>
@@ -1150,7 +1189,7 @@
             </div>
           </div>
         </section>
-        <section class="kpi-rule-form-section" id="kpiRuleSchemeSection">
+        <section class="kpi-rule-form-section kpi-rule-scheme-section" id="kpiRuleSchemeSection">
           <div class="kpi-rule-form-section-head">4. 绩效方案设置</div>
           <div class="kpi-rule-form-section-body">
             <div class="kpi-rule-field kpi-rule-field--top">
@@ -1183,7 +1222,7 @@
                 </div>
               </div>
             </div>
-            <div class="kpi-rule-field" id="kpiRuleLeaderRatioField" hidden>
+            <div class="kpi-rule-field kpi-rule-leader-ratio-field" id="kpiRuleLeaderRatioField" hidden>
               <label class="kpi-rule-label" for="kpiRuleLeaderRatio"><span class="req">*</span>组长提成比例：</label>
               <div class="kpi-rule-control">
                 <div class="kpi-rule-weight-input-wrap">
@@ -1192,7 +1231,7 @@
                 </div>
               </div>
             </div>
-            <div class="kpi-rule-field" id="kpiRuleExtraBonusField" hidden>
+            <div class="kpi-rule-field kpi-rule-extra-bonus-field" id="kpiRuleExtraBonusField" hidden>
               <span class="kpi-rule-label">额外提成奖励：</span>
               <div class="kpi-rule-control">
                 <label class="kpi-rule-split-check kpi-rule-extra-bonus-check">
@@ -1236,14 +1275,6 @@
         <section class="kpi-rule-form-section" id="kpiTargetScopeSection">
           <div class="kpi-rule-form-section-head">1. 选择考核员工范围</div>
           <div class="kpi-rule-form-section-body">
-            <div class="kpi-rule-field">
-              <label class="kpi-rule-label" for="kpiTargetRegion"><span class="req">*</span>考核地区：</label>
-              <div class="kpi-rule-control">
-                <select class="kpi-rule-select" id="kpiTargetRegion" disabled aria-readonly="true">
-                  <option value="印尼" selected>印尼</option>
-                </select>
-              </div>
-            </div>
             <div class="kpi-rule-field">
               <label class="kpi-rule-label" for="kpiTargetGroup">考核员工范围：</label>
               <div class="kpi-rule-control">
@@ -1535,8 +1566,9 @@ function getKpiRuleRecentQuarters(years) {
   return list;
 }
 
-function initKpiRulePeriodOptions() {
-  var select = document.getElementById('kpiRulePeriod');
+function initKpiRulePeriodOptions(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var select = kriEl('kpiRulePeriod');
   if (!select) return;
   var previous = select.value;
   var quarters = getKpiRuleSelectableQuarters(4);
@@ -1587,6 +1619,12 @@ var KPI_RULE_GROUP_EMPLOYEE_COUNTS = {
   'DANA销售D组': 16
 };
 
+var KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS = {
+  'V1销售': 42,
+  'V23销售': 58,
+  'V4销售': 24
+};
+
 var KPI_RULE_REGION_EMPLOYEE_TOTALS = {
   '印尼': 135,
   '尼日': 98,
@@ -1597,7 +1635,11 @@ var KPI_RULE_REGION_EMPLOYEE_TOTALS = {
 
 function getKpiRuleListEmployeeTotal(row) {
   if (row.targetTotal != null) return row.targetTotal;
-  if (row.group) return KPI_RULE_GROUP_EMPLOYEE_COUNTS[row.group] || 0;
+  if (row.group) {
+    return KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[row.group]
+      || KPI_RULE_GROUP_EMPLOYEE_COUNTS[row.group]
+      || 0;
+  }
   return KPI_RULE_REGION_EMPLOYEE_TOTALS[row.region] || 0;
 }
 
@@ -1616,10 +1658,7 @@ var KPI_RULE_LIST_WEIGHT_PRESETS = {
 };
 
 var KPI_RULES_DATA = (function () {
-  var groups = [
-    'TW销售A组', 'TW销售B组', 'TW销售C组', 'TW销售D组',
-    'DANA销售A组', 'DANA销售B组', 'DANA销售C组', 'DANA销售D组'
-  ];
+  var groups = ['V1销售', 'V23销售', 'V4销售'];
   var dimensions = KPI_RULE_STANDARD_DIMENSIONS.slice();
   var weights = KPI_RULE_LIST_WEIGHT_PRESETS['充值活跃,净入金'];
   var roles = ['销售', '组长'];
@@ -1645,7 +1684,7 @@ var KPI_RULES_DATA = (function () {
     var quarter = getKpiRuleQuarterByMonth(monthLabel);
     var group = groups[ruleIndex % groups.length];
     var region = '印尼';
-    var employeeTotal = KPI_RULE_GROUP_EMPLOYEE_COUNTS[group] || 0;
+    var employeeTotal = KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[group] || 0;
     var isTargetComplete = incompleteMonths.indexOf(monthLabel) === -1;
 
     roles.forEach(function (role, roleIndex) {
@@ -1654,8 +1693,8 @@ var KPI_RULES_DATA = (function () {
       var targetSetCount = isTargetComplete
         ? employeeTotal
         : Math.max(1, employeeTotal - (2 + ((ruleIndex + roleIndex) % 6)));
-      var name = region + group + quarter + role + '绩效方案';
-      var schemeKey = region + '|' + group + '|' + quarter + '|' + role;
+      var name = group + quarter + '绩效方案';
+      var schemeKey = group + '|' + quarter + '|' + role;
 
       list.push({
         id: buildKpiRuleListId(monthLabel, seq),
@@ -1827,8 +1866,9 @@ function buildKpiRuleDetailText(value) {
 }
 
 function getKpiRuleDetailPerfRows(dim) {
-  if (kpiRulePerfStore && kpiRulePerfStore.perf && kpiRulePerfStore.perf[dim] && kpiRulePerfStore.perf[dim].length) {
-    return kpiRulePerfStore.perf[dim];
+  var entryStore = kpiRuleEntryState.legacy.perfStore;
+  if (entryStore && entryStore.perf && entryStore.perf[dim] && entryStore.perf[dim].length) {
+    return entryStore.perf[dim];
   }
   return cloneKpiRulePerfDefaultRows();
 }
@@ -2274,20 +2314,192 @@ var KPI_RULE_DIMENSION_WEIGHTS = {
   '联系率': { fieldId: 'kpiRuleWeightFieldComm', inputId: 'kpiRuleWeightComm' }
 };
 
-var kpiRuleWeightRemovedModules = {};
 
-var KPI_RULE_PERF_SECTIONS = {
-  perf: {
-    bodyId: 'kpiRulePerfSectionBody',
-    emptyId: 'kpiRulePerfEmpty',
-    settings: {
-      '充值活跃': { fieldId: 'kpiRulePerfFieldActive' },
-      '净入金': { fieldId: 'kpiRulePerfFieldDeposit' },
-      '交易手数': { fieldId: 'kpiRulePerfFieldLots' },
-      '联系率': { fieldId: 'kpiRulePerfFieldComm' }
+var KPI_RULE_NEW_ENTRY_DEFAULT_DIMENSIONS = ['充值活跃', '净入金'];
+
+function isKpiRuleNewEntryVariant(variant) {
+  return getKpiRuleEntryVariantConfig(variant).key === 'new';
+}
+
+var KPI_RULE_ENTRY_VARIANTS = {
+  legacy: { key: 'legacy', suffix: '', modalId: 'kpiRuleEntryModal', formId: 'kpiRuleEntryForm', title: '新增KPI提成规则（旧）' },
+  new: { key: 'new', suffix: 'New', modalId: 'kpiRuleEntryModalNew', formId: 'kpiRuleEntryFormNew', title: '新增KPI提成规则（新）' }
+};
+var activeKpiRuleEntryVariant = 'legacy';
+var kpiRuleEntryState = {
+  legacy: { perfStore: {}, weightRemovedModules: {}, perfRemovedModules: {}, splitMonthSelection: [], splitMonthPeriodKey: '' },
+  new: { perfStore: {}, weightRemovedModules: {}, perfRemovedModules: {}, splitMonthSelection: [], splitMonthPeriodKey: '' }
+};
+
+function getKpiRuleEntryVariantConfig(variant) {
+  return KPI_RULE_ENTRY_VARIANTS[variant || activeKpiRuleEntryVariant] || KPI_RULE_ENTRY_VARIANTS.legacy;
+}
+
+function setActiveKpiRuleEntryVariant(variant) {
+  activeKpiRuleEntryVariant = variant || 'legacy';
+}
+
+function getKpiRuleEntryCtx(variant) {
+  return kpiRuleEntryState[variant || activeKpiRuleEntryVariant];
+}
+
+function kriId(baseId, variant) {
+  return baseId + getKpiRuleEntryVariantConfig(variant).suffix;
+}
+
+function kriEl(baseId, variant) {
+  return document.getElementById(kriId(baseId, variant));
+}
+
+function kriForm(variant) {
+  return document.getElementById(getKpiRuleEntryVariantConfig(variant).formId);
+}
+
+function getKpiRuleWeightConf(dim, variant) {
+  var suffix = getKpiRuleEntryVariantConfig(variant).suffix;
+  var base = KPI_RULE_DIMENSION_WEIGHTS[dim];
+  return { fieldId: base.fieldId + suffix, inputId: base.inputId + suffix };
+}
+
+function getKpiRulePerfSections(variant) {
+  var suffix = getKpiRuleEntryVariantConfig(variant).suffix;
+  return {
+    perf: {
+      bodyId: 'kpiRulePerfSectionBody' + suffix,
+      emptyId: 'kpiRulePerfEmpty' + suffix,
+      settings: {
+        '充值活跃': { fieldId: 'kpiRulePerfFieldActive' + suffix },
+        '净入金': { fieldId: 'kpiRulePerfFieldDeposit' + suffix },
+        '交易手数': { fieldId: 'kpiRulePerfFieldLots' + suffix },
+        '联系率': { fieldId: 'kpiRulePerfFieldComm' + suffix }
+      }
+    }
+  };
+}
+
+function rewriteKpiRuleEntryInlineHandlers(root, variant) {
+  var v = "'" + variant + "'";
+  var attrs = ['onclick', 'onchange', 'oninput', 'onsubmit'];
+  root.querySelectorAll('*').forEach(function (el) {
+    attrs.forEach(function (attr) {
+      var value = el.getAttribute(attr);
+      if (!value) return;
+      value = value
+        .replace(/closeKpiRuleEntryModal\(\)/g, 'closeKpiRuleEntryModal(' + v + ')')
+        .replace(/submitKpiRuleEntryForm\(event\)/g, 'submitKpiRuleEntryForm(event, ' + v + ')')
+        .replace(/onKpiRuleRegionChange\(\)/g, 'onKpiRuleRegionChange(' + v + ')')
+        .replace(/onKpiRuleGroupChange\(\)/g, 'onKpiRuleGroupChange(' + v + ')')
+        .replace(/updateKpiRuleSplitMonths\(\)/g, 'updateKpiRuleSplitMonths(' + v + ')')
+        .replace(/updateKpiRuleDefaultName\(\)/g, 'updateKpiRuleDefaultName(' + v + ')')
+        .replace(/syncKpiRuleWeightFields\(\)/g, 'syncKpiRuleWeightFields(' + v + ')')
+        .replace(/validateKpiRuleWeights\(\)/g, 'validateKpiRuleWeights(' + v + ')')
+        .replace(/onKpiRuleFormulaTypeChange\(\)/g, 'onKpiRuleFormulaTypeChange(' + v + ')')
+        .replace(/updateKpiRuleSchemeSection\(\)/g, 'updateKpiRuleSchemeSection(' + v + ')')
+        .replace(/removeKpiRuleWeightModule\(event,\s*'([^']+)'\)/g, "removeKpiRuleWeightModule(event, '$1', " + v + ')')
+        .replace(/removeKpiRulePerfModule\(event,\s*'([^']+)'\)/g, "removeKpiRulePerfModule(event, '$1', " + v + ')');
+      el.setAttribute(attr, value);
+    });
+  });
+}
+
+function customizeKpiRuleEntryModalNew(clone) {
+  var regionSelect = clone.querySelector('#kpiRuleRegionNew');
+  if (regionSelect) {
+    var regionField = regionSelect.closest('.kpi-rule-field');
+    if (regionField) regionField.remove();
+  }
+  var groupSelect = clone.querySelector('#kpiRuleGroupNew');
+  if (groupSelect) {
+    groupSelect.innerHTML =
+      '<option value="">请选择考核员工范围</option>' +
+      '<option value="V1销售">V1销售</option>' +
+      '<option value="V23销售">V23销售</option>' +
+      '<option value="V4销售">V4销售</option>';
+  }
+  var nameInput = clone.querySelector('#kpiRuleNameNew');
+  if (nameInput) {
+    nameInput.placeholder = '请选择员工范围与考核时间后自动生成';
+    nameInput.readOnly = true;
+    nameInput.classList.add('is-readonly');
+    var control = nameInput.parentElement;
+    if (control) {
+      var row = document.createElement('div');
+      row.className = 'kpi-rule-name-row';
+      control.insertBefore(row, nameInput);
+      row.appendChild(nameInput);
+      var editLink = document.createElement('a');
+      editLink.href = '#';
+      editLink.className = 'kpi-rule-name-edit-link';
+      editLink.id = 'kpiRuleNameEditLinkNew';
+      editLink.textContent = '修改';
+      editLink.setAttribute('onclick', 'enableKpiRuleNameEdit(event, \'new\')');
+      row.appendChild(editLink);
     }
   }
-};
+  var dimensionGroup = clone.querySelector('#kpiRuleDimensionGroupNew');
+  if (dimensionGroup) {
+    var dimensionField = dimensionGroup.closest('.kpi-rule-field');
+    if (dimensionField) dimensionField.remove();
+  }
+  clone.querySelectorAll('.kpi-rule-weight-remove-link').forEach(function (el) {
+    el.remove();
+  });
+  clone.querySelectorAll('.kpi-rule-perf-remove-module-link').forEach(function (el) {
+    el.remove();
+  });
+  [
+    'kpiRuleWeightActive',
+    'kpiRuleWeightDeposit',
+    'kpiRuleWeightComm',
+    'kpiRuleWeightLots',
+    'kpiRuleBaseAmount',
+    'kpiRuleLeaderRatio'
+  ].forEach(function (id) {
+    var el = clone.querySelector('#' + id + 'New');
+    if (el) el.removeAttribute('value');
+  });
+  clone.querySelectorAll('.kpi-rule-perf-table-foot').forEach(function (foot) {
+    var addBtn = foot.querySelector('.kpi-rule-perf-add-btn');
+    if (!addBtn) return;
+    var btnHtml = addBtn.outerHTML;
+    foot.innerHTML =
+      '<table class="kpi-rule-perf-table kpi-rule-perf-table-foot-grid">' +
+        '<tbody><tr>' +
+          '<td class="col-no" aria-hidden="true"></td>' +
+          '<td class="col-range" aria-hidden="true"></td>' +
+          '<td class="col-perf" aria-hidden="true"></td>' +
+          '<td class="col-action">' + btnHtml + '</td>' +
+        '</tr></tbody>' +
+      '</table>';
+  });
+}
+
+function initKpiRuleEntryModalClone() {
+  if (document.getElementById('kpiRuleEntryModalNew')) return;
+  var source = document.getElementById('kpiRuleEntryModal');
+  if (!source) return;
+  var clone = source.cloneNode(true);
+  clone.id = 'kpiRuleEntryModalNew';
+  clone.querySelectorAll('[id]').forEach(function (el) {
+    if (el.id && el.id !== 'kpiRuleEntryModalNew') el.id = el.id + 'New';
+  });
+  clone.querySelectorAll('label[for]').forEach(function (label) {
+    var f = label.getAttribute('for');
+    if (f) label.setAttribute('for', f + 'New');
+  });
+  clone.querySelectorAll('[name="kpiRuleDimension"]').forEach(function (el) {
+    el.name = 'kpiRuleDimensionNew';
+  });
+  clone.querySelectorAll('[name="kpiRuleFormulaType"]').forEach(function (el) {
+    el.name = 'kpiRuleFormulaTypeNew';
+  });
+  customizeKpiRuleEntryModalNew(clone);
+  rewriteKpiRuleEntryInlineHandlers(clone, 'new');
+  var title = clone.querySelector('#kpiRuleEntryTitleNew');
+  if (title) title.textContent = KPI_RULE_ENTRY_VARIANTS.new.title;
+  source.parentNode.insertBefore(clone, source.nextSibling);
+}
+
 
 var KPI_RULE_PERF_DEFAULT_ROWS = [
   { range: '＜40%', perf: 0 },
@@ -2296,9 +2508,6 @@ var KPI_RULE_PERF_DEFAULT_ROWS = [
   { range: '80%≤ N ＜90%', perf: 80 },
   { range: ' N ≥90%', equalsCompletion: true }
 ];
-
-var kpiRulePerfStore = {};
-var kpiRulePerfRemovedModules = {};
 
 function cloneKpiRulePerfDefaultRows() {
   return KPI_RULE_PERF_DEFAULT_ROWS.map(function (row) {
@@ -2399,15 +2608,15 @@ function renderKpiRulePerfFormRow(dim, row, index) {
 }
 
 function getKpiRulePerfTable(dim, sectionKey) {
-  return document.querySelector('#kpiRuleEntryForm .kpi-rule-perf-table[data-perf-section="' + sectionKey + '"][data-perf-dimension="' + dim + '"]');
+  return kriForm().querySelector('.kpi-rule-perf-table[data-perf-section="' + sectionKey + '"][data-perf-dimension="' + dim + '"]');
 }
 
 function getKpiRulePerfRows(dim, sectionKey) {
-  if (!kpiRulePerfStore[sectionKey]) kpiRulePerfStore[sectionKey] = {};
-  if (!kpiRulePerfStore[sectionKey][dim]) {
-    kpiRulePerfStore[sectionKey][dim] = cloneKpiRulePerfDefaultRows();
+  if (!getKpiRuleEntryCtx().perfStore[sectionKey]) getKpiRuleEntryCtx().perfStore[sectionKey] = {};
+  if (!getKpiRuleEntryCtx().perfStore[sectionKey][dim]) {
+    getKpiRuleEntryCtx().perfStore[sectionKey][dim] = cloneKpiRulePerfDefaultRows();
   }
-  return kpiRulePerfStore[sectionKey][dim];
+  return getKpiRuleEntryCtx().perfStore[sectionKey][dim];
 }
 
 function formatKpiRulePerfValue(perf) {
@@ -2556,25 +2765,29 @@ function addKpiRulePerfRow(dim, sectionKey) {
   renderKpiRulePerfTable(dim, sectionKey);
 }
 
-function resetKpiRulePerfStore() {
-  kpiRulePerfStore = {};
-  kpiRulePerfRemovedModules = {};
+function resetKpiRulePerfStore(variant) {
+  var ctx = getKpiRuleEntryCtx(variant);
+  ctx.perfStore = {};
+  ctx.perfRemovedModules = {};
 }
 
 function updateKpiRulePerfEmptyState() {
-  var empty = document.getElementById('kpiRulePerfEmpty');
+  var empty = kriEl('kpiRulePerfEmpty');
   if (!empty) return;
   var hasVisibleModule = getSelectedKpiRuleDimensions().some(function (dim) {
-    if (kpiRulePerfRemovedModules[dim]) return false;
-    var conf = KPI_RULE_PERF_SECTIONS.perf.settings[dim];
+    if (getKpiRuleEntryCtx().perfRemovedModules[dim]) return false;
+    var conf = getKpiRulePerfSections().perf.settings[dim];
     var field = conf && document.getElementById(conf.fieldId);
     return !!field;
   });
   empty.hidden = hasVisibleModule;
 }
 
-function initKpiRulePerfTables() {
-  document.querySelectorAll('#kpiRuleEntryForm .kpi-rule-perf-add-btn').forEach(function (btn) {
+function initKpiRulePerfTablesForVariant(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var form = kriForm();
+  if (!form) return;
+  form.querySelectorAll('.kpi-rule-perf-add-btn').forEach(function (btn) {
     if (btn.dataset.perfAddBound === '1') return;
     btn.dataset.perfAddBound = '1';
     btn.addEventListener('click', function (event) {
@@ -2585,16 +2798,21 @@ function initKpiRulePerfTables() {
       if (dim && sectionKey) addKpiRulePerfRow(dim, sectionKey);
     });
   });
-  Object.keys(KPI_RULE_PERF_SECTIONS).forEach(function (sectionKey) {
-    Object.keys(KPI_RULE_PERF_SECTIONS[sectionKey].settings).forEach(function (dim) {
+  Object.keys(getKpiRulePerfSections()).forEach(function (sectionKey) {
+    Object.keys(getKpiRulePerfSections()[sectionKey].settings).forEach(function (dim) {
       bindKpiRulePerfTableActions(dim, sectionKey);
       renderKpiRulePerfTable(dim, sectionKey);
     });
   });
 }
 
+function initKpiRulePerfTables() {
+  initKpiRulePerfTablesForVariant('legacy');
+  initKpiRulePerfTablesForVariant('new');
+}
+
 function syncKpiRulePerfFieldOrder(sectionKey) {
-  var section = KPI_RULE_PERF_SECTIONS[sectionKey];
+  var section = getKpiRulePerfSections()[sectionKey];
   if (!section) return;
   var body = document.getElementById(section.bodyId);
   var empty = document.getElementById(section.emptyId);
@@ -2611,7 +2829,7 @@ function syncKpiRulePerfFieldOrder(sectionKey) {
 }
 
 function syncKpiRulePerfSectionSettings(sectionKey) {
-  var section = KPI_RULE_PERF_SECTIONS[sectionKey];
+  var section = getKpiRulePerfSections()[sectionKey];
   if (!section) return;
   var selected = getSelectedKpiRuleDimensions();
   var selectedMap = {};
@@ -2622,7 +2840,7 @@ function syncKpiRulePerfSectionSettings(sectionKey) {
     var field = document.getElementById(conf.fieldId);
     if (!field) return;
     var isSelected = !!selectedMap[dim];
-    var isRemoved = !!kpiRulePerfRemovedModules[dim];
+    var isRemoved = !!getKpiRuleEntryCtx().perfRemovedModules[dim];
     field.hidden = !isSelected || isRemoved;
     field.querySelectorAll('.kpi-rule-perf-add-btn').forEach(function (btn) {
       var isActive = isSelected && !isRemoved;
@@ -2635,40 +2853,50 @@ function syncKpiRulePerfSectionSettings(sectionKey) {
   syncKpiRulePerfFieldOrder(sectionKey);
 }
 
-function removeKpiRulePerfModule(event, dim) {
+function removeKpiRulePerfModule(event, dim, variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   if (event) event.preventDefault();
-  var conf = KPI_RULE_PERF_SECTIONS.perf.settings[dim];
+  var conf = getKpiRulePerfSections().perf.settings[dim];
   if (!conf) return;
   var field = document.getElementById(conf.fieldId);
   if (!field || field.hidden) return;
   if (!confirm('确认移除此模块？')) return;
-  kpiRulePerfRemovedModules[dim] = true;
+  getKpiRuleEntryCtx().perfRemovedModules[dim] = true;
   field.hidden = true;
   updateKpiRulePerfEmptyState();
 }
 
 function syncKpiRulePerfSettings() {
-  Object.keys(KPI_RULE_PERF_SECTIONS).forEach(function (sectionKey) {
+  Object.keys(getKpiRulePerfSections()).forEach(function (sectionKey) {
     syncKpiRulePerfSectionSettings(sectionKey);
   });
 }
 
-function syncKpiRuleWeightFields() {
-  var result = syncKpiRuleLinkedFields(KPI_RULE_DIMENSION_WEIGHTS, { clearOnHide: '0' });
+function getKpiRuleDimensionWeightConfigMap() {
+  var map = {};
+  Object.keys(KPI_RULE_DIMENSION_WEIGHTS).forEach(function (dim) {
+    map[dim] = getKpiRuleWeightConf(dim);
+  });
+  return map;
+}
+
+function syncKpiRuleWeightFields(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var result = syncKpiRuleLinkedFields(getKpiRuleDimensionWeightConfigMap(), { clearOnHide: '0' });
 
   Object.keys(KPI_RULE_DIMENSION_WEIGHTS).forEach(function (dim) {
-    if (!kpiRuleWeightRemovedModules[dim]) return;
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    if (!getKpiRuleEntryCtx().weightRemovedModules[dim]) return;
+    var conf = getKpiRuleWeightConf(dim);
     var field = document.getElementById(conf.fieldId);
     if (field) field.hidden = true;
   });
 
   Object.keys(KPI_RULE_DIMENSION_WEIGHTS).forEach(function (dim) {
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var conf = getKpiRuleWeightConf(dim);
     var field = document.getElementById(conf.fieldId);
     var input = document.getElementById(conf.inputId);
     if (!input) return;
-    var isActive = field && !field.hidden && !kpiRuleWeightRemovedModules[dim];
+    var isActive = field && !field.hidden && !getKpiRuleEntryCtx().weightRemovedModules[dim];
     input.required = isActive;
   });
 
@@ -2680,22 +2908,23 @@ function syncKpiRuleWeightFields() {
 
 function updateKpiRuleWeightEmptyState() {
   var hasVisibleModule = getSelectedKpiRuleDimensions().some(function (dim) {
-    return !kpiRuleWeightRemovedModules[dim];
+    return !getKpiRuleEntryCtx().weightRemovedModules[dim];
   });
-  var empty = document.getElementById('kpiRuleWeightEmpty');
-  var sumBox = document.getElementById('kpiRuleWeightSumBox');
+  var empty = kriEl('kpiRuleWeightEmpty');
+  var sumBox = kriEl('kpiRuleWeightSumBox');
   if (empty) empty.hidden = hasVisibleModule;
   if (sumBox) sumBox.hidden = !hasVisibleModule;
 }
 
-function removeKpiRuleWeightModule(event, dim) {
+function removeKpiRuleWeightModule(event, dim, variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   if (event) event.preventDefault();
-  var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+  var conf = getKpiRuleWeightConf(dim);
   if (!conf) return;
   var field = document.getElementById(conf.fieldId);
   if (!field || field.hidden) return;
   if (!confirm('确认移除此权重？')) return;
-  kpiRuleWeightRemovedModules[dim] = true;
+  getKpiRuleEntryCtx().weightRemovedModules[dim] = true;
   field.hidden = true;
   updateKpiRuleWeightEmptyState();
   validateKpiRuleWeights();
@@ -2734,10 +2963,13 @@ function syncKpiRuleLinkedFields(config, options) {
 }
 
 function getSelectedKpiRuleDimensions() {
-  var form = document.getElementById('kpiRuleEntryForm');
+  if (isKpiRuleNewEntryVariant()) {
+    return KPI_RULE_NEW_ENTRY_DEFAULT_DIMENSIONS.slice();
+  }
+  var form = kriForm();
   if (!form) return [];
   return Array.prototype.map.call(
-    form.querySelectorAll('input[name="kpiRuleDimension"]:checked'),
+    form.querySelectorAll('input[name="kpiRuleDimension' + getKpiRuleEntryVariantConfig().suffix + '"]:checked'),
     function (cb) { return cb.value; }
   );
 }
@@ -2749,11 +2981,12 @@ function parseKpiRuleWeight(id) {
   return isNaN(val) ? 0 : val;
 }
 
-function validateKpiRuleWeights() {
+function validateKpiRuleWeights(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   var selected = getSelectedKpiRuleDimensions();
-  var box = document.getElementById('kpiRuleWeightSumBox');
-  var text = document.getElementById('kpiRuleWeightSumText');
-  var hint = document.getElementById('kpiRuleWeightSumHint');
+  var box = kriEl('kpiRuleWeightSumBox');
+  var text = kriEl('kpiRuleWeightSumText');
+  var hint = kriEl('kpiRuleWeightSumHint');
 
   if (!selected.length) {
     if (box) box.classList.remove('is-error');
@@ -2761,13 +2994,13 @@ function validateKpiRuleWeights() {
   }
 
   var sum = selected.reduce(function (total, dim) {
-    if (kpiRuleWeightRemovedModules[dim]) return total;
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    if (getKpiRuleEntryCtx().weightRemovedModules[dim]) return total;
+    var conf = getKpiRuleWeightConf(dim);
     return total + (conf ? parseKpiRuleWeight(conf.inputId) : 0);
   }, 0);
 
   var activeCount = selected.filter(function (dim) {
-    return !kpiRuleWeightRemovedModules[dim];
+    return !getKpiRuleEntryCtx().weightRemovedModules[dim];
   }).length;
 
   if (!activeCount) {
@@ -2790,8 +3023,8 @@ function validateKpiRuleWeights() {
 
 function getKpiRuleWeightedDimensions() {
   return getSelectedKpiRuleDimensions().filter(function (dim) {
-    if (kpiRuleWeightRemovedModules[dim]) return false;
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    if (getKpiRuleEntryCtx().weightRemovedModules[dim]) return false;
+    var conf = getKpiRuleWeightConf(dim);
     if (!conf) return false;
     return parseKpiRuleWeight(conf.inputId) > 0;
   });
@@ -2805,7 +3038,7 @@ function buildKpiRuleKpiCompletionFormula() {
   var dims = getKpiRuleWeightedDimensions();
   if (!dims.length) return '';
   return dims.map(function (dim) {
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var conf = getKpiRuleWeightConf(dim);
     var weight = parseKpiRuleWeight(conf.inputId);
     var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
     return label + ' × <span class="kpi-rule-formula-expr-percent">' + formatKpiRuleWeightPercent(weight) + '</span>';
@@ -2820,7 +3053,7 @@ function buildKpiRuleKpiCompletionFormulaForPreview() {
   var dims = getKpiRuleWeightedDimensions();
   if (!dims.length) return '';
   return dims.map(function (dim) {
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var conf = getKpiRuleWeightConf(dim);
     var weight = parseKpiRuleWeight(conf.inputId);
     var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
     return label + kpiRuleFormulaPreviewOp('×') + buildKpiRuleFormulaPreviewNum(formatKpiRuleWeightPercent(weight));
@@ -2847,7 +3080,9 @@ function buildKpiRuleFormulaPreviewPlaceholder(label) {
 }
 
 function getSelectedKpiRuleFormulaType() {
-  var checked = document.querySelector('input[name="kpiRuleFormulaType"]:checked');
+  var form = kriForm();
+  if (!form) return '销售提成规则';
+  var checked = form.querySelector('input[name="kpiRuleFormulaType' + getKpiRuleEntryVariantConfig().suffix + '"]:checked');
   return checked ? checked.value : '销售提成规则';
 }
 
@@ -2856,22 +3091,25 @@ function isKpiRuleLeaderFormulaType() {
 }
 
 function applyKpiRuleFormulaDefaults(formulaType) {
+  if (isKpiRuleNewEntryVariant()) return;
   var defaults = KPI_RULE_FORMULA_DEFAULTS[formulaType] || KPI_RULE_FORMULA_DEFAULTS['销售提成规则'];
-  var baseAmount = document.getElementById('kpiRuleBaseAmount');
-  var leaderRatio = document.getElementById('kpiRuleLeaderRatio');
+  var baseAmount = kriEl('kpiRuleBaseAmount');
+  var leaderRatio = kriEl('kpiRuleLeaderRatio');
   if (baseAmount) baseAmount.value = defaults.amount;
   if (leaderRatio && defaults.leaderRatio != null) leaderRatio.value = defaults.leaderRatio;
 }
 
-function syncKpiRuleExtraBonusVisibility() {
-  var field = document.getElementById('kpiRuleExtraBonusField');
+function syncKpiRuleExtraBonusVisibility(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var field = kriEl('kpiRuleExtraBonusField');
   if (!field) return;
   field.hidden = true;
 }
 
-function syncKpiRuleLeaderRatioVisibility() {
-  var field = document.getElementById('kpiRuleLeaderRatioField');
-  var leaderRatio = document.getElementById('kpiRuleLeaderRatio');
+function syncKpiRuleLeaderRatioVisibility(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var field = kriEl('kpiRuleLeaderRatioField');
+  var leaderRatio = kriEl('kpiRuleLeaderRatio');
   var isLeader = isKpiRuleLeaderFormulaType();
   if (field) field.hidden = !isLeader;
   if (leaderRatio) {
@@ -2880,7 +3118,8 @@ function syncKpiRuleLeaderRatioVisibility() {
   }
 }
 
-function onKpiRuleFormulaTypeChange() {
+function onKpiRuleFormulaTypeChange(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   var formulaType = getSelectedKpiRuleFormulaType();
   applyKpiRuleFormulaDefaults(formulaType);
   syncKpiRuleExtraBonusVisibility();
@@ -2907,7 +3146,7 @@ function buildKpiRuleExampleKpiDetail() {
   var parts = [];
   var total = 0;
   dims.forEach(function (dim) {
-    var conf = KPI_RULE_DIMENSION_WEIGHTS[dim];
+    var conf = getKpiRuleWeightConf(dim);
     var weight = parseKpiRuleWeight(conf.inputId);
     var rate = getKpiRuleExampleCompletionRate(dim);
     var label = KPI_RULE_DIMENSION_COMPLETION_LABELS[dim] || (dim + '完成率');
@@ -2935,8 +3174,8 @@ function buildKpiRuleFormulaExample() {
   var formulaType = getSelectedKpiRuleFormulaType();
   var fixed = KPI_RULE_FORMULA_EXAMPLE_FIXED;
   var defaults = KPI_RULE_FORMULA_DEFAULTS[formulaType] || KPI_RULE_FORMULA_DEFAULTS['销售提成规则'];
-  var baseAmountEl = document.getElementById('kpiRuleBaseAmount');
-  var leaderRatioEl = document.getElementById('kpiRuleLeaderRatio');
+  var baseAmountEl = kriEl('kpiRuleBaseAmount');
+  var leaderRatioEl = kriEl('kpiRuleLeaderRatio');
   var baseAmount = baseAmountEl ? parseFloat(baseAmountEl.value) : parseFloat(defaults.amount);
   var leaderRatio = leaderRatioEl ? parseFloat(leaderRatioEl.value) : parseFloat(defaults.leaderRatio);
   if (isNaN(baseAmount)) baseAmount = 0;
@@ -2990,8 +3229,8 @@ function buildKpiRuleSalesCommissionPreview(lotsPart, amountPart, kpiPart) {
 }
 
 function buildKpiRuleFormulaPreview() {
-  var baseAmountEl = document.getElementById('kpiRuleBaseAmount');
-  var leaderRatioEl = document.getElementById('kpiRuleLeaderRatio');
+  var baseAmountEl = kriEl('kpiRuleBaseAmount');
+  var leaderRatioEl = kriEl('kpiRuleLeaderRatio');
   var baseAmount = baseAmountEl ? baseAmountEl.value.trim() : '';
   var leaderRatio = leaderRatioEl ? leaderRatioEl.value.trim() : '';
   var kpiFormula = buildKpiRuleKpiCompletionFormulaForPreview();
@@ -3012,10 +3251,11 @@ function buildKpiRuleFormulaPreview() {
   return teamPart + kpiRuleFormulaPreviewOp('×') + leaderRatioPart + ' + ' + salesPreview;
 }
 
-function updateKpiRuleSchemeSection() {
-  var formulaEl = document.getElementById('kpiRuleKpiCompletionFormula');
-  var previewEl = document.getElementById('kpiRuleFormulaPreview');
-  var exampleEl = document.getElementById('kpiRuleFormulaExample');
+function updateKpiRuleSchemeSection(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var formulaEl = kriEl('kpiRuleKpiCompletionFormula');
+  var previewEl = kriEl('kpiRuleFormulaPreview');
+  var exampleEl = kriEl('kpiRuleFormulaExample');
   if (!formulaEl) return;
 
   var formula = buildKpiRuleKpiCompletionFormula();
@@ -3038,123 +3278,192 @@ function updateKpiRuleSchemeSection() {
 }
 
 function resetKpiRuleSchemeSettings() {
-  var formulaSales = document.getElementById('kpiRuleFormulaSales');
-  var extraBonus = document.getElementById('kpiRuleExtraBonus');
+  var formulaSales = kriEl('kpiRuleFormulaSales');
+  var extraBonus = kriEl('kpiRuleExtraBonus');
   if (formulaSales) formulaSales.checked = true;
   if (extraBonus) extraBonus.checked = true;
-  applyKpiRuleFormulaDefaults('销售提成规则');
+  if (isKpiRuleNewEntryVariant()) {
+    var baseAmount = kriEl('kpiRuleBaseAmount');
+    var leaderRatio = kriEl('kpiRuleLeaderRatio');
+    if (baseAmount) baseAmount.value = '';
+    if (leaderRatio) leaderRatio.value = '';
+  } else {
+    applyKpiRuleFormulaDefaults('销售提成规则');
+  }
   syncKpiRuleExtraBonusVisibility();
   syncKpiRuleLeaderRatioVisibility();
   updateKpiRuleSchemeSection();
 }
 
-function resetKpiRuleWeights() {
-  document.getElementById('kpiRuleWeightActive').value = '30';
-  document.getElementById('kpiRuleWeightDeposit').value = '70';
-  document.getElementById('kpiRuleWeightLots').value = '0';
-  document.getElementById('kpiRuleWeightComm').value = '0';
-  kpiRuleWeightRemovedModules = {};
-  resetKpiRulePerfStore();
-  initKpiRulePerfTables();
-  syncKpiRuleWeightFields();
+function resetKpiRuleWeights(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var weightActive = kriEl('kpiRuleWeightActive');
+  var weightDeposit = kriEl('kpiRuleWeightDeposit');
+  var weightLots = kriEl('kpiRuleWeightLots');
+  var weightComm = kriEl('kpiRuleWeightComm');
+  if (isKpiRuleNewEntryVariant()) {
+    if (weightActive) weightActive.value = '';
+    if (weightDeposit) weightDeposit.value = '';
+    if (weightLots) weightLots.value = '';
+    if (weightComm) weightComm.value = '';
+  } else {
+    if (weightActive) weightActive.value = '30';
+    if (weightDeposit) weightDeposit.value = '70';
+    if (weightLots) weightLots.value = '0';
+    if (weightComm) weightComm.value = '0';
+  }
+  getKpiRuleEntryCtx().weightRemovedModules = {};
+  resetKpiRulePerfStore(variant);
+  initKpiRulePerfTablesForVariant(variant);
+  syncKpiRuleWeightFields(variant);
   resetKpiRuleSchemeSettings();
 }
 
 var KPI_RULE_CURRENT_USER_REGION = '印尼';
 
 function getKpiRuleRegionValue() {
-  var region = document.getElementById('kpiRuleRegion');
+  var region = kriEl('kpiRuleRegion');
   if (region && region.value) return region.value;
   return KPI_RULE_CURRENT_USER_REGION;
 }
 
-function onKpiRuleRegionChange() {
+function onKpiRuleRegionChange(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   updateKpiRuleDefaultName();
   updateKpiRuleEmployeeCount();
 }
 
-function initKpiRuleBasicFields() {
-  var region = document.getElementById('kpiRuleRegion');
-  if (region) {
-    region.value = KPI_RULE_CURRENT_USER_REGION;
+function initKpiRuleBasicFields(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var cfg = getKpiRuleEntryVariantConfig();
+  if (cfg.key !== 'new') {
+    var region = kriEl('kpiRuleRegion');
+    if (region) {
+      region.value = KPI_RULE_CURRENT_USER_REGION;
+    }
   }
-  var group = document.getElementById('kpiRuleGroup');
+  var group = kriEl('kpiRuleGroup');
   if (group) group.value = '';
   updateKpiRuleEmployeeCount();
 }
 
 function getKpiRuleEmployeeCount() {
-  var group = document.getElementById('kpiRuleGroup');
+  var cfg = getKpiRuleEntryVariantConfig();
+  var group = kriEl('kpiRuleGroup');
   var groupVal = group && group.value;
+  if (cfg.key === 'new') {
+    return groupVal ? (KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal] || 0) : 0;
+  }
   if (groupVal && groupVal !== '当前地区所有人') return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
   return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
 }
 
 function updateKpiRuleEmployeeCount() {
-  var el = document.getElementById('kpiRuleEmployeeCount');
+  var el = kriEl('kpiRuleEmployeeCount');
   if (!el) return;
   var count = getKpiRuleEmployeeCount();
   el.textContent = '所选员工范围总人数为 ' + count + ' 人';
 }
 
-function onKpiRuleGroupChange() {
+function onKpiRuleGroupChange(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   updateKpiRuleDefaultName();
   updateKpiRuleEmployeeCount();
 }
 
 function buildKpiRuleDefaultName() {
-  var group = document.getElementById('kpiRuleGroup');
-  var period = document.getElementById('kpiRulePeriod');
-  var regionVal = getKpiRuleRegionValue();
+  var cfg = getKpiRuleEntryVariantConfig();
+  var group = kriEl('kpiRuleGroup');
+  var period = kriEl('kpiRulePeriod');
   var groupVal = group && group.value;
   var periodVal = period && period.value;
   if (!periodVal) return '';
+  if (cfg.key === 'new') {
+    if (!groupVal) return '';
+    return groupVal + periodVal + '绩效方案';
+  }
+  var regionVal = getKpiRuleRegionValue();
   var groupPart = (!groupVal || groupVal === '当前地区所有人') ? '所有人' : groupVal;
   return regionVal + groupPart + periodVal + '绩效方案';
 }
 
-function updateKpiRuleDefaultName() {
-  var nameInput = document.getElementById('kpiRuleName');
+function isKpiRuleNameFieldLocked(variant) {
+  var nameInput = kriEl('kpiRuleName', variant);
+  return nameInput ? nameInput.readOnly : true;
+}
+
+function lockKpiRuleNameField(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (!isKpiRuleNewEntryVariant()) return;
+  var nameInput = kriEl('kpiRuleName');
+  var editLink = kriEl('kpiRuleNameEditLink');
+  if (nameInput) {
+    nameInput.readOnly = true;
+    nameInput.classList.add('is-readonly');
+  }
+  if (editLink) editLink.hidden = false;
+}
+
+function enableKpiRuleNameEdit(event, variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (event) event.preventDefault();
+  var nameInput = kriEl('kpiRuleName');
+  var editLink = kriEl('kpiRuleNameEditLink');
+  if (nameInput) {
+    nameInput.readOnly = false;
+    nameInput.classList.remove('is-readonly');
+    nameInput.focus();
+    if (nameInput.value) {
+      try { nameInput.select(); } catch (e) {}
+    }
+  }
+  if (editLink) editLink.hidden = true;
+}
+
+function updateKpiRuleDefaultName(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var nameInput = kriEl('kpiRuleName');
   if (!nameInput) return;
+  if (isKpiRuleNewEntryVariant() && !isKpiRuleNameFieldLocked()) return;
   nameInput.value = buildKpiRuleDefaultName();
 }
 
-var kpiRuleSplitMonthSelection = [];
-var kpiRuleSplitMonthPeriodKey = '';
-
 function resetKpiRuleSplitMonthSelection(period) {
-  kpiRuleSplitMonthPeriodKey = period || '';
-  kpiRuleSplitMonthSelection = period ? (getKpiRuleQuarterMonths(period) || []).slice() : [];
+  getKpiRuleEntryCtx().splitMonthPeriodKey = period || '';
+  getKpiRuleEntryCtx().splitMonthSelection = period ? (getKpiRuleQuarterMonths(period) || []).slice() : [];
 }
 
 function buildKpiRuleMonthTagHtml(month) {
+  var variant = activeKpiRuleEntryVariant;
   return (
     '<span class="kpi-rule-month-tag">' +
       '<span class="kpi-rule-month-tag-text">' + month + '</span>' +
-      '<button type="button" class="kpi-rule-month-tag-remove" onclick="removeKpiRuleSplitMonth(\'' + month + '\')" aria-label="删除' + month + '">×</button>' +
+      '<button type="button" class="kpi-rule-month-tag-remove" onclick="removeKpiRuleSplitMonth(\'' + month + '\', \'' + variant + '\')" aria-label="删除' + month + '">×</button>' +
     '</span>'
   );
 }
 
 function renderKpiRuleMonthList() {
-  var list = document.getElementById('kpiRuleMonthList');
+  var list = kriEl('kpiRuleMonthList');
   if (!list) return;
-  if (!kpiRuleSplitMonthSelection.length) {
+  if (!getKpiRuleEntryCtx().splitMonthSelection.length) {
     list.innerHTML = '<span class="kpi-rule-month-empty kpi-rule-month-empty--alert">暂无拆分月份，请重新选择考核时间范围</span>';
     return;
   }
-  list.innerHTML = kpiRuleSplitMonthSelection.map(buildKpiRuleMonthTagHtml).join('');
+  list.innerHTML = getKpiRuleEntryCtx().splitMonthSelection.map(buildKpiRuleMonthTagHtml).join('');
 }
 
-function removeKpiRuleSplitMonth(month) {
-  kpiRuleSplitMonthSelection = kpiRuleSplitMonthSelection.filter(function (m) { return m !== month; });
+function removeKpiRuleSplitMonth(month, variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  getKpiRuleEntryCtx().splitMonthSelection = getKpiRuleEntryCtx().splitMonthSelection.filter(function (m) { return m !== month; });
   renderKpiRuleMonthList();
 }
 
-function updateKpiRuleSplitMonths() {
-  var periodEl = document.getElementById('kpiRulePeriod');
-  var splitEl = document.getElementById('kpiRuleSplitByMonth');
-  var list = document.getElementById('kpiRuleMonthList');
+function updateKpiRuleSplitMonths(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var periodEl = kriEl('kpiRulePeriod');
+  var splitEl = kriEl('kpiRuleSplitByMonth');
+  var list = kriEl('kpiRuleMonthList');
   var period = periodEl && periodEl.value;
   var splitChecked = splitEl && splitEl.checked;
 
@@ -3163,12 +3472,12 @@ function updateKpiRuleSplitMonths() {
       list.hidden = true;
       list.innerHTML = '';
     }
-    kpiRuleSplitMonthSelection = [];
-    kpiRuleSplitMonthPeriodKey = '';
+    getKpiRuleEntryCtx().splitMonthSelection = [];
+    getKpiRuleEntryCtx().splitMonthPeriodKey = '';
     return;
   }
 
-  if (period !== kpiRuleSplitMonthPeriodKey) {
+  if (period !== getKpiRuleEntryCtx().splitMonthPeriodKey) {
     resetKpiRuleSplitMonthSelection(period);
   }
 
@@ -3176,17 +3485,19 @@ function updateKpiRuleSplitMonths() {
   renderKpiRuleMonthList();
 }
 
-function validateKpiRuleSplitMonths() {
-  var splitEl = document.getElementById('kpiRuleSplitByMonth');
-  var periodEl = document.getElementById('kpiRulePeriod');
+function validateKpiRuleSplitMonths(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  var splitEl = kriEl('kpiRuleSplitByMonth');
+  var periodEl = kriEl('kpiRulePeriod');
   if (!splitEl || !splitEl.checked) return true;
   if (!periodEl || !periodEl.value) return true;
-  if (kpiRuleSplitMonthSelection.length > 0) return true;
+  if (getKpiRuleEntryCtx().splitMonthSelection.length > 0) return true;
   alert('暂无拆分月份，请重新选择考核时间范围');
   return false;
 }
 
-function validateKpiRuleSchemeSection() {
+function validateKpiRuleSchemeSection(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   if (!buildKpiRuleKpiCompletionFormula()) {
     alert('请先设置权重大于 0 的考核维度，生成 KPI 完成率');
     return false;
@@ -3194,15 +3505,18 @@ function validateKpiRuleSchemeSection() {
   return true;
 }
 
-function hasKpiRuleDimensionSelected() {
-  var form = document.getElementById('kpiRuleEntryForm');
+function hasKpiRuleDimensionSelected(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (isKpiRuleNewEntryVariant()) return true;
+  var form = kriForm();
   if (!form) return false;
-  return form.querySelectorAll('input[name="kpiRuleDimension"]:checked').length > 0;
+  return form.querySelectorAll('input[name="kpiRuleDimension' + getKpiRuleEntryVariantConfig().suffix + '"]:checked').length > 0;
 }
 
-function submitKpiRuleEntryForm(event) {
+function submitKpiRuleEntryForm(event, variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
   if (event) event.preventDefault();
-  var form = document.getElementById('kpiRuleEntryForm');
+  var form = kriForm();
   if (!form.checkValidity()) {
     form.reportValidity();
     return;
@@ -3222,26 +3536,12 @@ function submitKpiRuleEntryForm(event) {
     return;
   }
   alert('KPI 提成规则已确认提交（原型演示）');
-  closeKpiRuleEntryModal();
+  closeKpiRuleEntryModal(variant);
 }
 
 
 
 var KPI_TARGET_ROW_ID = null;
-
-function setKpiTargetRegionDisplay(region) {
-  var regionEl = document.getElementById('kpiTargetRegion');
-  if (!regionEl || !region) return;
-  var hasOption = Array.prototype.some.call(regionEl.options, function (opt) { return opt.value === region; });
-  if (!hasOption) {
-    var option = document.createElement('option');
-    option.value = region;
-    option.textContent = region;
-    regionEl.appendChild(option);
-  }
-  regionEl.value = region;
-  regionEl.disabled = true;
-}
 
 function applyKpiTargetWeightsFromRow(row) {
   var weights = getKpiRuleListWeights(row);
@@ -3966,7 +4266,6 @@ function initKpiTargetEmployeeTable(row) {
 
 function populateKpiTargetFormFromRow(row) {
   if (!row) return;
-  setKpiTargetRegionDisplay(row.region || KPI_RULE_CURRENT_USER_REGION);
   setKpiTargetGroupDisplay(row.group || '');
 
   var activeGoal = document.getElementById('kpiTargetActiveGoal');
@@ -4018,25 +4317,37 @@ function initKpiTargetPeriodOptions() {
   }
 }
 
-function openKpiRuleEntryModal() {
-  var modal = document.getElementById('kpiRuleEntryModal');
-  var form = document.getElementById('kpiRuleEntryForm');
+function openKpiRuleEntryModalNew() {
+  openKpiRuleEntryModal('new');
+}
+
+function openKpiRuleEntryModal(variant) {
+  setActiveKpiRuleEntryVariant(variant || 'legacy');
+  var cfg = getKpiRuleEntryVariantConfig();
+  var modal = document.getElementById(cfg.modalId);
+  var form = kriForm();
   if (!modal) return;
   if (form) form.reset();
-  var splitByMonth = document.getElementById('kpiRuleSplitByMonth');
+  var splitByMonth = kriEl('kpiRuleSplitByMonth');
   if (splitByMonth) splitByMonth.checked = true;
-  initKpiRulePeriodOptions();
-  initKpiRuleBasicFields();
-  resetKpiRuleWeights();
-  updateKpiRuleSplitMonths();
-  updateKpiRuleDefaultName();
+  initKpiRulePeriodOptions(variant);
+  initKpiRuleBasicFields(variant);
+  resetKpiRuleWeights(variant);
+  syncKpiRuleWeightFields(variant);
+  syncKpiRuleExtraBonusVisibility(variant);
+  syncKpiRuleLeaderRatioVisibility(variant);
+  updateKpiRuleSplitMonths(variant);
+  updateKpiRuleDefaultName(variant);
+  lockKpiRuleNameField(variant);
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 }
 
-function closeKpiRuleEntryModal() {
-  var modal = document.getElementById('kpiRuleEntryModal');
+function closeKpiRuleEntryModal(variant) {
+  setActiveKpiRuleEntryVariant(variant || 'legacy');
+  var cfg = getKpiRuleEntryVariantConfig();
+  var modal = document.getElementById(cfg.modalId);
   if (!modal || modal.hidden) return;
   modal.hidden = true;
   modal.setAttribute('aria-hidden', 'true');
@@ -4790,11 +5101,6 @@ function getKpiTargetRegionValue() {
 }
 
 function initKpiTargetBasicFields() {
-  var region = document.getElementById('kpiTargetRegion');
-  if (region) {
-    region.value = KPI_RULE_CURRENT_USER_REGION;
-    region.disabled = true;
-  }
   var group = document.getElementById('kpiTargetGroup');
   if (group) group.value = '';
   updateKpiTargetEmployeeCount();
@@ -4862,13 +5168,19 @@ function validateKpiTargetSchemeSection() {
   return true;
 }
 
-resetKpiRulePerfStore();
+resetKpiRulePerfStore('legacy');
+resetKpiRulePerfStore('new');
+initKpiRuleEntryModalClone();
 initKpiRulePerfTables();
-initKpiRulePeriodOptions();
+initKpiRulePeriodOptions('legacy');
+initKpiRulePeriodOptions('new');
 initKpiRuleFilterPeriodOptions();
-syncKpiRuleWeightFields();
-syncKpiRuleExtraBonusVisibility();
-syncKpiRuleLeaderRatioVisibility();
+syncKpiRuleWeightFields('legacy');
+syncKpiRuleWeightFields('new');
+syncKpiRuleExtraBonusVisibility('legacy');
+syncKpiRuleExtraBonusVisibility('new');
+syncKpiRuleLeaderRatioVisibility('legacy');
+syncKpiRuleLeaderRatioVisibility('new');
 renderRulesTable();
 </script>
 </body>
