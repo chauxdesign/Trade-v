@@ -602,6 +602,22 @@
     #kpiRuleEntryModalNew .kpi-rule-name-row .kpi-rule-input{
       flex:0 0 260px;width:260px;max-width:260px;
     }
+    #kpiRuleEntryModalNew .kpi-rule-group-scope-row{
+      display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-leader-scheme-check{
+      margin:0;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-formula-radio-group--single .kpi-rule-formula-radio-item{
+      cursor:default;border-bottom:none;align-items:flex-start;
+      white-space:normal;line-height:1.5;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-formula-radio-group--single{
+      width:auto;max-width:100%;min-width:260px;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-formula-radio-group--single input{
+      pointer-events:none;margin-top:2px;
+    }
     #kpiRuleEntryModalNew .kpi-rule-perf-table-foot{
       display:block;padding:0;border-top:1px solid #e2e8f0;
       background:#fafbfc;border-radius:0 0 8px 8px;overflow:hidden;
@@ -1617,6 +1633,12 @@ var KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS = {
   'V4销售': 24
 };
 
+var KPI_RULE_LEVEL_GROUP_LEADER_COUNTS = {
+  'V1销售': 6,
+  'V23销售': 8,
+  'V4销售': 4
+};
+
 var KPI_RULE_REGION_EMPLOYEE_TOTALS = {
   '印尼': 135,
   '尼日': 98,
@@ -2390,6 +2412,7 @@ function rewriteKpiRuleEntryInlineHandlers(root, variant) {
         .replace(/syncKpiRuleWeightFields\(\)/g, 'syncKpiRuleWeightFields(' + v + ')')
         .replace(/validateKpiRuleWeights\(\)/g, 'validateKpiRuleWeights(' + v + ')')
         .replace(/onKpiRuleFormulaTypeChange\(\)/g, 'onKpiRuleFormulaTypeChange(' + v + ')')
+        .replace(/onKpiRuleLeaderSchemeChange\(\)/g, 'onKpiRuleLeaderSchemeChange(' + v + ')')
         .replace(/updateKpiRuleSchemeSection\(\)/g, 'updateKpiRuleSchemeSection(' + v + ')')
         .replace(/removeKpiRuleWeightModule\(event,\s*'([^']+)'\)/g, "removeKpiRuleWeightModule(event, '$1', " + v + ')')
         .replace(/removeKpiRulePerfModule\(event,\s*'([^']+)'\)/g, "removeKpiRulePerfModule(event, '$1', " + v + ')');
@@ -2411,6 +2434,16 @@ function customizeKpiRuleEntryModalNew(clone) {
       '<option value="V1销售">V1销售</option>' +
       '<option value="V23销售">V23销售</option>' +
       '<option value="V4销售">V4销售</option>';
+    var groupRow = groupSelect.closest('.kpi-rule-group-row');
+    if (groupRow) {
+      groupRow.classList.add('kpi-rule-group-scope-row');
+      var leaderCheck = document.createElement('label');
+      leaderCheck.className = 'kpi-rule-split-check kpi-rule-leader-scheme-check';
+      leaderCheck.innerHTML =
+        '<input type="checkbox" id="kpiRuleLeaderSchemeNew" onchange="onKpiRuleLeaderSchemeChange()">' +
+        '<span>是否组长方案</span>';
+      groupRow.appendChild(leaderCheck);
+    }
   }
   var nameInput = clone.querySelector('#kpiRuleNameNew');
   if (nameInput) {
@@ -2468,6 +2501,34 @@ function customizeKpiRuleEntryModalNew(clone) {
         '</tr></tbody>' +
       '</table>';
   });
+  var formulaSales = clone.querySelector('#kpiRuleFormulaSalesNew');
+  if (formulaSales) {
+    var formulaField = formulaSales.closest('.kpi-rule-field');
+    var radioGroup = formulaSales.closest('.kpi-rule-formula-radio-group');
+    if (radioGroup) {
+      radioGroup.classList.add('kpi-rule-formula-radio-group--single');
+      radioGroup.setAttribute('aria-label', '选择绩效提成公式');
+      radioGroup.innerHTML =
+        '<label class="kpi-rule-formula-radio-item">' +
+          '<input type="radio" name="kpiRuleFormulaTypeNew" id="kpiRuleFormulaTypeSingleNew" value="销售提成规则" checked required>' +
+          '<span id="kpiRuleFormulaTypeSingleLabelNew">' + KPI_RULE_NEW_FORMULA_LABELS['销售提成规则'] + '</span>' +
+        '</label>';
+    }
+    if (formulaField) {
+      var formulaLabel = formulaField.querySelector('.kpi-rule-label');
+      if (formulaLabel) formulaLabel.innerHTML = '<span class="req">*</span>选择绩效提成公式：';
+    }
+  }
+  var schemeSection = clone.querySelector('#kpiRuleSchemeSectionNew');
+  if (schemeSection) {
+    schemeSection.querySelectorAll('.kpi-rule-field').forEach(function (field) {
+      var label = field.querySelector('.kpi-rule-label');
+      if (!label) return;
+      if ((label.textContent || '').indexOf('绩效公式预览') >= 0) {
+        label.textContent = '绩效公式计算预览：';
+      }
+    });
+  }
 }
 
 function initKpiRuleEntryModalClone() {
@@ -2508,6 +2569,22 @@ var KPI_RULE_PERF_DEFAULT_ROWS = [
 var KPI_RULE_PERF_DEFAULT_ROWS_NEW = [
   { range: 'N＜40%', perf: 0 }
 ];
+
+var KPI_RULE_NEW_FORMULA_LABELS = {
+  '销售提成规则': '总交易手数 × 基础提成金额 × KPI完成率',
+  '组长提成规则': '团队所有提成 × 组长提成比例 + 总交易手数 × 基础提成金额 × KPI完成率'
+};
+
+function getKpiRuleNewFormulaDisplayLabel(formulaType) {
+  return KPI_RULE_NEW_FORMULA_LABELS[formulaType] || formulaType;
+}
+
+function getKpiRuleNewFormulaDisplayHtml(formulaType) {
+  if (formulaType === '组长提成规则') {
+    return '<strong>团队所有提成 × 组长提成比例</strong> + 总交易手数 × 基础提成金额 × KPI完成率';
+  }
+  return getKpiRuleNewFormulaDisplayLabel(formulaType);
+}
 
 function cloneKpiRulePerfDefaultRows(variant) {
   var source = isKpiRuleNewEntryVariant(variant) ? KPI_RULE_PERF_DEFAULT_ROWS_NEW : KPI_RULE_PERF_DEFAULT_ROWS;
@@ -3119,12 +3196,61 @@ function syncKpiRuleLeaderRatioVisibility(variant) {
   }
 }
 
+function syncKpiRuleFormulaTypeVisibility(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (!isKpiRuleNewEntryVariant()) return;
+  var check = kriEl('kpiRuleLeaderScheme');
+  var singleRadio = kriEl('kpiRuleFormulaTypeSingle');
+  var singleLabel = kriEl('kpiRuleFormulaTypeSingleLabel');
+  if (!singleRadio) return;
+  var isLeaderScheme = !!(check && check.checked);
+  var formulaType = isLeaderScheme ? '组长提成规则' : '销售提成规则';
+  singleRadio.value = formulaType;
+  singleRadio.checked = true;
+  if (singleLabel) singleLabel.innerHTML = getKpiRuleNewFormulaDisplayHtml(formulaType);
+}
+
+function syncKpiRuleLeaderSchemeCheck(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (!isKpiRuleNewEntryVariant()) return;
+  var check = kriEl('kpiRuleLeaderScheme');
+  if (!check) return;
+  check.checked = isKpiRuleLeaderFormulaType();
+}
+
+function onKpiRuleLeaderSchemeChange(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (!isKpiRuleNewEntryVariant()) return;
+  syncKpiRuleFormulaTypeVisibility(variant);
+  onKpiRuleFormulaTypeChange(variant);
+  updateKpiRuleEmployeeCount();
+  updateKpiRuleDefaultName(variant);
+}
+
+function isKpiRuleLeaderSchemeChecked(variant) {
+  if (!isKpiRuleNewEntryVariant(variant)) return false;
+  var check = kriEl('kpiRuleLeaderScheme', variant);
+  return !!(check && check.checked);
+}
+
+function getKpiRuleLeaderSchemeNamePart(variant) {
+  return isKpiRuleLeaderSchemeChecked(variant) ? '组长' : '';
+}
+
+function buildKpiRuleEmployeeCountText(count, variant) {
+  if (isKpiRuleLeaderSchemeChecked(variant)) {
+    return '所选员工范围组长总人数为 ' + count + ' 人';
+  }
+  return '所选员工范围总人数为 ' + count + ' 人';
+}
+
 function onKpiRuleFormulaTypeChange(variant) {
   if (variant) setActiveKpiRuleEntryVariant(variant);
   var formulaType = getSelectedKpiRuleFormulaType();
   applyKpiRuleFormulaDefaults(formulaType);
   syncKpiRuleExtraBonusVisibility();
   syncKpiRuleLeaderRatioVisibility();
+  syncKpiRuleLeaderSchemeCheck();
   updateKpiRuleSchemeSection();
 }
 
@@ -3279,9 +3405,7 @@ function updateKpiRuleSchemeSection(variant) {
 }
 
 function resetKpiRuleSchemeSettings() {
-  var formulaSales = kriEl('kpiRuleFormulaSales');
   var extraBonus = kriEl('kpiRuleExtraBonus');
-  if (formulaSales) formulaSales.checked = true;
   if (extraBonus) extraBonus.checked = true;
   if (isKpiRuleNewEntryVariant()) {
     var baseAmount = kriEl('kpiRuleBaseAmount');
@@ -3289,10 +3413,13 @@ function resetKpiRuleSchemeSettings() {
     if (baseAmount) baseAmount.value = '';
     if (leaderRatio) leaderRatio.value = '';
   } else {
+    var formulaSales = kriEl('kpiRuleFormulaSales');
+    if (formulaSales) formulaSales.checked = true;
     applyKpiRuleFormulaDefaults('销售提成规则');
   }
   syncKpiRuleExtraBonusVisibility();
   syncKpiRuleLeaderRatioVisibility();
+  syncKpiRuleFormulaTypeVisibility();
   updateKpiRuleSchemeSection();
 }
 
@@ -3345,6 +3472,10 @@ function initKpiRuleBasicFields(variant) {
   }
   var group = kriEl('kpiRuleGroup');
   if (group) group.value = '';
+  if (cfg.key === 'new') {
+    var leaderScheme = kriEl('kpiRuleLeaderScheme');
+    if (leaderScheme) leaderScheme.checked = false;
+  }
   updateKpiRuleEmployeeCount();
 }
 
@@ -3353,7 +3484,11 @@ function getKpiRuleEmployeeCount() {
   var group = kriEl('kpiRuleGroup');
   var groupVal = group && group.value;
   if (cfg.key === 'new') {
-    return groupVal ? (KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal] || 0) : 0;
+    if (!groupVal) return 0;
+    if (isKpiRuleLeaderSchemeChecked()) {
+      return KPI_RULE_LEVEL_GROUP_LEADER_COUNTS[groupVal] || 0;
+    }
+    return KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
   }
   if (groupVal && groupVal !== '当前地区所有人') return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
   return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
@@ -3363,7 +3498,7 @@ function updateKpiRuleEmployeeCount() {
   var el = kriEl('kpiRuleEmployeeCount');
   if (!el) return;
   var count = getKpiRuleEmployeeCount();
-  el.textContent = '所选员工范围总人数为 ' + count + ' 人';
+  el.textContent = buildKpiRuleEmployeeCountText(count);
 }
 
 function onKpiRuleGroupChange(variant) {
@@ -3381,7 +3516,7 @@ function buildKpiRuleDefaultName() {
   if (!periodVal) return '';
   if (cfg.key === 'new') {
     if (!groupVal) return '';
-    return groupVal + periodVal + '绩效方案';
+    return groupVal + periodVal + getKpiRuleLeaderSchemeNamePart() + '绩效方案';
   }
   var regionVal = getKpiRuleRegionValue();
   var groupPart = (!groupVal || groupVal === '当前地区所有人') ? '所有人' : groupVal;
@@ -3572,7 +3707,7 @@ function buildKpiRuleListRowFromNewEntry() {
   var dimensions = getSelectedKpiRuleDimensions().filter(function (dim) {
     return !getKpiRuleEntryCtx().weightRemovedModules[dim];
   });
-  var employeeTotal = KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[group] || 0;
+  var employeeTotal = getKpiRuleEmployeeCount();
   var seq = getNextKpiRuleListSeqForMonth(period);
 
   return {
@@ -4428,6 +4563,8 @@ function openKpiRuleEntryModal(variant) {
   syncKpiRuleWeightFields(variant);
   syncKpiRuleExtraBonusVisibility(variant);
   syncKpiRuleLeaderRatioVisibility(variant);
+  syncKpiRuleFormulaTypeVisibility(variant);
+  syncKpiRuleLeaderSchemeCheck(variant);
   updateKpiRuleSplitMonths(variant);
   updateKpiRuleDefaultName(variant);
   lockKpiRuleNameField(variant);
