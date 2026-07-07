@@ -179,12 +179,65 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       padding: 10px 14px;
       font-size: 12px;
       color: var(--muted);
       background: #fafbfc;
       border-top: 1px solid var(--line);
+      flex-wrap: wrap;
     }
+
+    .table-foot-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .table-pager-info { white-space: nowrap; }
+
+    .table-pager-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pager-btn,
+    .pager-page {
+      border: 1px solid var(--wire);
+      background: #fff;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #374151;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+
+    .pager-btn:hover,
+    .pager-page:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .pager-btn:disabled,
+    .pager-page:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f8fafc;
+    }
+
+    .pager-page.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .pager-ellipsis { padding: 0 4px; color: #94a3b8; }
 
     @media (max-width: 900px) {
       .app {
@@ -226,145 +279,57 @@
                 <th class="col-action">操作</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323775', event)">20008323775</a></td>
-                <td>13812345621</td>
-                <td>$500</td>
-                <td>06-28-2026 14:32</td>
-                <td>06-30-2026 11:05</td>
-                <td>—</td>
-                <td>06-28-2026 14:32</td>
-                <td>$0</td>
-                <td>1</td>
-                <td>--</td>
-                <td>—</td>
-                <td class="col-record">—</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323775', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008323775', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323775', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323812', event)">20008323812</a></td>
-                <td>18690234567</td>
-                <td>$2,800</td>
-                <td>06-27-2026 09:15</td>
-                <td>07-01-2026 08:20</td>
-                <td>06-30-2026 16:42</td>
-                <td>06-29-2026 10:08</td>
-                <td>$420</td>
-                <td>3</td>
-                <td>已接通</td>
-                <td>06-28-2026 15:30</td>
-                <td class="col-record">电话回访，客户已了解开仓流程，计划本周尝试小额交易</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323812', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008323812', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323812', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008323906', event)">20008323906</a></td>
-                <td>15921876543</td>
-                <td>$300</td>
-                <td>06-26-2026 18:44</td>
-                <td>06-27-2026 09:33</td>
-                <td>—</td>
-                <td>06-26-2026 18:44</td>
-                <td>$0</td>
-                <td>1</td>
-                <td>已接通</td>
-                <td>06-27-2026 10:15</td>
-                <td class="col-record">在线客服触达，发送首充引导话术及开仓教程链接</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008323906', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008323906', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008323906', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324018', event)">20008324018</a></td>
-                <td>17766408892</td>
-                <td>$3,600</td>
-                <td>06-25-2026 11:20</td>
-                <td>06-30-2026 19:42</td>
-                <td>06-29-2026 14:18</td>
-                <td>06-28-2026 14:00</td>
-                <td>$185</td>
-                <td>4</td>
-                <td>已接通</td>
-                <td>06-29-2026 09:00</td>
-                <td class="col-record">已完成首单，客户反馈平台体验良好，暂无其他问题</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324018', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008324018', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324018', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324155', event)">20008324155</a></td>
-                <td>13588925678</td>
-                <td>$4,500</td>
-                <td>06-22-2026 16:08</td>
-                <td>06-26-2026 22:10</td>
-                <td>06-25-2026 20:35</td>
-                <td>06-24-2026 11:30</td>
-                <td>$96</td>
-                <td>2</td>
-                <td>已接通</td>
-                <td>06-25-2026 16:45</td>
-                <td class="col-record">核实出金原因，客户表示短期资金周转，已登记挽留方案待跟进</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324155', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008324155', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324155', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail('20008324203', event)">20008324203</a></td>
-                <td>18833150987</td>
-                <td>$600</td>
-                <td>06-18-2026 08:55</td>
-                <td>06-19-2026 07:18</td>
-                <td>—</td>
-                <td>06-18-2026 08:55</td>
-                <td>$0</td>
-                <td>1</td>
-                <td>--</td>
-                <td>—</td>
-                <td class="col-record">—</td>
-                <td class="col-action">
-                  <span class="action-links">
-                    <a href="#" class="action-link" onclick="handleAction('chat', '20008324203', event)">私聊</a>
-                    <a href="#" class="action-link" onclick="handleAction('log', '20008324203', event)">录入</a>
-                    <a href="#" class="action-link" onclick="handleAction('ai-summary', '20008324203', event)">提交AI总结</a>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
+            <tbody id="customerTableBody"></tbody>
           </table>
         </div>
         <div class="table-foot">
-          <span>共 6 条</span>
-          <span>更新时间：07-01-2026 10:30</span>
+          <div class="table-foot-left">
+            <span class="table-pager-info" id="customerPagerInfo"></span>
+            <div class="table-pager-actions" id="customerPagerActions"></div>
+          </div>
+          <span>更新时间：07-07-2026 10:30</span>
         </div>
       </section>
     </div>
   </main>
 </div>
 <script>
+  var PAGE_SIZE = 12;
+  var currentPage = 1;
+
+  var CUSTOMER_DATA = [
+    { sid: '20008323775', phone: '13812345621', deposit: '$500', firstDeposit: '06-28-2026 14:32', lastActive: '06-30-2026 11:05', lastTrade: '—', lastRecharge: '06-28-2026 14:32', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008323812', phone: '18690234567', deposit: '$2,800', firstDeposit: '06-27-2026 09:15', lastActive: '07-01-2026 08:20', lastTrade: '06-30-2026 16:42', lastRecharge: '06-29-2026 10:08', pnl: '$420', rechargeCount: 3, contacted: '已接通', followTime: '06-28-2026 15:30', followRecord: '电话回访，客户已了解开仓流程，计划本周尝试小额交易' },
+    { sid: '20008323906', phone: '15921876543', deposit: '$300', firstDeposit: '06-26-2026 18:44', lastActive: '06-27-2026 09:33', lastTrade: '—', lastRecharge: '06-26-2026 18:44', pnl: '$0', rechargeCount: 1, contacted: '已接通', followTime: '06-27-2026 10:15', followRecord: '在线客服触达，发送首充引导话术及开仓教程链接' },
+    { sid: '20008324018', phone: '17766408892', deposit: '$3,600', firstDeposit: '06-25-2026 11:20', lastActive: '06-30-2026 19:42', lastTrade: '06-29-2026 14:18', lastRecharge: '06-28-2026 14:00', pnl: '$185', rechargeCount: 4, contacted: '已接通', followTime: '06-29-2026 09:00', followRecord: '已完成首单，客户反馈平台体验良好，暂无其他问题' },
+    { sid: '20008324155', phone: '13588925678', deposit: '$4,500', firstDeposit: '06-22-2026 16:08', lastActive: '06-26-2026 22:10', lastTrade: '06-25-2026 20:35', lastRecharge: '06-24-2026 11:30', pnl: '$96', rechargeCount: 2, contacted: '已接通', followTime: '06-25-2026 16:45', followRecord: '核实出金原因，客户表示短期资金周转，已登记挽留方案待跟进' },
+    { sid: '20008324203', phone: '18833150987', deposit: '$600', firstDeposit: '06-18-2026 08:55', lastActive: '06-19-2026 07:18', lastTrade: '—', lastRecharge: '06-18-2026 08:55', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008324288', phone: '15188234561', deposit: '$1,200', firstDeposit: '07-06-2026 20:18', lastActive: '07-07-2026 09:42', lastTrade: '—', lastRecharge: '07-06-2026 20:18', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008324367', phone: '13655678901', deposit: '$800', firstDeposit: '07-05-2026 13:05', lastActive: '07-06-2026 18:30', lastTrade: '07-06-2026 10:22', lastRecharge: '07-05-2026 13:05', pnl: '$52', rechargeCount: 1, contacted: '已接通', followTime: '07-05-2026 16:40', followRecord: '私聊回访，客户已完成小额试单，对点差表示满意' },
+    { sid: '20008324420', phone: '18733445566', deposit: '$2,000', firstDeposit: '07-04-2026 10:50', lastActive: '07-06-2026 21:15', lastTrade: '07-05-2026 15:08', lastRecharge: '07-04-2026 10:50', pnl: '$138', rechargeCount: 2, contacted: '已接通', followTime: '07-04-2026 14:20', followRecord: '电话确认首充到账，引导客户完成 KYC 后尝试首单' },
+    { sid: '20008324501', phone: '18266778899', deposit: '$350', firstDeposit: '07-03-2026 17:33', lastActive: '07-04-2026 08:10', lastTrade: '—', lastRecharge: '07-03-2026 17:33', pnl: '$0', rechargeCount: 1, contacted: '已接通', followTime: '07-03-2026 19:05', followRecord: '在线客服触达，发送首充引导话术及开仓教程链接' },
+    { sid: '20008324589', phone: '13399887766', deposit: '$1,500', firstDeposit: '07-02-2026 09:22', lastActive: '07-05-2026 12:48', lastTrade: '07-03-2026 11:35', lastRecharge: '07-02-2026 09:22', pnl: '$74', rechargeCount: 2, contacted: '已接通', followTime: '07-02-2026 15:10', followRecord: '已完成首单，客户反馈平台体验良好，暂无其他问题' },
+    { sid: '20008324670', phone: '15822334455', deposit: '$450', firstDeposit: '07-01-2026 22:08', lastActive: '07-02-2026 07:55', lastTrade: '—', lastRecharge: '07-01-2026 22:08', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008324755', phone: '18911223344', deposit: '$3,200', firstDeposit: '06-30-2026 15:40', lastActive: '07-04-2026 16:22', lastTrade: '07-02-2026 09:18', lastRecharge: '07-01-2026 11:05', pnl: '$210', rechargeCount: 3, contacted: '已接通', followTime: '07-01-2026 10:30', followRecord: '电话回访，客户已了解开仓流程，计划本周尝试小额交易' },
+    { sid: '20008324832', phone: '17655667788', deposit: '$700', firstDeposit: '06-29-2026 08:15', lastActive: '06-30-2026 14:20', lastTrade: '—', lastRecharge: '06-29-2026 08:15', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008324910', phone: '13788990011', deposit: '$5,000', firstDeposit: '06-28-2026 19:50', lastActive: '07-03-2026 20:05', lastTrade: '07-01-2026 13:42', lastRecharge: '06-30-2026 09:18', pnl: '$325', rechargeCount: 4, contacted: '已接通', followTime: '06-29-2026 11:00', followRecord: '高净值客户，已安排专属顾问跟进交易策略咨询' },
+    { sid: '20008324988', phone: '18133445522', deposit: '$280', firstDeposit: '06-27-2026 12:28', lastActive: '06-28-2026 09:15', lastTrade: '—', lastRecharge: '06-27-2026 12:28', pnl: '$0', rechargeCount: 1, contacted: '已接通', followTime: '06-27-2026 14:50', followRecord: '短信+私聊双触达，客户表示周末有空再了解交易规则' },
+    { sid: '20008325065', phone: '13966778855', deposit: '$1,800', firstDeposit: '06-26-2026 07:42', lastActive: '06-29-2026 17:30', lastTrade: '06-28-2026 08:55', lastRecharge: '06-27-2026 16:20', pnl: '$63', rechargeCount: 2, contacted: '已接通', followTime: '06-26-2026 12:15', followRecord: '核实出金原因，客户表示短期资金周转，已登记挽留方案待跟进' },
+    { sid: '20008325142', phone: '15622334411', deposit: '$550', firstDeposit: '06-25-2026 21:10', lastActive: '06-26-2026 10:08', lastTrade: '—', lastRecharge: '06-25-2026 21:10', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008325228', phone: '18599887733', deposit: '$2,500', firstDeposit: '06-24-2026 14:35', lastActive: '06-28-2026 11:42', lastTrade: '06-26-2026 16:20', lastRecharge: '06-25-2026 09:45', pnl: '$178', rechargeCount: 3, contacted: '已接通', followTime: '06-24-2026 17:30', followRecord: '电话回访，客户已了解开仓流程，计划本周尝试小额交易' },
+    { sid: '20008325305', phone: '13455667722', deposit: '$400', firstDeposit: '06-23-2026 10:18', lastActive: '06-24-2026 08:55', lastTrade: '—', lastRecharge: '06-23-2026 10:18', pnl: '$0', rechargeCount: 1, contacted: '已接通', followTime: '06-23-2026 15:22', followRecord: '在线客服触达，发送首充引导话术及开仓教程链接' },
+    { sid: '20008325390', phone: '18311224455', deposit: '$3,800', firstDeposit: '06-22-2026 08:50', lastActive: '06-27-2026 19:18', lastTrade: '06-25-2026 14:08', lastRecharge: '06-24-2026 11:30', pnl: '$142', rechargeCount: 3, contacted: '已接通', followTime: '06-22-2026 13:40', followRecord: '已完成首单，客户反馈平台体验良好，暂无其他问题' },
+    { sid: '20008325468', phone: '15288996677', deposit: '$320', firstDeposit: '06-21-2026 16:22', lastActive: '06-22-2026 07:40', lastTrade: '—', lastRecharge: '06-21-2026 16:22', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008325545', phone: '18644556633', deposit: '$900', firstDeposit: '06-20-2026 11:05', lastActive: '06-23-2026 15:28', lastTrade: '06-22-2026 10:15', lastRecharge: '06-20-2026 11:05', pnl: '$28', rechargeCount: 1, contacted: '已接通', followTime: '06-20-2026 14:55', followRecord: '私聊回访，客户已完成小额试单，对点差表示满意' },
+    { sid: '20008325622', phone: '13177889900', deposit: '$1,000', firstDeposit: '06-19-2026 09:38', lastActive: '06-21-2026 12:10', lastTrade: '—', lastRecharge: '06-19-2026 09:38', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008325708', phone: '17822334466', deposit: '$2,200', firstDeposit: '06-17-2026 18:15', lastActive: '06-22-2026 09:50', lastTrade: '06-20-2026 11:28', lastRecharge: '06-18-2026 14:05', pnl: '$115', rechargeCount: 2, contacted: '已接通', followTime: '06-18-2026 10:20', followRecord: '电话确认首充到账，引导客户完成 KYC 后尝试首单' },
+    { sid: '20008325785', phone: '13899001122', deposit: '$650', firstDeposit: '06-16-2026 13:48', lastActive: '06-17-2026 08:22', lastTrade: '—', lastRecharge: '06-16-2026 13:48', pnl: '$0', rechargeCount: 1, contacted: '已接通', followTime: '06-16-2026 16:30', followRecord: '短信+私聊双触达，客户表示周末有空再了解交易规则' },
+    { sid: '20008325863', phone: '15733445588', deposit: '$4,200', firstDeposit: '06-15-2026 10:25', lastActive: '06-20-2026 17:42', lastTrade: '06-18-2026 15:35', lastRecharge: '06-17-2026 09:10', pnl: '$89', rechargeCount: 3, contacted: '已接通', followTime: '06-15-2026 14:08', followRecord: '高净值客户，已安排专属顾问跟进交易策略咨询' },
+    { sid: '20008325940', phone: '18466778899', deposit: '$380', firstDeposit: '06-14-2026 20:55', lastActive: '06-15-2026 07:18', lastTrade: '—', lastRecharge: '06-14-2026 20:55', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' },
+    { sid: '20008326018', phone: '13255667744', deposit: '$1,350', firstDeposit: '06-12-2026 08:30', lastActive: '06-16-2026 14:05', lastTrade: '06-14-2026 09:42', lastRecharge: '06-13-2026 11:20', pnl: '$47', rechargeCount: 2, contacted: '已接通', followTime: '06-12-2026 12:45', followRecord: '在线客服触达，发送首充引导话术及开仓教程链接' },
+    { sid: '20008326095', phone: '17988990033', deposit: '$520', firstDeposit: '06-10-2026 15:12', lastActive: '06-11-2026 09:28', lastTrade: '—', lastRecharge: '06-10-2026 15:12', pnl: '$0', rechargeCount: 1, contacted: '--', followTime: '—', followRecord: '—' }
+  ];
+
   function openCustomerDetail(sid, e) {
     if (e) e.preventDefault();
     alert('进入个人详情页\nSID：' + sid + '\n（原型占位，可对接客户详情页）');
@@ -384,6 +349,94 @@
       alert('提交 AI 总结\nSID：' + sid + '\n（原型占位，可对接 AI 总结提交）');
     }
   }
+
+  function renderActionCell(sid) {
+    return '<td class="col-action">' +
+      '<span class="action-links">' +
+      '<a href="#" class="action-link" onclick="handleAction(\'chat\', \'' + sid + '\', event)">私聊</a>' +
+      '<a href="#" class="action-link" onclick="handleAction(\'log\', \'' + sid + '\', event)">录入</a>' +
+      '<a href="#" class="action-link" onclick="handleAction(\'ai-summary\', \'' + sid + '\', event)">提交AI总结</a>' +
+      '</span></td>';
+  }
+
+  function renderCustomerRow(row) {
+    return '<tr>' +
+      '<td class="col-sid"><a href="#" class="sid-link" onclick="openCustomerDetail(\'' + row.sid + '\', event)">' + row.sid + '</a></td>' +
+      '<td>' + row.phone + '</td>' +
+      '<td>' + row.deposit + '</td>' +
+      '<td>' + row.firstDeposit + '</td>' +
+      '<td>' + row.lastActive + '</td>' +
+      '<td>' + row.lastTrade + '</td>' +
+      '<td>' + row.lastRecharge + '</td>' +
+      '<td>' + row.pnl + '</td>' +
+      '<td>' + row.rechargeCount + '</td>' +
+      '<td>' + row.contacted + '</td>' +
+      '<td>' + row.followTime + '</td>' +
+      '<td class="col-record">' + row.followRecord + '</td>' +
+      renderActionCell(row.sid) +
+      '</tr>';
+  }
+
+  function getPageRows(page) {
+    var start = (page - 1) * PAGE_SIZE;
+    return CUSTOMER_DATA.slice(start, start + PAGE_SIZE);
+  }
+
+  function buildPageNumbers(totalPages, page) {
+    var pages = [];
+    if (totalPages <= 7) {
+      for (var i = 1; i <= totalPages; i += 1) pages.push(i);
+      return pages;
+    }
+    pages.push(1);
+    if (page > 3) pages.push('...');
+    var start = Math.max(2, page - 1);
+    var end = Math.min(totalPages - 1, page + 1);
+    for (var j = start; j <= end; j += 1) pages.push(j);
+    if (page < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+    return pages;
+  }
+
+  function renderPagination(totalPages, page, total) {
+    var info = document.getElementById('customerPagerInfo');
+    var actions = document.getElementById('customerPagerActions');
+    var start = total ? (page - 1) * PAGE_SIZE + 1 : 0;
+    var end = Math.min(page * PAGE_SIZE, total);
+    info.textContent = '共 ' + total + ' 条 · 第 ' + start + '-' + end + ' 条 · 每页 ' + PAGE_SIZE + ' 条';
+    if (!total) {
+      actions.innerHTML = '';
+      return;
+    }
+    var html = '<button type="button" class="pager-btn" onclick="goToCustomerPage(' + (page - 1) + ')"' + (page <= 1 ? ' disabled' : '') + '>上一页</button>';
+    buildPageNumbers(totalPages, page).forEach(function (item) {
+      if (item === '...') {
+        html += '<span class="pager-ellipsis">...</span>';
+        return;
+      }
+      html += '<button type="button" class="pager-page' + (item === page ? ' active' : '') + '" onclick="goToCustomerPage(' + item + ')">' + item + '</button>';
+    });
+    html += '<button type="button" class="pager-btn" onclick="goToCustomerPage(' + (page + 1) + ')"' + (page >= totalPages ? ' disabled' : '') + '>下一页</button>';
+    actions.innerHTML = html;
+  }
+
+  function goToCustomerPage(page) {
+    var totalPages = Math.max(1, Math.ceil(CUSTOMER_DATA.length / PAGE_SIZE));
+    currentPage = Math.min(Math.max(page || 1, 1), totalPages);
+    renderCustomerTable();
+  }
+
+  function renderCustomerTable() {
+    var tbody = document.getElementById('customerTableBody');
+    var total = CUSTOMER_DATA.length;
+    var totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    var pageRows = getPageRows(currentPage);
+    tbody.innerHTML = pageRows.map(renderCustomerRow).join('');
+    renderPagination(totalPages, currentPage, total);
+  }
+
+  renderCustomerTable();
 </script>
 </body>
 </html>
