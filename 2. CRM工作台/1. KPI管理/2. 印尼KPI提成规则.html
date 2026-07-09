@@ -931,7 +931,7 @@
         <div class="filter-bar">
           <div class="board-filter-form">
             <div class="board-filter-field">
-              <label class="board-filter-label" for="filterGroup">考核等级</label>
+              <label class="board-filter-label" for="filterGroup">考核员工范围：</label>
               <select class="board-filter-select board-filter-select--group" id="filterGroup">
                 <option value="">全部</option>
                 <option value="V1销售">V1销售</option>
@@ -941,7 +941,7 @@
               </select>
             </div>
             <div class="board-filter-field">
-              <label class="board-filter-label" for="filterPeriod">考核时间范围</label>
+              <label class="board-filter-label" for="filterPeriod">考核时间范围：</label>
               <select class="board-filter-select board-filter-select--period" id="filterPeriod">
                 <option value="">全部</option>
               </select>
@@ -968,7 +968,7 @@
               <tr>
                 <th>编号</th>
                 <th>提成规则名称</th>
-                <th>等级</th>
+                <th>员工范围</th>
                 <th>考核月份</th>
                 <th>目标设定进度</th>
                 <th>状态</th>
@@ -2038,7 +2038,6 @@ function buildKpiRuleDetailHtml(row) {
         buildKpiRuleDetailField('考核地区', buildKpiRuleDetailText(row.region)) +
         buildKpiRuleDetailField('考核员工范围', buildKpiRuleDetailText(row.group || '当前地区所有人')) +
         buildKpiRuleDetailField('考核月份', buildKpiRuleDetailText(formatKpiRuleListAssessmentMonth(row))) +
-        buildKpiRuleDetailField('等级', buildKpiRuleDetailText(getKpiRuleListLevel(row)), { middle: true }) +
         buildKpiRuleDetailField('KPI考核维度', renderDimensionTags(dimensions), { middle: true }) +
       '</div>' +
     '</section>' +
