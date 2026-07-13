@@ -56,6 +56,7 @@
     a.submenu-item{color:inherit;text-decoration:none;cursor:pointer}
     .submenu-item:hover{color:#1d4ed8}
     .submenu-item.active{color:#2563eb;font-weight:700;background:#eff6ff}
+    .submenu-item.is-menu-hidden{display:none}
     .menu-divider{height:1px;background:#58a9f7;margin:8px 12px;opacity:.85}
   </style>
 </head>
@@ -64,7 +65,7 @@
   销售工作台 2.0 统一侧边栏菜单（纯静态，无需本地服务）
   仅维护本文件即可；各页面通过 iframe 引入。
   所有链接以导航根目录（1. 本地最新修订/）为基准的绝对路径书写，例如：
-  2. CRM工作台/1. KPI管理/1. 员工目标绩效.html
+  2. CRM工作台/1. KPI管理/1. 目标提成管理.html
   <iframe class="wb-sidebar-frame" src="2. CRM工作台/_sidebar-menu.html#lang=zh&active=workbench-home" title="侧边菜单"></iframe>
 -->
 <div id="wb-sidebar-root"></div>
@@ -86,10 +87,10 @@
       <div class="menu-item is-expanded" data-wb-menu-group="perf"><span class="menu-icon">◎</span>目标绩效管理 <span class="arrow">›</span></div>
       <div class="submenu-wrap">
         <div class="submenu">
-          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 员工目标绩效.html">员工目标绩效</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-indonesia" target="_parent" href="2. CRM工作台/1. KPI管理/2. 印尼KPI提成规则.html">印尼KPI提成规则</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-nigeria" target="_parent" href="2. CRM工作台/1. KPI管理/尼日KPI提成规则.html">尼日KPI提成规则</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-india" target="_parent" href="2. CRM工作台/1. KPI管理/印度KPI提成规则.html">印度KPI提成规则</a>
+          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 目标提成管理.html">目标提成管理</a>
+          <a class="submenu-item" data-wb-menu="perf-commission-rules-indonesia" target="_parent" href="2. CRM工作台/1. KPI管理/2. 绩效规则管理.html">绩效规则管理</a>
+          <a class="submenu-item is-menu-hidden" data-wb-menu="perf-commission-rules-nigeria" target="_parent" href="2. CRM工作台/1. KPI管理/尼日KPI提成规则.html">尼日KPI提成规则</a>
+          <a class="submenu-item is-menu-hidden" data-wb-menu="perf-commission-rules-india" target="_parent" href="2. CRM工作台/1. KPI管理/印度KPI提成规则.html">印度KPI提成规则</a>
         </div>
       </div>
       <div class="menu-item is-expanded"><span class="menu-icon">●</span>用户管理 <span class="arrow">›</span></div>
@@ -137,10 +138,10 @@
       <div class="menu-item is-expanded" data-wb-menu-group="perf"><span class="menu-icon">◎</span>Target Performance Management <span class="arrow">›</span></div>
       <div class="submenu-wrap">
         <div class="submenu">
-          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 员工目标绩效.html">Employee Target Performance</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-indonesia" target="_parent" href="2. CRM工作台/1. KPI管理/2. 印尼KPI提成规则.html">Indonesia KPI Commission Rules</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-nigeria" target="_parent" href="2. CRM工作台/1. KPI管理/尼日KPI提成规则.html">Nigeria KPI Commission Rules</a>
-          <a class="submenu-item" data-wb-menu="perf-commission-rules-india" target="_parent" href="2. CRM工作台/1. KPI管理/印度KPI提成规则.html">India KPI Commission Rules</a>
+          <a class="submenu-item" data-wb-menu="perf-manage" target="_parent" href="2. CRM工作台/1. KPI管理/1. 目标提成管理.html">Target Commission Management</a>
+          <a class="submenu-item" data-wb-menu="perf-commission-rules-indonesia" target="_parent" href="2. CRM工作台/1. KPI管理/2. 绩效规则管理.html">Performance Rules Management</a>
+          <a class="submenu-item is-menu-hidden" data-wb-menu="perf-commission-rules-nigeria" target="_parent" href="2. CRM工作台/1. KPI管理/尼日KPI提成规则.html">Nigeria KPI Commission Rules</a>
+          <a class="submenu-item is-menu-hidden" data-wb-menu="perf-commission-rules-india" target="_parent" href="2. CRM工作台/1. KPI管理/印度KPI提成规则.html">India KPI Commission Rules</a>
         </div>
       </div>
       <div class="menu-item is-expanded"><span class="menu-icon">●</span>User Management <span class="arrow">›</span></div>
