@@ -1864,8 +1864,14 @@ var KPI_RULES_DATA = (function () {
           { range: 'N≥100%', perf: 200 }
         ];
       store.perf = {
-        '充值活跃': cloneKpiRuleStaticRows([{ range: 'N＜' + indiaThreshold + '%', perf: 0 }]),
-        '净入金': cloneKpiRuleStaticRows([{ range: 'N＜' + indiaThreshold + '%', perf: 0 }])
+        '充值活跃': cloneKpiRuleStaticRows([
+          { range: 'N＜' + indiaThreshold + '%', perf: 0 },
+          { range: 'N≥' + indiaThreshold + '%', equalsCompletion: true }
+        ]),
+        '净入金': cloneKpiRuleStaticRows([
+          { range: 'N＜' + indiaThreshold + '%', perf: 0 },
+          { range: 'N≥' + indiaThreshold + '%', equalsCompletion: true }
+        ])
       };
       store.depositExtraBonus = {
         '净入金': cloneKpiRuleStaticRows([
@@ -3619,7 +3625,10 @@ function getKpiRuleIndiaPerfDefaultRows(groupVal, dim) {
     return KPI_RULE_PERF_DEFAULT_ROWS_NEW;
   }
   var threshold = getKpiRuleIndiaPerfZeroThreshold(groupVal);
-  return [{ range: 'N＜' + threshold + '%', perf: 0 }];
+  return [
+    { range: 'N＜' + threshold + '%', perf: 0 },
+    { range: 'N≥' + threshold + '%', equalsCompletion: true }
+  ];
 }
 
 function refreshKpiRuleIndiaPerfDefaults(variant) {
