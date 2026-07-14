@@ -701,6 +701,15 @@
     }
     .kpi-rule-weight-empty[hidden]{display:none}
     .kpi-rule-weight-input-wrap{display:inline-flex;align-items:center;gap:4px}
+    .kpi-rule-leader-ratio-control{
+      display:inline-flex;align-items:center;flex-wrap:wrap;gap:10px 16px;
+    }
+    .kpi-rule-exclude-leader-check{line-height:1.5}
+    .kpi-rule-exclude-leader-check[hidden]{display:none}
+    .kpi-rule-exclude-leader-wrap{
+      display:inline-flex;align-items:center;gap:4px;
+    }
+    .kpi-rule-exclude-leader-wrap[hidden]{display:none}
     .kpi-rule-weight-field-actions{
       display:flex;align-items:center;gap:10px;flex-wrap:wrap;
     }
@@ -1735,6 +1744,9 @@ var KPI_RULE_INDIA_ENTRY_DEFAULTS = {
 var KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP =
   '加成比例数值应用于在在原本奖励提成上乘以的百分比，\n示例：原本提成1000$，加成比例120%，\n实际提成为：1000*120%=1200$';
 
+var KPI_RULE_EXCLUDE_LEADER_PERSONAL_HELP_TIP =
+  '勾选后，团队所有提成总额为：所有销售总提成中剔除组长个人销售提成金额。';
+
 var KPI_RULE_LEVEL_GROUP_LEADER_COUNTS = {
   'V1销售': 6,
   'V23销售': 8,
@@ -2600,6 +2612,13 @@ function buildKpiRuleDetailHtml(row) {
     schemeRows += buildKpiRuleDetailField('组长提成比例', buildKpiRuleDetailText(formatKpiRuleWeightPercent(parseFloat(schemeDefaults.leaderRatio))));
   }
 
+  if (isKpiRuleLeaderRole(row) && (region === '印尼' || region === '尼日' || region === '印度')) {
+    schemeRows += buildKpiRuleDetailField(
+      '团队提成去除组长个人提成',
+      buildKpiRuleDetailText(row.excludeLeaderPersonal ? '是' : '否')
+    );
+  }
+
   schemeRows += buildKpiRuleDetailField('绩效公式预览', '<div class="kpi-rule-formula-preview">' + formulaPreview + '</div>', { top: true }) +
     buildKpiRuleDetailField('案例说明', buildKpiRuleDetailExampleHtml(row), { top: true });
 
@@ -2973,6 +2992,69 @@ function isKpiRuleIndonesiaEntryVariant(variant) {
   return getKpiRuleEntryVariantConfig(variant).key === 'new';
 }
 
+function removeKpiRuleExcludeLeaderPersonalCheck(root) {
+  if (!root) return;
+  var check = root.querySelector('[id^="kpiRuleExcludeLeaderPersonal"]');
+  if (!check) return;
+  var wrap = check.closest('.kpi-rule-exclude-leader-wrap');
+  var label = check.closest('.kpi-rule-exclude-leader-check');
+  var row = check.closest('.kpi-rule-leader-ratio-control');
+  if (wrap) wrap.remove();
+  else if (label) label.remove();
+  if (row && row.parentNode) {
+    while (row.firstChild) row.parentNode.insertBefore(row.firstChild, row);
+    row.parentNode.removeChild(row);
+  }
+}
+
+function createKpiRuleExcludeLeaderPersonalControl(checkboxId, options) {
+  var wrap = document.createElement('span');
+  wrap.className = 'kpi-rule-exclude-leader-wrap';
+  if (options && options.hidden) wrap.hidden = true;
+  var excludeLabel = document.createElement('label');
+  excludeLabel.className = 'kpi-rule-split-check kpi-rule-exclude-leader-check';
+  excludeLabel.innerHTML =
+    '<input type="checkbox" id="' + checkboxId + '">' +
+    '<span>团队提成去除组长个人提成</span>';
+  var helpIcon = document.createElement('span');
+  helpIcon.className = 'kpi-rule-perf-help kpi-rule-exclude-leader-help';
+  helpIcon.tabIndex = 0;
+  helpIcon.setAttribute('role', 'img');
+  helpIcon.textContent = '?';
+  wrap.appendChild(excludeLabel);
+  wrap.appendChild(helpIcon);
+  bindKpiRuleHelpTooltip(helpIcon, KPI_RULE_EXCLUDE_LEADER_PERSONAL_HELP_TIP);
+  return wrap;
+}
+
+function attachKpiRuleExcludeLeaderPersonalCheck(ratioField, checkboxId) {
+  if (!ratioField || !checkboxId || ratioField.querySelector('#' + checkboxId)) return;
+  var control = ratioField.querySelector('.kpi-rule-control');
+  var ratioWrap = control && control.querySelector('.kpi-rule-weight-input-wrap');
+  if (!control || !ratioWrap) return;
+  var row = control.querySelector('.kpi-rule-leader-ratio-control');
+  if (!row) {
+    row = document.createElement('div');
+    row.className = 'kpi-rule-leader-ratio-control';
+    control.insertBefore(row, ratioWrap);
+    row.appendChild(ratioWrap);
+  }
+  row.appendChild(createKpiRuleExcludeLeaderPersonalControl(checkboxId, { hidden: true }));
+}
+
+function syncKpiRuleExcludeLeaderPersonalVisibility(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  if (!isKpiRuleNigeriaEntryVariant() && !isKpiRuleIndiaEntryVariant()) return;
+  var check = kriEl('kpiRuleExcludeLeaderPersonal');
+  if (!check) return;
+  var wrap = check.closest('.kpi-rule-exclude-leader-wrap');
+  var label = check.closest('.kpi-rule-exclude-leader-check');
+  var isLeader = isKpiRuleLeaderSchemeChecked();
+  if (wrap) wrap.hidden = !isLeader;
+  else if (label) label.hidden = !isLeader;
+  if (!isLeader) check.checked = false;
+}
+
 var KPI_RULE_ENTRY_VARIANTS = {
   legacy: { key: 'legacy', suffix: '', modalId: 'kpiRuleEntryModal', formId: 'kpiRuleEntryForm', title: '新增KPI提成规则（旧）' },
   new: { key: 'new', suffix: 'New', modalId: 'kpiRuleEntryModalNew', formId: 'kpiRuleEntryFormNew', title: '新增KPI提成规则（印尼）', region: '印尼' },
@@ -3151,6 +3233,18 @@ function customizeKpiRuleEntryModalNew(clone) {
       }
     });
   }
+  var leaderRatioField = clone.querySelector('#kpiRuleLeaderRatioFieldNew');
+  if (leaderRatioField && !clone.querySelector('#kpiRuleExcludeLeaderPersonalNew')) {
+    var leaderControl = leaderRatioField.querySelector('.kpi-rule-control');
+    var ratioWrap = leaderControl && leaderControl.querySelector('.kpi-rule-weight-input-wrap');
+    if (leaderControl && ratioWrap) {
+      var leaderRatioRow = document.createElement('div');
+      leaderRatioRow.className = 'kpi-rule-leader-ratio-control';
+      leaderControl.insertBefore(leaderRatioRow, ratioWrap);
+      leaderRatioRow.appendChild(ratioWrap);
+      leaderRatioRow.appendChild(createKpiRuleExcludeLeaderPersonalControl('kpiRuleExcludeLeaderPersonalNew'));
+    }
+  }
 }
 
 function initKpiRuleEntryModalClone() {
@@ -3254,6 +3348,7 @@ function initKpiRuleEntryModalIndiaClone() {
 }
 
 function customizeKpiRuleEntryModalIndia(clone) {
+  removeKpiRuleExcludeLeaderPersonalCheck(clone);
   var groupSelect = clone.querySelector('#kpiRuleGroupIndia');
   if (groupSelect) {
     groupSelect.innerHTML =
@@ -3389,6 +3484,10 @@ function customizeKpiRuleEntryModalIndia(clone) {
           '</div>';
         amountField.parentNode.insertBefore(ratioField, amountField.nextSibling);
       }
+      attachKpiRuleExcludeLeaderPersonalCheck(
+        clone.querySelector('#kpiRuleBaseRatioFieldIndia'),
+        'kpiRuleExcludeLeaderPersonalIndia'
+      );
     }
     if (baseAmountInput) baseAmountInput.value = KPI_RULE_INDIA_ENTRY_DEFAULTS.baseAmount;
   }
@@ -3398,6 +3497,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
 }
 
 function customizeKpiRuleEntryModalNigeria(clone) {
+  removeKpiRuleExcludeLeaderPersonalCheck(clone);
   var groupSelect = clone.querySelector('#kpiRuleGroupNigeria');
   if (groupSelect) {
     groupSelect.innerHTML =
@@ -3457,6 +3557,10 @@ function customizeKpiRuleEntryModalNigeria(clone) {
         '</div>';
       amountField.parentNode.insertBefore(ratioField, amountField.nextSibling);
     }
+    attachKpiRuleExcludeLeaderPersonalCheck(
+      clone.querySelector('#kpiRuleBaseRatioFieldNigeria'),
+      'kpiRuleExcludeLeaderPersonalNigeria'
+    );
   }
 
   var baseRatioInput = clone.querySelector('#kpiRuleBaseRatioNigeria');
@@ -3509,6 +3613,7 @@ function syncKpiRuleNigeriaLeaderCommissionVisibility(variant) {
     renderKpiRulePerfTable('default', 'leaderCommission');
   }
   syncKpiRuleLeaderRatioVisibility(variant);
+  syncKpiRuleExcludeLeaderPersonalVisibility(variant);
   updateKpiRuleSchemeSection(variant);
 }
 
@@ -3528,6 +3633,7 @@ function syncKpiRuleIndiaLeaderCommissionVisibility(variant) {
     renderKpiRulePerfTable('default', 'leaderCommission');
   }
   syncKpiRuleLeaderRatioVisibility(variant);
+  syncKpiRuleExcludeLeaderPersonalVisibility(variant);
   updateKpiRuleSchemeSection(variant);
 }
 
@@ -4767,21 +4873,27 @@ function resetKpiRuleSchemeSettings() {
     var baseAmount = kriEl('kpiRuleBaseAmount');
     var baseRatio = kriEl('kpiRuleBaseRatio');
     var leaderRatio = kriEl('kpiRuleLeaderRatio');
+    var excludeLeaderPersonal = kriEl('kpiRuleExcludeLeaderPersonal');
     if (baseAmount) baseAmount.value = KPI_RULE_NIGERIA_ENTRY_DEFAULTS.baseAmount;
     if (baseRatio) baseRatio.value = KPI_RULE_NIGERIA_ENTRY_DEFAULTS.baseRatio;
     if (leaderRatio) leaderRatio.value = '';
+    if (excludeLeaderPersonal) excludeLeaderPersonal.checked = false;
   } else if (isKpiRuleIndonesiaEntryVariant()) {
     var baseAmount = kriEl('kpiRuleBaseAmount');
     var leaderRatio = kriEl('kpiRuleLeaderRatio');
+    var excludeLeaderPersonal = kriEl('kpiRuleExcludeLeaderPersonal');
     if (baseAmount) baseAmount.value = KPI_RULE_INDONESIA_ENTRY_DEFAULTS.baseAmount;
     if (leaderRatio) leaderRatio.value = KPI_RULE_INDONESIA_ENTRY_DEFAULTS.leaderRatio;
+    if (excludeLeaderPersonal) excludeLeaderPersonal.checked = false;
   } else if (isKpiRuleIndiaEntryVariant()) {
     var baseAmount = kriEl('kpiRuleBaseAmount');
     var leaderRatio = kriEl('kpiRuleLeaderRatio');
     var baseRatio = kriEl('kpiRuleBaseRatio');
+    var excludeLeaderPersonal = kriEl('kpiRuleExcludeLeaderPersonal');
     if (baseAmount) baseAmount.value = KPI_RULE_INDIA_ENTRY_DEFAULTS.baseAmount;
     if (leaderRatio) leaderRatio.value = KPI_RULE_INDIA_ENTRY_DEFAULTS.leaderRatio;
     if (baseRatio) baseRatio.value = '';
+    if (excludeLeaderPersonal) excludeLeaderPersonal.checked = false;
   } else if (isKpiRuleNewEntryVariant()) {
     var baseAmount = kriEl('kpiRuleBaseAmount');
     var baseRatio = kriEl('kpiRuleBaseRatio');
@@ -5113,6 +5225,7 @@ function buildKpiRuleListRowFromNewEntry() {
   var baseAmountEl = kriEl('kpiRuleBaseAmount');
   var baseRatioEl = kriEl('kpiRuleBaseRatio');
   var leaderRatioEl = kriEl('kpiRuleLeaderRatio');
+  var excludeLeaderPersonalEl = kriEl('kpiRuleExcludeLeaderPersonal');
   var splitEl = kriEl('kpiRuleSplitByMonth');
   var dimensions = getSelectedKpiRuleDimensions().filter(function (dim) {
     return !getKpiRuleEntryCtx().weightRemovedModules[dim];
@@ -5142,6 +5255,7 @@ function buildKpiRuleListRowFromNewEntry() {
     baseAmount: baseAmountEl ? baseAmountEl.value : '',
     baseRatio: baseRatioEl ? baseRatioEl.value : '',
     leaderRatio: leaderRatioEl ? leaderRatioEl.value : '',
+    excludeLeaderPersonal: !!(excludeLeaderPersonalEl && excludeLeaderPersonalEl.checked),
     entryPerfStore: cloneKpiRuleEntryPerfStore(getKpiRuleEntryCtx().perfStore)
   };
 }
@@ -5571,15 +5685,23 @@ function bindKpiTargetAlertTooltips() {
   });
 }
 
+function bindKpiRuleHelpTooltip(el, tipText) {
+  if (!el || !tipText) return;
+  el.setAttribute('data-tip', tipText);
+  el.setAttribute('aria-label', tipText);
+  el.onmouseenter = function () { showKpiTargetEmpAlertTooltip(el); };
+  el.onmouseleave = hideKpiTargetEmpAlertTooltip;
+  el.onfocus = function () { showKpiTargetEmpAlertTooltip(el); };
+  el.onblur = hideKpiTargetEmpAlertTooltip;
+}
+
 function bindKpiRulePerfHelpTooltips(root) {
   if (!root) return;
-  root.querySelectorAll('.kpi-rule-perf-help').forEach(function (el) {
-    el.setAttribute('data-tip', KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP);
-    el.setAttribute('aria-label', KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP);
-    el.onmouseenter = function () { showKpiTargetEmpAlertTooltip(el); };
-    el.onmouseleave = hideKpiTargetEmpAlertTooltip;
-    el.onfocus = function () { showKpiTargetEmpAlertTooltip(el); };
-    el.onblur = hideKpiTargetEmpAlertTooltip;
+  root.querySelectorAll('.kpi-rule-perf-help:not(.kpi-rule-exclude-leader-help)').forEach(function (el) {
+    bindKpiRuleHelpTooltip(el, KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP);
+  });
+  root.querySelectorAll('.kpi-rule-exclude-leader-help').forEach(function (el) {
+    bindKpiRuleHelpTooltip(el, KPI_RULE_EXCLUDE_LEADER_PERSONAL_HELP_TIP);
   });
 }
 
