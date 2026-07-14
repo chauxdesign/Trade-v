@@ -817,7 +817,7 @@
               <tr>
                 <th>ID</th>
                 <th class="col-name">Name</th>
-                <th>员工等级</th>
+                <th>考核等级</th>
                 <th>角色</th>
                 <th>业务范围</th>
                 <th>Lark状态</th>
@@ -851,9 +851,9 @@
       <div class="seat-edit-info" id="seatEditInfo"></div>
       <div class="seat-edit-fields">
         <div class="seat-edit-field">
-          <label class="seat-edit-label" for="seatRoleLevelSelect">角色等级</label>
+          <label class="seat-edit-label" for="seatRoleLevelSelect">考核等级</label>
           <select class="seat-edit-select" id="seatRoleLevelSelect">
-            <option value="">请选择角色等级</option>
+            <option value="">请选择考核等级</option>
             <option value="新人销售">新人销售</option>
             <option value="V1销售">V1销售</option>
             <option value="V23销售">V23销售</option>
@@ -1307,7 +1307,7 @@
     if (!row) return;
     var roleLevel = document.getElementById('seatRoleLevelSelect').value;
     if (!roleLevel) {
-      alert('请选择角色等级');
+      alert('请选择考核等级');
       return;
     }
     row.roles = selectedRoleNames.map(function (name) {
