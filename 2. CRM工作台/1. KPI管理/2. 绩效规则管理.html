@@ -394,9 +394,9 @@
     .kpi-target-emp-alert-icon{display:block;width:14px;height:14px;pointer-events:none}
     .kpi-target-employee-table .col-name-level{overflow:visible}
     .kpi-target-emp-alert-tooltip{
-      position:fixed;z-index:1600;max-width:300px;padding:8px 10px;
+      position:fixed;z-index:1600;max-width:360px;padding:8px 10px;
       background:#1f2937;color:#fff;font-size:12px;font-weight:500;line-height:1.5;border-radius:8px;
-      box-shadow:0 10px 24px rgba(15,23,42,.22);pointer-events:none;white-space:normal;
+      box-shadow:0 10px 24px rgba(15,23,42,.22);pointer-events:none;white-space:pre-line;
     }
     .kpi-target-employee-table .col-check input{
       width:15px;height:15px;margin:0;accent-color:var(--accent);cursor:pointer;
@@ -810,6 +810,17 @@
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .kpi-rule-perf-table .col-perf{width:100px;font-weight:700;color:#0f172a}
+    .kpi-rule-perf-table .col-perf--with-help{width:118px;white-space:nowrap}
+    .kpi-rule-perf-help-label{
+      display:inline-flex;align-items:center;justify-content:center;gap:4px;vertical-align:middle;
+    }
+    .kpi-rule-perf-help{
+      display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+      width:14px;height:14px;cursor:help;
+      border-radius:50%;background:#94a3b8;color:#fff;font-size:10px;font-weight:700;line-height:1;
+      box-sizing:border-box;
+    }
+    .kpi-rule-perf-help:hover,.kpi-rule-perf-help:focus{background:#64748b;outline:none}
     .kpi-rule-perf-table .col-action{width:100px}
     .kpi-rule-perf-table tr.is-form-row td{white-space:normal;overflow:hidden}
     .kpi-rule-perf-table tr.is-form-row .col-no{color:#94a3b8;font-weight:700}
@@ -1720,6 +1731,9 @@ var KPI_RULE_INDIA_ENTRY_DEFAULTS = {
   baseAmount: '15',
   leaderRatio: '25'
 };
+
+var KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP =
+  '加成比例数值应用于在在原本奖励提成上乘以的百分比，\n示例：原本提成1000$，加成比例120%，\n实际提成为：1000*120%=1200$';
 
 var KPI_RULE_LEVEL_GROUP_LEADER_COUNTS = {
   'V1销售': 6,
@@ -3269,7 +3283,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
             '<div class="kpi-rule-perf-table-wrap">' +
               '<table class="kpi-rule-perf-table" data-perf-section="depositExtraBonus" data-perf-dimension="净入金">' +
                 '<thead>' +
-                  '<tr><th class="col-no">编号</th><th class="col-range">净入金完成率区间</th><th class="col-perf">加成比例</th><th class="col-action">操作</th></tr>' +
+                  '<tr><th class="col-no">编号</th><th class="col-range">净入金完成率区间</th><th class="col-perf col-perf--with-help"><span class="kpi-rule-perf-help-label">加成比例<span class="kpi-rule-perf-help" tabindex="0" role="img">?</span></span></th><th class="col-action">操作</th></tr>' +
                 '</thead>' +
                 '<tbody></tbody>' +
               '</table>' +
@@ -3287,7 +3301,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
             '<div class="kpi-rule-perf-table-wrap">' +
               '<table class="kpi-rule-perf-table" data-perf-section="depositExtraBonus" data-perf-dimension="联系率">' +
                 '<thead>' +
-                  '<tr><th class="col-no">编号</th><th class="col-range">联系率完成率区间</th><th class="col-perf">加成比例</th><th class="col-action">操作</th></tr>' +
+                  '<tr><th class="col-no">编号</th><th class="col-range">联系率完成率区间</th><th class="col-perf col-perf--with-help"><span class="kpi-rule-perf-help-label">加成比例<span class="kpi-rule-perf-help" tabindex="0" role="img">?</span></span></th><th class="col-action">操作</th></tr>' +
                 '</thead>' +
                 '<tbody></tbody>' +
               '</table>' +
@@ -3305,7 +3319,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
             '<div class="kpi-rule-perf-table-wrap">' +
               '<table class="kpi-rule-perf-table" data-perf-section="depositExtraBonus" data-perf-dimension="活跃人数">' +
                 '<thead>' +
-                  '<tr><th class="col-no">编号</th><th class="col-range">充值活跃人数完成率区间</th><th class="col-perf">加成比例</th><th class="col-action">操作</th></tr>' +
+                  '<tr><th class="col-no">编号</th><th class="col-range">充值活跃人数完成率区间</th><th class="col-perf col-perf--with-help"><span class="kpi-rule-perf-help-label">加成比例<span class="kpi-rule-perf-help" tabindex="0" role="img">?</span></span></th><th class="col-action">操作</th></tr>' +
                 '</thead>' +
                 '<tbody></tbody>' +
               '</table>' +
@@ -3320,6 +3334,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
     extraSection.querySelectorAll('.kpi-rule-perf-table-foot').forEach(function (foot) {
       formatKpiRulePerfTableFootGrid(foot);
     });
+    bindKpiRulePerfHelpTooltips(extraSection);
   }
 
   var extraBonusSection = clone.querySelector('#kpiRuleDepositExtraBonusSectionIndia');
@@ -3580,8 +3595,8 @@ var KPI_RULE_INDIA_CONTACT_EXTRA_BONUS_DEFAULT_ROWS_HIGH = [
 ];
 
 var KPI_RULE_INDIA_ACTIVE_USER_EXTRA_BONUS_DEFAULT_ROWS = [
-  { range: '80%≤ N ＜100%', perf: 10 },
-  { range: 'N≥100%', perf: 20 }
+  { range: '80%≤ N ＜100%', perf: 110 },
+  { range: 'N≥100%', perf: 120 }
 ];
 
 var KPI_RULE_NIGERIA_TEAM_KPI_EXAMPLE_RATE = 86;
@@ -5553,6 +5568,18 @@ function bindKpiTargetAlertTooltips() {
       el.onmouseenter = function () { showKpiTargetEmpAlertTooltip(el); };
       el.onmouseleave = hideKpiTargetEmpAlertTooltip;
     });
+  });
+}
+
+function bindKpiRulePerfHelpTooltips(root) {
+  if (!root) return;
+  root.querySelectorAll('.kpi-rule-perf-help').forEach(function (el) {
+    el.setAttribute('data-tip', KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP);
+    el.setAttribute('aria-label', KPI_RULE_INDIA_BONUS_RATIO_HELP_TIP);
+    el.onmouseenter = function () { showKpiTargetEmpAlertTooltip(el); };
+    el.onmouseleave = hideKpiTargetEmpAlertTooltip;
+    el.onfocus = function () { showKpiTargetEmpAlertTooltip(el); };
+    el.onblur = hideKpiTargetEmpAlertTooltip;
   });
 }
 
