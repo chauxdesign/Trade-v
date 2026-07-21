@@ -387,6 +387,48 @@
       white-space: nowrap;
     }
 
+    .cell-edit-select,
+    .cell-edit-input {
+      width: 100%;
+      min-width: 112px;
+      height: 28px;
+      padding: 0 8px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 11px;
+      color: #0f172a;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .cell-edit-select {
+      min-width: 108px;
+      padding-right: 24px;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+    }
+
+    .cell-edit-input {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      min-width: 140px;
+    }
+
+    .cell-edit-select:focus,
+    .cell-edit-input:focus {
+      outline: none;
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .col-level .cell-edit-select {
+      min-width: 108px;
+    }
+
     .col-lark {
       white-space: nowrap;
     }
@@ -476,6 +518,12 @@
     }
 
     .btn-edit:hover { background: #1d4ed8; }
+
+    .btn-edit:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #94a3b8;
+    }
 
     .status-switch {
       display: inline-flex;
@@ -888,7 +936,9 @@
           <div class="filter-row filter-row--actions">
             <div class="filter-actions-left">
               <button type="button" class="btn btn-primary" onclick="handleSystemPermission()">系统权限</button>
-              <button type="button" class="btn btn-outline" onclick="handleBatchEdit()">编辑</button>
+              <button type="button" class="btn btn-outline" id="batchEditBtn" onclick="handleBatchEdit()">编辑</button>
+              <button type="button" class="btn btn-outline" id="batchCancelBtn" onclick="cancelBatchEdit()" hidden>取消</button>
+              <button type="button" class="btn btn-primary" id="batchSaveBtn" onclick="saveBatchEdit()" hidden>保存</button>
             </div>
             <div class="filter-actions-right">
               <button type="button" class="btn btn-outline" onclick="resetFilters()">重置</button>
@@ -1182,6 +1232,8 @@
   var filteredData = SEAT_DATA.slice();
   var editingSeatId = null;
   var selectedRoleNames = [];
+  var isBatchEditing = false;
+  var batchEditDrafts = {};
 
   var ROLE_LEVEL_OPTIONS = ['新人销售', 'V1销售', 'V23销售', 'V4销售', '销售组长'];
 
@@ -1244,6 +1296,55 @@
     return value;
   }
 
+  function displayToInputValue(value) {
+    if (!value || value === '—') return '';
+    return value;
+  }
+
+  function escapeAttr(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function getBatchDraft(row) {
+    var draft = batchEditDrafts[row.id];
+    if (draft) return draft;
+    return {
+      employeeLevel: row.employeeLevel || '',
+      twChatroomId: displayToInputValue(row.twChatroomId),
+      bdChatroomId: displayToInputValue(row.bdChatroomId),
+      twTelephone: displayToInputValue(row.twTelephone),
+      danaTelephone: displayToInputValue(row.danaTelephone)
+    };
+  }
+
+  function renderLevelSelect(row) {
+    var draft = getBatchDraft(row);
+    var levelValue = ROLE_LEVEL_OPTIONS.indexOf(draft.employeeLevel) >= 0 ? draft.employeeLevel : '';
+    var options = '<option value="">请选择</option>' + ROLE_LEVEL_OPTIONS.map(function (level) {
+      return '<option value="' + escapeAttr(level) + '"' + (level === levelValue ? ' selected' : '') + '>' + level + '</option>';
+    }).join('');
+    return '<select class="cell-edit-select" data-field="employeeLevel" data-id="' + row.id + '" onchange="updateBatchDraft(' + row.id + ', \'employeeLevel\', this.value)">' + options + '</select>';
+  }
+
+  function renderTextInput(row, field, value) {
+    return '<input type="text" class="cell-edit-input" data-field="' + field + '" data-id="' + row.id + '" value="' + escapeAttr(value) + '" oninput="updateBatchDraft(' + row.id + ', \'' + field + '\', this.value)" />';
+  }
+
+  function renderEditableFields(row) {
+    var draft = getBatchDraft(row);
+    return {
+      level: renderLevelSelect(row),
+      twChatroomId: renderTextInput(row, 'twChatroomId', draft.twChatroomId),
+      bdChatroomId: renderTextInput(row, 'bdChatroomId', draft.bdChatroomId),
+      twTelephone: renderTextInput(row, 'twTelephone', draft.twTelephone),
+      danaTelephone: renderTextInput(row, 'danaTelephone', draft.danaTelephone)
+    };
+  }
+
   function renderStatus(online, id) {
     if (online === null) {
       return '<span class="status-unconfigured">未配置</span>';
@@ -1256,19 +1357,40 @@
   }
 
   function renderRow(row) {
+    var levelCell;
+    var twChatroomCell;
+    var bdChatroomCell;
+    var twTelephoneCell;
+    var danaTelephoneCell;
+
+    if (isBatchEditing) {
+      var fields = renderEditableFields(row);
+      levelCell = fields.level;
+      twChatroomCell = fields.twChatroomId;
+      bdChatroomCell = fields.bdChatroomId;
+      twTelephoneCell = fields.twTelephone;
+      danaTelephoneCell = fields.danaTelephone;
+    } else {
+      levelCell = renderEmployeeLevel(row.employeeLevel);
+      twChatroomCell = renderCellValue(row.twChatroomId);
+      bdChatroomCell = renderCellValue(row.bdChatroomId);
+      twTelephoneCell = renderCellValue(row.twTelephone);
+      danaTelephoneCell = renderCellValue(row.danaTelephone);
+    }
+
     return '<tr>' +
       '<td class="col-id">' + row.id + '</td>' +
       '<td class="col-name">' + row.name + '</td>' +
-      '<td class="col-level">' + renderEmployeeLevel(row.employeeLevel) + '</td>' +
+      '<td class="col-level">' + levelCell + '</td>' +
       '<td class="col-roles">' + renderRoles(row.roles) + '</td>' +
       '<td class="col-scope">' + row.scope + '</td>' +
       '<td class="col-lark">' + renderLarkStatus(row.larkStatus) + '</td>' +
-      '<td class="col-mono">' + renderCellValue(row.twChatroomId) + '</td>' +
-      '<td class="col-mono">' + renderCellValue(row.bdChatroomId) + '</td>' +
-      '<td class="col-mono">' + renderCellValue(row.twTelephone) + '</td>' +
-      '<td class="col-mono">' + renderCellValue(row.danaTelephone) + '</td>' +
+      '<td class="col-mono">' + twChatroomCell + '</td>' +
+      '<td class="col-mono">' + bdChatroomCell + '</td>' +
+      '<td class="col-mono">' + twTelephoneCell + '</td>' +
+      '<td class="col-mono">' + danaTelephoneCell + '</td>' +
       '<td class="col-action"><div class="action-cell">' +
-      '<button type="button" class="btn-edit" title="编辑" onclick="editSeat(' + row.id + ', event)">✎</button>' +
+      '<button type="button" class="btn-edit" title="编辑" onclick="editSeat(' + row.id + ', event)"' + (isBatchEditing ? ' disabled' : '') + '>✎</button>' +
       renderStatus(row.online, row.id) +
       '</div></td>' +
       '</tr>';
@@ -1425,12 +1547,22 @@
 
   function resetFilters() {
     document.getElementById('roleFilter').value = '';
+    if (isBatchEditing) {
+      isBatchEditing = false;
+      batchEditDrafts = {};
+      updateBatchEditButtons();
+    }
     SEAT_DATA = buildSeatData();
     filteredData = SEAT_DATA.slice();
     renderTable();
   }
 
   function applyFilters() {
+    if (isBatchEditing) {
+      isBatchEditing = false;
+      batchEditDrafts = {};
+      updateBatchEditButtons();
+    }
     var role = document.getElementById('roleFilter').value;
     filteredData = SEAT_DATA.filter(function (row) {
       if (!role) return true;
@@ -1455,10 +1587,79 @@
     alert('打开系统权限配置\n（原型占位）');
   }
 
-  function handleBatchEdit() {
-    alert('批量编辑坐席\n（原型占位）');
+  function updateBatchEditButtons() {
+    var editBtn = document.getElementById('batchEditBtn');
+    var cancelBtn = document.getElementById('batchCancelBtn');
+    var saveBtn = document.getElementById('batchSaveBtn');
+    if (!editBtn || !cancelBtn || !saveBtn) return;
+    editBtn.hidden = isBatchEditing;
+    cancelBtn.hidden = !isBatchEditing;
+    saveBtn.hidden = !isBatchEditing;
   }
 
+  function initBatchEditDrafts() {
+    batchEditDrafts = {};
+    filteredData.forEach(function (row) {
+      batchEditDrafts[row.id] = {
+        employeeLevel: row.employeeLevel || '',
+        twChatroomId: displayToInputValue(row.twChatroomId),
+        bdChatroomId: displayToInputValue(row.bdChatroomId),
+        twTelephone: displayToInputValue(row.twTelephone),
+        danaTelephone: displayToInputValue(row.danaTelephone)
+      };
+    });
+  }
+
+  function updateBatchDraft(id, field, value) {
+    if (!batchEditDrafts[id]) {
+      var row = getSeatById(id);
+      if (!row) return;
+      batchEditDrafts[id] = getBatchDraft(row);
+    }
+    batchEditDrafts[id][field] = value;
+  }
+
+  function normalizeEditableValue(value) {
+    var trimmed = String(value == null ? '' : value).trim();
+    return trimmed || '—';
+  }
+
+  function handleBatchEdit() {
+    if (isBatchEditing) return;
+    isBatchEditing = true;
+    initBatchEditDrafts();
+    updateBatchEditButtons();
+    renderTable();
+  }
+
+  function cancelBatchEdit() {
+    if (!isBatchEditing) return;
+    isBatchEditing = false;
+    batchEditDrafts = {};
+    updateBatchEditButtons();
+    renderTable();
+  }
+
+  function saveBatchEdit() {
+    if (!isBatchEditing) return;
+    Object.keys(batchEditDrafts).forEach(function (idKey) {
+      var id = Number(idKey);
+      var row = getSeatById(id);
+      var draft = batchEditDrafts[id];
+      if (!row || !draft) return;
+      row.employeeLevel = draft.employeeLevel || '';
+      row.twChatroomId = normalizeEditableValue(draft.twChatroomId);
+      row.bdChatroomId = normalizeEditableValue(draft.bdChatroomId);
+      row.twTelephone = normalizeEditableValue(draft.twTelephone);
+      row.danaTelephone = normalizeEditableValue(draft.danaTelephone);
+    });
+    isBatchEditing = false;
+    batchEditDrafts = {};
+    updateBatchEditButtons();
+    renderTable();
+  }
+
+  updateBatchEditButtons();
   renderTable();
 </script>
 </body>
