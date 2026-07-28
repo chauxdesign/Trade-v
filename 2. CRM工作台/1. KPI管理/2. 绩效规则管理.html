@@ -66,6 +66,13 @@
       margin:0 0 24px;font-size:14px;line-height:1.7;color:#334155;text-align:left;
     }
     .kpi-rule-alert-text strong{color:#dc2626;font-weight:800}
+    .kpi-rule-alert-text--with-note{margin-bottom:12px}
+    .kpi-rule-alert-note{
+      margin:0 0 24px;padding:12px 14px;border-radius:8px;
+      background:#fff7ed;border:1px solid #fed7aa;
+      font-size:13px;line-height:1.7;color:#9a3412;text-align:left;
+    }
+    .kpi-rule-alert-note strong{font-weight:800}
     .kpi-rule-alert-actions{
       display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
     }
@@ -977,6 +984,7 @@
         </div>
         <div class="tab-group tab-group--right">
           <button type="button" class="tab tab--alert-test" onclick="openKpiRuleAlertTest()">预警测试（评审用）</button>
+          <button type="button" class="tab tab--alert-test" onclick="openKpiRuleDuplicateAlertTest()">重复规则提示（评审用）</button>
         </div>
       </div>
     </header>
@@ -1483,6 +1491,18 @@
   </div>
 </div>
 
+<div id="kpiRuleDuplicateAlertOverlay" class="kpi-rule-alert-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="kpiRuleDuplicateAlertTitle">
+  <div class="kpi-rule-alert-panel">
+    <div class="kpi-rule-alert-icon" aria-hidden="true">!</div>
+    <h2 class="kpi-rule-alert-title" id="kpiRuleDuplicateAlertTitle">绩效考核规则冲突提示</h2>
+    <p class="kpi-rule-alert-text kpi-rule-alert-text--with-note">印尼地区目前已存在对<strong>V1销售</strong>员工的<strong>7月份</strong>绩效考核规则，请检查考核员工范围或考核时间范围是否设置准确！</p>
+    <p class="kpi-rule-alert-note"><strong>注意：</strong>若需设置当前条件的绩效考核规则，则需要先行作废原有规则。</p>
+    <div class="kpi-rule-alert-actions">
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--primary" onclick="closeKpiRuleDuplicateAlertTest()">我知道了</button>
+    </div>
+  </div>
+</div>
+
 <div id="kpiTargetSubmitAlertModal" class="kpi-rule-alert-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="kpiTargetSubmitAlertTitle">
   <div class="kpi-rule-alert-panel kpi-target-submit-alert-panel">
     <div class="kpi-rule-alert-icon" aria-hidden="true">!</div>
@@ -1540,6 +1560,22 @@ function openKpiRuleAlertTest() {
 
 function closeKpiRuleAlertTest() {
   var overlay = document.getElementById('kpiRuleAlertOverlay');
+  if (!overlay) return;
+  overlay.hidden = true;
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function openKpiRuleDuplicateAlertTest() {
+  var overlay = document.getElementById('kpiRuleDuplicateAlertOverlay');
+  if (!overlay) return;
+  overlay.hidden = false;
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeKpiRuleDuplicateAlertTest() {
+  var overlay = document.getElementById('kpiRuleDuplicateAlertOverlay');
   if (!overlay) return;
   overlay.hidden = true;
   overlay.setAttribute('aria-hidden', 'true');
@@ -4976,9 +5012,6 @@ function buildKpiRuleFormulaExample() {
   }
   if (isLeader) {
     assumptionParts.unshift('团队所有提成 <strong>' + formatKpiRuleExampleMoney(fixed.teamCommission) + '</strong>');
-    if (excludeLeaderPersonal) {
-      assumptionParts.splice(1, 0, formatKpiRuleExampleLeaderPersonalMoney(salesResult));
-    }
     if (isKpiRuleNigeriaEntryVariant()) {
       assumptionParts.push('团队KPI平均完成率 <strong>' + formatKpiRuleExamplePercent(KPI_RULE_NIGERIA_TEAM_KPI_EXAMPLE_RATE) + '</strong>');
     } else if (isKpiRuleIndiaEntryVariant()) {
