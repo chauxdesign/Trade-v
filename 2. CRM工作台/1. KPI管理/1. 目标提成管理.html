@@ -523,16 +523,6 @@
             </div>
           </div>
           <div class="board-filter-field">
-            <label class="board-filter-label" for="channelFilterSelect">项目</label>
-            <div class="board-filter-control">
-              <select id="channelFilterSelect" class="board-filter-select" aria-label="项目">
-                <option value="all">全部</option>
-                <option value="DATA">DATA</option>
-                <option value="TW">TW</option>
-              </select>
-            </div>
-          </div>
-          <div class="board-filter-field">
             <label class="board-filter-label" for="monthFilterSelect">时间月份</label>
             <div class="board-filter-control">
               <select id="monthFilterSelect" class="board-filter-select" aria-label="时间月份"></select>
@@ -554,7 +544,6 @@
                 <th>SID</th>
                 <th>销售</th>
                 <th>销售等级</th>
-                <th>项目</th>
                 <th>时间进度/月份</th>
                 <th>分配客户数</th>
                 <th>净入金/目标</th>
@@ -598,7 +587,6 @@ var currentPage = 1;
 var currentSummaryRange = 'thisMonth';
 var currentSummaryCustomMonth = '';
 var currentLevelFilter = 'all';
-var currentChannelFilter = 'all';
 var currentMonthFilter = '';
 var currentSalesNameFilter = '';
 
@@ -794,8 +782,54 @@ function formatMoneyK(value) {
   return '$' + k.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: digits }) + 'K';
 }
 
+/** 总览区域数值显示：<10万千分位；≥10万 K；≥1000万 M；≥1亿 B；金额加 $ */
+function formatOverviewNumber(value, isMoney) {
+  var n = Number(value);
+  if (!isFinite(n)) n = 0;
+  var abs = Math.abs(n);
+  var formatted;
+
+  if (abs < 100000) {
+    var rounded2 = Math.round(n * 100) / 100;
+    if (Math.abs(rounded2 - Math.round(rounded2)) < 1e-9) {
+      formatted = Math.round(rounded2).toLocaleString('en-US');
+    } else {
+      formatted = rounded2.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+  } else if (abs < 10000000) {
+    formatted = (n / 1000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'K';
+  } else if (abs < 100000000) {
+    formatted = (n / 1000000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'M';
+  } else {
+    formatted = (n / 1000000000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'B';
+  }
+
+  return isMoney ? '$' + formatted : formatted;
+}
+
 function formatPercent(value, digits) {
   return value.toFixed(digits == null ? 1 : digits) + '%';
+}
+
+/** 总览完成进度：默认两位小数，末尾为 .00 时不显示小数位 */
+function formatOverviewPercent(value) {
+  var n = Number(value);
+  if (!isFinite(n)) n = 0;
+  var fixed = n.toFixed(2);
+  if (fixed.slice(-3) === '.00') fixed = fixed.slice(0, -3);
+  return fixed + '%';
 }
 
 function getRateClass(relativeRate) {
@@ -865,7 +899,6 @@ function getFilteredRows() {
   return EMPLOYEE_BOARD_ROWS.filter(function (row) {
     if (!rowMatchesSalesOrSid(row, keyword)) return false;
     if (currentLevelFilter !== 'all' && row.level !== currentLevelFilter) return false;
-    if (currentChannelFilter !== 'all' && row.channel !== currentChannelFilter) return false;
     if (currentMonthFilter && row.statMonth !== currentMonthFilter) return false;
     return true;
   });
@@ -963,8 +996,8 @@ function computeSummaryStats(rangeKey) {
 
   var netDepositTarget = NET_DEPOSIT_TARGET * rowCount * factor;
   var activeTarget = ACTIVE_TARGET * rowCount * factor;
-  var netDepositProgress = 78;
-  var activeProgress = 92;
+  var netDepositProgress = 78.56;
+  var activeProgress = 92.35;
   var netDeposit = round(netDepositTarget * netDepositProgress / 100, 2);
   var rechargeUsers = Math.round(activeTarget * activeProgress / 100);
   var tradeLots = Math.round(totals.tradeLots * factor);
@@ -1007,9 +1040,9 @@ function buildSummaryChannelCard(metrics, progressPercent, progressLabel) {
       '<div class="kpi-channel-progress">' +
         '<div class="kpi-channel-progress-meta">' +
           '<span>完成进度</span>' +
-          '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatPercent(safePercent) + '</span>' +
+          '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatOverviewPercent(safePercent) + '</span>' +
         '</div>' +
-        '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 1) + '" aria-label="' + ariaLabel + '">' +
+        '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 2) + '" aria-label="' + ariaLabel + '">' +
           '<div class="kpi-card-progress-fill ' + statusClass + '" style="width:' + fillWidth + '%"></div>' +
         '</div>' +
       '</div>' +
@@ -1045,9 +1078,9 @@ function buildProgressBarItem(label, percent) {
     '<div class="kpi-progress-stack-item">' +
       '<div class="kpi-channel-progress-meta">' +
         '<span>' + label + '</span>' +
-        '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatPercent(safePercent) + '</span>' +
+        '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatOverviewPercent(safePercent) + '</span>' +
       '</div>' +
-      '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 1) + '" aria-label="' + label + '">' +
+      '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 2) + '" aria-label="' + label + '">' +
         '<div class="kpi-card-progress-fill ' + statusClass + '" style="width:' + fillWidth + '%"></div>' +
       '</div>' +
     '</div>'
@@ -1126,19 +1159,19 @@ function buildSummaryOverviewSections(stats, mergeCustomerTrade) {
     ? buildSummarySection(
         'summary-section--single',
         buildSummaryPairCard(
-          '分配客户数', stats.assignedCustomers.toLocaleString('en-US'),
-          '总交易手数', stats.tradeLots.toLocaleString('en-US')
+          '分配客户数', formatOverviewNumber(stats.assignedCustomers, false),
+          '总交易手数', formatOverviewNumber(stats.tradeLots, false)
         )
       ) +
       buildSummarySection(
         'summary-section--single',
-        buildSummaryCard('绩效奖励提成', formatMoney(stats.performanceReward))
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
       )
     : buildSummarySection(
         'summary-section--triple',
-        buildSummaryCard('分配客户数', stats.assignedCustomers.toLocaleString('en-US')) +
-        buildSummaryCard('总交易手数', stats.tradeLots.toLocaleString('en-US')) +
-        buildSummaryCard('绩效奖励提成', formatMoney(stats.performanceReward))
+        buildSummaryCard('分配客户数', formatOverviewNumber(stats.assignedCustomers, false)) +
+        buildSummaryCard('总交易手数', formatOverviewNumber(stats.tradeLots, false)) +
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
       );
 
   return (
@@ -1146,15 +1179,15 @@ function buildSummaryOverviewSections(stats, mergeCustomerTrade) {
       buildSummarySection(
         'summary-section--single',
         buildSummaryChannelCard([
-          { label: '净入金', value: formatMoneyK(stats.netDeposit) },
-          { label: '目标', value: formatMoneyK(stats.netDepositTarget) }
+          { label: '净入金', value: formatOverviewNumber(stats.netDeposit, true) },
+          { label: '目标', value: formatOverviewNumber(stats.netDepositTarget, true) }
         ], stats.netDepositProgress, '净入金完成进度')
       ) +
       buildSummarySection(
         'summary-section--single',
         buildSummaryChannelCard([
-          { label: '充值活跃', value: stats.rechargeUsers.toLocaleString('en-US') },
-          { label: '目标', value: stats.activeTarget.toLocaleString('en-US') }
+          { label: '充值活跃', value: formatOverviewNumber(stats.rechargeUsers, false) },
+          { label: '目标', value: formatOverviewNumber(stats.activeTarget, false) }
         ], stats.activeProgress, '充值活跃完成进度')
       ) +
       tailSectionHtml +
@@ -1168,22 +1201,22 @@ function buildSummaryMirrorOverviewSections(stats) {
       buildSummarySection(
         'summary-section--single',
         buildSummaryPairCard(
-          '分配客户数', stats.assignedCustomers.toLocaleString('en-US'),
-          '总交易手数', stats.tradeLots.toLocaleString('en-US')
+          '分配客户数', formatOverviewNumber(stats.assignedCustomers, false),
+          '总交易手数', formatOverviewNumber(stats.tradeLots, false)
         )
       ) +
       buildSummarySection(
         'summary-section--single',
         buildSummaryChannelMetricsCard([
-          { label: '净入金', value: formatMoneyK(stats.netDeposit) },
-          { label: '目标', value: formatMoneyK(stats.netDepositTarget) }
+          { label: '净入金', value: formatOverviewNumber(stats.netDeposit, true) },
+          { label: '目标', value: formatOverviewNumber(stats.netDepositTarget, true) }
         ])
       ) +
       buildSummarySection(
         'summary-section--single',
         buildSummaryChannelMetricsCard([
-          { label: '充值活跃', value: stats.rechargeUsers.toLocaleString('en-US') },
-          { label: '目标', value: stats.activeTarget.toLocaleString('en-US') }
+          { label: '充值活跃', value: formatOverviewNumber(stats.rechargeUsers, false) },
+          { label: '目标', value: formatOverviewNumber(stats.activeTarget, false) }
         ])
       ) +
       buildSummarySection(
@@ -1195,7 +1228,7 @@ function buildSummaryMirrorOverviewSections(stats) {
       ) +
       buildSummarySection(
         'summary-section--single',
-        buildSummaryCard('绩效奖励提成', formatMoney(stats.performanceReward))
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
       ) +
     '</div>'
   );
@@ -1271,7 +1304,6 @@ function buildRowHtml(row, monthLabel, time) {
       '<td class="sales-sid">' + row.sid + '</td>' +
       '<td class="sales-name">' + row.salesName + '</td>' +
       '<td><span class="level-tag ' + row.levelClass + '">' + row.levelLabel + '</span></td>' +
-      '<td>' + row.channel + '</td>' +
       buildStackCell(formatPercent(time.percent), monthLabel) +
       '<td>' + row.assignedCustomers + '</td>' +
       buildStackCell(formatMoneyK(row.netDeposit), '$' + NET_DEPOSIT_TARGET.toLocaleString('en-US'), { mainClass: 'money' }) +
@@ -1330,10 +1362,6 @@ function switchLevelFilter(levelKey) {
   currentLevelFilter = levelKey || 'all';
 }
 
-function switchChannelFilter(channelKey) {
-  currentChannelFilter = channelKey || 'all';
-}
-
 function switchSalesNameFilter(value) {
   currentSalesNameFilter = value || '';
 }
@@ -1341,12 +1369,10 @@ function switchSalesNameFilter(value) {
 function applyBoardFilters() {
   var nameInput = document.getElementById('salesNameFilterInput');
   var levelSelect = document.getElementById('levelFilterSelect');
-  var channelSelect = document.getElementById('channelFilterSelect');
   var monthSelect = document.getElementById('monthFilterSelect');
 
   currentSalesNameFilter = nameInput ? nameInput.value.trim() : '';
   currentLevelFilter = levelSelect ? levelSelect.value : 'all';
-  currentChannelFilter = channelSelect ? channelSelect.value : 'all';
   currentMonthFilter = monthSelect ? monthSelect.value : formatMonthKey(new Date());
 
   hideSalesNameSuggest();
@@ -1355,7 +1381,6 @@ function applyBoardFilters() {
 
 function resetBoardFilters() {
   currentLevelFilter = 'all';
-  currentChannelFilter = 'all';
   currentSalesNameFilter = '';
   currentMonthFilter = formatMonthKey(new Date());
 
@@ -1365,9 +1390,6 @@ function resetBoardFilters() {
 
   var levelSelect = document.getElementById('levelFilterSelect');
   if (levelSelect) levelSelect.value = 'all';
-
-  var channelSelect = document.getElementById('channelFilterSelect');
-  if (channelSelect) channelSelect.value = 'all';
 
   var monthSelect = document.getElementById('monthFilterSelect');
   if (monthSelect) monthSelect.value = currentMonthFilter;
