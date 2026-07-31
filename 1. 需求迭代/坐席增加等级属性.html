@@ -1755,8 +1755,11 @@
 
   function hasSidBindChange(row, draft) {
     return !isSameEditableValue(row.twChatroomId, draft.twChatroomId)
-      || !isSameEditableValue(row.bdChatroomId, draft.bdChatroomId)
-      || !isSameEditableValue(row.twTelephone, draft.twTelephone)
+      || !isSameEditableValue(row.bdChatroomId, draft.bdChatroomId);
+  }
+
+  function hasPhoneChange(row, draft) {
+    return !isSameEditableValue(row.twTelephone, draft.twTelephone)
       || !isSameEditableValue(row.danaTelephone, draft.danaTelephone);
   }
 
@@ -1764,10 +1767,13 @@
     return (row.employeeLevel || '') !== (draft.employeeLevel || '');
   }
 
-  function buildSaveSuccessMessages(sidChangedIds, levelChangedIds) {
+  function buildSaveSuccessMessages(sidChangedIds, phoneChangedIds, levelChangedIds) {
     var messages = [];
     if (sidChangedIds.length) {
       messages.push('销售/客服ID：' + formatIdList(sidChangedIds) + '的坐席SID绑定成功！');
+    }
+    if (phoneChangedIds.length) {
+      messages.push('销售/客服ID：' + formatIdList(phoneChangedIds) + '的联系电话修改成功！');
     }
     if (levelChangedIds.length) {
       messages.push('销售/客服ID：' + formatIdList(levelChangedIds) + '的考核等级修改成功！');
@@ -1796,6 +1802,7 @@
   function saveBatchEdit() {
     if (!isBatchEditing) return;
     var sidChangedIds = [];
+    var phoneChangedIds = [];
     var levelChangedIds = [];
     Object.keys(batchEditDrafts).forEach(function (idKey) {
       var id = Number(idKey);
@@ -1803,6 +1810,7 @@
       var draft = batchEditDrafts[id];
       if (!row || !draft) return;
       if (hasSidBindChange(row, draft)) sidChangedIds.push(id);
+      if (hasPhoneChange(row, draft)) phoneChangedIds.push(id);
       if (hasLevelChange(row, draft)) levelChangedIds.push(id);
       row.employeeLevel = draft.employeeLevel || '';
       row.twChatroomId = normalizeEditableValue(draft.twChatroomId);
@@ -1810,7 +1818,7 @@
       row.twTelephone = normalizeEditableValue(draft.twTelephone);
       row.danaTelephone = normalizeEditableValue(draft.danaTelephone);
     });
-    var messages = buildSaveSuccessMessages(sidChangedIds, levelChangedIds);
+    var messages = buildSaveSuccessMessages(sidChangedIds, phoneChangedIds, levelChangedIds);
     isBatchEditing = false;
     batchEditDrafts = {};
     updateBatchEditButtons();
