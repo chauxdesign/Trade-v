@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM需求原型入口</title>
+</head>
+<body>
+<!--
+  index.html 进入需求管理时的中转页：
+  自动跳转到二级菜单编号最大的页面。
+  新增/调整二级菜单时，请同步维护下方 items（与 _sidebar-menu.html 一致）。
+-->
+<script>
+(function () {
+  var items = [
+    { num: 1, href: '../1. 私聊群发新增手数.html' },
+    { num: 2, href: '../2. 过去4周首充客户定位.html' },
+    { num: 3, href: '../3. 坐席管理增加考核等级.html' }
+  ];
+  items.sort(function (a, b) { return b.num - a.num; });
+  location.replace(items[0].href);
+})();
+</script>
+</body>
+</html>
