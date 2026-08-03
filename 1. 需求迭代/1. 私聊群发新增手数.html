@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>私聊群发新增手数</title>
+  <style>
+    :root {
+      --bg: #eceff3;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e8ecf1;
+      --panel: #fff;
+      --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --card-radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .wb-sidebar-frame {
+      width: 250px;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    .wb-topbar-frame {
+      width: 100%;
+      height: 80px;
+      border: none;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .scroll-wrap {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 14px 24px;
+      background: var(--bg);
+    }
+
+    .content-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .content-panel-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #2563eb;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .wb-sidebar-frame {
+        width: 100%;
+        height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="1. 需求迭代/菜单项/_sidebar-menu.html#active=q2-private-chat" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <iframe class="wb-topbar-frame" src="1. 需求迭代/菜单项/_topbar.html#active=q2-private-chat" title="顶部导航"></iframe>
+
+    <div class="scroll-wrap">
+      <div class="content-panel">
+        <div class="content-panel-icon">◎</div>
+        <span>「私聊群发新增手数需求」原型内容待补充</span>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
