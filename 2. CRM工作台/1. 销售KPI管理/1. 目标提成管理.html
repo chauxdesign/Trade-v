@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../../" />
+  <title>目标提成管理</title>
+  <style>
+    :root{
+      --bg:#eceff3;
+      --sidebar:#f0f2f5;--sidebar-border:#e5e7eb;
+      --menu-text:#333333;--menu-muted:#6b7280;--menu-icon:#4b5563;
+      --menu-hover:#f5f7fa;--menu-active-bg:#eff6ff;--menu-active-text:#2563eb;
+      --submenu-bg:#ffffff;
+      --wire:#d1d5db;--text:#1f2937;--muted:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:var(--text);background:var(--bg)}
+    .app{display:grid;grid-template-columns:200px 1fr;height:100vh;overflow:hidden}
+    .wb-sidebar-frame{width:200px;height:100vh;border:none;display:block}
+
+    .sidebar{
+      background:var(--sidebar);color:var(--menu-text);
+      border-right:1px solid var(--sidebar-border);
+      overflow-y:auto;box-shadow:2px 0 8px rgba(15,23,42,.04);
+    }
+    .logo-box{
+      height:64px;display:flex;align-items:center;gap:10px;
+      padding:0 16px;border-bottom:1px solid #e8eaed;background:#fff;
+    }
+    .shield{
+      width:32px;height:32px;border-radius:8px;flex-shrink:0;
+      background:linear-gradient(135deg,#2563eb 0%,#22c55e 100%);
+      color:#fff;font-size:14px;font-weight:900;
+      display:grid;place-items:center;
+    }
+    .logo-text{font-size:24px;font-weight:900;color:#111827;letter-spacing:.5px}
+    .menu{padding:6px 0 12px;font-size:13px}
+    .menu-item{
+      height:36px;display:flex;align-items:center;gap:10px;
+      padding:0 14px;color:var(--menu-text);cursor:default;
+      border-left:3px solid transparent;
+    }
+    .menu-item:hover{background:var(--menu-hover)}
+    .menu-item.active{
+      background:linear-gradient(90deg,var(--menu-active-bg),#f8fbff);
+      border-left-color:#3b82f6;color:var(--menu-active-text);font-weight:700;
+    }
+    .menu-icon{width:16px;text-align:center;color:var(--menu-icon);font-size:12px}
+    .menu-item.active .menu-icon{color:var(--menu-active-text)}
+    .menu-item .arrow{margin-left:auto;color:#9ca3af;font-size:14px}
+    .submenu-wrap{display:none;background:var(--submenu-bg);border-top:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0}
+    .menu-item.active + .submenu-wrap,
+    .menu-item.is-expanded + .submenu-wrap{display:block}
+    .submenu{padding:6px 0 8px 44px;font-size:12px;color:#374151;line-height:28px}
+    .submenu-item{
+      display:block;padding:0 8px;margin:0 -8px;border-radius:4px;cursor:default;
+    }
+    a.submenu-item{color:inherit;text-decoration:none;cursor:pointer}
+    .submenu-item:hover{color:#1d4ed8}
+    .submenu-item.active{color:#2563eb;font-weight:700;background:#eff6ff}
+    .menu-divider{height:1px;background:#58a9f7;margin:8px 12px;opacity:.85}
+
+    .main{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+    .topbar{background:#fff;border-bottom:1px solid var(--wire)}
+    .top-line{height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;font-size:12px;color:var(--muted)}
+    .top-left{display:flex;align-items:center;gap:12px}
+    .hamburger{font-size:18px;color:#374151}
+    .top-actions{display:flex;gap:12px;align-items:center}
+    .lang-select{
+      border:none;background:transparent;
+      font-size:12px;color:var(--muted);cursor:pointer;
+      padding:0 14px 0 0;font-family:inherit;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right center;
+    }
+    .lang-select:hover{color:#374151}
+    .lang-select:focus{outline:none;color:#374151}
+    .tab-row{height:44px;display:flex;align-items:center;gap:12px;padding:0 14px;border-top:1px solid #f0f0f0;background:#fafafa}
+    .tab-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .tab{padding:4px 12px;font-size:12px;border:1px solid var(--wire);background:#fff;border-radius:4px}
+    .tab.active{border-color:#2563eb;background:#eff6ff;color:#1d4ed8;font-weight:700}
+    .tab span{margin-left:6px;color:#64748b}
+
+    .scroll-wrap{
+      flex:1;overflow:auto;padding:12px 14px 24px;background:var(--bg);
+      display:flex;flex-direction:column;gap:12px;
+    }
+
+    .dashboard-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:14px;
+      box-shadow:0 4px 20px rgba(15,23,42,.06);overflow:hidden;
+      flex-shrink:0;
+    }
+    .dashboard-panel.summary-panel{overflow:visible}
+    .summary-panel--mirror{display:none}
+    .dashboard-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:16px 20px;border-bottom:1px solid #f1f5f9;
+    }
+    .dashboard-head--meta-only{
+      justify-content:flex-start;padding:8px 16px;min-height:36px;gap:12px;
+    }
+    .dashboard-head--meta-only .meta,
+    .dashboard-head--filters .meta{
+      text-align:left;line-height:1.4;flex-shrink:0;
+    }
+    .dashboard-head--filters{
+      align-items:center;flex-wrap:wrap;
+    }
+    .dashboard-head .meta{font-size:12px;color:var(--muted)}
+    /* 条件筛选 — 参考跟进客户弹窗 comm-follow 表单 */
+    .filter-bar{padding:0 2px 4px}
+    .board-filter-form{
+      display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 18px;
+      padding:10px 14px;background:#fff;border:1px solid #e8ecf1;border-radius:8px;
+    }
+    .board-filter-field{
+      display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 10px;align-items:center;
+    }
+    .board-filter-label{
+      font-size:12px;font-weight:700;color:#475569;line-height:34px;white-space:nowrap;
+    }
+    .board-filter-control{min-width:0}
+    .board-filter-input,.board-filter-select{
+      border:1px solid #e8ecf1;border-radius:8px;background:#fff;
+      font-size:12px;color:#0f172a;font-family:inherit;box-sizing:border-box;
+      height:34px;padding:0 12px;transition:border-color .15s ease,box-shadow .15s ease;
+    }
+    .board-filter-input{width:148px}
+    .board-filter-combo{position:relative;width:250px;max-width:100%}
+    .board-filter-combo .board-filter-input{width:100%}
+    .board-filter-suggest{
+      position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;
+      max-height:220px;overflow:auto;border:1px solid #e2e8f0;border-radius:8px;
+      background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.12);
+    }
+    .board-filter-suggest-item{
+      display:flex;align-items:center;width:100%;padding:8px 12px;border:none;background:#fff;
+      font-size:12px;color:#0f172a;text-align:left;cursor:pointer;font-family:inherit;
+    }
+    .board-filter-suggest-item:hover,
+    .board-filter-suggest-item.is-active{background:#eff6ff;color:#1d4ed8}
+    .board-filter-suggest-name{font-weight:700}
+    .board-filter-suggest-sub{margin-left:6px;color:#94a3b8;font-weight:600}
+    .board-filter-suggest-empty{
+      padding:10px 12px;font-size:12px;color:#94a3b8;text-align:center;
+    }
+    .board-filter-input::placeholder{color:#94a3b8}
+    .board-filter-select{
+      width:150px;padding-right:28px;cursor:pointer;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 12px center;
+    }
+    .board-filter-input:focus,.board-filter-select:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .board-filter-reset{
+      margin-left:auto;height:34px;padding:0 12px;border:1px solid #e8ecf1;border-radius:8px;
+      background:#fff;color:#475569;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+      transition:border-color .15s ease,background .15s ease;
+    }
+    .board-filter-reset:hover{border-color:#cbd5e1;background:#f8fafc}
+    .board-filter-submit{
+      height:34px;padding:0 16px;border:1px solid #2563eb;border-radius:8px;
+      background:#2563eb;color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
+      transition:background .15s ease,border-color .15s ease;
+    }
+    .board-filter-submit:hover{background:#1d4ed8;border-color:#1d4ed8}
+    @media (max-width:900px){
+      .board-filter-reset{margin-left:0}
+      .board-filter-submit{margin-left:0}
+    }
+    .summary-filter-bar{padding:10px 16px 12px}
+    .summary-range-bar{
+      padding:8px 16px;border-bottom:1px solid #f1f5f9;background:#fafafa;
+    }
+    .summary-range-group{display:flex;flex-wrap:wrap;gap:4px}
+    .summary-range-btn{
+      padding:3px 10px;border-radius:6px;border:1px solid #e2e8f0;
+      background:#fff;font-size:11px;font-weight:600;color:#64748b;
+      cursor:pointer;font-family:inherit;line-height:1.2;
+    }
+    .summary-range-btn:hover{border-color:#93c5fd;color:#2563eb;background:#eff6ff}
+    .summary-range-btn.active{
+      border-color:#2563eb;color:#2563eb;background:#eff6ff;font-weight:700;
+      box-shadow:0 0 0 1px rgba(37,99,235,.15);
+    }
+    .summary-range-select{
+      padding:3px 24px 3px 10px;border-radius:6px;border:1px solid #e2e8f0;
+      background:#fff;font-size:11px;font-weight:600;color:#64748b;
+      cursor:pointer;font-family:inherit;line-height:1.2;height:24px;
+      appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 8px center;
+    }
+    .summary-range-select:hover{border-color:#93c5fd;color:#2563eb;background-color:#eff6ff}
+    .summary-range-select.active{
+      border-color:#2563eb;color:#2563eb;background-color:#eff6ff;font-weight:700;
+      box-shadow:0 0 0 1px rgba(37,99,235,.15);
+    }
+    .summary-overview{padding:10px 14px 12px;--summary-card-min-h:calc(82px * 1.15 * 0.85 * 0.9)}
+    .summary-sections{
+      display:grid;grid-template-columns:minmax(0,2fr) minmax(0,2fr) minmax(0,3fr);gap:0;align-items:stretch;
+    }
+    #summaryOverviewCards .summary-sections{
+      grid-template-columns:minmax(0,1.9fr) minmax(0,1.9fr) minmax(0,1.9fr) minmax(0,1.3fr);
+      gap:6px;
+    }
+    #summaryOverviewCards .summary-section{padding:0}
+    #summaryOverviewCards .summary-section:not(:first-child)::before{display:none}
+    #summaryOverviewCards .summary-section:nth-child(3) .kpi-card-pair-label{font-size:15px}
+    #summaryOverviewCards .summary-section:nth-child(3) .kpi-card-pair-val{font-size:26px}
+    #summaryOverviewCards .summary-section:nth-child(4) .kpi-card .label{font-size:14px}
+    #summaryOverviewCards .summary-section:nth-child(4) .kpi-card .value{font-size:26px}
+    #summaryOverviewCards .summary-section:nth-child(1) .kpi-channel-card,
+    #summaryOverviewCards .summary-section:nth-child(2) .kpi-channel-card{
+      cursor:pointer;
+      transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease;
+    }
+    #summaryOverviewCards .summary-section:nth-child(1) .kpi-channel-card:hover,
+    #summaryOverviewCards .summary-section:nth-child(2) .kpi-channel-card:hover{
+      transform:translateY(-4px);
+      border-color:#93c5fd;
+      background:linear-gradient(135deg,#fff,#eff6ff);
+      box-shadow:0 12px 28px rgba(37,99,235,.16);
+    }
+    #summaryOverviewCards .summary-section:nth-child(1) .kpi-channel-card:active,
+    #summaryOverviewCards .summary-section:nth-child(2) .kpi-channel-card:active{
+      transform:translateY(-1px);
+      box-shadow:0 6px 16px rgba(37,99,235,.12);
+    }
+    .summary-section{
+      min-width:0;padding:0 12px;position:relative;
+      display:flex;flex-direction:column;
+    }
+    .summary-section:first-child{padding-left:0}
+    .summary-section:last-child{padding-right:0}
+    .summary-section:not(:first-child)::before{
+      content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+      width:1px;height:70%;background:#e2e8f0;
+    }
+    .kpi-summary{display:grid;gap:8px;margin-bottom:0;grid-template-columns:repeat(var(--card-cols,1),minmax(0,1fr));flex:1;height:100%;min-height:var(--summary-card-min-h)}
+    .summary-section--single{--card-cols:1}
+    .summary-section--triple{--card-cols:3}
+    .summary-section--double{--card-cols:2}
+    .summary-overview .kpi-summary{align-items:stretch}
+    .summary-overview .kpi-summary .kpi-card:not(.kpi-card--progress):not(.kpi-card--pair){
+      display:flex;flex-direction:column;justify-content:center;
+    }
+    .summary-overview .kpi-summary .kpi-card{
+      min-width:0;width:100%;height:100%;min-height:var(--summary-card-min-h);box-sizing:border-box;
+    }
+    .kpi-card{background:linear-gradient(135deg,#fff,#f8fbff);border:1px solid #dbe4f0;border-radius:14px;padding:calc(14px * 0.9) 12px;text-align:center;cursor:default;transition:transform .15s,box-shadow .15s}
+    .kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,23,42,.08)}
+    .kpi-card .label{font-size:12px;color:var(--muted);line-height:1.35;min-height:calc(30px * 0.9);display:flex;align-items:center;justify-content:center}
+    .kpi-card .value{font-size:20px;font-weight:800;margin-top:calc(6px * 0.9);color:#0f172a}
+    .kpi-card .value.pct{font-size:18px}
+    .summary-overview .summary-section--triple .kpi-card .label{font-size:13px}
+    .summary-overview .summary-section--triple .kpi-card .value{font-size:22px}
+    .kpi-card--pair{
+      display:flex;flex-direction:column;justify-content:center;
+      padding:calc(14px * 0.9) 12px;
+    }
+    .kpi-card-pair-metrics{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;
+      width:100%;align-content:center;
+    }
+    .kpi-card-pair-metric{
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      padding:4px 6px;text-align:center;min-width:0;
+    }
+    .kpi-card-pair-metric + .kpi-card-pair-metric{border-left:1px solid #e2e8f0}
+    .kpi-card-pair-label{font-size:13px;color:var(--muted);line-height:1.25}
+    .kpi-card-pair-val{
+      font-size:22px;font-weight:800;color:#0f172a;line-height:1.2;
+      font-variant-numeric:tabular-nums;
+    }
+    .kpi-channel-card{
+      border:1px solid #dbe4f0;border-radius:14px;overflow:hidden;
+      background:linear-gradient(135deg,#fff,#f8fbff);
+      display:flex;flex-direction:column;min-width:0;width:100%;height:100%;
+      min-height:var(--summary-card-min-h);box-sizing:border-box;
+    }
+    .kpi-channel-metrics{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
+      padding:9px 8px 7px;flex:1;align-content:center;
+    }
+    .kpi-channel-metric{
+      display:flex;flex-direction:column;align-items:center;gap:3px;
+      padding:3px 6px;text-align:center;min-width:0;
+    }
+    .kpi-channel-metric + .kpi-channel-metric{border-left:1px solid #e2e8f0}
+    .kpi-channel-metric-label{font-size:12px;color:#64748b;line-height:1.25}
+    .kpi-channel-metric-val{
+      font-size:18px;font-weight:800;color:#0f172a;line-height:1.2;
+      font-variant-numeric:tabular-nums;
+    }
+    .kpi-channel-progress{
+      padding:5px 12px 7px;border-top:1px solid #f1f5f9;
+      background:#fafbfc;
+    }
+    .kpi-channel-progress-meta{
+      display:flex;align-items:center;justify-content:space-between;gap:8px;
+      margin-bottom:4px;font-size:10px;color:#64748b;font-weight:600;line-height:1.2;
+    }
+    .kpi-channel-progress-pct{font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
+    .kpi-channel-progress-pct.is-good{color:#059669}
+    .kpi-channel-progress-pct.is-warn{color:#d97706}
+    .kpi-channel-progress-pct.is-bad{color:#dc2626}
+    .kpi-channel-progress .kpi-card-progress{margin-top:0;height:6px}
+    .kpi-card--progress{display:flex;flex-direction:column;justify-content:flex-start}
+    .kpi-card--progress .label{font-size:11px;min-height:22px;line-height:1.25}
+    .kpi-card--progress .value{font-size:15px;margin-top:3px;margin-bottom:6px}
+    .kpi-card--progress .value.pct{font-size:14px}
+    .kpi-card-progress{
+      height:5px;border-radius:999px;background:rgba(15,23,42,.08);overflow:hidden;margin-top:auto;
+    }
+    .kpi-card-progress-fill{
+      height:100%;border-radius:999px;transition:width .35s ease;
+      background:linear-gradient(90deg,#60a5fa,#2563eb);
+    }
+    .kpi-card-progress-fill.is-good{background:linear-gradient(90deg,#34d399,#059669)}
+    .kpi-card-progress-fill.is-warn{background:linear-gradient(90deg,#fbbf24,#d97706)}
+    .kpi-card-progress-fill.is-bad{background:linear-gradient(90deg,#f87171,#dc2626)}
+    .summary-overview-cards--mirror .summary-sections{
+      grid-template-columns:minmax(0,2fr) minmax(0,2fr) minmax(0,2fr) minmax(0,2.8fr) minmax(0,1.2fr);
+    }
+    .kpi-channel-card--metrics-only .kpi-channel-metrics{
+      padding:12px 8px;flex:1;align-content:center;
+    }
+    .kpi-channel-metrics--cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .kpi-card--progress-stack{
+      display:flex;flex-direction:column;justify-content:center;
+      gap:10px;padding:10px 12px;
+    }
+    .kpi-progress-stack-item{width:100%}
+    .kpi-progress-stack-item + .kpi-progress-stack-item{
+      padding-top:10px;border-top:1px solid #f1f5f9;
+    }
+    @media (max-width:1100px){
+      .summary-sections{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:12px}
+      .summary-section{padding:0}
+      .summary-section:not(:first-child)::before{display:none}
+      .summary-section:nth-child(odd){padding-right:12px}
+      .summary-section:nth-child(odd)::after{
+        content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);
+        width:1px;height:70%;background:#e2e8f0;
+      }
+      .summary-section:nth-child(even){padding-left:12px}
+      .summary-section:nth-child(n+3){padding-top:12px;border-top:1px solid #e2e8f0}
+      .summary-section--single,
+      .summary-section--double,
+      .summary-section--triple{--card-cols:1}
+      .summary-overview-cards--mirror .summary-sections{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media (max-width:640px){
+      .summary-sections{grid-template-columns:1fr;row-gap:0}
+      .summary-section{padding:12px 0}
+      .summary-section:not(:first-child)::before{display:none}
+      .summary-section:nth-child(odd)::after{display:none}
+      .summary-section:not(:first-child){border-top:1px solid #e2e8f0}
+      .summary-section:nth-child(odd){padding-right:0}
+      .summary-section:nth-child(even){padding-left:0}
+      .summary-section:nth-child(n+3){padding-top:12px}
+    }
+    .dashboard-table-wrap{overflow-x:auto}
+    .employee-board-table{
+      width:100%;min-width:1200px;border-collapse:collapse;font-size:12px;
+    }
+    .employee-board-table th,.employee-board-table td{
+      padding:10px 12px;border-bottom:1px solid #f1f5f9;white-space:nowrap;text-align:center;
+    }
+    .employee-board-table th{
+      background:#f8fafc;color:#475569;font-weight:700;
+      position:sticky;top:0;z-index:1;
+    }
+    .employee-board-table tbody tr:hover td{background:#f8fbff}
+    .employee-board-table tr:last-child td{border-bottom:none}
+    .level-tag{
+      display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:700;
+    }
+    .level-v1{background:#eff6ff;color:#1d4ed8}
+    .level-v23{background:#f0fdf4;color:#15803d}
+    .level-v4{background:#faf5ff;color:#7e22ce}
+    .level-leader{background:#fff7ed;color:#c2410c}
+    .rate-good{color:#059669;font-weight:700}
+    .rate-warn{color:#d97706;font-weight:700}
+    .rate-bad{color:#dc2626;font-weight:700}
+    .money{font-variant-numeric:tabular-nums;font-weight:600;color:#0f172a}
+    .perf-reward{font-variant-numeric:tabular-nums;font-weight:700;color:#2563eb}
+    .perf-reward.perf-reward--high{color:#dc2626}
+    .sales-name{font-weight:700;color:#0f172a}
+    .sales-sid{font-variant-numeric:tabular-nums;font-weight:600;color:#475569}
+    .rate-split{
+      display:inline-flex;align-items:baseline;justify-content:center;gap:4px;
+      font-variant-numeric:tabular-nums;
+    }
+    .rate-split .rate-split-sep{color:#94a3b8;font-weight:600}
+    .employee-board-table td.cell-stack{
+      white-space:normal;vertical-align:middle;line-height:1.3;text-align:center;
+    }
+    .cell-stack-main{font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums}
+    .cell-stack-sub{
+      font-size:10px;color:#94a3b8;font-weight:600;margin-top:2px;
+      font-variant-numeric:tabular-nums;
+    }
+    .cell-stack-main.money{color:#0f172a}
+    .cell-stack-main .perf-reward{font-size:12px}
+    .cell-stack-sub .trade-fee-val{color:#059669;font-weight:700}
+    .dashboard-pager{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 20px;border-top:1px solid #f1f5f9;background:#fafafa;
+      font-size:12px;color:#475569;
+    }
+    .dashboard-pager-info{white-space:nowrap}
+    .dashboard-pager-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+    .pager-btn,.pager-page{
+      border:1px solid var(--wire);background:#fff;padding:5px 10px;
+      font-size:12px;border-radius:6px;cursor:pointer;color:#374151;
+      font-family:inherit;line-height:1.2;
+    }
+    .pager-btn:hover,.pager-page:hover{border-color:#93c5fd;background:#f8fafc}
+    .pager-btn:disabled,.pager-page:disabled{
+      opacity:.45;cursor:not-allowed;background:#f8fafc;
+    }
+    .pager-page.active{
+      background:#2563eb;border-color:#2563eb;color:#fff;font-weight:700;
+    }
+    .pager-ellipsis{padding:0 4px;color:#94a3b8}
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="2. CRM工作台/0. 菜单项/_sidebar-menu.html#lang=zh&amp;active=perf-manage" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-line">
+        <div class="top-left">
+          <span class="hamburger">≡</span>
+          <strong>目标提成管理</strong>
+        </div>
+        <div class="top-actions">
+          <span>🔍</span>
+          <span>默认模式 ▾</span>
+          <select class="lang-select" id="langSelect" aria-label="语言" onchange="switchLanguage(this)">
+            <option value="zh" selected>简体</option>
+            <option value="en">English</option>
+          </select>
+          <span>GMT+08:00 ▾</span>
+          <span>◐ Steve Jobs ▾</span>
+          <span>⛶</span>
+        </div>
+      </div>
+      <div class="tab-row">
+        <div class="tab-group">
+          <div class="tab active">目标提成管理 <span>×</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="scroll-wrap">
+      <section class="dashboard-panel summary-panel">
+        <div class="summary-range-bar">
+          <div class="summary-range-group" role="tablist" aria-label="时间范围">
+            <button type="button" class="summary-range-btn" data-range="yesterday" onclick="switchSummaryRange('yesterday', this)">昨日</button>
+            <button type="button" class="summary-range-btn" data-range="last7d" onclick="switchSummaryRange('last7d', this)">近7天</button>
+            <button type="button" class="summary-range-btn" data-range="last15d" onclick="switchSummaryRange('last15d', this)">近15天</button>
+            <button type="button" class="summary-range-btn active" data-range="thisMonth" onclick="switchSummaryRange('thisMonth', this)">本月</button>
+            <button type="button" class="summary-range-btn" data-range="lastMonth" onclick="switchSummaryRange('lastMonth', this)">上月</button>
+            <select id="summaryMonthSelect" class="summary-range-select summary-month-select" aria-label="自定义月份" onchange="switchSummaryCustomMonth(this)">
+              <option value="">自定义月份</option>
+            </select>
+          </div>
+        </div>
+        <div class="summary-overview">
+          <div class="kpi-summary summary-overview-cards" id="summaryOverviewCards"></div>
+        </div>
+      </section>
+
+      <section class="dashboard-panel summary-panel summary-panel--mirror">
+        <div class="summary-range-bar">
+          <div class="summary-range-group" role="tablist" aria-label="时间范围">
+            <button type="button" class="summary-range-btn" data-range="yesterday" onclick="switchSummaryRange('yesterday', this)">昨日</button>
+            <button type="button" class="summary-range-btn" data-range="last7d" onclick="switchSummaryRange('last7d', this)">近7天</button>
+            <button type="button" class="summary-range-btn" data-range="last15d" onclick="switchSummaryRange('last15d', this)">近15天</button>
+            <button type="button" class="summary-range-btn active" data-range="thisMonth" onclick="switchSummaryRange('thisMonth', this)">本月</button>
+            <button type="button" class="summary-range-btn" data-range="lastMonth" onclick="switchSummaryRange('lastMonth', this)">上月</button>
+            <select class="summary-range-select summary-month-select" aria-label="自定义月份" onchange="switchSummaryCustomMonth(this)">
+              <option value="">自定义月份</option>
+            </select>
+          </div>
+        </div>
+        <div class="summary-overview">
+          <div class="kpi-summary summary-overview-cards summary-overview-cards--mirror"></div>
+        </div>
+      </section>
+
+      <div class="filter-bar" id="boardFilters">
+        <div class="board-filter-form">
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="salesNameFilterInput">销售/ SID</label>
+            <div class="board-filter-control">
+              <div class="board-filter-combo" id="salesNameFilterCombo">
+                <input type="text" id="salesNameFilterInput" class="board-filter-input" placeholder="输入销售名称或 SID" autocomplete="off" aria-label="销售或 SID" aria-autocomplete="list" aria-controls="salesNameFilterSuggest" aria-expanded="false">
+                <div class="board-filter-suggest" id="salesNameFilterSuggest" hidden role="listbox" aria-label="销售或 SID 推荐"></div>
+              </div>
+            </div>
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="regionFilterSelect">考核地区</label>
+            <div class="board-filter-control">
+              <select id="regionFilterSelect" class="board-filter-select" aria-label="考核地区">
+                <option value="all">全部</option>
+                <option value="印尼">印尼</option>
+                <option value="尼日">尼日</option>
+                <option value="印度">印度</option>
+              </select>
+            </div>
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="levelFilterSelect">考核等级</label>
+            <div class="board-filter-control">
+              <select id="levelFilterSelect" class="board-filter-select" aria-label="考核等级">
+                <option value="all">全部</option>
+                <option value="V1">V1销售</option>
+                <option value="V2-3">V23销售</option>
+                <option value="V4">V4销售</option>
+                <option value="沉默户">销售组长</option>
+              </select>
+            </div>
+          </div>
+          <div class="board-filter-field">
+            <label class="board-filter-label" for="monthFilterSelect">时间月份</label>
+            <div class="board-filter-control">
+              <select id="monthFilterSelect" class="board-filter-select" aria-label="时间月份"></select>
+            </div>
+          </div>
+          <button type="button" class="board-filter-reset" onclick="resetBoardFilters()">重置</button>
+          <button type="button" class="board-filter-submit" onclick="applyBoardFilters()">查询</button>
+        </div>
+      </div>
+
+      <section class="dashboard-panel">
+        <div class="dashboard-head dashboard-head--meta-only">
+          <div class="meta" id="dashboardMeta"></div>
+        </div>
+        <div class="dashboard-table-wrap">
+          <table class="employee-board-table" id="employeeBoardTable">
+            <thead>
+              <tr>
+                <th>SID</th>
+                <th>销售</th>
+                <th>考核等级</th>
+                <th>考核地区</th>
+                <th>时间进度/月份</th>
+                <th>分配客户数</th>
+                <th>净入金/目标</th>
+                <th>净入金/相对完成率</th>
+                <th>充值用户/活跃目标</th>
+                <th>活跃/相对达标率</th>
+                <th>交易手数/手续费</th>
+                <th>销售提成</th>
+              </tr>
+            </thead>
+            <tbody id="employeeBoardBody"></tbody>
+          </table>
+        </div>
+        <div class="dashboard-pager">
+          <div class="dashboard-pager-info" id="dashboardPagerInfo"></div>
+          <div class="dashboard-pager-actions" id="dashboardPagerActions"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+var NET_DEPOSIT_TARGET = 64000;
+var ACTIVE_TARGET = 640;
+var ASSIGNED_CUSTOMERS_BY_LEVEL = {
+  'V1': 800,
+  'V2-3': 400,
+  'V4': 400,
+  '沉默户': 800
+};
+var PAGE_SIZE = 10;
+var LEVEL_COUNTS = {
+  'V1': 40,
+  'V2-3': 40,
+  'V4': 15,
+  '沉默户': 8
+};
+var MOCK_ROW_COUNT = LEVEL_COUNTS['V1'] + LEVEL_COUNTS['V2-3'] + LEVEL_COUNTS['V4'] + LEVEL_COUNTS['沉默户'];
+var currentPage = 1;
+var currentSummaryRange = 'thisMonth';
+var currentSummaryCustomMonth = '';
+var currentLevelFilter = 'all';
+var currentRegionFilter = 'all';
+var currentMonthFilter = '';
+var currentSalesNameFilter = '';
+
+var REGION_OPTIONS = ['印尼', '尼日', '印度'];
+
+var LEVEL_OPTIONS = [
+  { level: 'V1', levelLabel: 'V1销售', levelClass: 'level-v1' },
+  { level: 'V2-3', levelLabel: 'V23销售', levelClass: 'level-v23' },
+  { level: 'V4', levelLabel: 'V4销售', levelClass: 'level-v4' },
+  { level: '沉默户', levelLabel: '销售组长', levelClass: 'level-leader' }
+];
+
+var LEADER_SALES_POOL = ['Fury', 'Coulson', 'May', 'Mack', 'Hill', 'Talbot', 'Sitwell', 'Maria'];
+
+var CHANNEL_OPTIONS = ['DATA', 'TW'];
+var RANK_SALES_POOL = [
+  'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter', 'Ward', 'Bobbi',
+  'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
+];
+
+var EMPLOYEE_BOARD_ROWS = generateMockEmployeeRows();
+
+function formatMonthKey(date) {
+  return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+}
+
+function formatMonthLabel(monthKey) {
+  var parts = monthKey.split('-');
+  return parts[0] + '年' + Number(parts[1]) + '月';
+}
+
+function getMonthOptions(count) {
+  var options = [];
+  var now = new Date();
+  for (var i = 0; i < count; i += 1) {
+    var date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    var key = formatMonthKey(date);
+    options.push({ key: key, label: formatMonthLabel(key) });
+  }
+  return options;
+}
+
+function getSummaryMonthOptions() {
+  return getMonthOptions(12);
+}
+
+function getBoardMonthOptions() {
+  return getMonthOptions(12);
+}
+
+function initSummaryMonthSelect() {
+  var optionsHtml =
+    '<option value="">自定义月份</option>' +
+    getSummaryMonthOptions().map(function (item) {
+      return '<option value="' + item.key + '">' + item.label + '</option>';
+    }).join('');
+  document.querySelectorAll('.summary-month-select').forEach(function (select) {
+    select.innerHTML = optionsHtml;
+  });
+}
+
+function initMonthFilterSelect() {
+  var select = document.getElementById('monthFilterSelect');
+  if (!select) return;
+  var now = new Date();
+  currentMonthFilter = formatMonthKey(now);
+  select.innerHTML = getBoardMonthOptions().map(function (item) {
+    return '<option value="' + item.key + '"' + (item.key === currentMonthFilter ? ' selected' : '') + '>' + item.label + '</option>';
+  }).join('');
+}
+
+function getMonthContext(monthKey) {
+  var parts = monthKey.split('-');
+  var year = Number(parts[0]);
+  var monthIndex = Number(parts[1]) - 1;
+  var now = new Date();
+  var isCurrentMonth = monthKey === formatMonthKey(now);
+  var daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+  var day = isCurrentMonth ? now.getDate() : daysInMonth;
+  var monthText = String(monthIndex + 1).padStart(2, '0');
+  var dayText = String(day).padStart(2, '0');
+
+  return {
+    dateText: year + '-' + monthText + '-' + dayText,
+    time: {
+      day: day,
+      daysInMonth: daysInMonth,
+      percent: day / daysInMonth * 100
+    }
+  };
+}
+
+function switchLanguage(sel) {
+  if (sel.value === 'en') window.location.href = '2. CRM工作台/2. 销售工作台2.0/工作台KPI英文版.html';
+  else sel.value = 'zh';
+}
+
+function seededRandom(seed) {
+  var x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function pickBySeed(list, seed) {
+  return list[Math.floor(seededRandom(seed) * list.length)];
+}
+
+function round(value, digits) {
+  var factor = Math.pow(10, digits == null ? 0 : digits);
+  return Math.round(value * factor) / factor;
+}
+
+function generateSalesName(index) {
+  return RANK_SALES_POOL[index % RANK_SALES_POOL.length];
+}
+
+function generateSalesSid(index) {
+  var min = 101;
+  var max = 999;
+  return String(Math.floor(seededRandom(index * 193 + 41) * (max - min + 1)) + min);
+}
+
+function buildLevelAssignmentList() {
+  var list = [];
+  LEVEL_OPTIONS.forEach(function (meta) {
+    var count = LEVEL_COUNTS[meta.level] || 0;
+    for (var j = 0; j < count; j += 1) list.push(meta);
+  });
+  return list;
+}
+
+function shuffleList(list, seed) {
+  var result = list.slice();
+  for (var i = result.length - 1; i > 0; i -= 1) {
+    var j = Math.floor(seededRandom(seed + i * 97) * (i + 1));
+    var temp = result[i];
+    result[i] = result[j];
+    result[j] = temp;
+  }
+  return result;
+}
+
+function generateMockEmployeeRows() {
+  var rows = [];
+  var levelAssignment = shuffleList(buildLevelAssignmentList(), 52841);
+  var now = new Date();
+  var levelFactors = {
+    'V1': { deposit: [8000, 22000], active: [60, 180], lots: [180, 420], fee: [680, 1680] },
+    'V2-3': { deposit: [14000, 32000], active: [120, 260], lots: [320, 620], fee: [1180, 2280] },
+    'V4': { deposit: [22000, 42000], active: [180, 320], lots: [480, 860], fee: [1760, 3120] },
+    '沉默户': { deposit: [3000, 12000], active: [24, 96], lots: [60, 180], fee: [220, 760] }
+  };
+
+  for (var m = 0; m < 24; m += 1) {
+    var monthDate = new Date(now.getFullYear(), now.getMonth() - m, 1);
+    var statMonth = formatMonthKey(monthDate);
+    for (var i = 0; i < levelAssignment.length; i += 1) {
+      var levelMeta = levelAssignment[i];
+      var factor = levelFactors[levelMeta.level];
+      var seedBase = i * 1000 + m * 17;
+      var r2 = seededRandom(seedBase + 2);
+      var r3 = seededRandom(seedBase + 4);
+      var r4 = seededRandom(seedBase + 5);
+      var r5 = seededRandom(seedBase + 6);
+
+      rows.push({
+        salesName: levelMeta.level === '沉默户'
+          ? pickBySeed(LEADER_SALES_POOL, i * 13 + 3)
+          : generateSalesName(i),
+        sid: generateSalesSid(i),
+        region: pickBySeed(REGION_OPTIONS, i * 19 + 11),
+        level: levelMeta.level,
+        levelLabel: levelMeta.levelLabel,
+        levelClass: levelMeta.levelClass,
+        channel: pickBySeed(CHANNEL_OPTIONS, i * 31 + 7),
+        statMonth: statMonth,
+        assignedCustomers: ASSIGNED_CUSTOMERS_BY_LEVEL[levelMeta.level],
+        netDeposit: round(factor.deposit[0] + (factor.deposit[1] - factor.deposit[0]) * r2, 2),
+        rechargeUsers: Math.round(factor.active[0] + (factor.active[1] - factor.active[0]) * r3),
+        tradeLots: Math.round(factor.lots[0] + (factor.lots[1] - factor.lots[0]) * r4),
+        tradeFee: round(factor.fee[0] + (factor.fee[1] - factor.fee[0]) * r5, 2)
+      });
+    }
+  }
+
+  return rows;
+}
+
+function formatMoney(value) {
+  return '$' + value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+}
+
+function formatMoneyK(value) {
+  var k = value / 1000;
+  var abs = Math.abs(k);
+  var digits = abs >= 100 ? 0 : abs >= 10 ? 1 : 2;
+  return '$' + k.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: digits }) + 'K';
+}
+
+/** 总览区域数值显示：<10万千分位；≥10万 K；≥1000万 M；≥1亿 B；金额加 $ */
+function formatOverviewNumber(value, isMoney) {
+  var n = Number(value);
+  if (!isFinite(n)) n = 0;
+  var abs = Math.abs(n);
+  var formatted;
+
+  if (abs < 100000) {
+    var rounded2 = Math.round(n * 100) / 100;
+    if (Math.abs(rounded2 - Math.round(rounded2)) < 1e-9) {
+      formatted = Math.round(rounded2).toLocaleString('en-US');
+    } else {
+      formatted = rounded2.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+  } else if (abs < 10000000) {
+    formatted = (n / 1000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'K';
+  } else if (abs < 100000000) {
+    formatted = (n / 1000000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'M';
+  } else {
+    formatted = (n / 1000000000).toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 1
+    }) + 'B';
+  }
+
+  return isMoney ? '$' + formatted : formatted;
+}
+
+function formatPercent(value, digits) {
+  return value.toFixed(digits == null ? 1 : digits) + '%';
+}
+
+/** 总览完成进度：默认两位小数，末尾为 .00 时不显示小数位 */
+function formatOverviewPercent(value) {
+  var n = Number(value);
+  if (!isFinite(n)) n = 0;
+  var fixed = n.toFixed(2);
+  if (fixed.slice(-3) === '.00') fixed = fixed.slice(0, -3);
+  return fixed + '%';
+}
+
+function getRateClass(relativeRate) {
+  if (relativeRate >= 100) return 'rate-good';
+  if (relativeRate >= 85) return 'rate-warn';
+  return 'rate-bad';
+}
+
+function getTimeProgress(now) {
+  var day = now.getDate();
+  var daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+  return {
+    day: day,
+    daysInMonth: daysInMonth,
+    percent: day / daysInMonth * 100
+  };
+}
+
+function formatDate(now) {
+  var y = now.getFullYear();
+  var m = String(now.getMonth() + 1).padStart(2, '0');
+  var d = String(now.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+function calcRelativeRate(actualRate, timeProgress) {
+  if (!timeProgress) return 0;
+  return actualRate / timeProgress * 100;
+}
+
+function getSummaryMonthKey(rangeKey) {
+  var now = new Date();
+  if (rangeKey === 'custom' && currentSummaryCustomMonth) {
+    return currentSummaryCustomMonth;
+  }
+  if (rangeKey === 'lastMonth') {
+    return formatMonthKey(new Date(now.getFullYear(), now.getMonth() - 1, 1));
+  }
+  if (
+    rangeKey === 'thisMonth' ||
+    rangeKey === 'yesterday' ||
+    rangeKey === 'last7d' ||
+    rangeKey === 'last15d'
+  ) {
+    return formatMonthKey(now);
+  }
+  return formatMonthKey(now);
+}
+
+function rowMatchesSalesOrSid(row, keyword) {
+  if (!keyword) return true;
+  var q = keyword.toLowerCase();
+  return row.salesName.toLowerCase().indexOf(q) !== -1 ||
+    String(row.sid).indexOf(q) !== -1;
+}
+
+function getSummaryFilteredRows() {
+  var monthKey = getSummaryMonthKey(currentSummaryRange);
+  return EMPLOYEE_BOARD_ROWS.filter(function (row) {
+    if (monthKey && row.statMonth !== monthKey) return false;
+    return true;
+  });
+}
+
+function getFilteredRows() {
+  var keyword = currentSalesNameFilter.trim();
+  return EMPLOYEE_BOARD_ROWS.filter(function (row) {
+    if (!rowMatchesSalesOrSid(row, keyword)) return false;
+    if (currentRegionFilter !== 'all' && row.region !== currentRegionFilter) return false;
+    if (currentLevelFilter !== 'all' && row.level !== currentLevelFilter) return false;
+    if (currentMonthFilter && row.statMonth !== currentMonthFilter) return false;
+    return true;
+  });
+}
+
+function getTotalPages() {
+  var total = getFilteredRows().length;
+  return Math.max(1, Math.ceil(total / PAGE_SIZE));
+}
+
+function getPageRows(page) {
+  var rows = getFilteredRows();
+  var start = (page - 1) * PAGE_SIZE;
+  return rows.slice(start, start + PAGE_SIZE);
+}
+
+function calcRowPerformanceReward(row) {
+  var netDepositRate = row.netDeposit / NET_DEPOSIT_TARGET;
+  var activeRate = row.rechargeUsers / ACTIVE_TARGET;
+  return row.tradeLots * 0.03 * (0.7 * netDepositRate + 0.3 * activeRate);
+}
+
+function buildPerformanceRewardCell(row) {
+  var reward = calcRowPerformanceReward(row);
+  var rewardCls = 'perf-reward' + (reward > 1000 ? ' perf-reward--high' : '');
+  return '<td><span class="' + rewardCls + '">' + formatMoney(round(reward, 2)) + '</span></td>';
+}
+
+function buildStackCell(mainHtml, subHtml, options) {
+  var opts = options || {};
+  var mainClass = 'cell-stack-main' + (opts.mainClass ? ' ' + opts.mainClass : '');
+  return (
+    '<td class="cell-stack">' +
+      '<div class="' + mainClass + '">' + mainHtml + '</div>' +
+      '<div class="cell-stack-sub">' + subHtml + '</div>' +
+    '</td>'
+  );
+}
+
+function getSummaryRangeMeta(rangeKey, now, customMonthKey) {
+  var year = now.getFullYear();
+  var month = now.getMonth();
+  var day = now.getDate();
+  var daysInMonth = new Date(year, month + 1, 0).getDate();
+  var currentMonthKey = formatMonthKey(now);
+
+  switch (rangeKey) {
+    case 'yesterday':
+      return { factor: 1 / daysInMonth, timeProgress: 1 / daysInMonth * 100 };
+    case 'last7d':
+      return { factor: Math.min(7, day) / daysInMonth, timeProgress: Math.min(7, day) / daysInMonth * 100 };
+    case 'last15d':
+      return { factor: Math.min(15, day) / daysInMonth, timeProgress: Math.min(15, day) / daysInMonth * 100 };
+    case 'thisMonth':
+      return { factor: day / daysInMonth, timeProgress: day / daysInMonth * 100 };
+    case 'lastMonth':
+      return { factor: 1, timeProgress: 100 };
+    case 'custom': {
+      if (!customMonthKey) {
+        return { factor: day / daysInMonth, timeProgress: day / daysInMonth * 100 };
+      }
+      if (customMonthKey > currentMonthKey) {
+        return { factor: 0, timeProgress: 0 };
+      }
+      if (customMonthKey === currentMonthKey) {
+        return { factor: day / daysInMonth, timeProgress: day / daysInMonth * 100 };
+      }
+      return { factor: 1, timeProgress: 100 };
+    }
+    default:
+      return { factor: day / daysInMonth, timeProgress: day / daysInMonth * 100 };
+  }
+}
+
+function computeSummaryStats(rangeKey) {
+  var now = new Date();
+  var rangeMeta = getSummaryRangeMeta(rangeKey || currentSummaryRange, now, currentSummaryCustomMonth);
+  var factor = rangeMeta.factor;
+  var filteredRows = getSummaryFilteredRows();
+  var rowCount = filteredRows.length;
+  var totals = filteredRows.reduce(function (acc, row) {
+    acc.assignedCustomers += row.assignedCustomers;
+    acc.netDeposit += row.netDeposit;
+    acc.rechargeUsers += row.rechargeUsers;
+    acc.tradeLots += row.tradeLots;
+    acc.performanceReward += calcRowPerformanceReward(row);
+    return acc;
+  }, {
+    assignedCustomers: 0,
+    netDeposit: 0,
+    rechargeUsers: 0,
+    tradeLots: 0,
+    performanceReward: 0
+  });
+
+  var netDepositTarget = NET_DEPOSIT_TARGET * rowCount * factor;
+  var activeTarget = ACTIVE_TARGET * rowCount * factor;
+  var netDepositProgress = 78.56;
+  var activeProgress = 92.35;
+  var netDeposit = round(netDepositTarget * netDepositProgress / 100, 2);
+  var rechargeUsers = Math.round(activeTarget * activeProgress / 100);
+  var tradeLots = Math.round(totals.tradeLots * factor);
+  var performanceReward = totals.performanceReward * factor;
+
+  return {
+    assignedCustomers: totals.assignedCustomers,
+    netDepositTarget: netDepositTarget,
+    netDeposit: netDeposit,
+    netDepositProgress: netDepositProgress,
+    activeTarget: Math.round(activeTarget),
+    rechargeUsers: rechargeUsers,
+    activeProgress: activeProgress,
+    tradeLots: tradeLots,
+    performanceReward: round(performanceReward, 2),
+    timeProgress: rangeMeta.timeProgress
+  };
+}
+
+function buildSummaryChannelCard(metrics, progressPercent, progressLabel) {
+  var cardClass = 'kpi-channel-card';
+  var colsClass = metrics.length === 2 ? ' kpi-channel-metrics--cols-2' : '';
+  var safePercent = Math.max(0, progressPercent);
+  var fillWidth = Math.min(safePercent, 100);
+  var statusClass = getProgressStatusClass(safePercent);
+  var ariaLabel = progressLabel || '完成进度';
+  var metricsHtml = metrics.map(function (metric) {
+    var metricClass = 'kpi-channel-metric' + (metric.isRate ? ' kpi-channel-metric--rate' : '');
+    return (
+      '<div class="' + metricClass + '">' +
+        '<span class="kpi-channel-metric-label">' + metric.label + '</span>' +
+        '<strong class="kpi-channel-metric-val">' + metric.value + '</strong>' +
+      '</div>'
+    );
+  }).join('');
+
+  return (
+    '<article class="' + cardClass + '">' +
+      '<div class="kpi-channel-metrics' + colsClass + '">' + metricsHtml + '</div>' +
+      '<div class="kpi-channel-progress">' +
+        '<div class="kpi-channel-progress-meta">' +
+          '<span>完成进度</span>' +
+          '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatOverviewPercent(safePercent) + '</span>' +
+        '</div>' +
+        '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 2) + '" aria-label="' + ariaLabel + '">' +
+          '<div class="kpi-card-progress-fill ' + statusClass + '" style="width:' + fillWidth + '%"></div>' +
+        '</div>' +
+      '</div>' +
+    '</article>'
+  );
+}
+
+function buildSummaryChannelMetricsCard(metrics) {
+  var colsClass = metrics.length === 2 ? ' kpi-channel-metrics--cols-2' : '';
+  var metricsHtml = metrics.map(function (metric) {
+    var metricClass = 'kpi-channel-metric' + (metric.isRate ? ' kpi-channel-metric--rate' : '');
+    return (
+      '<div class="' + metricClass + '">' +
+        '<span class="kpi-channel-metric-label">' + metric.label + '</span>' +
+        '<strong class="kpi-channel-metric-val">' + metric.value + '</strong>' +
+      '</div>'
+    );
+  }).join('');
+
+  return (
+    '<article class="kpi-channel-card kpi-channel-card--metrics-only">' +
+      '<div class="kpi-channel-metrics' + colsClass + '">' + metricsHtml + '</div>' +
+    '</article>'
+  );
+}
+
+function buildProgressBarItem(label, percent) {
+  var safePercent = Math.max(0, percent);
+  var fillWidth = Math.min(safePercent, 100);
+  var statusClass = getProgressStatusClass(safePercent);
+
+  return (
+    '<div class="kpi-progress-stack-item">' +
+      '<div class="kpi-channel-progress-meta">' +
+        '<span>' + label + '</span>' +
+        '<span class="kpi-channel-progress-pct ' + statusClass + '">' + formatOverviewPercent(safePercent) + '</span>' +
+      '</div>' +
+      '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 2) + '" aria-label="' + label + '">' +
+        '<div class="kpi-card-progress-fill ' + statusClass + '" style="width:' + fillWidth + '%"></div>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function buildSummaryProgressStackCard(items) {
+  return (
+    '<div class="kpi-card kpi-card--progress-stack">' +
+      items.map(function (item) {
+        return buildProgressBarItem(item.label, item.percent);
+      }).join('') +
+    '</div>'
+  );
+}
+
+function buildSummaryCard(label, value, options) {
+  var opts = options || {};
+  var valueClass = 'value' + (opts.isPercent ? ' pct' : '');
+  var cardClass = 'kpi-card';
+  if (opts.progress != null) cardClass += ' kpi-card--progress';
+
+  var progressHtml = '';
+  if (opts.progress != null) {
+    var safePercent = Math.max(0, opts.progress);
+    var fillWidth = Math.min(safePercent, 100);
+    var statusClass = getProgressStatusClass(safePercent);
+    progressHtml =
+      '<div class="kpi-card-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + round(safePercent, 1) + '" aria-label="' + label + '">' +
+        '<div class="kpi-card-progress-fill ' + statusClass + '" style="width:' + fillWidth + '%"></div>' +
+      '</div>';
+  }
+
+  return (
+    '<div class="' + cardClass + '">' +
+      '<div class="label">' + label + '</div>' +
+      '<div class="' + valueClass + '">' + value + '</div>' +
+      progressHtml +
+    '</div>'
+  );
+}
+
+function getProgressStatusClass(percent) {
+  if (percent >= 90) return 'is-good';
+  if (percent >= 75) return 'is-warn';
+  return 'is-bad';
+}
+
+function buildSummarySection(sectionClass, cardsHtml) {
+  return (
+    '<div class="summary-section ' + sectionClass + '">' +
+      '<div class="kpi-summary">' + cardsHtml + '</div>' +
+    '</div>'
+  );
+}
+
+function buildSummaryPairCard(leftLabel, leftValue, rightLabel, rightValue) {
+  return (
+    '<div class="kpi-card kpi-card--pair">' +
+      '<div class="kpi-card-pair-metrics">' +
+        '<div class="kpi-card-pair-metric">' +
+          '<span class="kpi-card-pair-label">' + leftLabel + '</span>' +
+          '<strong class="kpi-card-pair-val">' + leftValue + '</strong>' +
+        '</div>' +
+        '<div class="kpi-card-pair-metric">' +
+          '<span class="kpi-card-pair-label">' + rightLabel + '</span>' +
+          '<strong class="kpi-card-pair-val">' + rightValue + '</strong>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
+  );
+}
+
+function buildSummaryOverviewSections(stats, mergeCustomerTrade) {
+  var tailSectionHtml = mergeCustomerTrade
+    ? buildSummarySection(
+        'summary-section--single',
+        buildSummaryPairCard(
+          '分配客户数', formatOverviewNumber(stats.assignedCustomers, false),
+          '总交易手数', formatOverviewNumber(stats.tradeLots, false)
+        )
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
+      )
+    : buildSummarySection(
+        'summary-section--triple',
+        buildSummaryCard('分配客户数', formatOverviewNumber(stats.assignedCustomers, false)) +
+        buildSummaryCard('总交易手数', formatOverviewNumber(stats.tradeLots, false)) +
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
+      );
+
+  return (
+    '<div class="summary-sections">' +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryChannelCard([
+          { label: '净入金', value: formatOverviewNumber(stats.netDeposit, true) },
+          { label: '目标', value: formatOverviewNumber(stats.netDepositTarget, true) }
+        ], stats.netDepositProgress, '净入金完成进度')
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryChannelCard([
+          { label: '充值活跃', value: formatOverviewNumber(stats.rechargeUsers, false) },
+          { label: '目标', value: formatOverviewNumber(stats.activeTarget, false) }
+        ], stats.activeProgress, '充值活跃完成进度')
+      ) +
+      tailSectionHtml +
+    '</div>'
+  );
+}
+
+function buildSummaryMirrorOverviewSections(stats) {
+  return (
+    '<div class="summary-sections">' +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryPairCard(
+          '分配客户数', formatOverviewNumber(stats.assignedCustomers, false),
+          '总交易手数', formatOverviewNumber(stats.tradeLots, false)
+        )
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryChannelMetricsCard([
+          { label: '净入金', value: formatOverviewNumber(stats.netDeposit, true) },
+          { label: '目标', value: formatOverviewNumber(stats.netDepositTarget, true) }
+        ])
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryChannelMetricsCard([
+          { label: '充值活跃', value: formatOverviewNumber(stats.rechargeUsers, false) },
+          { label: '目标', value: formatOverviewNumber(stats.activeTarget, false) }
+        ])
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryProgressStackCard([
+          { label: '净入金完成进度', percent: stats.netDepositProgress },
+          { label: '充值活跃完成进度', percent: stats.activeProgress }
+        ])
+      ) +
+      buildSummarySection(
+        'summary-section--single',
+        buildSummaryCard('绩效奖励提成', formatOverviewNumber(stats.performanceReward, true))
+      ) +
+    '</div>'
+  );
+}
+
+var SUMMARY_OVERVIEW_LAYOUTS = {
+  primary: { mergeCustomerTrade: true }
+};
+
+function renderSummaryOverview() {
+  var stats = computeSummaryStats(currentSummaryRange);
+  var primary = document.getElementById('summaryOverviewCards');
+
+  if (primary) {
+    primary.innerHTML = buildSummaryOverviewSections(
+      stats,
+      SUMMARY_OVERVIEW_LAYOUTS.primary.mergeCustomerTrade
+    );
+  }
+  document.querySelectorAll('.summary-overview-cards--mirror').forEach(function (container) {
+    container.innerHTML = buildSummaryMirrorOverviewSections(stats);
+  });
+}
+
+function syncSummaryRangeControls(rangeKey, customMonth) {
+  document.querySelectorAll('.summary-range-btn').forEach(function (el) {
+    el.classList.toggle('active', !customMonth && el.getAttribute('data-range') === rangeKey);
+  });
+  document.querySelectorAll('.summary-month-select').forEach(function (select) {
+    if (customMonth) {
+      select.value = customMonth;
+      select.classList.add('active');
+    } else {
+      select.classList.remove('active');
+      select.value = '';
+    }
+  });
+}
+
+function switchSummaryRange(rangeKey, btn) {
+  currentSummaryRange = rangeKey;
+  currentSummaryCustomMonth = '';
+  syncSummaryRangeControls(rangeKey, '');
+  renderSummaryOverview();
+}
+
+function switchSummaryCustomMonth(selectEl) {
+  if (!selectEl.value) return;
+  currentSummaryRange = 'custom';
+  currentSummaryCustomMonth = selectEl.value;
+  syncSummaryRangeControls('', selectEl.value);
+  renderSummaryOverview();
+}
+
+function buildRateSplitCell(actualRate, relativeRate) {
+  return (
+    '<span class="rate-split">' +
+      '<span>' + formatPercent(actualRate) + '</span>' +
+      '<span class="rate-split-sep">/</span>' +
+      '<span class="' + getRateClass(relativeRate) + '">' + formatPercent(relativeRate) + '</span>' +
+    '</span>'
+  );
+}
+
+function buildRowHtml(row, monthLabel, time) {
+  var netDepositRate = row.netDeposit / NET_DEPOSIT_TARGET * 100;
+  var netDepositRelative = calcRelativeRate(netDepositRate, time.percent);
+  var activeRate = row.rechargeUsers / ACTIVE_TARGET * 100;
+  var activeRelative = calcRelativeRate(activeRate, time.percent);
+
+  return (
+    '<tr>' +
+      '<td class="sales-sid">' + row.sid + '</td>' +
+      '<td class="sales-name">' + row.salesName + '</td>' +
+      '<td><span class="level-tag ' + row.levelClass + '">' + row.levelLabel + '</span></td>' +
+      '<td>' + (row.region || '—') + '</td>' +
+      buildStackCell(formatPercent(time.percent), monthLabel) +
+      '<td>' + row.assignedCustomers + '</td>' +
+      buildStackCell(formatMoneyK(row.netDeposit), '$' + NET_DEPOSIT_TARGET.toLocaleString('en-US'), { mainClass: 'money' }) +
+      '<td>' + buildRateSplitCell(netDepositRate, netDepositRelative) + '</td>' +
+      buildStackCell(row.rechargeUsers.toLocaleString('en-US'), ACTIVE_TARGET.toLocaleString('en-US')) +
+      '<td>' + buildRateSplitCell(activeRate, activeRelative) + '</td>' +
+      buildStackCell(row.tradeLots.toLocaleString('en-US'), '<span class="trade-fee-val">' + formatMoney(row.tradeFee) + '</span>', { mainClass: 'money' }) +
+      buildPerformanceRewardCell(row) +
+    '</tr>'
+  );
+}
+
+function buildPageNumbers(totalPages, page) {
+  var pages = [];
+  if (totalPages <= 7) {
+    for (var i = 1; i <= totalPages; i += 1) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+  if (page > 3) pages.push('...');
+
+  var start = Math.max(2, page - 1);
+  var end = Math.min(totalPages - 1, page + 1);
+  for (var j = start; j <= end; j += 1) pages.push(j);
+
+  if (page < totalPages - 2) pages.push('...');
+  pages.push(totalPages);
+  return pages;
+}
+
+function renderPagination(totalPages, page) {
+  var info = document.getElementById('dashboardPagerInfo');
+  var actions = document.getElementById('dashboardPagerActions');
+  var total = getFilteredRows().length;
+  var start = total ? (page - 1) * PAGE_SIZE + 1 : 0;
+  var end = Math.min(page * PAGE_SIZE, total);
+
+  info.textContent = '共 ' + total + ' 条 · 第 ' + start + '-' + end + ' 条 · 每页 ' + PAGE_SIZE + ' 条';
+
+  var html = '<button type="button" class="pager-btn" onclick="goToPage(' + (page - 1) + ')"' + (page <= 1 ? ' disabled' : '') + '>上一页</button>';
+
+  buildPageNumbers(totalPages, page).forEach(function (item) {
+    if (item === '...') {
+      html += '<span class="pager-ellipsis">...</span>';
+      return;
+    }
+    html += '<button type="button" class="pager-page' + (item === page ? ' active' : '') + '" onclick="goToPage(' + item + ')">' + item + '</button>';
+  });
+
+  html += '<button type="button" class="pager-btn" onclick="goToPage(' + (page + 1) + ')"' + (page >= totalPages ? ' disabled' : '') + '>下一页</button>';
+  actions.innerHTML = html;
+}
+
+function switchLevelFilter(levelKey) {
+  currentLevelFilter = levelKey || 'all';
+}
+
+function switchSalesNameFilter(value) {
+  currentSalesNameFilter = value || '';
+}
+
+function applyBoardFilters() {
+  var nameInput = document.getElementById('salesNameFilterInput');
+  var regionSelect = document.getElementById('regionFilterSelect');
+  var levelSelect = document.getElementById('levelFilterSelect');
+  var monthSelect = document.getElementById('monthFilterSelect');
+
+  currentSalesNameFilter = nameInput ? nameInput.value.trim() : '';
+  currentRegionFilter = regionSelect ? regionSelect.value : 'all';
+  currentLevelFilter = levelSelect ? levelSelect.value : 'all';
+  currentMonthFilter = monthSelect ? monthSelect.value : formatMonthKey(new Date());
+
+  hideSalesNameSuggest();
+  renderEmployeeBoard(1);
+}
+
+function resetBoardFilters() {
+  currentRegionFilter = 'all';
+  currentLevelFilter = 'all';
+  currentSalesNameFilter = '';
+  currentMonthFilter = formatMonthKey(new Date());
+
+  var nameInput = document.getElementById('salesNameFilterInput');
+  if (nameInput) nameInput.value = '';
+  hideSalesNameSuggest();
+
+  var regionSelect = document.getElementById('regionFilterSelect');
+  if (regionSelect) regionSelect.value = 'all';
+
+  var levelSelect = document.getElementById('levelFilterSelect');
+  if (levelSelect) levelSelect.value = 'all';
+
+  var monthSelect = document.getElementById('monthFilterSelect');
+  if (monthSelect) monthSelect.value = currentMonthFilter;
+
+  renderEmployeeBoard(1);
+}
+
+var _salesNameSuggestIndex = -1;
+var _salesNamePoolCache = null;
+
+function getSalesNamePool() {
+  if (_salesNamePoolCache) return _salesNamePoolCache;
+  var seen = {};
+  var items = [];
+  EMPLOYEE_BOARD_ROWS.forEach(function (row) {
+    if (!seen[row.salesName]) {
+      seen[row.salesName] = true;
+      items.push({ name: row.salesName, sid: row.sid });
+    }
+  });
+  items.sort(function (a, b) {
+    return a.name.localeCompare(b.name);
+  });
+  _salesNamePoolCache = items;
+  return items;
+}
+
+function searchSalesNames(query) {
+  var q = query.trim().toLowerCase();
+  if (!q) return [];
+  return getSalesNamePool().filter(function (item) {
+    return item.name.toLowerCase().indexOf(q) !== -1 ||
+      String(item.sid).indexOf(q) !== -1;
+  }).slice(0, 8);
+}
+
+function hideSalesNameSuggest() {
+  var suggest = document.getElementById('salesNameFilterSuggest');
+  var input = document.getElementById('salesNameFilterInput');
+  if (suggest) {
+    suggest.hidden = true;
+    suggest.innerHTML = '';
+  }
+  if (input) input.setAttribute('aria-expanded', 'false');
+  _salesNameSuggestIndex = -1;
+}
+
+function selectSalesNameSuggestion(item) {
+  var input = document.getElementById('salesNameFilterInput');
+  if (input) input.value = item.name;
+  hideSalesNameSuggest();
+}
+
+function renderSalesNameSuggest(matches) {
+  var suggest = document.getElementById('salesNameFilterSuggest');
+  var input = document.getElementById('salesNameFilterInput');
+  if (!suggest) return;
+  if (!matches.length) {
+    suggest.innerHTML = '<div class="board-filter-suggest-empty">未找到匹配销售或 SID</div>';
+    suggest.hidden = false;
+    if (input) input.setAttribute('aria-expanded', 'true');
+    _salesNameSuggestIndex = -1;
+    return;
+  }
+  suggest.innerHTML = matches.map(function (item, index) {
+    return '<button type="button" class="board-filter-suggest-item" data-index="' + index + '" role="option">' +
+      '<span class="board-filter-suggest-name">' + item.name + '</span>' +
+      '<span class="board-filter-suggest-sub">' + item.sid + '</span>' +
+      '</button>';
+  }).join('');
+  suggest.hidden = false;
+  if (input) input.setAttribute('aria-expanded', 'true');
+  _salesNameSuggestIndex = -1;
+  suggest.querySelectorAll('.board-filter-suggest-item').forEach(function (btn) {
+    btn.addEventListener('mousedown', function (event) {
+      event.preventDefault();
+      var idx = Number(btn.getAttribute('data-index'));
+      if (matches[idx]) selectSalesNameSuggestion(matches[idx]);
+    });
+  });
+}
+
+function handleSalesNameFilterInput() {
+  var input = document.getElementById('salesNameFilterInput');
+  if (!input) return;
+  if (!input.value.trim()) {
+    hideSalesNameSuggest();
+    return;
+  }
+  renderSalesNameSuggest(searchSalesNames(input.value));
+}
+
+function initSalesNameFilterCombo() {
+  var input = document.getElementById('salesNameFilterInput');
+  var combo = document.getElementById('salesNameFilterCombo');
+  if (!input) return;
+  input.addEventListener('input', handleSalesNameFilterInput);
+  input.addEventListener('focus', handleSalesNameFilterInput);
+  input.addEventListener('blur', function () {
+    setTimeout(hideSalesNameSuggest, 120);
+  });
+  input.addEventListener('keydown', function (event) {
+    var suggest = document.getElementById('salesNameFilterSuggest');
+    if (!suggest || suggest.hidden) return;
+    var items = suggest.querySelectorAll('.board-filter-suggest-item');
+    if (!items.length) return;
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      _salesNameSuggestIndex = Math.min(_salesNameSuggestIndex + 1, items.length - 1);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      _salesNameSuggestIndex = Math.max(_salesNameSuggestIndex - 1, 0);
+    } else if (event.key === 'Enter') {
+      if (_salesNameSuggestIndex >= 0) {
+        event.preventDefault();
+        items[_salesNameSuggestIndex].dispatchEvent(new MouseEvent('mousedown'));
+        return;
+      }
+      event.preventDefault();
+      applyBoardFilters();
+      return;
+    } else if (event.key === 'Escape') {
+      hideSalesNameSuggest();
+      return;
+    } else {
+      return;
+    }
+    items.forEach(function (item, index) {
+      item.classList.toggle('is-active', index === _salesNameSuggestIndex);
+    });
+  });
+  if (combo) {
+    document.addEventListener('click', function (event) {
+      if (!combo.contains(event.target)) hideSalesNameSuggest();
+    });
+  }
+}
+
+function renderEmployeeBoard(page) {
+  var now = new Date();
+  var monthContext = getMonthContext(currentMonthFilter);
+  var monthLabel = formatMonthLabel(currentMonthFilter);
+  var time = monthContext.time;
+  var meta = document.getElementById('dashboardMeta');
+  var tbody = document.getElementById('employeeBoardBody');
+  var filteredRows = getFilteredRows();
+  var totalPages = getTotalPages();
+
+  currentPage = Math.min(Math.max(page || 1, 1), totalPages);
+
+  meta.textContent =
+    '当前日期：' + formatDate(now) +
+    '，当前统计月份：' + monthLabel +
+    '，时间进度 = 当前日期 / 当月天数，相对完成率 = 完成率 / 时间进度';
+
+  tbody.innerHTML = getPageRows(currentPage).map(function (row) {
+    return buildRowHtml(row, monthLabel, time);
+  }).join('');
+
+  renderPagination(totalPages, currentPage);
+}
+
+function goToPage(page) {
+  renderEmployeeBoard(page);
+}
+
+initMonthFilterSelect();
+initSummaryMonthSelect();
+initSalesNameFilterCombo();
+renderSummaryOverview();
+renderEmployeeBoard(1);
+</script>
+</body>
+</html>
