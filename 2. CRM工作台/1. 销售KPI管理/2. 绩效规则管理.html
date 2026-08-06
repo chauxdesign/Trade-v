@@ -1538,6 +1538,24 @@
   </div>
 </div>
 
+<div id="kpiRuleVoidConfirmModal" class="kpi-rule-alert-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="kpiRuleVoidConfirmTitle">
+  <div class="kpi-rule-alert-panel kpi-target-submit-alert-panel">
+    <div class="kpi-rule-alert-icon" aria-hidden="true">!</div>
+    <h2 class="kpi-rule-alert-title" id="kpiRuleVoidConfirmTitle">作废规则提示</h2>
+    <p class="kpi-target-submit-alert-intro">当前规则可能已有每日结算数据产生，若强行作废，可能会引发以下影响，请谨慎操作！</p>
+    <ol class="kpi-rule-confirm-impact-list">
+      <li>该绩效规则下已设置过目标的人员所有的绩效数据会被清空</li>
+      <li>新设置的规则，需要重新为对应考核员工进行目标设置，目标设置后绩效数据需要第二天才能更新</li>
+      <li>在组长绩效提成中，涉及到团队奖励部分若与当前作废规则相关联，则当天数据可能会有错误，需要等第2天更新正常</li>
+    </ol>
+    <p class="kpi-target-submit-alert-confirm">是否确认作废该绩效规则？</p>
+    <div class="kpi-rule-alert-actions">
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--ghost" onclick="closeKpiRuleVoidConfirmModal(false)">取消</button>
+      <button type="button" class="kpi-rule-alert-btn kpi-rule-alert-btn--primary" onclick="closeKpiRuleVoidConfirmModal(true)">确认作废</button>
+    </div>
+  </div>
+</div>
+
 <div id="kpiRuleDetailModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
   <div class="alert-task-follow-backdrop" onclick="closeKpiRuleDetailModal()"></div>
   <div class="alert-task-follow-dialog kpi-rule-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="kpiRuleDetailTitle">
@@ -3105,13 +3123,38 @@ function editRule(id) {
   alert('编辑：' + buildKpiRuleListDisplayName(row) + '（原型演示）');
 }
 
+var kpiRuleVoidConfirmCallback = null;
+
+function openKpiRuleVoidConfirmModal(onConfirm) {
+  var modal = document.getElementById('kpiRuleVoidConfirmModal');
+  if (!modal) {
+    if (onConfirm) onConfirm();
+    return;
+  }
+  kpiRuleVoidConfirmCallback = onConfirm || null;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeKpiRuleVoidConfirmModal(confirmed) {
+  var modal = document.getElementById('kpiRuleVoidConfirmModal');
+  if (modal) {
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  var callback = kpiRuleVoidConfirmCallback;
+  kpiRuleVoidConfirmCallback = null;
+  if (confirmed && callback) callback();
+}
+
 function toggleRuleStatus(id) {
   var row = KPI_RULES_DATA.find(function (r) { return r.id === id; });
   if (!row || !canVoidKpiRule(row)) return;
-  if (!confirm('确认作废「' + buildKpiRuleListDisplayName(row) + '」？')) return;
-  row.status = 'disabled';
-  alert('已作废：' + buildKpiRuleListDisplayName(row) + '（原型演示）');
-  renderRulesTable();
+  openKpiRuleVoidConfirmModal(function () {
+    row.status = 'disabled';
+    alert('已作废：' + buildKpiRuleListDisplayName(row) + '（原型演示）');
+    renderRulesTable();
+  });
 }
 
 var KPI_RULE_DIMENSION_WEIGHTS = {

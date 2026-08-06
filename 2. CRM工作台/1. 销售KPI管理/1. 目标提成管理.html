@@ -175,9 +175,10 @@
     }
     .summary-filter-bar{padding:10px 16px 12px}
     .summary-range-bar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
       padding:8px 16px;border-bottom:1px solid #f1f5f9;background:#fafafa;
     }
-    .summary-range-group{display:flex;flex-wrap:wrap;gap:4px}
+    .summary-range-group{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-width:0}
     .summary-range-btn{
       padding:3px 10px;border-radius:6px;border:1px solid #e2e8f0;
       background:#fff;font-size:11px;font-weight:600;color:#64748b;
@@ -201,6 +202,37 @@
       border-color:#2563eb;color:#2563eb;background-color:#eff6ff;font-weight:700;
       box-shadow:0 0 0 1px rgba(37,99,235,.15);
     }
+    .summary-data-info{position:relative;display:inline-flex;align-items:center;flex-shrink:0;margin-left:auto}
+    .summary-data-info-btn{
+      padding:0;border:none;background:transparent;
+      color:#2563eb;font-size:11px;font-weight:600;line-height:1.2;
+      cursor:pointer;font-family:inherit;text-decoration:none;
+      transition:color .15s ease;
+    }
+    .summary-data-info-btn:hover,
+    .summary-data-info-btn[aria-expanded="true"]{
+      color:#1d4ed8;text-decoration:none;
+    }
+    .summary-data-info-popover{
+      position:absolute;z-index:30;top:calc(100% + 8px);right:0;left:auto;
+      width:340px;max-width:min(340px,calc(100vw - 48px));
+      padding:12px 14px;border-radius:10px;border:1px solid #e2e8f0;
+      background:#fff;box-shadow:0 12px 32px rgba(15,23,42,.14);
+      color:#334155;font-size:12px;font-weight:500;line-height:1.55;
+    }
+    .summary-data-info-popover[hidden]{display:none}
+    .summary-data-info-popover::before{
+      content:'';position:absolute;top:-5px;right:18px;left:auto;
+      width:10px;height:10px;background:#fff;border-left:1px solid #e2e8f0;border-top:1px solid #e2e8f0;
+      transform:rotate(45deg);
+    }
+    .summary-data-info-title{
+      margin:0 0 8px;font-size:12px;font-weight:800;color:#0f172a;
+    }
+    .summary-data-info-list{
+      margin:0;padding:0 0 0 18px;display:grid;gap:8px;
+    }
+    .summary-data-info-list li{padding-left:2px}
     .summary-overview{padding:10px 14px 12px;--summary-card-min-h:calc(82px * 1.15 * 0.85 * 0.9)}
     .summary-sections{
       display:grid;grid-template-columns:minmax(0,2fr) minmax(0,2fr) minmax(0,3fr);gap:0;align-items:stretch;
@@ -475,6 +507,17 @@
               <option value="">自定义月份</option>
             </select>
           </div>
+          <span class="summary-data-info">
+            <button type="button" class="summary-data-info-btn" aria-label="数据更新说明" aria-expanded="false" aria-haspopup="true" onclick="toggleSummaryDataInfo(this)">数据更新说明</button>
+            <div class="summary-data-info-popover" role="tooltip" hidden>
+              <p class="summary-data-info-title">数据说明</p>
+              <ol class="summary-data-info-list">
+                <li>整体的数据更新周期为：T+1，如果当前时间为自然月第1天，部分指标数据可能显示为0需要第2天更新</li>
+                <li>总览区域数据主管可见当前地区的所有数据，不用区分人员是否设置过考核目标，组长只可见自己团队设置过考核目标的所有人汇总数据</li>
+                <li>如果考核规则被作废，新设置的考核规则数据需要第二天更新，组长关于团队提成数据可能会有延迟</li>
+              </ol>
+            </div>
+          </span>
         </div>
         <div class="summary-overview">
           <div class="kpi-summary summary-overview-cards" id="summaryOverviewCards"></div>
@@ -493,6 +536,17 @@
               <option value="">自定义月份</option>
             </select>
           </div>
+          <span class="summary-data-info">
+            <button type="button" class="summary-data-info-btn" aria-label="数据更新说明" aria-expanded="false" aria-haspopup="true" onclick="toggleSummaryDataInfo(this)">数据更新说明</button>
+            <div class="summary-data-info-popover" role="tooltip" hidden>
+              <p class="summary-data-info-title">数据说明</p>
+              <ol class="summary-data-info-list">
+                <li>整体的数据更新周期为：T+1，如果当前时间为自然月第1天，部分指标数据可能显示为0需要第2天更新</li>
+                <li>总览区域数据主管可见当前地区的所有数据，不用区分人员是否设置过考核目标，组长只可见自己团队设置过考核目标的所有人汇总数据</li>
+                <li>如果考核规则被作废，新设置的考核规则数据需要第二天更新，组长关于团队提成数据可能会有延迟</li>
+              </ol>
+            </div>
+          </span>
         </div>
         <div class="summary-overview">
           <div class="kpi-summary summary-overview-cards summary-overview-cards--mirror"></div>
@@ -1299,6 +1353,36 @@ function switchSummaryCustomMonth(selectEl) {
   syncSummaryRangeControls('', selectEl.value);
   renderSummaryOverview();
 }
+
+function closeAllSummaryDataInfo(exceptWrap) {
+  document.querySelectorAll('.summary-data-info').forEach(function (wrap) {
+    if (exceptWrap && wrap === exceptWrap) return;
+    var btn = wrap.querySelector('.summary-data-info-btn');
+    var popover = wrap.querySelector('.summary-data-info-popover');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    if (popover) popover.hidden = true;
+  });
+}
+
+function toggleSummaryDataInfo(btn) {
+  var wrap = btn.closest('.summary-data-info');
+  if (!wrap) return;
+  var popover = wrap.querySelector('.summary-data-info-popover');
+  if (!popover) return;
+  var willOpen = popover.hidden;
+  closeAllSummaryDataInfo(willOpen ? wrap : null);
+  popover.hidden = !willOpen;
+  btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+}
+
+document.addEventListener('click', function (event) {
+  if (event.target.closest('.summary-data-info')) return;
+  closeAllSummaryDataInfo();
+});
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') closeAllSummaryDataInfo();
+});
 
 function buildRateSplitCell(actualRate, relativeRate) {
   return (
