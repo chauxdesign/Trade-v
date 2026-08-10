@@ -378,6 +378,16 @@
       flex-shrink:0;margin-left:auto;font-size:12px;
     }
     .perf-rank-panel .rank-self-gap{margin-left:0;font-size:11px;line-height:1.45}
+    .perf-rank-panel .rank-self.is-top3-summary .rank-self-label,
+    .perf-rank-panel .rank-self.is-top3-summary .rank-self-name{display:none}
+    .perf-rank-panel .rank-self.is-top3-summary .rank-self-val{
+      flex:1;margin-left:0;text-align:left;
+    }
+    .revenue-rank-panel .rev-rank-self.is-top3-summary .rev-rank-self-label,
+    .revenue-rank-panel .rev-rank-self.is-top3-summary .rev-rank-self-name{display:none}
+    .revenue-rank-panel .rev-rank-self.is-top3-summary .rev-rank-self-val{
+      flex:1;margin-left:0;text-align:left;
+    }
     .revenue-rank-panel .module-head h2::before{
       background:linear-gradient(180deg,#10b981,#059669);
     }
@@ -483,19 +493,28 @@
     }
     .rev-rank-chip strong{color:#0f172a;font-weight:800}
     .rev-rank-self{
-      display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;
-      margin-top:10px;padding:10px 12px;
+      display:flex;flex-direction:column;align-items:stretch;gap:0;
+      margin-top:10px;padding:10px 12px 9px;
       background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 100%);
       border:1px solid #a7f3d0;border-radius:8px;font-size:11px;
+    }
+    .rev-rank-self-line--main{
+      display:flex;align-items:center;gap:8px;min-width:0;
+    }
+    .rev-rank-self-line--sub{
+      margin-top:6px;padding-top:6px;
+      border-top:1px dashed rgba(148,163,184,.35);
     }
     .rev-rank-self-label{
       font-size:10px;font-weight:700;color:#64748b;
       padding:2px 6px;background:#fff;border-radius:4px;border:1px solid #e2e8f0;
     }
-    .rev-rank-self-no{font-weight:800;color:#059669;min-width:22px;text-align:center}
-    .rev-rank-self-name{font-weight:800;color:#0f172a}
-    .rev-rank-self-val{font-weight:800;color:#047857;font-variant-numeric:tabular-nums}
-    .rev-rank-self-gap{font-size:10px;color:#64748b}
+    .rev-rank-self-name{flex:1;min-width:0;font-weight:800;color:#0f172a;font-size:12px}
+    .rev-rank-self-val{
+      flex-shrink:0;margin-left:auto;font-weight:800;color:#047857;
+      font-variant-numeric:tabular-nums;font-size:12px;
+    }
+    .rev-rank-self-gap{margin-left:0;font-size:11px;line-height:1.45;color:#64748b}
 
     /* 客户排行榜 */
     .rank-date-chips{
@@ -591,7 +610,7 @@
     }
     .customer-rank-panel .rank-self-name{flex:1;min-width:0;font-size:12px}
     .customer-rank-panel .rank-self-val{
-      flex-shrink:0;margin-left:auto;font-size:12px;
+      flex:1;min-width:0;margin-left:0;font-size:12px;text-align:left;
     }
     .customer-rank-panel .rank-self-gap{
       margin-left:0;font-size:11px;line-height:1.45;color:#64748b;
@@ -676,10 +695,13 @@
       background:linear-gradient(135deg,#fff7ed 0%,#fffbeb 100%);
       border-color:#fed7aa;
     }
+    .perf-item--bonus{padding:11.5px 12px}
+    .perf-item--bonus .perf-label{margin-bottom:3px;line-height:1.45}
+    .perf-item--bonus .perf-desc{line-height:1.5;margin-bottom:4px}
     .perf-item--risk .perf-icon,
     .perf-item--bonus .perf-icon{background:#ffedd5}
-    .perf-item--risk .perf-value,
-    .perf-item--bonus .perf-value{color:#c2410c;font-size:16px}
+    .perf-item--risk .perf-value{color:#c2410c;font-size:16px;letter-spacing:0}
+    .perf-item--bonus .perf-value{color:#c2410c;font-size:18px;letter-spacing:0;line-height:1.25}
     .perf-footnote{
       margin:10px 0 0;font-size:10px;color:#94a3b8;line-height:1.5;
       padding-top:8px;border-top:1px dashed #e2e8f0;
@@ -2723,7 +2745,6 @@
       background:linear-gradient(135deg,#eff6ff 0%,#f0f9ff 100%);
       border-color:#bfdbfe;
     }
-    .task-rank-panel .rev-rank-self-no,
     .task-rank-panel .rev-rank-self-val{color:#2563eb}
 
     @media(max-width:900px){
@@ -4577,7 +4598,7 @@
                 <article class="goal-card goal-card--reach" data-reach-connected="136" data-reach-contacts="183">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
-                    <div><h3>客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）</p></div>
+                    <div><h3>客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
@@ -4784,7 +4805,7 @@
                 <article class="goal-card goal-card--reach" data-reach-connected="2334" data-reach-contacts="2995">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
-                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）</p></div>
+                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
@@ -4943,9 +4964,9 @@
                 <div class="perf-item perf-item--bonus">
                   <span class="perf-icon" aria-hidden="true">📈</span>
                   <div class="perf-body">
-                    <div class="perf-label">本月绩效/ 预估绩效</div>
-                    <div class="perf-desc">本月已实现绩效与预估绩效</div>
-                    <div class="perf-value">$3,860</div>
+                    <div class="perf-label">本月绩效 / 预估绩效</div>
+                    <div class="perf-desc">本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）</div>
+                    <div class="perf-value">$3,860 / $5,790</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--risk">
@@ -5026,12 +5047,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 占 $301K</span>
+                    <span class="rank-self-val">你的 TOP3 客户净充值总值：$311K</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">净充值合计领先</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：20.5%</span>
                   </div>
                 </div>
               </div>
@@ -5051,12 +5070,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 提现 $112.6K</span>
+                    <span class="rank-self-val">你的 TOP3 客户提现总值：$112.6K</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">建议关注大额提现挽回</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：22.3%</span>
                   </div>
                 </div>
               </div>
@@ -5076,12 +5093,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 合计 1,166 手</span>
+                    <span class="rank-self-val">你的 TOP3 客户交易手数总值：1,166 手</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">活跃交易客户集中</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：14.9%</span>
                   </div>
                 </div>
               </div>
@@ -5107,23 +5122,6 @@
               </div>
 
               <div class="rev-rank-tab-panel active" data-rev-panel="deposit" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队净入金</div>
-                    <div class="rev-hero-val">$1.52M</div>
-                    <div class="rev-hero-sub">较昨日 +6.8%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">入金 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">$286K · 32 客户</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的净入金</div>
-                    <div class="rev-hero-val">$248K</div>
-                    <div class="rev-hero-sub">排名第 2 · 占团队 16.3%</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">净入金</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5143,32 +5141,18 @@
                   <span class="rev-rank-chip">昨日新增入金 <strong>$428K</strong></span>
                 </div>
                 <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#2</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">$248K</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 $38K · 领先第 3 名 $36K</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 2 名</span>
+                    <span class="rev-rank-self-val">$248K</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">距 TOP1 差 $38K · 领先第 3 名 $36K</span>
+                  </div>
                 </div>
               </div>
 
               <div class="rev-rank-tab-panel" data-rev-panel="fee" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队手续费</div>
-                    <div class="rev-hero-val">$86.4K</div>
-                    <div class="rev-hero-sub">较昨日 +4.2%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">手续费 TOP1</div>
-                    <div class="rev-hero-val">May</div>
-                    <div class="rev-hero-sub">$18.6K · 占比 21.5%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的手续费</div>
-                    <div class="rev-hero-val">$18.6K</div>
-                    <div class="rev-hero-sub">排名第 1 · 超均值 52%</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">手续费</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5185,35 +5169,21 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>$10.8K</strong></span>
                   <span class="rev-rank-chip">人均手续费 <strong>$432</strong></span>
-                  <span class="rev-rank-chip">高贡献客户 <strong>May 26 人</strong></span>
+                  <span class="rev-rank-chip">高贡献客户 <strong>26 人</strong></span>
                 </div>
                 <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#1</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">$18.6K</span>
-                  <span class="rev-rank-self-gap">领先第 2 名 $1.4K · 占团队 21.5%</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 1 名</span>
+                    <span class="rev-rank-self-val">$18.6K</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">领先第 2 名 $1.4K</span>
+                  </div>
                 </div>
               </div>
 
               <div class="rev-rank-tab-panel" data-rev-panel="trade" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队交易量</div>
-                    <div class="rev-hero-val">7,842 手</div>
-                    <div class="rev-hero-sub">较昨日 +9.1%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">交易 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">1,280 手 · 16.3%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的交易量</div>
-                    <div class="rev-hero-val">1,156 手</div>
-                    <div class="rev-hero-sub">排名第 2 · 428 笔订单</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">交易手数</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5230,14 +5200,17 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>980 手</strong></span>
                   <span class="rev-rank-chip">人均订单 <strong>378 笔</strong></span>
-                  <span class="rev-rank-chip">活跃交易客户 <strong>472 人</strong></span>
+                  <span class="rev-rank-chip">高活跃客户 <strong>472 人</strong></span>
                 </div>
                 <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#2</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">1,156 手</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 124 手 · 428 笔订单</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 2 名</span>
+                    <span class="rev-rank-self-val">1,156 手</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">距 TOP1 差 124 手 · 领先第 3 名 132 手</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5318,9 +5291,9 @@
                 <div class="perf-item perf-item--bonus">
                   <span class="perf-icon" aria-hidden="true">📈</span>
                   <div class="perf-body">
-                    <div class="perf-label">团队本月绩效/ 预估绩效</div>
-                    <div class="perf-desc">本月已实现绩效与预估绩效</div>
-                    <div class="perf-value">$23,060</div>
+                    <div class="perf-label">团队本月绩效 / 预估绩效</div>
+                    <div class="perf-desc">本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）</div>
+                    <div class="perf-value">$23,060 / $34,590</div>
                   </div>
                 </div>
               </div>
@@ -5346,14 +5319,14 @@
                   <tr data-sales-name="Fury"><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">$2,420</td></tr>
                 </tbody>
               </table>
-              <div class="rank-self">
+              <div class="rank-self is-top3-summary">
                 <div class="rank-self-line rank-self-line--main">
                   <span class="rank-self-label">团队 TOP1</span>
                   <span class="rank-self-name">Coulson · 第 1 名</span>
-                  <span class="rank-self-val">$4,280</span>
+                  <span class="rank-self-val">所选团队的 TOP3 销售绩效总值：$11,660</span>
                 </div>
                 <div class="rank-self-line rank-self-line--sub">
-                  <span class="rank-self-gap">领先第 2 名 $420</span>
+                  <span class="rank-self-gap">所占比团队总额百分比为：50.6%</span>
                 </div>
               </div>
             </div>
@@ -5392,12 +5365,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 占 $301K</span>
+                    <span class="rank-self-val">所选团队的 TOP3 客户净充值总值：$311K</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">净充值合计领先</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：20.5%</span>
                   </div>
                 </div>
               </div>
@@ -5417,12 +5388,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 提现 $112.6K</span>
+                    <span class="rank-self-val">所选团队的 TOP3 客户提现总值：$112.6K</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">建议关注大额提现挽回</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：22.3%</span>
                   </div>
                 </div>
               </div>
@@ -5442,12 +5411,10 @@
                 </table>
                 <div class="rank-self">
                   <div class="rank-self-line rank-self-line--main">
-                    <span class="rank-self-label">关联客户</span>
-                    <span class="rank-self-name">Coulson 名下</span>
-                    <span class="rank-self-val">TOP3 合计 1,166 手</span>
+                    <span class="rank-self-val">所选团队的 TOP3 客户交易手数总值：1,166 手</span>
                   </div>
                   <div class="rank-self-line rank-self-line--sub">
-                    <span class="rank-self-gap">活跃交易客户集中</span>
+                    <span class="rank-self-gap">所占比团队总额百分比为：14.9%</span>
                   </div>
                 </div>
               </div>
@@ -5473,23 +5440,6 @@
               </div>
 
               <div class="rev-rank-tab-panel active" data-rev-panel="deposit" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队净入金</div>
-                    <div class="rev-hero-val">$1.52M</div>
-                    <div class="rev-hero-sub">较昨日 +6.8%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">入金 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">$286K · 32 客户</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的净入金</div>
-                    <div class="rev-hero-val">$248K</div>
-                    <div class="rev-hero-sub">排名第 2 · 占团队 16.3%</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">净入金</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5508,33 +5458,19 @@
                   <span class="rev-rank-chip">高于均值 <strong>3 人</strong></span>
                   <span class="rev-rank-chip">昨日新增入金 <strong>$428K</strong></span>
                 </div>
-                <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#2</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">$248K</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 $38K · 领先第 3 名 $36K</span>
+                <div class="rev-rank-self is-top3-summary">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rev-rank-self-val">所选团队的 TOP3 销售净入金总值：$746K</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：49.1%</span>
+                  </div>
                 </div>
               </div>
 
               <div class="rev-rank-tab-panel" data-rev-panel="fee" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队手续费</div>
-                    <div class="rev-hero-val">$86.4K</div>
-                    <div class="rev-hero-sub">较昨日 +4.2%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">手续费 TOP1</div>
-                    <div class="rev-hero-val">May</div>
-                    <div class="rev-hero-sub">$18.6K · 占比 21.5%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的手续费</div>
-                    <div class="rev-hero-val">$18.6K</div>
-                    <div class="rev-hero-sub">排名第 1 · 超均值 52%</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">手续费</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5551,35 +5487,21 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>$10.8K</strong></span>
                   <span class="rev-rank-chip">人均手续费 <strong>$432</strong></span>
-                  <span class="rev-rank-chip">高贡献客户 <strong>May 26 人</strong></span>
+                  <span class="rev-rank-chip">高贡献客户 <strong>26 人</strong></span>
                 </div>
-                <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#1</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">$18.6K</span>
-                  <span class="rev-rank-self-gap">领先第 2 名 $1.4K · 占团队 21.5%</span>
+                <div class="rev-rank-self is-top3-summary">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">May · 第 1 名</span>
+                    <span class="rev-rank-self-val">所选团队的 TOP3 销售手续费总值：$50.6K</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：58.6%</span>
+                  </div>
                 </div>
               </div>
 
               <div class="rev-rank-tab-panel" data-rev-panel="trade" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队交易量</div>
-                    <div class="rev-hero-val">7,842 手</div>
-                    <div class="rev-hero-sub">较昨日 +9.1%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">交易 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">1,280 手 · 16.3%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine">
-                    <div class="rev-hero-label">我的交易量</div>
-                    <div class="rev-hero-val">1,156 手</div>
-                    <div class="rev-hero-sub">排名第 2 · 428 笔订单</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">交易手数</th><th style="text-align:right">环比</th></tr></thead>
                   <tbody>
@@ -5596,14 +5518,17 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>980 手</strong></span>
                   <span class="rev-rank-chip">人均订单 <strong>378 笔</strong></span>
-                  <span class="rev-rank-chip">活跃交易客户 <strong>472 人</strong></span>
+                  <span class="rev-rank-chip">高活跃客户 <strong>472 人</strong></span>
                 </div>
-                <div class="rev-rank-self">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#2</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">1,156 手</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 124 手 · 428 笔订单</span>
+                <div class="rev-rank-self is-top3-summary">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rev-rank-self-val">所选团队的 TOP3 销售交易手数总值：3,460 手</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：44.1%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -5693,14 +5618,14 @@
     <div class="alert-task-follow-body">
       <p class="alert-task-follow-intro">以下为客户目标总览指标定义，适用于团队/个人视角。</p>
       <ul class="goal-metric-help-list">
-        <li><span class="metric-name">我的客户数</span><span class="metric-desc">周期内团队/个人绑定的客户数量</span></li>
-        <li><span class="metric-name">充值客户数</span><span class="metric-desc">周期内团队/个人绑定的客户中完成充值的数量</span></li>
-        <li><span class="metric-name">交易客户数</span><span class="metric-desc">周期内团队/个人绑定的客户中完成交易的数量</span></li>
-        <li><span class="metric-name">交易手数</span><span class="metric-desc">周期内团队/个人绑定的客户完成的所有开仓交易手数的总数</span></li>
-        <li><span class="metric-name">交易平均</span><span class="metric-desc">周期内团队/个人绑定的客户所有人的平均开仓交易手数</span></li>
-        <li><span class="metric-name">本月联系</span><span class="metric-desc">周期内团队/个人触达客户的数量</span></li>
-        <li><span class="metric-name">覆盖率</span><span class="metric-desc">周期内团队/个人触达客户相对于所有绑定客户总量的覆盖率</span></li>
-        <li><span class="metric-name">高风险客户数</span><span class="metric-desc">周期内团队/个人当月的高风险客户数</span></li>
+        <li><span class="metric-name">我的客户数</span><span class="metric-desc">当月截止到昨日，团队/个人绑定的客户数量</span></li>
+        <li><span class="metric-name">充值客户数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户中完成充值的数量</span></li>
+        <li><span class="metric-name">交易客户数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户中完成交易的数量</span></li>
+        <li><span class="metric-name">交易手数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户完成的所有开仓交易手数的总数</span></li>
+        <li><span class="metric-name">交易平均</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户所有人的平均开仓交易手数</span></li>
+        <li><span class="metric-name">本月联系</span><span class="metric-desc">当月截止到昨日，周期内团队/个人触达客户的数量</span></li>
+        <li><span class="metric-name">覆盖率</span><span class="metric-desc">当月截止到昨日，周期内团队/个人触达客户相对于所有绑定客户总量的覆盖率</span></li>
+        <li><span class="metric-name">高风险客户数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人当月的高风险客户数</span></li>
       </ul>
     </div>
   </div>
@@ -15063,21 +14988,21 @@ function buildManagerGoalGroupSidebar(groupKey) {
       { label: teamSb.perfItems[0].label, desc: teamSb.perfItems[0].desc, value: formatNetDepositUsd(groupData.netDeposit.month) },
       { label: teamSb.perfItems[1].label, desc: teamSb.perfItems[1].desc, value: groupData.summary.tradeCustomers + ' 人' },
       { label: teamSb.perfItems[2].label, desc: teamSb.perfItems[2].desc, value: '$' + Math.round(totalFee).toLocaleString('en-US') },
-      { label: teamSb.perfItems[3].label, desc: teamSb.perfItems[3].desc, value: '$' + totalReward.toLocaleString('en-US') }
+      { label: teamSb.perfItems[3].label, desc: teamSb.perfItems[3].desc, value: formatPerfRewardWithRelative(totalReward) }
     ],
     customerRankIntro: teamSb.customerRankIntro,
     customerRank: {
       'net-deposit': {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, scale, 'K'),
-        self: buildManagerGoalCustRankSelf(topMember, scale, 'net-deposit')
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'net-deposit', '所选团队的')
       },
       withdraw: {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, scale, 'K'),
-        self: buildManagerGoalCustRankSelf(topMember, scale, 'withdraw')
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'withdraw', '所选团队的')
       },
       'trade-lots': {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, scale, '手'),
-        self: buildManagerGoalCustRankSelf(topMember, scale, 'trade-lots')
+        self: buildManagerGoalCustRankSelf(topMember, scale, 'trade-lots', '所选团队的')
       }
     },
     revenueIntro: teamSb.revenueIntro,
@@ -15085,15 +15010,15 @@ function buildManagerGoalGroupSidebar(groupKey) {
       deposit: Object.assign({}, teamSb.revenueRank.deposit, {
         teamVal: formatNetDepositUsd(groupData.netDeposit.month),
         mineVal: formatNetDepositUsd(groupData.netDeposit.month),
-        self: { no: '—', name: '团队汇总', val: formatNetDepositUsd(groupData.netDeposit.month), gap: members.length + ' 位销售合计' }
+        self: buildManagerGoalSalesTop3Self(members, 'deposit')
       }),
       fee: Object.assign({}, teamSb.revenueRank.fee, {
-        self: { no: '—', name: '团队汇总', val: teamSb.revenueRank.fee.self.val, gap: members.length + ' 位销售合计' }
+        self: buildManagerGoalSalesTop3Self(members, 'fee')
       }),
       trade: Object.assign({}, teamSb.revenueRank.trade, {
         teamVal: groupData.tradeLots.month.toLocaleString('en-US') + ' 手',
         mineVal: groupData.tradeLots.month.toLocaleString('en-US') + ' 手',
-        self: { no: '—', name: '团队汇总', val: groupData.tradeLots.month.toLocaleString('en-US') + ' 手', gap: members.length + ' 位销售合计' }
+        self: buildManagerGoalSalesTop3Self(members, 'trade')
       })
     }
   };
@@ -15346,17 +15271,30 @@ function limitManagerGoalTableRows(tbody, limit) {
   });
 }
 
-function buildManagerGoalCustRankSelf(salesName, scale, kind) {
+function buildManagerGoalCustRankSelf(salesName, scale, kind, ownerLabel) {
+  var prefix = ownerLabel || '你的';
   var top3Net = (MANAGER_GOAL_CUST_RANK_NET[0] + MANAGER_GOAL_CUST_RANK_NET[1] + MANAGER_GOAL_CUST_RANK_NET[2]) * scale;
   var top3Withdraw = (MANAGER_GOAL_CUST_RANK_WITHDRAW[0] + MANAGER_GOAL_CUST_RANK_WITHDRAW[1] + MANAGER_GOAL_CUST_RANK_WITHDRAW[2]) * scale;
   var top3Lots = Math.round((MANAGER_GOAL_CUST_RANK_LOTS[0] + MANAGER_GOAL_CUST_RANK_LOTS[1] + MANAGER_GOAL_CUST_RANK_LOTS[2]) * scale);
+  var teamNetK = 1520;
+  var teamWithdrawK = 505;
+  var teamLots = 7842;
   if (kind === 'net-deposit') {
-    return { name: salesName + ' 名下', val: 'TOP3 占 $' + Math.round(top3Net) + 'K', gap: '净充值合计领先' };
+    return {
+      val: prefix + ' TOP3 客户净充值总值：$' + Math.round(top3Net) + 'K',
+      gap: '所占比团队总额百分比为：' + (top3Net / teamNetK * 100).toFixed(1) + '%'
+    };
   }
   if (kind === 'withdraw') {
-    return { name: salesName + ' 名下', val: 'TOP3 提现 $' + top3Withdraw.toFixed(1) + 'K', gap: '建议关注大额提现挽回' };
+    return {
+      val: prefix + ' TOP3 客户提现总值：$' + top3Withdraw.toFixed(1) + 'K',
+      gap: '所占比团队总额百分比为：' + (top3Withdraw / teamWithdrawK * 100).toFixed(1) + '%'
+    };
   }
-  return { name: salesName + ' 名下', val: 'TOP3 合计 ' + top3Lots.toLocaleString('en-US') + ' 手', gap: '活跃交易客户集中' };
+  return {
+    val: prefix + ' TOP3 客户交易手数总值：' + top3Lots.toLocaleString('en-US') + ' 手',
+    gap: '所占比团队总额百分比为：' + (top3Lots / teamLots * 100).toFixed(1) + '%'
+  };
 }
 
 var MANAGER_GOAL_SALES_META = {
@@ -15390,21 +15328,21 @@ var MANAGER_GOAL_TEAM_SIDEBAR = {
       desc: '本月累计团队手续费',
       value: '$86,400'
     },
-    { label: '团队本月绩效/ 预估绩效', desc: '本月已实现绩效与预估绩效', value: '$23,060' }
+    { label: '团队本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: '$23,060 / $34,590' }
   ],
   customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong>',
   customerRank: {
     'net-deposit': {
       rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, 1, 'K'),
-      self: buildManagerGoalCustRankSelf('Coulson', 1, 'net-deposit')
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'net-deposit', '所选团队的')
     },
     withdraw: {
       rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, 1, 'K'),
-      self: buildManagerGoalCustRankSelf('Coulson', 1, 'withdraw')
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'withdraw', '所选团队的')
     },
     'trade-lots': {
       rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, 1, '手'),
-      self: buildManagerGoalCustRankSelf('Coulson', 1, 'trade-lots')
+      self: buildManagerGoalCustRankSelf('Coulson', 1, 'trade-lots', '所选团队的')
     }
   },
   revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 入金 / 手续费 / 交易',
@@ -15414,23 +15352,23 @@ var MANAGER_GOAL_TEAM_SIDEBAR = {
       topLabel: '入金 TOP1', topName: 'Coulson', topSub: '$286K · 32 客户',
       mineLabel: '团队净入金', mineVal: '$1.52M', mineSub: '较昨日 +6.8%',
       foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', '昨日新增入金 <strong>$428K</strong>'],
-      self: { no: '—', name: '团队汇总', val: '$1.52M', gap: '8 位销售合计' },
+      self: { mode: 'top3', val: '所选团队的 TOP3 销售净入金总值：$746K', gap: '所占比团队总额百分比为：49.1%' },
       showSelf: true
     },
     fee: {
       teamLabel: '团队手续费', teamVal: '$86.4K', teamSub: '较昨日 +4.2%',
       topLabel: '手续费 TOP1', topName: 'May', topSub: '$18.6K · 占比 21.5%',
       mineLabel: '团队手续费', mineVal: '$86.4K', mineSub: '较昨日 +4.2%',
-      foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', '高贡献客户 <strong>May 26 人</strong>'],
-      self: { no: '—', name: '团队汇总', val: '$86.4K', gap: '8 位销售合计' },
+      foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', '高贡献客户 <strong>26 人</strong>'],
+      self: { mode: 'top3', val: '所选团队的 TOP3 销售手续费总值：$50.6K', gap: '所占比团队总额百分比为：58.6%' },
       showSelf: true
     },
     trade: {
       teamLabel: '团队交易量', teamVal: '7,842 手', teamSub: '较昨日 +9.1%',
       topLabel: '交易 TOP1', topName: 'Coulson', topSub: '1,280 手 · 16.3%',
       mineLabel: '团队交易量', mineVal: '7,842 手', mineSub: '较昨日 +9.1%',
-      foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', '活跃交易客户 <strong>472 人</strong>'],
-      self: { no: '—', name: '团队汇总', val: '7,842 手', gap: '8 位销售合计' },
+      foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', '高活跃客户 <strong>472 人</strong>'],
+      self: { mode: 'top3', val: '所选团队的 TOP3 销售交易手数总值：3,460 手', gap: '所占比团队总额百分比为：44.1%' },
       showSelf: true
     }
   }
@@ -15443,11 +15381,15 @@ function buildManagerGoalSalesSidebar(salesName) {
   var scale = 0.55 + (9 - meta.rank) * 0.06;
   var netMonth = goal.netDeposit.month;
   var netFmt = '$' + Math.round(netMonth / 1000) + 'K';
+  var myNetK = parseFloat(meta.netK.replace(/[^\d.]/g, '')) || 0;
+  var topNetK = parseFloat(MANAGER_GOAL_SALES_META.Coulson.netK.replace(/[^\d.]/g, '')) || 0;
+  var nextSales = MANAGER_GOAL_PERF_RANK_ORDER[meta.rank];
+  var nextNetK = nextSales && MANAGER_GOAL_SALES_META[nextSales]
+    ? (parseFloat(MANAGER_GOAL_SALES_META[nextSales].netK.replace(/[^\d.]/g, '')) || 0)
+    : 0;
   var rankGap = meta.rank === 1
-    ? '领先第 2 名 $' + Math.max(0, Math.round((MANAGER_GOAL_SALES_DATA.May.netDeposit.month - netMonth) / 1000)) + 'K'
-    : (meta.rank === 8
-      ? '距 TOP1 差 $' + Math.round((MANAGER_GOAL_SALES_DATA.Coulson.netDeposit.month - netMonth) / 1000) + 'K'
-      : '距 TOP1 差 $' + Math.round((MANAGER_GOAL_SALES_DATA.Coulson.netDeposit.month - netMonth) / 1000) + 'K · 领先后一名');
+    ? '领先第 2 名 $' + Math.max(0, Math.round(myNetK - nextNetK)) + 'K'
+    : '距 TOP1 差 $' + Math.max(0, Math.round(topNetK - myNetK)) + 'K · 领先第 ' + (meta.rank + 1) + ' 名 $' + Math.max(0, Math.round(myNetK - nextNetK)) + 'K';
   return {
     perfTitle: salesName + ' · 绩效预估',
     perfFootnote: '基于 ' + salesName + ' 本月累计 KPI 完成进度与历史转化模型动态预估，仅供参考。',
@@ -15455,22 +15397,22 @@ function buildManagerGoalSalesSidebar(salesName) {
       { label: '净入金总额', desc: '本月累计净入金', value: formatNetDepositUsd(netMonth) },
       { label: '交易客户数', desc: '本月累计实盘交易客户数', value: goal.summary.tradeCustomers + ' 人' },
       { label: '手续费总额', desc: '本月累计手续费', value: meta.feeK },
-      { label: '本月绩效/ 预估绩效', desc: '本月已实现绩效与预估绩效', value: meta.reward },
+      { label: '本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(meta.reward) },
       { label: '昨日风险提醒', desc: '可能流失高价值客户', value: goal.summary.highRisk + ' 人' }
     ],
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + salesName + '</strong> 名下客户',
     customerRank: {
       'net-deposit': {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_NET, scale, 'K'),
-        self: buildManagerGoalCustRankSelf(salesName, scale, 'net-deposit')
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'net-deposit', salesName + ' 的')
       },
       withdraw: {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_WITHDRAW, scale, 'K'),
-        self: buildManagerGoalCustRankSelf(salesName, scale, 'withdraw')
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'withdraw', salesName + ' 的')
       },
       'trade-lots': {
         rows: buildManagerGoalCustRankRows(MANAGER_GOAL_CUST_RANK_LOTS, scale, '手'),
-        self: buildManagerGoalCustRankSelf(salesName, scale, 'trade-lots')
+        self: buildManagerGoalCustRankSelf(salesName, scale, 'trade-lots', salesName + ' 的')
       }
     },
     revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 高亮 <strong>' + salesName + '</strong>',
@@ -15480,7 +15422,7 @@ function buildManagerGoalSalesSidebar(salesName) {
         topLabel: '入金 TOP1', topName: 'Coulson', topSub: '$286K · 32 客户',
         mineLabel: salesName + ' 净入金', mineVal: meta.netK, mineSub: '排名第 ' + meta.revenueRank + ' · 占团队 ' + meta.revShare,
         foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', salesName + ' 净入金 <strong>' + meta.netK + '</strong>'],
-        self: { no: '#' + meta.revenueRank, name: salesName, val: meta.netK, gap: rankGap },
+        self: { label: '当前销售排名', no: '#' + meta.revenueRank, name: salesName, val: meta.netK, gap: rankGap },
         showSelf: true
       },
       fee: {
@@ -15488,7 +15430,7 @@ function buildManagerGoalSalesSidebar(salesName) {
         topLabel: '手续费 TOP1', topName: 'May', topSub: '$18.6K · 占比 21.5%',
         mineLabel: salesName + ' 手续费', mineVal: meta.feeK, mineSub: '团队排名第 ' + (salesName === 'May' ? '1' : meta.revenueRank),
         foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', salesName + ' 手续费 <strong>' + meta.feeK + '</strong>'],
-        self: { no: salesName === 'May' ? '#1' : '#' + meta.revenueRank, name: salesName, val: meta.feeK, gap: salesName === 'May' ? '领先第 2 名 $1.4K' : '距 TOP1 差 $' + (18.6 - parseFloat(meta.feeK.replace(/[^\d.]/g, ''))).toFixed(1) + 'K' },
+        self: { label: '当前销售排名', no: salesName === 'May' ? '#1' : '#' + meta.revenueRank, name: salesName, val: meta.feeK, gap: salesName === 'May' ? '领先第 2 名 $1.4K' : '距 TOP1 差 $' + (18.6 - parseFloat(meta.feeK.replace(/[^\d.]/g, ''))).toFixed(1) + 'K · 领先第 ' + (meta.revenueRank + 1) + ' 名' },
         showSelf: true
       },
       trade: {
@@ -15496,7 +15438,15 @@ function buildManagerGoalSalesSidebar(salesName) {
         topLabel: '交易 TOP1', topName: 'Coulson', topSub: '1,280 手 · 16.3%',
         mineLabel: salesName + ' 交易量', mineVal: meta.tradeLots + ' 手', mineSub: '排名第 ' + meta.revenueRank,
         foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', salesName + ' 交易 <strong>' + meta.tradeLots + ' 手</strong>'],
-        self: { no: '#' + meta.revenueRank, name: salesName, val: meta.tradeLots + ' 手', gap: meta.rank <= 2 ? '距 TOP1 差 ' + (meta.rank === 1 ? '0' : '124') + ' 手' : '距 TOP1 差 ' + (1280 - parseInt(meta.tradeLots.replace(/,/g, ''), 10)) + ' 手' },
+        self: {
+          label: '当前销售排名',
+          no: '#' + meta.revenueRank,
+          name: salesName,
+          val: meta.tradeLots + ' 手',
+          gap: meta.rank === 1
+            ? '领先第 2 名 124 手'
+            : '距 TOP1 差 ' + (meta.rank === 2 ? '124' : (1280 - parseInt(meta.tradeLots.replace(/,/g, ''), 10))) + ' 手 · 领先第 ' + (meta.rank + 1) + ' 名' + (meta.rank === 2 ? ' 132 手' : '')
+        },
         showSelf: true
       }
     }
@@ -15535,8 +15485,8 @@ function applyManagerGoalCustomerRankPanel(panel, sidebar) {
     renderManagerGoalCustRankTable(tabPanel.querySelector('tbody'), block.rows);
     var self = tabPanel.querySelector('.rank-self');
     if (self && block.self) {
-      self.querySelector('.rank-self-name').textContent = block.self.name;
-      self.querySelector('.rank-self-val').textContent = block.self.val;
+      var valEl = self.querySelector('.rank-self-val');
+      if (valEl) valEl.textContent = block.self.val;
       var gap = self.querySelector('.rank-self-gap');
       if (gap) gap.textContent = block.self.gap;
     }
@@ -15573,11 +15523,30 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
     var self = tabPanel.querySelector('.rev-rank-self');
     if (self && block.self) {
       self.style.display = '';
-      self.querySelector('.rev-rank-self-no').textContent = block.self.no;
-      self.querySelector('.rev-rank-self-name').textContent = block.self.name;
-      self.querySelector('.rev-rank-self-val').textContent = block.self.val;
-      self.querySelector('.rev-rank-self-gap').textContent = block.self.gap;
-      self.querySelector('.rev-rank-self-label').textContent = block.self.no === '—' ? '团队汇总' : '当前销售排名';
+      var labelEl = self.querySelector('.rev-rank-self-label');
+      var nameEl = self.querySelector('.rev-rank-self-name');
+      var valEl = self.querySelector('.rev-rank-self-val');
+      var gapEl = self.querySelector('.rev-rank-self-gap');
+      var isTop3 = block.self.mode === 'top3';
+      self.classList.toggle('is-top3-summary', isTop3);
+      if (isTop3) {
+        if (valEl) valEl.textContent = block.self.val;
+        if (gapEl) gapEl.textContent = block.self.gap;
+        return;
+      }
+      if (labelEl) {
+        labelEl.textContent = block.self.label || (block.self.no === '—' ? '团队 TOP1' : '当前销售排名');
+      }
+      if (nameEl) {
+        if (block.self.no === '—') {
+          nameEl.textContent = block.self.name;
+        } else {
+          var rankNum = String(block.self.no).replace(/^#/, '');
+          nameEl.textContent = block.self.name + ' · 第 ' + rankNum + ' 名';
+        }
+      }
+      if (valEl) valEl.textContent = block.self.val;
+      if (gapEl) gapEl.textContent = block.self.gap;
     }
   });
 }
@@ -15586,6 +15555,78 @@ var MANAGER_GOAL_PERF_RANK_ORDER = [
   'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter',
   'Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
 ];
+
+function sumManagerGoalTeamReward() {
+  return MANAGER_GOAL_PERF_RANK_ORDER.reduce(function (sum, name) {
+    return sum + parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[name].reward);
+  }, 0) || 23060;
+}
+
+function getManagerGoalTeamMetricTotal(kind) {
+  if (kind === 'deposit') return 1520;
+  if (kind === 'fee') return 86.4;
+  return 7842;
+}
+
+function buildManagerGoalPerfTop3Self(members) {
+  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice()).sort(function (a, b) {
+    return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+  });
+  var top3 = list.slice(0, 3);
+  var top3Total = top3.reduce(function (sum, name) {
+    return sum + parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[name].reward);
+  }, 0);
+  var teamTotal = 23060;
+  var pct = teamTotal ? (top3Total / teamTotal * 100).toFixed(1) : '0.0';
+  return {
+    mode: 'top3',
+    val: '所选团队的 TOP3 销售绩效总值：$' + top3Total.toLocaleString('en-US'),
+    gap: '所占比团队总额百分比为：' + pct + '%'
+  };
+}
+
+function buildManagerGoalSalesTop3Self(members, kind) {
+  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice());
+  list.sort(function (a, b) {
+    var ma = MANAGER_GOAL_SALES_META[a];
+    var mb = MANAGER_GOAL_SALES_META[b];
+    if (kind === 'deposit') {
+      return (parseFloat(mb.netK.replace(/[^\d.]/g, '')) || 0) - (parseFloat(ma.netK.replace(/[^\d.]/g, '')) || 0);
+    }
+    if (kind === 'fee') {
+      return (parseFloat(mb.feeK.replace(/[^\d.]/g, '')) || 0) - (parseFloat(ma.feeK.replace(/[^\d.]/g, '')) || 0);
+    }
+    return (parseInt(mb.tradeLots.replace(/,/g, ''), 10) || 0) - (parseInt(ma.tradeLots.replace(/,/g, ''), 10) || 0);
+  });
+  var top3 = list.slice(0, 3);
+  var top3Total = top3.reduce(function (sum, name) {
+    var meta = MANAGER_GOAL_SALES_META[name];
+    if (kind === 'deposit') return sum + (parseFloat(meta.netK.replace(/[^\d.]/g, '')) || 0);
+    if (kind === 'fee') return sum + (parseFloat(meta.feeK.replace(/[^\d.]/g, '')) || 0);
+    return sum + (parseInt(meta.tradeLots.replace(/,/g, ''), 10) || 0);
+  }, 0);
+  var teamTotal = getManagerGoalTeamMetricTotal(kind);
+  var pct = teamTotal ? (top3Total / teamTotal * 100).toFixed(1) : '0.0';
+  if (kind === 'deposit') {
+    return {
+      mode: 'top3',
+      val: '所选团队的 TOP3 销售净入金总值：$' + Math.round(top3Total) + 'K',
+      gap: '所占比团队总额百分比为：' + pct + '%'
+    };
+  }
+  if (kind === 'fee') {
+    return {
+      mode: 'top3',
+      val: '所选团队的 TOP3 销售手续费总值：$' + top3Total.toFixed(1) + 'K',
+      gap: '所占比团队总额百分比为：' + pct + '%'
+    };
+  }
+  return {
+    mode: 'top3',
+    val: '所选团队的 TOP3 销售交易手数总值：' + top3Total.toLocaleString('en-US') + ' 手',
+    gap: '所占比团队总额百分比为：' + pct + '%'
+  };
+}
 
 function buildManagerGoalPerfTop3() {
   return MANAGER_GOAL_PERF_RANK_ORDER.slice(0, 3).map(function (name) {
@@ -15630,6 +15671,22 @@ function parseManagerGoalRewardUsd(str) {
   return Number(String(str).replace(/[$,]/g, '')) || 0;
 }
 
+function getGoalMonthPaceMeta() {
+  var block = document.querySelector('[data-day-of-month][data-days-in-month]');
+  return {
+    day: block ? (Number(block.getAttribute('data-day-of-month')) || 20) : 20,
+    days: block ? (Number(block.getAttribute('data-days-in-month')) || 30) : 30
+  };
+}
+
+/** 本月绩效值 / 预估绩效值（本月绩效 ÷ 当月时间进度） */
+function formatPerfRewardWithRelative(reward) {
+  var amount = typeof reward === 'number' ? reward : parseManagerGoalRewardUsd(reward);
+  var pace = getGoalMonthPaceMeta();
+  var relative = gcaProjectMonthValue(amount, pace.day, pace.days);
+  return '$' + amount.toLocaleString('en-US') + ' / $' + relative.toLocaleString('en-US');
+}
+
 function parseManagerGoalFeeUsd(str) {
   var raw = String(str || '').trim().replace(/[$,\s]/g, '');
   if (!raw) return 0;
@@ -15670,30 +15727,20 @@ function applyManagerGoalPerfRankPanel(panel, data) {
   var valEl = self.querySelector('.rank-self-val');
   var gapEl = self.querySelector('.rank-self-gap');
   if (data.isGroup && data.groupMembers && data.groupMembers.length) {
-    var groupTop = data.groupMembers.slice().sort(function (a, b) {
-      return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
-    })[0];
-    var groupTopMeta = MANAGER_GOAL_SALES_META[groupTop];
-    var groupRunnerUp = data.groupMembers.slice().sort(function (a, b) {
-      return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
-    })[1];
-    labelEl.textContent = '团队 TOP1';
-    nameEl.textContent = groupTop + ' · 第 1 名';
-    valEl.textContent = groupTopMeta.reward;
-    if (gapEl) {
-      gapEl.textContent = groupRunnerUp
-        ? '领先第 2 名 $' + (parseManagerGoalRewardUsd(groupTopMeta.reward) - parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[groupRunnerUp].reward)).toLocaleString('en-US')
-        : '领先第 2 名';
-    }
+    var groupSummary = buildManagerGoalPerfTop3Self(data.groupMembers);
+    self.classList.add('is-top3-summary');
+    if (valEl) valEl.textContent = groupSummary.val;
+    if (gapEl) gapEl.textContent = groupSummary.gap;
     return;
   }
   if (data.isTeam) {
-    labelEl.textContent = '团队 TOP1';
-    nameEl.textContent = 'Coulson · 第 1 名';
-    valEl.textContent = '$4,280';
-    if (gapEl) gapEl.textContent = '领先第 2 名 $420';
+    var teamSummary = buildManagerGoalPerfTop3Self(null);
+    self.classList.add('is-top3-summary');
+    if (valEl) valEl.textContent = teamSummary.val;
+    if (gapEl) gapEl.textContent = teamSummary.gap;
     return;
   }
+  self.classList.remove('is-top3-summary');
   var meta = MANAGER_GOAL_SALES_META[data.salesName];
   if (!meta) return;
   var reward = parseManagerGoalRewardUsd(meta.reward);
