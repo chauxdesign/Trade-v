@@ -15421,7 +15421,7 @@ function buildManagerGoalSalesSidebar(salesName) {
         teamLabel: '团队净入金', teamVal: '$1.52M', teamSub: '较昨日 +6.8%',
         topLabel: '入金 TOP1', topName: 'Coulson', topSub: '$286K · 32 客户',
         mineLabel: salesName + ' 净入金', mineVal: meta.netK, mineSub: '排名第 ' + meta.revenueRank + ' · 占团队 ' + meta.revShare,
-        foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', salesName + ' 净入金 <strong>' + meta.netK + '</strong>'],
+        foot: ['团队均值 <strong>$190K</strong>', '高于均值 <strong>3 人</strong>', '昨日新增入金 <strong>$428K</strong>'],
         self: { label: '当前销售排名', no: '#' + meta.revenueRank, name: salesName, val: meta.netK, gap: rankGap },
         showSelf: true
       },
@@ -15429,7 +15429,7 @@ function buildManagerGoalSalesSidebar(salesName) {
         teamLabel: '团队手续费', teamVal: '$86.4K', teamSub: '较昨日 +4.2%',
         topLabel: '手续费 TOP1', topName: 'May', topSub: '$18.6K · 占比 21.5%',
         mineLabel: salesName + ' 手续费', mineVal: meta.feeK, mineSub: '团队排名第 ' + (salesName === 'May' ? '1' : meta.revenueRank),
-        foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', salesName + ' 手续费 <strong>' + meta.feeK + '</strong>'],
+        foot: ['团队均值 <strong>$10.8K</strong>', '人均手续费 <strong>$432</strong>', '高贡献客户 <strong>26 人</strong>'],
         self: { label: '当前销售排名', no: salesName === 'May' ? '#1' : '#' + meta.revenueRank, name: salesName, val: meta.feeK, gap: salesName === 'May' ? '领先第 2 名 $1.4K' : '距 TOP1 差 $' + (18.6 - parseFloat(meta.feeK.replace(/[^\d.]/g, ''))).toFixed(1) + 'K · 领先第 ' + (meta.revenueRank + 1) + ' 名' },
         showSelf: true
       },
@@ -15437,7 +15437,7 @@ function buildManagerGoalSalesSidebar(salesName) {
         teamLabel: '团队交易量', teamVal: '7,842 手', teamSub: '较昨日 +9.1%',
         topLabel: '交易 TOP1', topName: 'Coulson', topSub: '1,280 手 · 16.3%',
         mineLabel: salesName + ' 交易量', mineVal: meta.tradeLots + ' 手', mineSub: '排名第 ' + meta.revenueRank,
-        foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', salesName + ' 交易 <strong>' + meta.tradeLots + ' 手</strong>'],
+        foot: ['团队均值 <strong>980 手</strong>', '人均订单 <strong>378 笔</strong>', '高活跃客户 <strong>472 人</strong>'],
         self: {
           label: '当前销售排名',
           no: '#' + meta.revenueRank,

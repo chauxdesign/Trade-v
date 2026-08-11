@@ -1728,6 +1728,109 @@
       transform:translateY(-1px);
       box-shadow:0 4px 12px rgba(37,99,235,.1);
     }
+    .comm-qc-split{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;
+      margin-top:10px;
+    }
+    .comm-qc-col{
+      display:flex;flex-direction:column;min-width:0;
+    }
+    .comm-qc-band{
+      display:flex;align-items:center;gap:8px;
+      padding:4px 0 8px;
+    }
+    .comm-qc-band-label{
+      font-size:12px;font-weight:800;color:#334155;line-height:1.3;white-space:nowrap;
+    }
+    .comm-qc-band--tel .comm-qc-band-label{color:#2563eb}
+    .comm-qc-band--cr .comm-qc-band-label{color:#0f766e}
+    .comm-qc-band-line{flex:1;height:1px;background:#eef2f7}
+    .comm-qc-cards{
+      display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px;
+    }
+    .comm-qc-metric-card{
+      border:1px solid #e8ecf1;border-radius:10px;overflow:hidden;
+      background:#fff;display:flex;flex-direction:column;min-width:0;
+      cursor:default;
+      transition:box-shadow .15s ease,border-color .15s ease,transform .15s ease;
+    }
+    .comm-qc-metric-card:hover{
+      border-color:#93c5fd;
+      box-shadow:0 4px 14px rgba(37,99,235,.12);
+      transform:translateY(-1px);
+    }
+    .comm-qc-link{
+      cursor:pointer;border-radius:4px;padding:0 2px;
+      transition:color .15s ease,background .15s ease;
+    }
+    .comm-qc-link:hover{
+      text-decoration:underline;
+      background:rgba(37,99,235,.08);
+    }
+    .comm-qc-link:focus-visible{
+      outline:2px solid #93c5fd;outline-offset:2px;
+    }
+    .comm-qc-metric-card-head{
+      display:flex;align-items:center;justify-content:center;
+      padding:8px 8px;border-bottom:1px solid #f1f5f9;
+      background:linear-gradient(135deg,#f8fafc,#fff);
+    }
+    .comm-qc-metric-card-name{
+      font-size:11px;font-weight:800;color:#0f172a;line-height:1.3;
+      text-align:center;white-space:nowrap;
+    }
+    .comm-qc-metric-card-body{
+      padding:10px 8px;display:flex;align-items:center;justify-content:center;
+      min-height:52px;
+    }
+    .comm-qc-metric-card-val{
+      font-size:20px;font-weight:800;color:#0f172a;line-height:1.2;
+      font-variant-numeric:tabular-nums;
+    }
+    .comm-qc-metric-card--overview .comm-qc-metric-card-head{
+      background:linear-gradient(135deg,#eff6ff,#f0fdfa);
+    }
+    .comm-qc-dual{
+      display:flex;align-items:center;justify-content:center;gap:0;width:100%;
+    }
+    .comm-qc-dual-item{
+      flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+      min-width:0;padding:0 4px;
+    }
+    .comm-qc-dual-item + .comm-qc-dual-item{border-left:1px solid #f1f5f9}
+    .comm-qc-dual-item span{font-size:9px;color:#64748b;line-height:1.2}
+    .comm-qc-dual-item .goal-q-help{
+      width:12px;height:12px;margin-left:2px;font-size:8px;top:0;
+    }
+    .comm-qc-dual-item strong{
+      font-size:18px;font-weight:800;color:#0f172a;line-height:1.2;
+      font-variant-numeric:tabular-nums;
+    }
+    .comm-qc-dual-item--score strong{color:#0f766e;cursor:default}
+    .comm-qc-metric-card--compliance .comm-qc-metric-card-head{
+      background:linear-gradient(135deg,#fffbeb,#fff7ed);
+    }
+    .comm-qc-compliance{
+      display:flex;align-items:center;justify-content:center;gap:2px;
+      width:100%;
+    }
+    .comm-qc-compliance-item{
+      flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+      min-width:0;
+    }
+    .comm-qc-compliance-item em{
+      font-style:normal;font-size:9px;color:#94a3b8;line-height:1.2;
+    }
+    .comm-qc-compliance-item strong{
+      font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2;
+    }
+    .comm-qc-compliance-item--low strong{color:#059669}
+    .comm-qc-compliance-item--mid strong{color:#d97706}
+    .comm-qc-compliance-item--high strong{color:#dc2626}
+    .comm-qc-compliance-sep{
+      color:#cbd5e1;font-size:11px;font-weight:700;flex-shrink:0;line-height:1;
+      padding-bottom:12px;
+    }
     #panel-sop .comm-rank-panel{
       background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
       box-shadow:var(--card-shadow);padding:0;overflow:hidden;
@@ -2741,7 +2844,8 @@
     .task-rank-panel .rev-rank-self-val{color:#2563eb}
 
     @media(max-width:900px){
-      .comm-stats-grid{grid-template-columns:1fr}
+      .comm-stats-grid,.comm-qc-split{grid-template-columns:1fr}
+      .comm-qc-cards{grid-template-columns:1fr}
       .comm-channel-metrics{grid-template-columns:repeat(3,1fr)}
     }
 
@@ -4467,13 +4571,13 @@
           <section class="block large comm-stats-section">
             <div class="module-head">
               <div class="module-head-row">
-                <h2>今日客户触达统计</h2>
+                <h2>客户触达统计</h2>
                 <div class="comm-stats-head-actions">
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp审核</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only">按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率</p>
-              <p class="kpi-intro manager-only">团队今日沟通概览 · 按渠道统计联系客户数、回复数与回复率</p>
+              <p class="kpi-intro sales-only">按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果，数据为自然月本月1日截止到目前的数据</p>
+              <p class="kpi-intro manager-only">团队昨日沟通概览 · 按渠道统计联系客户数、回复数与回复率</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -4579,6 +4683,104 @@
                     <div class="comm-channel-foot">较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人</div>
                   </article>
                 </div>
+                <div class="comm-qc-split">
+                  <div class="comm-qc-col">
+                    <div class="comm-qc-band comm-qc-band--tel">
+                      <span class="comm-qc-band-label">电话质检分析</span>
+                      <span class="comm-qc-band-line"></span>
+                    </div>
+                    <div class="comm-qc-cards">
+                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-dual">
+                            <div class="comm-qc-dual-item">
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">26</strong>
+                              <span>质检总数</span>
+                            </div>
+                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
+                              <strong>88</strong>
+                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">合规统计</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-compliance" aria-label="低风险 18，中风险 6，高风险 2">
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">18</strong>
+                              <em>低风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">6</strong>
+                              <em>中风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">2</strong>
+                              <em>高风险</em>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="comm-qc-col">
+                    <div class="comm-qc-band comm-qc-band--cr">
+                      <span class="comm-qc-band-label">CR质检分析</span>
+                      <span class="comm-qc-band-line"></span>
+                    </div>
+                    <div class="comm-qc-cards">
+                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-dual">
+                            <div class="comm-qc-dual-item">
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">16</strong>
+                              <span>质检总数</span>
+                            </div>
+                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
+                              <strong>84</strong>
+                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">合规统计</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-compliance" aria-label="低风险 10，中风险 4，高风险 2">
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">10</strong>
+                              <em>低风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">4</strong>
+                              <em>中风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">2</strong>
+                              <em>高风险</em>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="manager-only">
                 <div class="comm-stats-summary">
@@ -4683,10 +4885,107 @@
                     <div class="comm-channel-foot">人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong></div>
                   </article>
                 </div>
+                <div class="comm-qc-split">
+                  <div class="comm-qc-col">
+                    <div class="comm-qc-band comm-qc-band--tel">
+                      <span class="comm-qc-band-label">电话质检分析</span>
+                      <span class="comm-qc-band-line"></span>
+                    </div>
+                    <div class="comm-qc-cards">
+                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-dual">
+                            <div class="comm-qc-dual-item">
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">208</strong>
+                              <span>质检总数</span>
+                            </div>
+                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
+                              <strong>86</strong>
+                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">合规统计</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-compliance" aria-label="低风险 136，中风险 52，高风险 20">
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">136</strong>
+                              <em>低风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">52</strong>
+                              <em>中风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">20</strong>
+                              <em>高风险</em>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="comm-qc-col">
+                    <div class="comm-qc-band comm-qc-band--cr">
+                      <span class="comm-qc-band-label">CR质检分析</span>
+                      <span class="comm-qc-band-line"></span>
+                    </div>
+                    <div class="comm-qc-cards">
+                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-dual">
+                            <div class="comm-qc-dual-item">
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">128</strong>
+                              <span>质检总数</span>
+                            </div>
+                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
+                              <strong>82</strong>
+                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">合规统计</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-compliance" aria-label="低风险 78，中风险 34，高风险 16">
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">78</strong>
+                              <em>低风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">34</strong>
+                              <em>中风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">16</strong>
+                              <em>高风险</em>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
-
 
           <section class="block large alert-task-section">
             <div class="module-head">
@@ -12758,6 +13057,42 @@ function handleCommStatsChannelActivate(card) {
   }
 }
 
+function initCommQcCardInteractions() {
+  document.querySelectorAll('.comm-stats-section .comm-qc-col').forEach(function (col) {
+    var band = col.querySelector('.comm-qc-band');
+    var type = band && band.classList.contains('comm-qc-band--cr') ? 'cr' : 'tel';
+    col.querySelectorAll('.comm-qc-link').forEach(function (link) {
+      link.setAttribute('data-qc-type', type);
+    });
+  });
+}
+
+function openCommQcAnalysisPage(type, options) {
+  options = options || {};
+  var view = document.body.dataset.view || 'sales';
+  var url = type === 'cr'
+    ? '2. CRM工作台/2. 销售工作台2.0/二级页面/CR质检分析.html'
+    : '2. CRM工作台/2. 销售工作台2.0/二级页面/电话质检分析.html';
+  var params = new URLSearchParams();
+  params.set('view', view);
+  if (view === 'sales') params.set('agent', COMM_STATS_CURRENT_SALES || 'Coulson');
+  if (options.risk) params.set('risk', options.risk);
+  window.open(url + '?' + params.toString(), '_blank');
+}
+
+function handleCommQcLinkActivate(link) {
+  if (!link || !link.closest('.comm-stats-section')) return;
+  var type = link.getAttribute('data-qc-type') || 'tel';
+  var metric = link.getAttribute('data-qc-metric') || 'total';
+  if (metric === 'total') {
+    openCommQcAnalysisPage(type, {});
+    return;
+  }
+  if (metric === 'risk') {
+    openCommQcAnalysisPage(type, { risk: link.getAttribute('data-qc-risk') || '' });
+  }
+}
+
 function getAlertTaskCardProgressCounts(card) {
   var strongEl = card.querySelector('.alert-task-card-progress strong');
   if (!strongEl) return { completed: 0, assigned: 0 };
@@ -15641,6 +15976,9 @@ document.addEventListener('click', function (e) {
   var commChannel = e.target.closest('.comm-stats-section .comm-channel');
   if (commChannel) handleCommStatsChannelActivate(commChannel);
 
+  var qcLink = e.target.closest('.comm-stats-section .comm-qc-link');
+  if (qcLink) handleCommQcLinkActivate(qcLink);
+
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!panel || !panel.classList.contains('is-scroll-follow')) return;
   var target = e.target;
@@ -15724,6 +16062,12 @@ document.addEventListener('keydown', function (e) {
   if (commCard && document.activeElement === commCard) {
     e.preventDefault();
     handleCommStatsChannelActivate(commCard);
+    return;
+  }
+  var qcLink = e.target.closest('.comm-stats-section .comm-qc-link');
+  if (qcLink && document.activeElement === qcLink) {
+    e.preventDefault();
+    handleCommQcLinkActivate(qcLink);
     return;
   }
   var card = e.target.closest('.alert-task-section .alert-task-card');
@@ -17870,8 +18214,10 @@ normalizeTempMktRemainingDays();
 initAlertTaskCardInteractions();
 initTempMktCardInteractions();
 initCommStatsCardInteractions();
+initCommQcCardInteractions();
 initCommFollowEntryForm();
 initCommReviewDrawer();
+initGoalQHelpTooltips();
 restoreWorkbenchView();
 </script>
 </body>
