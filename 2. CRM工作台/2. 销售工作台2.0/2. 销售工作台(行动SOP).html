@@ -483,19 +483,34 @@
     }
     .rev-rank-chip strong{color:#0f172a;font-weight:800}
     .rev-rank-self{
-      display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;
-      margin-top:10px;padding:10px 12px;
+      display:flex;flex-direction:column;align-items:stretch;gap:0;
+      margin-top:10px;padding:10px 12px 9px;
       background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 100%);
       border:1px solid #a7f3d0;border-radius:8px;font-size:11px;
+    }
+    .rev-rank-self-line--main{
+      display:flex;align-items:center;gap:8px;min-width:0;
+    }
+    .rev-rank-self-line--sub{
+      margin-top:6px;padding-top:6px;
+      border-top:1px dashed rgba(148,163,184,.35);
     }
     .rev-rank-self-label{
       font-size:10px;font-weight:700;color:#64748b;
       padding:2px 6px;background:#fff;border-radius:4px;border:1px solid #e2e8f0;
     }
     .rev-rank-self-no{font-weight:800;color:#059669;min-width:22px;text-align:center}
-    .rev-rank-self-name{font-weight:800;color:#0f172a}
-    .rev-rank-self-val{font-weight:800;color:#047857;font-variant-numeric:tabular-nums}
-    .rev-rank-self-gap{font-size:10px;color:#64748b}
+    .rev-rank-self-name{flex:1;min-width:0;font-weight:800;color:#0f172a;font-size:12px}
+    .rev-rank-self-val{
+      flex-shrink:0;margin-left:auto;font-weight:800;color:#047857;
+      font-variant-numeric:tabular-nums;font-size:12px;
+    }
+    .rev-rank-self-gap{margin-left:0;font-size:11px;line-height:1.45;color:#64748b}
+    .rev-rank-self.is-top3-summary .rev-rank-self-label,
+    .rev-rank-self.is-top3-summary .rev-rank-self-name{display:none}
+    .rev-rank-self.is-top3-summary .rev-rank-self-val{
+      flex:1;margin-left:0;text-align:left;
+    }
 
     /* 客户排行榜 */
     .rank-date-chips{
@@ -1857,28 +1872,29 @@
     }
     .comm-rank-panel .customer-rank-table .rank-val{color:#0e7490}
     .comm-rank-panel .rank-self{
+      flex-direction:column;align-items:stretch;gap:0;
+      padding:10px 12px 9px;
       background:linear-gradient(135deg,#ecfeff 0%,#f0fdfa 100%);
       border-color:#99f6e4;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:6px 8px;
     }
-    .comm-rank-panel .rank-self-no,.comm-rank-panel .rank-self-val{color:#0e7490}
-    .comm-rank-panel .rank-self-no{
-      min-width:auto;
-      text-align:left;
+    .comm-rank-panel .rank-self-line--main{
+      display:flex;align-items:center;gap:8px;min-width:0;
     }
-    .comm-rank-panel .rank-self-name{
-      flex:none;
+    .comm-rank-panel .rank-self-line--sub{
+      margin-top:6px;padding-top:6px;
+      border-top:1px dashed rgba(148,163,184,.35);
     }
+    .comm-rank-panel .rank-self-name{flex:1;min-width:0;font-size:12px}
     .comm-rank-panel .rank-self-val{
-      flex:none;
-      margin-left:0;
+      flex-shrink:0;margin-left:auto;font-size:12px;color:#0e7490;
     }
     .comm-rank-panel .rank-self-gap{
-      flex-basis:100%;
-      margin-left:0;
-      line-height:1.45;
+      margin-left:0;font-size:11px;line-height:1.45;color:#64748b;
+    }
+    .comm-rank-panel .rank-self.is-top3-summary .rank-self-label,
+    .comm-rank-panel .rank-self.is-top3-summary .rank-self-name{display:none}
+    .comm-rank-panel .rank-self.is-top3-summary .rank-self-val{
+      flex:1;margin-left:0;text-align:left;
     }
 
     /* 每日预警任务（SOP 页） */
@@ -2477,16 +2493,31 @@
     }
     .comm-stats-detail-title-name{color:#2563eb}
     #commStatsDetailFilters{
-      display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
     }
     #commStatsDetailFilters .my-follow-drawer-filters-grid{
-      display:flex;align-items:center;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
+      display:flex;align-items:center;justify-content:flex-start;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
     #commStatsDetailFilters .my-follow-filter-field{
-      flex:1 1 0;min-width:0;margin:0;
+      flex:0 0 auto;width:180px;max-width:100%;margin:0;
     }
-    #commStatsDetailFilters .my-follow-filter-reset{
-      flex-shrink:0;height:30px;padding:0 10px;white-space:nowrap;
+    #commStatsDetailFilters .my-follow-filter-field--keyword{
+      width:220px;
+    }
+    #commStatsDetailFilters .my-follow-filter-actions{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
+    }
+    #commStatsDetailFilters .my-follow-filter-reset,
+    #commStatsDetailFilters .my-follow-filter-query{
+      flex-shrink:0;height:30px;padding:0 12px;white-space:nowrap;
+    }
+    #commStatsDetailFilters .my-follow-filter-query{
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #commStatsDetailFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
     }
     #commStatsDetailFilters.is-customer-mode .my-follow-filter-field--comm-only{display:none}
     #commStatsDetailDrawer .alert-task-detail-panel{width:80%;max-width:85%}
@@ -2499,7 +2530,7 @@
     #phoneCommDetailDrawer .phone-comm-duration--short{color:#dc2626;font-weight:700}
     #waCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #waCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
-    #waCommDetailDrawer .alert-task-detail-table{min-width:860px}
+    #waCommDetailDrawer .alert-task-detail-table{min-width:940px}
     #waCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
     #waCommDetailDrawer .channel-comm-result-block .alert-task-note-line,
     #phoneCommDetailDrawer .phone-comm-result-block .alert-task-note-line,
@@ -2512,32 +2543,51 @@
     #phoneCommDetailFilters,
     #waCommDetailFilters,
     #chatCommDetailFilters{
-      display:flex;align-items:center;gap:10px;flex-wrap:nowrap;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
     }
     #phoneCommDetailFilters .my-follow-drawer-filters-grid,
     #waCommDetailFilters .my-follow-drawer-filters-grid,
     #chatCommDetailFilters .my-follow-drawer-filters-grid{
-      display:flex;align-items:center;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
+      display:flex;align-items:center;justify-content:flex-start;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
     #phoneCommDetailFilters .my-follow-filter-field,
     #waCommDetailFilters .my-follow-filter-field,
     #chatCommDetailFilters .my-follow-filter-field{
-      flex:0 0 auto;min-width:0;margin:0;
+      flex:0 0 auto;width:160px;max-width:100%;margin:0;
     }
-    #phoneCommDetailFilters .my-follow-filter-input,
-    #waCommDetailFilters .my-follow-filter-input,
-    #chatCommDetailFilters .my-follow-filter-input{
-      width:150px;
+    #phoneCommDetailFilters .my-follow-filter-field--keyword,
+    #waCommDetailFilters .my-follow-filter-field--keyword,
+    #chatCommDetailFilters .my-follow-filter-field--keyword{
+      width:220px;
     }
-    #phoneCommDetailFilters .my-follow-filter-select,
-    #waCommDetailFilters .my-follow-filter-select,
-    #chatCommDetailFilters .my-follow-filter-select{
-      width:120px;
+    #phoneCommDetailFilters .my-follow-filter-field--effective,
+    #chatCommDetailFilters .my-follow-filter-field--effective{
+      width:170px;
+    }
+    #phoneCommDetailFilters .my-follow-filter-actions,
+    #waCommDetailFilters .my-follow-filter-actions,
+    #chatCommDetailFilters .my-follow-filter-actions{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
     }
     #phoneCommDetailFilters .my-follow-filter-reset,
     #waCommDetailFilters .my-follow-filter-reset,
-    #chatCommDetailFilters .my-follow-filter-reset{
-      flex-shrink:0;height:30px;padding:0 10px;white-space:nowrap;
+    #chatCommDetailFilters .my-follow-filter-reset,
+    #phoneCommDetailFilters .my-follow-filter-query,
+    #waCommDetailFilters .my-follow-filter-query,
+    #chatCommDetailFilters .my-follow-filter-query{
+      flex-shrink:0;height:30px;padding:0 12px;white-space:nowrap;
+    }
+    #phoneCommDetailFilters .my-follow-filter-query,
+    #waCommDetailFilters .my-follow-filter-query,
+    #chatCommDetailFilters .my-follow-filter-query{
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #phoneCommDetailFilters .my-follow-filter-query:hover,
+    #waCommDetailFilters .my-follow-filter-query:hover,
+    #chatCommDetailFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
     }
     .alert-task-detail-sub{
       margin:0;font-size:12px;color:#64748b;line-height:1.45;
@@ -2653,11 +2703,33 @@
       opacity:.45;cursor:not-allowed;
     }
 
+    /* 本期暂不开发 · 灰色遮罩（对齐我的目标） */
+    .gca-pending-wrap{position:relative;border-radius:12px}
+    .gca-pending-mask{
+      position:absolute;inset:0;z-index:6;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.5);
+      border:1px solid rgba(0,0,0,.12);
+      border-radius:12px;
+      cursor:not-allowed;user-select:none;
+    }
+    .gca-pending-mask span{
+      padding:10px 20px;border-radius:999px;
+      background:rgba(255,255,255,.92);border:1px solid #cbd5e1;
+      font-size:20px;font-weight:800;color:#000;letter-spacing:.02em;
+      line-height:1.3;
+      box-shadow:0 2px 8px rgba(15,23,42,.06);
+    }
+    .gca-pending-wrap > *:not(.gca-pending-mask){pointer-events:none}
+
     /* 营销活动任务（SOP 页） */
     #panel-sop .temp-mkt-section{
       background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
       box-shadow:var(--card-shadow);padding:0;overflow:hidden;
       border-width:1px;min-height:auto;height:fit-content;
+    }
+    #panel-sop .temp-mkt-section.gca-pending-wrap .gca-pending-mask{
+      border-radius:var(--card-radius);
     }
     .temp-mkt-section .module-head h2::before{
       background:linear-gradient(180deg,#8b5cf6,#7c3aed);
@@ -2840,7 +2912,6 @@
       background:linear-gradient(135deg,#eff6ff 0%,#f0f9ff 100%);
       border-color:#bfdbfe;
     }
-    .task-rank-panel .rev-rank-self-no,
     .task-rank-panel .rev-rank-self-val{color:#2563eb}
 
     @media(max-width:900px){
@@ -5625,7 +5696,8 @@
               </div>
           </section>
 
-          <section class="block large temp-mkt-section">
+          <section class="block large temp-mkt-section gca-pending-wrap" aria-label="本期暂不开发">
+            <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
             <div class="module-head">
               <h2>营销活动任务</h2>
               <p class="kpi-intro sales-only">主管活动下发 · 业务测试与短期营销类客户触达</p>
@@ -6173,72 +6245,114 @@
                     <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val">2h 12m</td><td class="rank-val">14</td></tr>
                   </tbody>
                 </table>
-                <div class="rank-self sales-only">
-                  <span class="rank-self-label">我的排名</span>
-                  <span class="rank-self-no">#2</span>
-                  <span class="rank-self-name">May</span>
-                  <span class="rank-self-val">4h 52m · 38 通</span>
-                  <span class="rank-self-gap">距 TOP1 差 36m · 较团队均值 +40m</span>
-                </div>
-                <div class="rev-rank-foot manager-only">
+                <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>3h 46m</strong></span>
                   <span class="rev-rank-chip">人均通话 <strong>28 通</strong></span>
+                  <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
+                </div>
+                <div class="rank-self sales-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">我的排名</span>
+                    <span class="rank-self-name">May · 第 2 名</span>
+                    <span class="rank-self-val">4h 52m · 38 通</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">距 TOP1 差 36m · 领先第 3 名 16m</span>
+                  </div>
+                </div>
+                <div class="rank-self is-top3-summary manager-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">团队 TOP1</span>
+                    <span class="rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rank-self-val">团队 TOP3 销售通话总时长为：14h 56m</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">所占比团队总额百分比为：38.2%</span>
+                  </div>
                 </div>
               </div>
               <div class="rank-tab-panel" data-comm-panel="whatsapp" role="tabpanel">
                 <table class="customer-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">联系客户数</th><th style="text-align:right">回复率</th></tr></thead>
                   <tbody>
-                    <tr><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">42</td><td class="rank-val">74%</td></tr>
-                    <tr><td class="rank-no">2</td><td class="rank-name">May</td><td class="rank-val">31</td><td class="rank-val">71%</td></tr>
-                    <tr><td class="rank-no">3</td><td class="rank-name">Daisy</td><td class="rank-val">29</td><td class="rank-val">70%</td></tr>
-                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">26</td><td class="rank-val">69%</td></tr>
-                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">24</td><td class="rank-val">68%</td></tr>
-                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">21</td><td class="rank-val">67%</td></tr>
-                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">18</td><td class="rank-val">65%</td></tr>
-                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val">16</td><td class="rank-val">63%</td></tr>
-                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val">14</td><td class="rank-val">61%</td></tr>
-                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val">12</td><td class="rank-val">59%</td></tr>
+                    <tr><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">42 人</td><td class="rank-val">74%</td></tr>
+                    <tr><td class="rank-no">2</td><td class="rank-name">May</td><td class="rank-val">31 人</td><td class="rank-val">71%</td></tr>
+                    <tr><td class="rank-no">3</td><td class="rank-name">Daisy</td><td class="rank-val">29 人</td><td class="rank-val">70%</td></tr>
+                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">26 人</td><td class="rank-val">69%</td></tr>
+                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">24 人</td><td class="rank-val">68%</td></tr>
+                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">21 人</td><td class="rank-val">67%</td></tr>
+                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">18 人</td><td class="rank-val">65%</td></tr>
+                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val">16 人</td><td class="rank-val">63%</td></tr>
+                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val">14 人</td><td class="rank-val">61%</td></tr>
+                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val">12 人</td><td class="rank-val">59%</td></tr>
                   </tbody>
                 </table>
-                <div class="rank-self sales-only">
-                  <span class="rank-self-label">我的排名</span>
-                  <span class="rank-self-no">#2</span>
-                  <span class="rank-self-name">May</span>
-                  <span class="rank-self-val">31 · 71%</span>
-                  <span class="rank-self-gap">距 TOP1 差 11 · 较团队均值 +3%</span>
+                <div class="rev-rank-foot">
+                  <span class="rev-rank-chip">团队均值 <strong>23 人</strong></span>
+                  <span class="rev-rank-chip">人均回复率 <strong>67%</strong></span>
+                  <span class="rev-rank-chip">高于均值 <strong>5 人</strong></span>
                 </div>
-                <div class="rev-rank-foot manager-only">
-                  <span class="rev-rank-chip">团队均值 <strong>31</strong></span>
-                  <span class="rev-rank-chip">人均回复率 <strong>71%</strong></span>
+                <div class="rank-self sales-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">我的排名</span>
+                    <span class="rank-self-name">May · 第 2 名</span>
+                    <span class="rank-self-val">31 人 · 71%</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">距 TOP1 差 11 人 · 领先第 3 名 2 人</span>
+                  </div>
+                </div>
+                <div class="rank-self is-top3-summary manager-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">团队 TOP1</span>
+                    <span class="rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rank-self-val">团队 TOP3 销售联系客户总数为：102 人</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">所占比团队总额百分比为：43.8%</span>
+                  </div>
                 </div>
               </div>
               <div class="rank-tab-panel" data-comm-panel="chatroom" role="tabpanel">
                 <table class="customer-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">联系客户数</th><th style="text-align:right">回复率</th></tr></thead>
                   <tbody>
-                    <tr><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">24</td><td class="rank-val">62%</td></tr>
-                    <tr><td class="rank-no">2</td><td class="rank-name">Daisy</td><td class="rank-val">22</td><td class="rank-val">60%</td></tr>
-                    <tr><td class="rank-no">3</td><td class="rank-name">May</td><td class="rank-val">19</td><td class="rank-val">58%</td></tr>
-                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">17</td><td class="rank-val">57%</td></tr>
-                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">15</td><td class="rank-val">56%</td></tr>
-                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">13</td><td class="rank-val">55%</td></tr>
-                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">11</td><td class="rank-val">54%</td></tr>
-                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val">10</td><td class="rank-val">52%</td></tr>
-                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val">8</td><td class="rank-val">51%</td></tr>
-                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val">7</td><td class="rank-val">50%</td></tr>
+                    <tr><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">24 人</td><td class="rank-val">62%</td></tr>
+                    <tr><td class="rank-no">2</td><td class="rank-name">Daisy</td><td class="rank-val">22 人</td><td class="rank-val">60%</td></tr>
+                    <tr><td class="rank-no">3</td><td class="rank-name">May</td><td class="rank-val">19 人</td><td class="rank-val">58%</td></tr>
+                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">17 人</td><td class="rank-val">57%</td></tr>
+                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">15 人</td><td class="rank-val">56%</td></tr>
+                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">13 人</td><td class="rank-val">55%</td></tr>
+                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">11 人</td><td class="rank-val">54%</td></tr>
+                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val">10 人</td><td class="rank-val">52%</td></tr>
+                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val">8 人</td><td class="rank-val">51%</td></tr>
+                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val">7 人</td><td class="rank-val">50%</td></tr>
                   </tbody>
                 </table>
-                <div class="rank-self sales-only">
-                  <span class="rank-self-label">我的排名</span>
-                  <span class="rank-self-no">#3</span>
-                  <span class="rank-self-name">May</span>
-                  <span class="rank-self-val">19 · 58%</span>
-                  <span class="rank-self-gap">距 TOP1 差 5 · 较团队均值 −5%</span>
+                <div class="rev-rank-foot">
+                  <span class="rev-rank-chip">团队均值 <strong>15 人</strong></span>
+                  <span class="rev-rank-chip">人均回复率 <strong>56%</strong></span>
+                  <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
                 </div>
-                <div class="rev-rank-foot manager-only">
-                  <span class="rev-rank-chip">团队均值 <strong>19</strong></span>
-                  <span class="rev-rank-chip">人均回复率 <strong>58%</strong></span>
+                <div class="rank-self sales-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">我的排名</span>
+                    <span class="rank-self-name">May · 第 3 名</span>
+                    <span class="rank-self-val">19 人 · 58%</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">距 TOP1 差 5 人 · 领先第 4 名 2 人</span>
+                  </div>
+                </div>
+                <div class="rank-self is-top3-summary manager-only">
+                  <div class="rank-self-line rank-self-line--main">
+                    <span class="rank-self-label">团队 TOP1</span>
+                    <span class="rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rank-self-val">团队 TOP3 销售联系客户总数为：65 人</span>
+                  </div>
+                  <div class="rank-self-line rank-self-line--sub">
+                    <span class="rank-self-gap">所占比团队总额百分比为：44.5%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -6266,51 +6380,64 @@
                 <div class="rev-rank-hero">
                   <div class="rev-hero-card">
                     <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">186</div>
+                    <div class="rev-hero-val">186 项</div>
                     <div class="rev-hero-sub">9 类预警任务</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold">
                     <div class="rev-hero-label">完成数 TOP1</div>
                     <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">24 完成 · 占 12.9%</div>
+                    <div class="rev-hero-sub">24 项 · 占 12.9%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--mine sales-only">
                     <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">22</div>
+                    <div class="rev-hero-val">22 项</div>
                     <div class="rev-hero-sub">排名第 2 · 超均值 +6%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">20.7</div>
+                    <div class="rev-hero-val">20.7 项</div>
                     <div class="rev-hero-sub">待处理 42 项</div>
                   </div>
                 </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
-                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">Coulson</td><td class="rank-val-main">24</td><td class="rank-share-cell"><span class="rank-share-pct">12.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
-                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">May</td><td class="rank-val-main">22</td><td class="rank-share-cell"><span class="rank-share-pct">11.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:92%"></span></span></td></tr>
-                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">Daisy</td><td class="rank-val-main">20</td><td class="rank-share-cell"><span class="rank-share-pct">10.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:83%"></span></span></td></tr>
-                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val-main">19</td><td class="rank-share-cell"><span class="rank-share-pct">10.2%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:79%"></span></span></td></tr>
-                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val-main">18</td><td class="rank-share-cell"><span class="rank-share-pct">9.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:75%"></span></span></td></tr>
-                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">17</td><td class="rank-share-cell"><span class="rank-share-pct">9.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:71%"></span></span></td></tr>
-                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">15</td><td class="rank-share-cell"><span class="rank-share-pct">8.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:63%"></span></span></td></tr>
-                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">14</td><td class="rank-share-cell"><span class="rank-share-pct">7.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:58%"></span></span></td></tr>
-                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">12</td><td class="rank-share-cell"><span class="rank-share-pct">6.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:50%"></span></span></td></tr>
-                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">11</td><td class="rank-share-cell"><span class="rank-share-pct">5.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:46%"></span></span></td></tr>
+                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">Coulson</td><td class="rank-val-main">24 项</td><td class="rank-share-cell"><span class="rank-share-pct">12.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
+                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">May</td><td class="rank-val-main">22 项</td><td class="rank-share-cell"><span class="rank-share-pct">11.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:92%"></span></span></td></tr>
+                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">Daisy</td><td class="rank-val-main">20 项</td><td class="rank-share-cell"><span class="rank-share-pct">10.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:83%"></span></span></td></tr>
+                    <tr><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val-main">19 项</td><td class="rank-share-cell"><span class="rank-share-pct">10.2%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:79%"></span></span></td></tr>
+                    <tr><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val-main">18 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:75%"></span></span></td></tr>
+                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">17 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:71%"></span></span></td></tr>
+                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">15 项</td><td class="rank-share-cell"><span class="rank-share-pct">8.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:63%"></span></span></td></tr>
+                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">14 项</td><td class="rank-share-cell"><span class="rank-share-pct">7.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:58%"></span></span></td></tr>
+                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">12 项</td><td class="rank-share-cell"><span class="rank-share-pct">6.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:50%"></span></span></td></tr>
+                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">11 项</td><td class="rank-share-cell"><span class="rank-share-pct">5.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:46%"></span></span></td></tr>
                   </tbody>
                 </table>
                 <div class="rev-rank-foot">
-                  <span class="rev-rank-chip">团队均值 <strong>20.7</strong></span>
+                  <span class="rev-rank-chip">团队均值 <strong>20.7 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
                   <span class="rev-rank-chip">待处理高危 <strong>42 项</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#2</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">22 完成</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 2 · 22/28 · 超时 2</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 2 名</span>
+                    <span class="rev-rank-self-val">22 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">距 TOP1 差 2 项 · 领先第 3 名 2 项</span>
+                  </div>
+                </div>
+                <div class="rev-rank-self is-top3-summary manager-only">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rev-rank-self-val">团队 TOP3 销售完成总数为：66 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：35.5%</span>
+                  </div>
                 </div>
               </div>
 
@@ -6318,103 +6445,130 @@
                 <div class="rev-rank-hero">
                   <div class="rev-hero-card">
                     <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">142</div>
+                    <div class="rev-hero-val">142 项</div>
                     <div class="rev-hero-sub">5 类日常任务</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold">
                     <div class="rev-hero-label">完成数 TOP1</div>
                     <div class="rev-hero-val">May</div>
-                    <div class="rev-hero-sub">18 完成 · 占 12.7%</div>
+                    <div class="rev-hero-sub">18 项 · 占 12.7%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--mine sales-only">
                     <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">18</div>
+                    <div class="rev-hero-val">18 项</div>
                     <div class="rev-hero-sub">排名第 1 · 超均值 +14%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">15.8</div>
+                    <div class="rev-hero-val">15.8 项</div>
                     <div class="rev-hero-sub">待处理 13 项</div>
                   </div>
                 </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
-                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">May</td><td class="rank-val-main">18</td><td class="rank-share-cell"><span class="rank-share-pct">12.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
-                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">Coulson</td><td class="rank-val-main">17</td><td class="rank-share-cell"><span class="rank-share-pct">12.0%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:94%"></span></span></td></tr>
-                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">Daisy</td><td class="rank-val-main">16</td><td class="rank-share-cell"><span class="rank-share-pct">11.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:89%"></span></span></td></tr>
-                    <tr><td class="rank-no">4</td><td class="rank-name">Simmons</td><td class="rank-val-main">15</td><td class="rank-share-cell"><span class="rank-share-pct">10.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:83%"></span></span></td></tr>
-                    <tr><td class="rank-no">5</td><td class="rank-name">Fitz</td><td class="rank-val-main">14</td><td class="rank-share-cell"><span class="rank-share-pct">9.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:78%"></span></span></td></tr>
-                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">13</td><td class="rank-share-cell"><span class="rank-share-pct">9.2%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:72%"></span></span></td></tr>
-                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">12</td><td class="rank-share-cell"><span class="rank-share-pct">8.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:67%"></span></span></td></tr>
-                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">11</td><td class="rank-share-cell"><span class="rank-share-pct">7.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:61%"></span></span></td></tr>
-                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">10</td><td class="rank-share-cell"><span class="rank-share-pct">7.0%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:56%"></span></span></td></tr>
-                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">9</td><td class="rank-share-cell"><span class="rank-share-pct">6.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:50%"></span></span></td></tr>
+                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">May</td><td class="rank-val-main">18 项</td><td class="rank-share-cell"><span class="rank-share-pct">12.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
+                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">Coulson</td><td class="rank-val-main">17 项</td><td class="rank-share-cell"><span class="rank-share-pct">12.0%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:94%"></span></span></td></tr>
+                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">Daisy</td><td class="rank-val-main">16 项</td><td class="rank-share-cell"><span class="rank-share-pct">11.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:89%"></span></span></td></tr>
+                    <tr><td class="rank-no">4</td><td class="rank-name">Simmons</td><td class="rank-val-main">15 项</td><td class="rank-share-cell"><span class="rank-share-pct">10.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:83%"></span></span></td></tr>
+                    <tr><td class="rank-no">5</td><td class="rank-name">Fitz</td><td class="rank-val-main">14 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:78%"></span></span></td></tr>
+                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">13 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.2%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:72%"></span></span></td></tr>
+                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">12 项</td><td class="rank-share-cell"><span class="rank-share-pct">8.5%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:67%"></span></span></td></tr>
+                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">11 项</td><td class="rank-share-cell"><span class="rank-share-pct">7.7%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:61%"></span></span></td></tr>
+                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">10 项</td><td class="rank-share-cell"><span class="rank-share-pct">7.0%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:56%"></span></span></td></tr>
+                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">9 项</td><td class="rank-share-cell"><span class="rank-share-pct">6.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:50%"></span></span></td></tr>
                   </tbody>
                 </table>
                 <div class="rev-rank-foot">
-                  <span class="rev-rank-chip">团队均值 <strong>15.8</strong></span>
+                  <span class="rev-rank-chip">团队均值 <strong>15.8 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>5 人</strong></span>
                   <span class="rev-rank-chip">待处理日常 <strong>13 项</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#1</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">18 完成</span>
-                  <span class="rev-rank-self-gap">领先第 2 名 1 · 18/22 · 超时 0</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 1 名</span>
+                    <span class="rev-rank-self-val">18 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">领先第 2 名 1 项</span>
+                  </div>
+                </div>
+                <div class="rev-rank-self is-top3-summary manager-only">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">May · 第 1 名</span>
+                    <span class="rev-rank-self-val">团队 TOP3 销售完成总数为：51 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：35.9%</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="rev-rank-tab-panel" data-task-panel="marketing" role="tabpanel">
+              <div class="rev-rank-tab-panel gca-pending-wrap" data-task-panel="marketing" role="tabpanel" aria-label="本期暂不开发">
+                <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
                 <div class="rev-rank-hero">
                   <div class="rev-hero-card">
                     <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">132</div>
+                    <div class="rev-hero-val">132 项</div>
                     <div class="rev-hero-sub">4 类营销任务</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold">
                     <div class="rev-hero-label">完成数 TOP1</div>
                     <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">17 完成 · 占 12.9%</div>
+                    <div class="rev-hero-sub">17 项 · 占 12.9%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--mine sales-only">
                     <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">15</div>
+                    <div class="rev-hero-val">15 项</div>
                     <div class="rev-hero-sub">排名第 3 · 超均值 +2%</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">14.7</div>
+                    <div class="rev-hero-val">14.7 项</div>
                     <div class="rev-hero-sub">待处理 28 项</div>
                   </div>
                 </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
-                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">Coulson</td><td class="rank-val-main">17</td><td class="rank-share-cell"><span class="rank-share-pct">12.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
-                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">Daisy</td><td class="rank-val-main">16</td><td class="rank-share-cell"><span class="rank-share-pct">12.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:94%"></span></span></td></tr>
-                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">May</td><td class="rank-val-main">15</td><td class="rank-share-cell"><span class="rank-share-pct">11.4%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:88%"></span></span></td></tr>
-                    <tr><td class="rank-no">4</td><td class="rank-name">Simmons</td><td class="rank-val-main">14</td><td class="rank-share-cell"><span class="rank-share-pct">10.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:82%"></span></span></td></tr>
-                    <tr><td class="rank-no">5</td><td class="rank-name">Fitz</td><td class="rank-val-main">13</td><td class="rank-share-cell"><span class="rank-share-pct">9.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:76%"></span></span></td></tr>
-                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">12</td><td class="rank-share-cell"><span class="rank-share-pct">9.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:71%"></span></span></td></tr>
-                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">11</td><td class="rank-share-cell"><span class="rank-share-pct">8.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:65%"></span></span></td></tr>
-                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">10</td><td class="rank-share-cell"><span class="rank-share-pct">7.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:59%"></span></span></td></tr>
-                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">9</td><td class="rank-share-cell"><span class="rank-share-pct">6.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:53%"></span></span></td></tr>
-                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">8</td><td class="rank-share-cell"><span class="rank-share-pct">6.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:47%"></span></span></td></tr>
+                    <tr class="rank-top1"><td class="rank-no">🥇</td><td class="rank-name">Coulson</td><td class="rank-val-main">17 项</td><td class="rank-share-cell"><span class="rank-share-pct">12.9%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:100%"></span></span></td></tr>
+                    <tr class="rank-top2"><td class="rank-no">🥈</td><td class="rank-name">Daisy</td><td class="rank-val-main">16 项</td><td class="rank-share-cell"><span class="rank-share-pct">12.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:94%"></span></span></td></tr>
+                    <tr class="rank-top3"><td class="rank-no">🥉</td><td class="rank-name">May</td><td class="rank-val-main">15 项</td><td class="rank-share-cell"><span class="rank-share-pct">11.4%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:88%"></span></span></td></tr>
+                    <tr><td class="rank-no">4</td><td class="rank-name">Simmons</td><td class="rank-val-main">14 项</td><td class="rank-share-cell"><span class="rank-share-pct">10.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:82%"></span></span></td></tr>
+                    <tr><td class="rank-no">5</td><td class="rank-name">Fitz</td><td class="rank-val-main">13 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:76%"></span></span></td></tr>
+                    <tr><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val-main">12 项</td><td class="rank-share-cell"><span class="rank-share-pct">9.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:71%"></span></span></td></tr>
+                    <tr><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val-main">11 项</td><td class="rank-share-cell"><span class="rank-share-pct">8.3%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:65%"></span></span></td></tr>
+                    <tr><td class="rank-no">8</td><td class="rank-name">Hunter</td><td class="rank-val-main">10 项</td><td class="rank-share-cell"><span class="rank-share-pct">7.6%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:59%"></span></span></td></tr>
+                    <tr><td class="rank-no">9</td><td class="rank-name">Ward</td><td class="rank-val-main">9 项</td><td class="rank-share-cell"><span class="rank-share-pct">6.8%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:53%"></span></span></td></tr>
+                    <tr><td class="rank-no">10</td><td class="rank-name">Bobbi</td><td class="rank-val-main">8 项</td><td class="rank-share-cell"><span class="rank-share-pct">6.1%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:47%"></span></span></td></tr>
                   </tbody>
                 </table>
                 <div class="rev-rank-foot">
-                  <span class="rev-rank-chip">团队均值 <strong>14.7</strong></span>
+                  <span class="rev-rank-chip">团队均值 <strong>14.7 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
                   <span class="rev-rank-chip">待处理营销 <strong>28 项</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
-                  <span class="rev-rank-self-label">我的排名</span>
-                  <span class="rev-rank-self-no">#3</span>
-                  <span class="rev-rank-self-name">May</span>
-                  <span class="rev-rank-self-val">15 完成</span>
-                  <span class="rev-rank-self-gap">距 TOP1 差 2 · 15/20 · 超时 1</span>
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">我的排名</span>
+                    <span class="rev-rank-self-name">May · 第 3 名</span>
+                    <span class="rev-rank-self-val">15 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">距 TOP1 差 2 项 · 领先第 4 名 1 项</span>
+                  </div>
+                </div>
+                <div class="rev-rank-self is-top3-summary manager-only">
+                  <div class="rev-rank-self-line rev-rank-self-line--main">
+                    <span class="rev-rank-self-label">团队 TOP1</span>
+                    <span class="rev-rank-self-name">Coulson · 第 1 名</span>
+                    <span class="rev-rank-self-val">团队 TOP3 销售完成总数为：48 项</span>
+                  </div>
+                  <div class="rev-rank-self-line rev-rank-self-line--sub">
+                    <span class="rev-rank-self-gap">所占比团队总额百分比为：36.4%</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -6563,14 +6717,11 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="commStatsDetailFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterNick" placeholder="客户名称" oninput="applyCommStatsDetailFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterSid" placeholder="SID" oninput="applyCommStatsDetailFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--keyword">
+                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCommStatsDetailFilters();}">
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
-                <select class="my-follow-filter-select" id="commStatsDetailFilterResult" onchange="applyCommStatsDetailFilters()">
+                <select class="my-follow-filter-select" id="commStatsDetailFilterResult">
                   <option value="">联系结果</option>
                   <option value="phone-connected">电话接通</option>
                   <option value="phone-missed">电话未接通</option>
@@ -6581,14 +6732,17 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
-                <select class="my-follow-filter-select" id="commStatsDetailFilterEffective" onchange="applyCommStatsDetailFilters()">
+                <select class="my-follow-filter-select" id="commStatsDetailFilterEffective">
                   <option value="">是否有效沟通</option>
                   <option value="yes">是</option>
                   <option value="no">否</option>
                 </select>
               </label>
             </div>
-            <button type="button" class="my-follow-filter-reset" onclick="resetCommStatsDetailFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetCommStatsDetailFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyCommStatsDetailFilters()">查询</button>
+            </div>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -6632,21 +6786,28 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="phoneCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterNick" placeholder="客户昵称" oninput="applyPhoneCommDetailFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--keyword">
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPhoneCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterSid" placeholder="SID" oninput="applyPhoneCommDetailFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <select class="my-follow-filter-select" id="phoneCommDetailFilterConnected" onchange="applyPhoneCommDetailFilters()">
+                <select class="my-follow-filter-select" id="phoneCommDetailFilterConnected">
                   <option value="">是否接通</option>
                   <option value="yes">是</option>
                   <option value="no">否</option>
                 </select>
               </label>
+              <label class="my-follow-filter-field my-follow-filter-field--effective">
+                <select class="my-follow-filter-select" id="phoneCommDetailFilterEffective">
+                  <option value="">沟通时长</option>
+                  <option value="gte60">60S以上</option>
+                  <option value="lt60">60S以内</option>
+                </select>
+              </label>
             </div>
-            <button type="button" class="my-follow-filter-reset" onclick="resetPhoneCommDetailFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetPhoneCommDetailFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyPhoneCommDetailFilters()">查询</button>
+            </div>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -6689,21 +6850,28 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="waCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterNick" placeholder="客户昵称" oninput="applyWaCommDetailFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--keyword">
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyWaCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterSid" placeholder="SID" oninput="applyWaCommDetailFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <select class="my-follow-filter-select" id="waCommDetailFilterReplied" onchange="applyWaCommDetailFilters()">
+                <select class="my-follow-filter-select" id="waCommDetailFilterReplied">
                   <option value="">是否回复</option>
                   <option value="yes">是</option>
                   <option value="no">否</option>
                 </select>
               </label>
+              <label class="my-follow-filter-field">
+                <select class="my-follow-filter-select" id="waCommDetailFilterAudited">
+                  <option value="">组长审核</option>
+                  <option value="yes">已审核</option>
+                  <option value="no">未审核</option>
+                </select>
+              </label>
             </div>
-            <button type="button" class="my-follow-filter-reset" onclick="resetWaCommDetailFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetWaCommDetailFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyWaCommDetailFilters()">查询</button>
+            </div>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -6713,6 +6881,7 @@
                   <th>SID</th>
                   <th>沟通时间</th>
                   <th>是否回复</th>
+                  <th>组长审核</th>
                   <th>沟通截图</th>
                   <th>沟通结果</th>
                 </tr>
@@ -6746,21 +6915,28 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="chatCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterNick" placeholder="客户昵称" oninput="applyChatCommDetailFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--keyword">
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyChatCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterSid" placeholder="SID" oninput="applyChatCommDetailFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <select class="my-follow-filter-select" id="chatCommDetailFilterReplied" onchange="applyChatCommDetailFilters()">
+                <select class="my-follow-filter-select" id="chatCommDetailFilterReplied">
                   <option value="">是否回复</option>
                   <option value="yes">是</option>
                   <option value="no">否</option>
                 </select>
               </label>
+              <label class="my-follow-filter-field my-follow-filter-field--effective">
+                <select class="my-follow-filter-select" id="chatCommDetailFilterEffective">
+                  <option value="">回复时效</option>
+                  <option value="within2min">2min以内</option>
+                  <option value="over2min">2min以上</option>
+                </select>
+              </label>
             </div>
-            <button type="button" class="my-follow-filter-reset" onclick="resetChatCommDetailFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetChatCommDetailFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyChatCommDetailFilters()">查询</button>
+            </div>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -6770,7 +6946,7 @@
                   <th>SID</th>
                   <th>沟通时间</th>
                   <th>是否回复</th>
-                  <th>跟进时效</th>
+                  <th>回复时效</th>
                   <th>沟通结果</th>
                 </tr>
               </thead>
@@ -11082,13 +11258,11 @@ function getCommStatsCommDate(row) {
 }
 
 function getCommStatsDetailFilterValues() {
-  var nickEl = document.getElementById('commStatsDetailFilterNick');
-  var sidEl = document.getElementById('commStatsDetailFilterSid');
+  var keywordEl = document.getElementById('commStatsDetailFilterKeyword');
   var resultEl = document.getElementById('commStatsDetailFilterResult');
   var effectiveEl = document.getElementById('commStatsDetailFilterEffective');
   return {
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
+    keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
     contactResult: resultEl ? resultEl.value : '',
     effective: effectiveEl ? effectiveEl.value : ''
   };
@@ -11108,8 +11282,11 @@ function rowHasChannelContactResult(row, channelType) {
 
 function filterCommStatsDetailRows(rows, filters) {
   return rows.filter(function (row) {
-    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.keyword) {
+      var nick = (row.name || '').toLowerCase();
+      var sid = (row.sid || '').toLowerCase();
+      if (nick.indexOf(filters.keyword) === -1 && sid.indexOf(filters.keyword) === -1) return false;
+    }
     if (_commStatsDetailListMode === 'customers') return true;
     if (_commStatsDetailChannelFilter && !rowHasChannelContactResult(row, _commStatsDetailChannelFilter)) return false;
     if (filters.contactResult && row.contactResults.indexOf(filters.contactResult) === -1) return false;
@@ -11129,12 +11306,10 @@ function applyCommStatsDetailFilters() {
 }
 
 function clearCommStatsDetailFilterInputs() {
-  var nickEl = document.getElementById('commStatsDetailFilterNick');
-  var sidEl = document.getElementById('commStatsDetailFilterSid');
+  var keywordEl = document.getElementById('commStatsDetailFilterKeyword');
   var resultEl = document.getElementById('commStatsDetailFilterResult');
   var effectiveEl = document.getElementById('commStatsDetailFilterEffective');
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  if (keywordEl) keywordEl.value = '';
   if (resultEl) resultEl.value = '';
   if (effectiveEl) effectiveEl.value = '';
 }
@@ -11998,22 +12173,27 @@ function buildPhoneCommDetailRows(salesName, rowCount, metric) {
 }
 
 function getPhoneCommDetailFilterValues() {
-  var nickEl = document.getElementById('phoneCommDetailFilterNick');
-  var sidEl = document.getElementById('phoneCommDetailFilterSid');
+  var keywordEl = document.getElementById('phoneCommDetailFilterKeyword');
   var connectedEl = document.getElementById('phoneCommDetailFilterConnected');
+  var effectiveEl = document.getElementById('phoneCommDetailFilterEffective');
   return {
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
-    connected: connectedEl ? connectedEl.value : ''
+    keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
+    connected: connectedEl ? connectedEl.value : '',
+    effective: effectiveEl ? effectiveEl.value : ''
   };
 }
 
 function filterPhoneCommDetailRows(rows, filters) {
   return rows.filter(function (row) {
-    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.keyword) {
+      var nick = (row.name || '').toLowerCase();
+      var sid = (row.sid || '').toLowerCase();
+      if (nick.indexOf(filters.keyword) === -1 && sid.indexOf(filters.keyword) === -1) return false;
+    }
     if (filters.connected === 'yes' && !row.isConnected) return false;
     if (filters.connected === 'no' && row.isConnected) return false;
+    if (filters.effective === 'gte60' && !(row.isConnected && row.durationSec >= 60)) return false;
+    if (filters.effective === 'lt60' && !(row.isConnected && row.durationSec > 0 && row.durationSec < 60)) return false;
     return true;
   });
 }
@@ -12083,12 +12263,12 @@ function goPhoneCommDetailPage(page) {
 }
 
 function clearPhoneCommDetailFilterInputs() {
-  var nickEl = document.getElementById('phoneCommDetailFilterNick');
-  var sidEl = document.getElementById('phoneCommDetailFilterSid');
+  var keywordEl = document.getElementById('phoneCommDetailFilterKeyword');
   var connectedEl = document.getElementById('phoneCommDetailFilterConnected');
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  var effectiveEl = document.getElementById('phoneCommDetailFilterEffective');
+  if (keywordEl) keywordEl.value = '';
   if (connectedEl) connectedEl.value = '';
+  if (effectiveEl) effectiveEl.value = '';
 }
 
 function applyPhoneCommDetailFilters() {
@@ -12168,15 +12348,18 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
     var isReplied = (s % 4) !== 0;
-    var isAuditValid = isReplied && (s % 3 !== 0);
+    var isAudited = (s % 3) !== 0;
+    var isAuditValid = isReplied && isAudited;
     var screenshotMeta = buildChannelCommScreenshotMeta(s, sid, 'wa_chat_');
     rows.push({
       name: name,
       sid: sid,
       commTime: buildCommStatsCommTime(s),
       isReplied: isReplied,
+      isAudited: isAudited,
       isAuditValid: isAuditValid,
       repliedLabel: isReplied ? '是' : '否',
+      auditedLabel: isAudited ? '已审核' : '未审核',
       hasScreenshot: screenshotMeta.hasScreenshot,
       screenshotName: screenshotMeta.screenshotName,
       resultHtml: buildChannelCommResultHtml(s)
@@ -12191,32 +12374,41 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
 }
 
 function getWaCommDetailFilterValues() {
-  var nickEl = document.getElementById('waCommDetailFilterNick');
-  var sidEl = document.getElementById('waCommDetailFilterSid');
+  var keywordEl = document.getElementById('waCommDetailFilterKeyword');
   var repliedEl = document.getElementById('waCommDetailFilterReplied');
+  var auditedEl = document.getElementById('waCommDetailFilterAudited');
   return {
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
-    replied: repliedEl ? repliedEl.value : ''
+    keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
+    replied: repliedEl ? repliedEl.value : '',
+    audited: auditedEl ? auditedEl.value : ''
   };
 }
 
 function filterWaCommDetailRows(rows, filters) {
   return rows.filter(function (row) {
-    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.keyword) {
+      var nick = (row.name || '').toLowerCase();
+      var sid = (row.sid || '').toLowerCase();
+      if (nick.indexOf(filters.keyword) === -1 && sid.indexOf(filters.keyword) === -1) return false;
+    }
     if (filters.replied === 'yes' && !row.isReplied) return false;
     if (filters.replied === 'no' && row.isReplied) return false;
+    if (filters.audited === 'yes' && !row.isAudited) return false;
+    if (filters.audited === 'no' && row.isAudited) return false;
     return true;
   });
 }
 
 function renderWaCommDetailRowHtml(row) {
+  var auditedHtml = row.isAudited
+    ? '<span class="task-status-tag task-status-tag--reviewed">已审核</span>'
+    : '<span class="task-status-tag task-status-tag--pending">未审核</span>';
   return '<tr>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
+    '<td class="col-audited">' + auditedHtml + '</td>' +
     '<td class="col-screenshot">' + renderChannelCommScreenshotHtml(row) + '</td>' +
     '<td class="col-comm-result">' + row.resultHtml + '</td>' +
     '</tr>';
@@ -12276,12 +12468,12 @@ function goWaCommDetailPage(page) {
 }
 
 function clearWaCommDetailFilterInputs() {
-  var nickEl = document.getElementById('waCommDetailFilterNick');
-  var sidEl = document.getElementById('waCommDetailFilterSid');
+  var keywordEl = document.getElementById('waCommDetailFilterKeyword');
   var repliedEl = document.getElementById('waCommDetailFilterReplied');
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  var auditedEl = document.getElementById('waCommDetailFilterAudited');
+  if (keywordEl) keywordEl.value = '';
   if (repliedEl) repliedEl.value = '';
+  if (auditedEl) auditedEl.value = '';
 }
 
 function applyWaCommDetailFilters() {
@@ -12401,22 +12593,27 @@ function buildChatCommDetailRows(salesName, rowCount, metric) {
 }
 
 function getChatCommDetailFilterValues() {
-  var nickEl = document.getElementById('chatCommDetailFilterNick');
-  var sidEl = document.getElementById('chatCommDetailFilterSid');
+  var keywordEl = document.getElementById('chatCommDetailFilterKeyword');
   var repliedEl = document.getElementById('chatCommDetailFilterReplied');
+  var effectiveEl = document.getElementById('chatCommDetailFilterEffective');
   return {
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
-    replied: repliedEl ? repliedEl.value : ''
+    keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
+    replied: repliedEl ? repliedEl.value : '',
+    effective: effectiveEl ? effectiveEl.value : ''
   };
 }
 
 function filterChatCommDetailRows(rows, filters) {
   return rows.filter(function (row) {
-    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.keyword) {
+      var nick = (row.name || '').toLowerCase();
+      var sid = (row.sid || '').toLowerCase();
+      if (nick.indexOf(filters.keyword) === -1 && sid.indexOf(filters.keyword) === -1) return false;
+    }
     if (filters.replied === 'yes' && !row.isReplied) return false;
     if (filters.replied === 'no' && row.isReplied) return false;
+    if (filters.effective === 'within2min' && !row.isFollowup2min) return false;
+    if (filters.effective === 'over2min' && !(row.isReplied && row.followupSec > 120)) return false;
     return true;
   });
 }
@@ -12486,12 +12683,12 @@ function goChatCommDetailPage(page) {
 }
 
 function clearChatCommDetailFilterInputs() {
-  var nickEl = document.getElementById('chatCommDetailFilterNick');
-  var sidEl = document.getElementById('chatCommDetailFilterSid');
+  var keywordEl = document.getElementById('chatCommDetailFilterKeyword');
   var repliedEl = document.getElementById('chatCommDetailFilterReplied');
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  var effectiveEl = document.getElementById('chatCommDetailFilterEffective');
+  if (keywordEl) keywordEl.value = '';
   if (repliedEl) repliedEl.value = '';
+  if (effectiveEl) effectiveEl.value = '';
 }
 
 function applyChatCommDetailFilters() {
