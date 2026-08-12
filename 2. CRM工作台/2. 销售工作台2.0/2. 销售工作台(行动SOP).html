@@ -1393,10 +1393,22 @@
       display:flex;align-items:center;justify-content:space-between;gap:12px;
       margin-bottom:4px;min-height:32px;
     }
-    .comm-stats-section .module-head-row h2{flex:1;min-width:0;margin:0}
+    .comm-stats-section .module-head-row h2{flex:0 1 auto;min-width:0;margin:0;white-space:nowrap}
+    .comm-stats-period-chips{
+      display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0;margin:0;
+      justify-content:flex-start;align-items:center;
+    }
+    .comm-stats-section .rank-date-chip:hover{
+      border-color:#67e8f9;color:#0e7490;background:#ecfeff;
+    }
+    .comm-stats-section .rank-date-chip.active{
+      background:linear-gradient(135deg,#0891b2,#06b6d4);
+      border-color:#0891b2;color:#fff;
+      box-shadow:0 2px 8px rgba(8,145,178,.2);
+    }
     .comm-stats-head-actions{
       display:flex;align-items:center;justify-content:flex-end;gap:8px;
-      flex-shrink:0;min-height:30px;min-width:132px;
+      flex-shrink:0;min-height:30px;
     }
     .comm-review-entry-btn{
       flex-shrink:0;display:inline-flex;align-items:center;gap:4px;
@@ -2504,6 +2516,9 @@
     #commStatsDetailFilters .my-follow-filter-field--keyword{
       width:220px;
     }
+    #commStatsDetailFilters .my-follow-filter-field--period{
+      width:110px;
+    }
     #commStatsDetailFilters .my-follow-filter-actions{
       display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
     }
@@ -2559,6 +2574,11 @@
     #waCommDetailFilters .my-follow-filter-field--keyword,
     #chatCommDetailFilters .my-follow-filter-field--keyword{
       width:220px;
+    }
+    #phoneCommDetailFilters .my-follow-filter-field--period,
+    #waCommDetailFilters .my-follow-filter-field--period,
+    #chatCommDetailFilters .my-follow-filter-field--period{
+      width:110px;
     }
     #phoneCommDetailFilters .my-follow-filter-field--effective,
     #chatCommDetailFilters .my-follow-filter-field--effective{
@@ -4643,12 +4663,19 @@
             <div class="module-head">
               <div class="module-head-row">
                 <h2>客户触达统计</h2>
+                <div class="rank-date-chips comm-stats-period-chips" role="tablist" aria-label="客户触达统计周期">
+                  <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-comm-stats-period="today" onclick="switchCommStatsPeriod('today', this)">今日</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="yesterday" onclick="switchCommStatsPeriod('yesterday', this)">昨日</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="week" onclick="switchCommStatsPeriod('week', this)">本周</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="month" onclick="switchCommStatsPeriod('month', this)">本月</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="lastmonth" onclick="switchCommStatsPeriod('lastmonth', this)">上月</button>
+                </div>
                 <div class="comm-stats-head-actions">
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp审核</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only">按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果，数据为自然月本月1日截止到目前的数据</p>
-              <p class="kpi-intro manager-only">团队昨日沟通概览 · 按渠道统计联系客户数、回复数与回复率</p>
+              <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：今日</p>
+              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：今日</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -6717,6 +6744,15 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="commStatsDetailFilters">
             <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field my-follow-filter-field--period">
+                <select class="my-follow-filter-select" id="commStatsDetailFilterPeriod">
+                  <option value="today">今日</option>
+                  <option value="yesterday">昨日</option>
+                  <option value="week">本周</option>
+                  <option value="month">本月</option>
+                  <option value="lastmonth">上月</option>
+                </select>
+              </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
                 <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCommStatsDetailFilters();}">
               </label>
@@ -6786,6 +6822,15 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="phoneCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field my-follow-filter-field--period">
+                <select class="my-follow-filter-select" id="phoneCommDetailFilterPeriod">
+                  <option value="today">今日</option>
+                  <option value="yesterday">昨日</option>
+                  <option value="week">本周</option>
+                  <option value="month">本月</option>
+                  <option value="lastmonth">上月</option>
+                </select>
+              </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
                 <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPhoneCommDetailFilters();}">
               </label>
@@ -6850,6 +6895,15 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="waCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field my-follow-filter-field--period">
+                <select class="my-follow-filter-select" id="waCommDetailFilterPeriod">
+                  <option value="today">今日</option>
+                  <option value="yesterday">昨日</option>
+                  <option value="week">本周</option>
+                  <option value="month">本月</option>
+                  <option value="lastmonth">上月</option>
+                </select>
+              </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
                 <input type="text" class="my-follow-filter-input" id="waCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyWaCommDetailFilters();}">
               </label>
@@ -6915,6 +6969,15 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="chatCommDetailFilters">
             <div class="my-follow-drawer-filters-grid">
+              <label class="my-follow-filter-field my-follow-filter-field--period">
+                <select class="my-follow-filter-select" id="chatCommDetailFilterPeriod">
+                  <option value="today">今日</option>
+                  <option value="yesterday">昨日</option>
+                  <option value="week">本周</option>
+                  <option value="month">本月</option>
+                  <option value="lastmonth">上月</option>
+                </select>
+              </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
                 <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyChatCommDetailFilters();}">
               </label>
@@ -7097,10 +7160,11 @@
     <div class="alert-task-follow-body">
       <p class="alert-task-follow-intro">统计范围：<strong class="comm-stats-follow-period-label">今日</strong> · 各销售在当前沟通渠道下的客户沟通跟进汇总</p>
       <div class="rank-date-chips" role="tablist" aria-label="时间范围">
-        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" onclick="switchCommStatsFollowPeriod('today', this)">今日</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchCommStatsFollowPeriod('week', this)">本周</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchCommStatsFollowPeriod('month', this)">本月</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchCommStatsFollowPeriod('lastmonth', this)">上月</button>
+        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="today" onclick="switchCommStatsFollowPeriod('today', this)">今日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="yesterday" onclick="switchCommStatsFollowPeriod('yesterday', this)">昨日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="week" onclick="switchCommStatsFollowPeriod('week', this)">本周</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="month" onclick="switchCommStatsFollowPeriod('month', this)">本月</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="lastmonth" onclick="switchCommStatsFollowPeriod('lastmonth', this)">上月</button>
       </div>
       <div class="alert-task-follow-table-wrap">
         <table class="alert-task-follow-table">
@@ -9401,6 +9465,7 @@ function initGrowthCharts() {
 
 var ALERT_TASK_FOLLOW_PERIODS = {
   today: '今日',
+  yesterday: '昨日',
   week: '本周',
   month: '本月',
   lastmonth: '上月'
@@ -10836,15 +10901,237 @@ var COMM_STATS_CHANNEL_LABELS = {
 };
 var COMM_STATS_CURRENT_SALES = 'Coulson';
 var _commStatsChannelType = '';
+var _commStatsModulePeriod = 'today';
 var _commStatsFollowPeriod = 'today';
 var _commStatsFollowScope = 'channel';
 var COMM_STATS_DETAIL_PAGE_SIZE = 12;
 var _commStatsDetailRows = [];
 var _commStatsDetailAllRows = [];
+
+var COMM_STATS_MODULE_DATA = {
+  sales: {
+    today: {
+      summary: ['86', '42', '28', '18', '49%', '67%', '43%'],
+      effectiveCount: 18,
+      tel: { metrics: ['24', '16', '67%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 8 人' },
+      wa: { metrics: ['20', '14', '70%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 6 人' },
+      chat: { metrics: ['12', '9', '7', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−4%</strong> · 未回复 5 人' },
+      qcTel: { total: '14', score: '87', low: '10', mid: '3', high: '1' },
+      qcCr: { total: '9', score: '83', low: '6', mid: '2', high: '1' }
+    },
+    yesterday: {
+      summary: ['86', '64', '44', '28', '74%', '69%', '44%'],
+      effectiveCount: 28,
+      tel: { metrics: ['38', '26', '68%'], foot: '较团队均值 <strong style="color:#059669">+6%</strong> · 未回复 12 人' },
+      wa: { metrics: ['31', '22', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 9 人' },
+      chat: { metrics: ['19', '15', '11', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人' },
+      qcTel: { total: '26', score: '88', low: '18', mid: '6', high: '2' },
+      qcCr: { total: '16', score: '84', low: '10', mid: '4', high: '2' }
+    },
+    week: {
+      summary: ['86', '168', '118', '76', '82%', '70%', '45%'],
+      effectiveCount: 76,
+      tel: { metrics: ['96', '68', '71%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 28 人' },
+      wa: { metrics: ['82', '58', '71%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 24 人' },
+      chat: { metrics: ['52', '40', '32', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 20 人' },
+      qcTel: { total: '68', score: '89', low: '48', mid: '14', high: '6' },
+      qcCr: { total: '42', score: '85', low: '28', mid: '10', high: '4' }
+    },
+    month: {
+      summary: ['86', '486', '342', '228', '86%', '70%', '47%'],
+      effectiveCount: 228,
+      tel: { metrics: ['286', '198', '69%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 88 人' },
+      wa: { metrics: ['248', '176', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 72 人' },
+      chat: { metrics: ['156', '118', '98', '63%'], foot: '较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 58 人' },
+      qcTel: { total: '196', score: '90', low: '142', mid: '38', high: '16' },
+      qcCr: { total: '128', score: '86', low: '90', mid: '26', high: '12' }
+    },
+    lastmonth: {
+      summary: ['86', '452', '310', '204', '84%', '69%', '45%'],
+      effectiveCount: 204,
+      tel: { metrics: ['264', '182', '69%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 82 人' },
+      wa: { metrics: ['228', '158', '69%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 70 人' },
+      chat: { metrics: ['142', '106', '88', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 54 人' },
+      qcTel: { total: '178', score: '88', low: '128', mid: '36', high: '14' },
+      qcCr: { total: '116', score: '84', low: '82', mid: '24', high: '10' }
+    }
+  },
+  manager: {
+    today: {
+      summary: ['680', '326', '228', '186', '48%', '70%', '57%'],
+      effectiveCount: 186,
+      tel: { metrics: ['196', '134', '68%'], foot: '人均联系 <strong>25</strong> · 人均有效沟通率 <strong>66%</strong>' },
+      wa: { metrics: ['158', '118', '75%'], foot: '人均联系 <strong>20</strong> · 人均回复率 <strong>70%</strong>' },
+      chat: { metrics: ['98', '74', '62', '63%'], foot: '人均联系 <strong>12</strong> · 人均回复率 <strong>56%</strong>' },
+      qcTel: { total: '128', score: '87', low: '92', mid: '26', high: '10' },
+      qcCr: { total: '86', score: '84', low: '60', mid: '18', high: '8' }
+    },
+    yesterday: {
+      summary: ['680', '512', '358', '296', '75%', '70%', '58%'],
+      effectiveCount: 296,
+      tel: { metrics: ['304', '212', '70%'], foot: '人均联系 <strong>38</strong> · 人均有效沟通率 <strong>68%</strong>' },
+      wa: { metrics: ['248', '186', '75%'], foot: '人均联系 <strong>31</strong> · 人均回复率 <strong>71%</strong>' },
+      chat: { metrics: ['152', '118', '96', '63%'], foot: '人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong>' },
+      qcTel: { total: '208', score: '86', low: '136', mid: '52', high: '20' },
+      qcCr: { total: '128', score: '82', low: '78', mid: '34', high: '16' }
+    },
+    week: {
+      summary: ['680', '1860', '1296', '1048', '81%', '70%', '56%'],
+      effectiveCount: 1048,
+      tel: { metrics: ['1120', '780', '70%'], foot: '人均联系 <strong>140</strong> · 人均有效沟通率 <strong>68%</strong>' },
+      wa: { metrics: ['910', '680', '75%'], foot: '人均联系 <strong>114</strong> · 人均回复率 <strong>71%</strong>' },
+      chat: { metrics: ['560', '430', '350', '63%'], foot: '人均联系 <strong>70</strong> · 人均回复率 <strong>58%</strong>' },
+      qcTel: { total: '720', score: '89', low: '520', mid: '140', high: '60' },
+      qcCr: { total: '480', score: '85', low: '340', mid: '96', high: '44' }
+    },
+    month: {
+      summary: ['680', '6280', '4380', '3520', '86%', '70%', '56%'],
+      effectiveCount: 3520,
+      tel: { metrics: ['3720', '2580', '69%'], foot: '人均联系 <strong>465</strong> · 人均有效沟通率 <strong>68%</strong>' },
+      wa: { metrics: ['3040', '2280', '75%'], foot: '人均联系 <strong>380</strong> · 人均回复率 <strong>71%</strong>' },
+      chat: { metrics: ['1880', '1460', '1180', '63%'], foot: '人均联系 <strong>235</strong> · 人均回复率 <strong>58%</strong>' },
+      qcTel: { total: '2460', score: '90', low: '1780', mid: '480', high: '200' },
+      qcCr: { total: '1640', score: '86', low: '1160', mid: '330', high: '150' }
+    },
+    lastmonth: {
+      summary: ['680', '5860', '4040', '3220', '84%', '69%', '55%'],
+      effectiveCount: 3220,
+      tel: { metrics: ['3480', '2400', '69%'], foot: '人均联系 <strong>435</strong> · 人均有效沟通率 <strong>67%</strong>' },
+      wa: { metrics: ['2820', '2080', '74%'], foot: '人均联系 <strong>353</strong> · 人均回复率 <strong>70%</strong>' },
+      chat: { metrics: ['1740', '1320', '1080', '62%'], foot: '人均联系 <strong>218</strong> · 人均回复率 <strong>57%</strong>' },
+      qcTel: { total: '2280', score: '88', low: '1640', mid: '450', high: '190' },
+      qcCr: { total: '1520', score: '84', low: '1080', mid: '300', high: '140' }
+    }
+  }
+};
+
+function getCommStatsPeriodLabel(period) {
+  return ALERT_TASK_FOLLOW_PERIODS[period] || period || '—';
+}
+
+function syncCommStatsFollowPeriodChips(period) {
+  var modal = document.getElementById('commStatsFollowModal');
+  if (!modal) return;
+  modal.querySelectorAll('.rank-date-chip').forEach(function (chip) {
+    var active = chip.getAttribute('data-period') === period;
+    chip.classList.toggle('active', active);
+    chip.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+}
+
+function updateCommStatsModuleIntro(period) {
+  var label = getCommStatsPeriodLabel(period);
+  var salesIntro = document.getElementById('commStatsIntroSales');
+  var managerIntro = document.getElementById('commStatsIntroManager');
+  if (salesIntro) {
+    salesIntro.textContent = '按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：' + label;
+  }
+  if (managerIntro) {
+    managerIntro.textContent = '团队按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：' + label;
+  }
+}
+
+function fillCommStatsSummary(root, values, effectiveCount) {
+  if (!root) return;
+  var chips = root.querySelectorAll('.comm-stats-summary .comm-summary-chip');
+  chips.forEach(function (chip, idx) {
+    if (values[idx] == null) return;
+    var strong = chip.querySelector('strong');
+    if (strong) strong.textContent = values[idx];
+    if (chip.getAttribute('data-comm-chip') === 'effective-rate') {
+      chip.setAttribute('data-comm-count', String(effectiveCount || 0));
+    }
+  });
+}
+
+function fillCommStatsChannel(card, data) {
+  if (!card || !data) return;
+  var vals = card.querySelectorAll('.comm-metric-val');
+  (data.metrics || []).forEach(function (val, idx) {
+    if (vals[idx]) vals[idx].textContent = val;
+  });
+  var foot = card.querySelector('.comm-channel-foot');
+  if (foot && data.foot != null) foot.innerHTML = data.foot;
+}
+
+function fillCommStatsQc(col, data) {
+  if (!col || !data) return;
+  var duals = col.querySelectorAll('.comm-qc-dual-item strong');
+  if (duals[0]) duals[0].textContent = data.total;
+  if (duals[1]) duals[1].textContent = data.score;
+  var risks = col.querySelectorAll('.comm-qc-compliance-item strong');
+  if (risks[0]) risks[0].textContent = data.low;
+  if (risks[1]) risks[1].textContent = data.mid;
+  if (risks[2]) risks[2].textContent = data.high;
+  var compliance = col.querySelector('.comm-qc-compliance');
+  if (compliance) {
+    compliance.setAttribute('aria-label', '低风险 ' + data.low + '，中风险 ' + data.mid + '，高风险 ' + data.high);
+  }
+}
+
+function applyCommStatsModulePeriod(period) {
+  var section = document.querySelector('.comm-stats-section');
+  if (!section) return;
+  ['sales', 'manager'].forEach(function (view) {
+    var block = COMM_STATS_MODULE_DATA[view] && COMM_STATS_MODULE_DATA[view][period];
+    if (!block) return;
+    var root = section.querySelector('.module-body > .' + (view === 'sales' ? 'sales-only' : 'manager-only'));
+    if (!root) return;
+    fillCommStatsSummary(root, block.summary, block.effectiveCount);
+    fillCommStatsChannel(root.querySelector('.comm-channel--tel'), block.tel);
+    fillCommStatsChannel(root.querySelector('.comm-channel--wa'), block.wa);
+    fillCommStatsChannel(root.querySelector('.comm-channel--chat'), block.chat);
+    var qcCols = root.querySelectorAll('.comm-qc-col');
+    fillCommStatsQc(qcCols[0], block.qcTel);
+    fillCommStatsQc(qcCols[1], block.qcCr);
+  });
+  updateCommStatsModuleIntro(period);
+}
+
+function switchCommStatsPeriod(period, btn) {
+  if (!period || !COMM_STATS_MODULE_DATA.sales[period]) return;
+  _commStatsModulePeriod = period;
+  _commStatsFollowPeriod = period;
+  var section = document.querySelector('.comm-stats-section');
+  if (section) {
+    section.querySelectorAll('.comm-stats-period-chips .rank-date-chip').forEach(function (chip) {
+      var active = chip === btn || chip.getAttribute('data-comm-stats-period') === period;
+      chip.classList.toggle('active', active);
+      chip.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+  applyCommStatsModulePeriod(period);
+  syncCommStatsFollowPeriodChips(period);
+}
 var _commStatsDetailPage = 1;
 var _commStatsDetailMetric = 'contacted';
 var _commStatsDetailScope = 'channel';
 var _commStatsDetailChannelFilter = '';
+var _commStatsDetailSalesName = '';
+var _commStatsDetailBaseCount = 0;
+var _commStatsDetailOpenedPeriod = 'today';
+
+function getDefaultCommDetailPeriod() {
+  return _commStatsFollowPeriod || _commStatsModulePeriod || 'today';
+}
+
+function setCommDetailPeriodSelect(selectId, period) {
+  var el = document.getElementById(selectId);
+  if (!el) return;
+  var next = period || 'today';
+  if (!ALERT_TASK_FOLLOW_PERIODS[next]) next = 'today';
+  el.value = next;
+}
+
+function syncCommDetailPeriodFromSelect(selectId, periodLabelId) {
+  var el = document.getElementById(selectId);
+  var period = (el && el.value) || getDefaultCommDetailPeriod();
+  if (!ALERT_TASK_FOLLOW_PERIODS[period]) period = 'today';
+  _commStatsFollowPeriod = period;
+  var labelEl = document.getElementById(periodLabelId);
+  if (labelEl) labelEl.textContent = ALERT_TASK_FOLLOW_PERIODS[period] || period;
+  return period;
+}
 
 var _commStatsFollowExpandedGroups = {};
 var COMM_STATS_FOLLOW_GROUP_KEYS = ['A', 'B', 'C', 'DA', 'DB', 'DC'];
@@ -11296,7 +11583,26 @@ function filterCommStatsDetailRows(rows, filters) {
   });
 }
 
-function applyCommStatsDetailFilters() {
+function applyCommStatsDetailFilters(options) {
+  options = options || {};
+  if (options.rebuild !== false) {
+    syncCommDetailPeriodFromSelect('commStatsDetailFilterPeriod', 'commStatsDetailPeriod');
+    if (_commStatsDetailSalesName && _commStatsDetailBaseCount) {
+      if (_commStatsDetailListMode === 'customers') {
+        _commStatsDetailAllRows = buildCommStatsCustomerDetailRows(
+          _commStatsDetailSalesName,
+          _commStatsDetailBaseCount,
+          _commStatsDetailCustomerMode
+        );
+      } else {
+        _commStatsDetailAllRows = buildCommStatsDetailRows(
+          _commStatsDetailSalesName,
+          _commStatsDetailBaseCount,
+          _commStatsDetailMetric
+        );
+      }
+    }
+  }
   var filters = getCommStatsDetailFilterValues();
   _commStatsDetailRows = filterCommStatsDetailRows(_commStatsDetailAllRows, filters);
   _commStatsDetailPage = 1;
@@ -11316,6 +11622,7 @@ function clearCommStatsDetailFilterInputs() {
 
 function resetCommStatsDetailFilters() {
   clearCommStatsDetailFilterInputs();
+  setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod || getDefaultCommDetailPeriod());
   applyCommStatsDetailFilters();
 }
 
@@ -11711,7 +12018,7 @@ function renderCommStatsDetailTable(salesName, rowCount, metric) {
   } else {
     _commStatsDetailAllRows = buildCommStatsDetailRows(salesName, rowCount, metric);
   }
-  applyCommStatsDetailFilters();
+  applyCommStatsDetailFilters({ rebuild: false });
 }
 
 function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
@@ -11720,6 +12027,9 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   _commStatsDetailCustomerMode = 'my-customers';
   _commStatsDetailMetric = metric || 'contacted';
   _commStatsDetailScope = detailScope || (_commStatsChannelType ? 'channel' : 'all');
+  _commStatsDetailSalesName = salesName;
+  _commStatsDetailBaseCount = rowCount;
+  _commStatsDetailOpenedPeriod = getDefaultCommDetailPeriod();
   var drawer = document.getElementById('commStatsDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('commStatsDetailTitle');
@@ -11733,7 +12043,7 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
     : (COMM_STATS_CHANNEL_LABELS[_commStatsChannelType] || _commStatsChannelType);
   if (titleEl) titleEl.innerHTML = renderCommStatsDetailTitle(salesName, _commStatsDetailScope);
   if (channelEl) channelEl.textContent = channelLabel;
-  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsDetailOpenedPeriod] || _commStatsDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (metricLabelEl) {
     var metricLabels = { replied: '回复', connected: '接通', contacted: '沟通', effective: '有效沟通' };
@@ -11742,6 +12052,7 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   _commStatsDetailChannelFilter = (_commStatsDetailScope === 'channel' && _commStatsChannelType) ? _commStatsChannelType : '';
   clearCommStatsDetailFilterInputs();
+  setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
   renderCommStatsDetailTableHeader();
   updateCommStatsDetailFilterVisibility();
   renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
@@ -11761,7 +12072,10 @@ function openCommStatsCustomerDrawer(salesName, rowCount, customerMode) {
   _commStatsDetailMetric = 'contacted';
   _commStatsDetailScope = 'all';
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = 'today';
+  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  _commStatsDetailSalesName = salesName;
+  _commStatsDetailBaseCount = rowCount;
+  _commStatsDetailOpenedPeriod = getDefaultCommDetailPeriod();
   var drawer = document.getElementById('commStatsDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('commStatsDetailTitle');
@@ -11772,12 +12086,13 @@ function openCommStatsCustomerDrawer(salesName, rowCount, customerMode) {
   var updatedEl = document.getElementById('commStatsDetailUpdatedAt');
   if (titleEl) titleEl.innerHTML = renderCommStatsCustomerDetailTitle(salesName, _commStatsDetailCustomerMode);
   if (channelEl) channelEl.textContent = '全部';
-  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsDetailOpenedPeriod] || _commStatsDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (metricLabelEl) metricLabelEl.textContent = '客户';
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   _commStatsDetailChannelFilter = '';
   clearCommStatsDetailFilterInputs();
+  setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
   renderCommStatsDetailTableHeader();
   updateCommStatsDetailFilterVisibility();
   renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
@@ -11846,12 +12161,8 @@ function openCommStatsSummaryFollowModal() {
   if (!modal) return;
   _commStatsFollowScope = 'summary';
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = 'today';
-  modal.querySelectorAll('.rank-date-chip').forEach(function (chip, idx) {
-    var active = idx === 0;
-    chip.classList.toggle('active', active);
-    chip.setAttribute('aria-selected', active ? 'true' : 'false');
-  });
+  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  syncCommStatsFollowPeriodChips(_commStatsFollowPeriod);
   updateCommStatsFollowModalMeta();
   renderCommStatsFollowTable();
   modal.hidden = false;
@@ -11864,12 +12175,8 @@ function openCommStatsFollowModal(channelType) {
   if (!modal || !channelType) return;
   _commStatsFollowScope = 'channel';
   _commStatsChannelType = channelType;
-  _commStatsFollowPeriod = 'today';
-  modal.querySelectorAll('.rank-date-chip').forEach(function (chip, idx) {
-    var active = idx === 0;
-    chip.classList.toggle('active', active);
-    chip.setAttribute('aria-selected', active ? 'true' : 'false');
-  });
+  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  syncCommStatsFollowPeriodChips(_commStatsFollowPeriod);
   updateCommStatsFollowModalMeta();
   renderCommStatsFollowTable();
   modal.hidden = false;
@@ -12077,6 +12384,9 @@ var _phoneCommDetailRows = [];
 var _phoneCommDetailAllRows = [];
 var _phoneCommDetailPage = 1;
 var _phoneCommDetailMetric = 'contacted';
+var _phoneCommDetailSalesName = '';
+var _phoneCommDetailBaseCount = 0;
+var _phoneCommDetailOpenedPeriod = 'today';
 
 function formatPhoneCommDuration(totalSeconds) {
   var sec = Math.max(0, totalSeconds | 0);
@@ -12271,7 +12581,18 @@ function clearPhoneCommDetailFilterInputs() {
   if (effectiveEl) effectiveEl.value = '';
 }
 
-function applyPhoneCommDetailFilters() {
+function applyPhoneCommDetailFilters(options) {
+  options = options || {};
+  if (options.rebuild !== false) {
+    syncCommDetailPeriodFromSelect('phoneCommDetailFilterPeriod', 'phoneCommDetailPeriod');
+    if (_phoneCommDetailSalesName && _phoneCommDetailBaseCount) {
+      _phoneCommDetailAllRows = buildPhoneCommDetailRows(
+        _phoneCommDetailSalesName,
+        _phoneCommDetailBaseCount,
+        _phoneCommDetailMetric
+      );
+    }
+  }
   var filters = getPhoneCommDetailFilterValues();
   _phoneCommDetailRows = filterPhoneCommDetailRows(_phoneCommDetailAllRows, filters);
   _phoneCommDetailPage = 1;
@@ -12282,18 +12603,22 @@ function applyPhoneCommDetailFilters() {
 
 function resetPhoneCommDetailFilters() {
   clearPhoneCommDetailFilterInputs();
+  setCommDetailPeriodSelect('phoneCommDetailFilterPeriod', _phoneCommDetailOpenedPeriod || getDefaultCommDetailPeriod());
   applyPhoneCommDetailFilters();
 }
 
 function renderPhoneCommDetailTable(salesName, rowCount, metric) {
   _phoneCommDetailAllRows = buildPhoneCommDetailRows(salesName, rowCount, metric);
-  applyPhoneCommDetailFilters();
+  applyPhoneCommDetailFilters({ rebuild: false });
 }
 
 function openPhoneCommDetailDrawer(salesName, rowCount, metric) {
   if (!salesName || !rowCount) return;
   _phoneCommDetailMetric = metric || 'contacted';
   _phoneCommDetailPage = 1;
+  _phoneCommDetailSalesName = salesName;
+  _phoneCommDetailBaseCount = rowCount;
+  _phoneCommDetailOpenedPeriod = getDefaultCommDetailPeriod();
   var drawer = document.getElementById('phoneCommDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('phoneCommDetailTitle');
@@ -12301,10 +12626,11 @@ function openPhoneCommDetailDrawer(salesName, rowCount, metric) {
   var countEl = document.getElementById('phoneCommDetailCount');
   var updatedEl = document.getElementById('phoneCommDetailUpdatedAt');
   if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> 的客户沟通明细';
-  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_phoneCommDetailOpenedPeriod] || _phoneCommDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   clearPhoneCommDetailFilterInputs();
+  setCommDetailPeriodSelect('phoneCommDetailFilterPeriod', _phoneCommDetailOpenedPeriod);
   renderPhoneCommDetailTable(salesName, rowCount, _phoneCommDetailMetric);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -12338,6 +12664,9 @@ var _waCommDetailRows = [];
 var _waCommDetailAllRows = [];
 var _waCommDetailPage = 1;
 var _waCommDetailMetric = 'contacted';
+var _waCommDetailSalesName = '';
+var _waCommDetailBaseCount = 0;
+var _waCommDetailOpenedPeriod = 'today';
 
 function buildWaCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('wa-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
@@ -12476,7 +12805,18 @@ function clearWaCommDetailFilterInputs() {
   if (auditedEl) auditedEl.value = '';
 }
 
-function applyWaCommDetailFilters() {
+function applyWaCommDetailFilters(options) {
+  options = options || {};
+  if (options.rebuild !== false) {
+    syncCommDetailPeriodFromSelect('waCommDetailFilterPeriod', 'waCommDetailPeriod');
+    if (_waCommDetailSalesName && _waCommDetailBaseCount) {
+      _waCommDetailAllRows = buildWaCommDetailRows(
+        _waCommDetailSalesName,
+        _waCommDetailBaseCount,
+        _waCommDetailMetric
+      );
+    }
+  }
   var filters = getWaCommDetailFilterValues();
   _waCommDetailRows = filterWaCommDetailRows(_waCommDetailAllRows, filters);
   _waCommDetailPage = 1;
@@ -12487,18 +12827,22 @@ function applyWaCommDetailFilters() {
 
 function resetWaCommDetailFilters() {
   clearWaCommDetailFilterInputs();
+  setCommDetailPeriodSelect('waCommDetailFilterPeriod', _waCommDetailOpenedPeriod || getDefaultCommDetailPeriod());
   applyWaCommDetailFilters();
 }
 
 function renderWaCommDetailTable(salesName, rowCount, metric) {
   _waCommDetailAllRows = buildWaCommDetailRows(salesName, rowCount, metric);
-  applyWaCommDetailFilters();
+  applyWaCommDetailFilters({ rebuild: false });
 }
 
 function openWaCommDetailDrawer(salesName, rowCount, metric) {
   if (!salesName || !rowCount) return;
   _waCommDetailMetric = metric || 'contacted';
   _waCommDetailPage = 1;
+  _waCommDetailSalesName = salesName;
+  _waCommDetailBaseCount = rowCount;
+  _waCommDetailOpenedPeriod = getDefaultCommDetailPeriod();
   var drawer = document.getElementById('waCommDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('waCommDetailTitle');
@@ -12506,10 +12850,11 @@ function openWaCommDetailDrawer(salesName, rowCount, metric) {
   var countEl = document.getElementById('waCommDetailCount');
   var updatedEl = document.getElementById('waCommDetailUpdatedAt');
   if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> 的客户沟通明细';
-  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_waCommDetailOpenedPeriod] || _waCommDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   clearWaCommDetailFilterInputs();
+  setCommDetailPeriodSelect('waCommDetailFilterPeriod', _waCommDetailOpenedPeriod);
   renderWaCommDetailTable(salesName, rowCount, _waCommDetailMetric);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -12545,6 +12890,9 @@ var _chatCommDetailRows = [];
 var _chatCommDetailAllRows = [];
 var _chatCommDetailPage = 1;
 var _chatCommDetailMetric = 'contacted';
+var _chatCommDetailSalesName = '';
+var _chatCommDetailBaseCount = 0;
+var _chatCommDetailOpenedPeriod = 'today';
 
 function formatChatFollowupTimelinessHtml(totalSeconds) {
   var sec = Math.max(0, totalSeconds | 0);
@@ -12691,7 +13039,18 @@ function clearChatCommDetailFilterInputs() {
   if (effectiveEl) effectiveEl.value = '';
 }
 
-function applyChatCommDetailFilters() {
+function applyChatCommDetailFilters(options) {
+  options = options || {};
+  if (options.rebuild !== false) {
+    syncCommDetailPeriodFromSelect('chatCommDetailFilterPeriod', 'chatCommDetailPeriod');
+    if (_chatCommDetailSalesName && _chatCommDetailBaseCount) {
+      _chatCommDetailAllRows = buildChatCommDetailRows(
+        _chatCommDetailSalesName,
+        _chatCommDetailBaseCount,
+        _chatCommDetailMetric
+      );
+    }
+  }
   var filters = getChatCommDetailFilterValues();
   _chatCommDetailRows = filterChatCommDetailRows(_chatCommDetailAllRows, filters);
   _chatCommDetailPage = 1;
@@ -12702,18 +13061,22 @@ function applyChatCommDetailFilters() {
 
 function resetChatCommDetailFilters() {
   clearChatCommDetailFilterInputs();
+  setCommDetailPeriodSelect('chatCommDetailFilterPeriod', _chatCommDetailOpenedPeriod || getDefaultCommDetailPeriod());
   applyChatCommDetailFilters();
 }
 
 function renderChatCommDetailTable(salesName, rowCount, metric) {
   _chatCommDetailAllRows = buildChatCommDetailRows(salesName, rowCount, metric);
-  applyChatCommDetailFilters();
+  applyChatCommDetailFilters({ rebuild: false });
 }
 
 function openChatCommDetailDrawer(salesName, rowCount, metric) {
   if (!salesName || !rowCount) return;
   _chatCommDetailMetric = metric || 'contacted';
   _chatCommDetailPage = 1;
+  _chatCommDetailSalesName = salesName;
+  _chatCommDetailBaseCount = rowCount;
+  _chatCommDetailOpenedPeriod = getDefaultCommDetailPeriod();
   var drawer = document.getElementById('chatCommDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('chatCommDetailTitle');
@@ -12721,10 +13084,11 @@ function openChatCommDetailDrawer(salesName, rowCount, metric) {
   var countEl = document.getElementById('chatCommDetailCount');
   var updatedEl = document.getElementById('chatCommDetailUpdatedAt');
   if (titleEl) titleEl.innerHTML = '<span class="comm-stats-detail-title-name">' + salesName + '</span> 的客户沟通明细';
-  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsFollowPeriod] || _commStatsFollowPeriod;
+  if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_chatCommDetailOpenedPeriod] || _chatCommDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   clearChatCommDetailFilterInputs();
+  setCommDetailPeriodSelect('chatCommDetailFilterPeriod', _chatCommDetailOpenedPeriod);
   renderChatCommDetailTable(salesName, rowCount, _chatCommDetailMetric);
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -12772,7 +13136,7 @@ function handleCommStatsSummaryChipActivate(chip) {
   if (!count) return;
 
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = 'today';
+  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
 
   if (view === 'manager' && chip.closest('.manager-only')) {
     openCommStatsSummaryFollowModal();
@@ -13242,6 +13606,8 @@ function handleCommStatsChannelActivate(card) {
   var view = document.body.dataset.view || 'sales';
   var channelType = card.getAttribute('data-channel-type');
   if (!channelType) return;
+
+  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
 
   if (view === 'manager' && card.closest('.manager-only')) {
     openCommStatsFollowModal(channelType);
@@ -18411,6 +18777,7 @@ normalizeTempMktRemainingDays();
 initAlertTaskCardInteractions();
 initTempMktCardInteractions();
 initCommStatsCardInteractions();
+applyCommStatsModulePeriod(_commStatsModulePeriod);
 initCommQcCardInteractions();
 initCommFollowEntryForm();
 initCommReviewDrawer();
