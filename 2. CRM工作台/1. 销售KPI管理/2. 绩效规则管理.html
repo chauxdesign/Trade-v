@@ -206,6 +206,7 @@
     .rules-table td.col-id{color:#64748b;font-variant-numeric:tabular-nums;white-space:nowrap}
     .rules-table td.col-name{font-weight:700;color:#0f172a;white-space:nowrap}
     .rules-table td.col-level{white-space:nowrap}
+    .rules-table td.col-project{white-space:nowrap}
     .rules-table td.col-region{white-space:nowrap}
     .rules-table td.col-period,
     .rules-table td.col-month{white-space:nowrap}
@@ -280,8 +281,8 @@
     #kpiRuleDetailBody .kpi-rule-formula-example{
       max-width:100%;width:100%;padding:8px 10px;line-height:1.55;
     }
-    .rules-table td.col-action{white-space:nowrap}
-    .action-group{display:inline-flex;align-items:center;gap:2px;flex-wrap:wrap}
+    .rules-table td.col-action{white-space:nowrap;width:1%}
+    .action-group{display:inline-flex;align-items:center;gap:2px;flex-wrap:nowrap;white-space:nowrap}
     .action-link{
       border:none;background:none;padding:0 4px;
       font-size:12px;font-weight:700;color:var(--accent);cursor:pointer;font-family:inherit;
@@ -626,6 +627,34 @@
     #kpiRuleEntryModalIndia .kpi-rule-name-row .kpi-rule-input{
       flex:0 0 260px;width:260px;max-width:260px;
     }
+    #kpiRuleEntryModalNew .kpi-rule-basic-section .kpi-rule-field,
+    #kpiRuleEntryModalNigeria .kpi-rule-basic-section .kpi-rule-field,
+    #kpiRuleEntryModalIndia .kpi-rule-basic-section .kpi-rule-field{
+      grid-template-columns:minmax(0,3fr) minmax(0,7fr);
+    }
+    #kpiRuleEntryModalNew .kpi-rule-field--project,
+    #kpiRuleEntryModalNigeria .kpi-rule-field--project,
+    #kpiRuleEntryModalIndia .kpi-rule-field--project{
+      grid-template-rows:auto auto;
+      align-items:start;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-field--project .kpi-rule-label,
+    #kpiRuleEntryModalNigeria .kpi-rule-field--project .kpi-rule-label,
+    #kpiRuleEntryModalIndia .kpi-rule-field--project .kpi-rule-label{
+      grid-column:1;grid-row:1;
+      align-self:center;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-field--project .kpi-rule-control,
+    #kpiRuleEntryModalNigeria .kpi-rule-field--project .kpi-rule-control,
+    #kpiRuleEntryModalIndia .kpi-rule-field--project .kpi-rule-control{
+      grid-column:2;grid-row:1;
+    }
+    #kpiRuleEntryModalNew .kpi-rule-field--project .kpi-rule-employee-count,
+    #kpiRuleEntryModalNigeria .kpi-rule-field--project .kpi-rule-employee-count,
+    #kpiRuleEntryModalIndia .kpi-rule-field--project .kpi-rule-employee-count{
+      grid-column:2;grid-row:2;
+      margin-top:8px;
+    }
     #kpiRuleEntryModalNew .kpi-rule-group-scope-row,
     #kpiRuleEntryModalNigeria .kpi-rule-group-scope-row,
     #kpiRuleEntryModalIndia .kpi-rule-group-scope-row{
@@ -707,6 +736,9 @@
       display:inline-flex;align-items:center;gap:6px;font-size:12px;color:#334155;cursor:pointer;
     }
     .kpi-rule-dimension-item input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+    .kpi-rule-project-group{
+      display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px 20px;min-height:34px;
+    }
     .kpi-rule-field--weight{
       grid-template-columns:minmax(148px,auto) minmax(0,1fr);
     }
@@ -1048,6 +1080,7 @@
                 <th>考核地区</th>
                 <th>提成规则名称</th>
                 <th>考核等级</th>
+                <th>考核项目</th>
                 <th>考核月份</th>
                 <th>目标设定进度</th>
                 <th>状态</th>
@@ -2039,6 +2072,14 @@ var KPI_RULES_DATA = (function () {
     };
   }
 
+  function pickMockProjects(config, level) {
+    var key = (config.region || '') + (level || '');
+    var seed = 0;
+    for (var i = 0; i < key.length; i++) seed += key.charCodeAt(i);
+    var presets = [['TradeWill', 'Dana'], ['TradeWill'], ['Dana']];
+    return presets[seed % 3];
+  }
+
   function pushMockRow(config, level, monthLabel, seq, options) {
     options = options || {};
     var quarter = getKpiRuleQuarterByMonth(monthLabel);
@@ -2059,6 +2100,7 @@ var KPI_RULES_DATA = (function () {
       group: level,
       dimensions: dimensions.slice(),
       region: config.region,
+      projects: pickMockProjects(config, level),
       period: monthLabel,
       quarter: quarter,
       splitByMonth: true,
@@ -2296,7 +2338,7 @@ function buildKpiRuleListSalesFormula(row, dimensionsOverride) {
   if (row && row.region === '印度') {
     var formula = '总交易手数 × ' + schemeDefaults.baseAmount + ' × ' +
       formatKpiRuleWeightPercent(parseFloat(schemeDefaults.baseRatio)) + ' × ' + kpiPart;
-    ['联系率', '活跃人数', '净入金'].forEach(function (dim) {
+    KPI_RULE_INDIA_EXTRA_BONUS_ORDER.forEach(function (dim) {
       if (!hasKpiRuleDetailIndiaExtraBonusDim(row, dim)) return;
       formula += ' × ' + KPI_RULE_INDIA_EXTRA_BONUS_FORMULA_LABELS[dim];
     });
@@ -2633,17 +2675,17 @@ function buildKpiRuleDetailIndiaExampleHtml(row) {
   kpiDetail.parts.forEach(function (part) {
     assumptionParts.push(part.label + ' <strong>' + formatKpiRuleExamplePercent(part.rate) + '</strong>');
   });
-  if (hasContactBonus) {
-    assumptionParts.push('联系率完成率 <strong>' + formatKpiRuleExamplePercent(contactRate) + '</strong>');
-    assumptionParts.push('联系率加成比例 <strong>' + formatKpiRuleExamplePercent(contactBonus) + '</strong>');
+  if (hasDepositBonus) {
+    assumptionParts.push('净入金完成率 <strong>' + formatKpiRuleExamplePercent(depositBonusRate) + '</strong>');
+    assumptionParts.push('净入金完成率加成比例 <strong>' + formatKpiRuleExamplePercent(depositBonus) + '</strong>');
   }
   if (hasActiveBonus) {
     assumptionParts.push('充值活跃人数完成率 <strong>' + formatKpiRuleExamplePercent(activeUserRate) + '</strong>');
     assumptionParts.push('充值活跃加成比例 <strong>' + formatKpiRuleExamplePercent(activeBonus) + '</strong>');
   }
-  if (hasDepositBonus) {
-    assumptionParts.push('净入金完成率 <strong>' + formatKpiRuleExamplePercent(depositBonusRate) + '</strong>');
-    assumptionParts.push('净入金完成率加成比例 <strong>' + formatKpiRuleExamplePercent(depositBonus) + '</strong>');
+  if (hasContactBonus) {
+    assumptionParts.push('联系率完成率 <strong>' + formatKpiRuleExamplePercent(contactRate) + '</strong>');
+    assumptionParts.push('联系率加成比例 <strong>' + formatKpiRuleExamplePercent(contactBonus) + '</strong>');
   }
   var salesExpr = buildKpiRuleIndiaSalesCommissionExampleExpr(fixed.tradeLots, baseAmount, kpiDetail.total, baseRatio, contactBonus, activeBonus, depositBonus);
   var salesResult = buildKpiRuleIndiaSalesCommissionExampleValue(fixed.tradeLots, baseAmount, kpiDetail.total, baseRatio, contactBonus, activeBonus, depositBonus);
@@ -2712,6 +2754,7 @@ function buildKpiRuleDetailHtml(row) {
     buildKpiRuleDetailField('提成规则名称', '<div class="kpi-rule-detail-text kpi-rule-detail-text--name">' + buildKpiRuleListDisplayName(row) + '</div>') +
     buildKpiRuleDetailField('考核地区', buildKpiRuleDetailText(row.region || '—')) +
     buildKpiRuleDetailField('考核员工范围', buildKpiRuleDetailText(row.group || '当前地区所有人')) +
+    buildKpiRuleDetailField('考核项目范围', buildKpiRuleDetailText(formatKpiRuleProjects(row.projects))) +
     buildKpiRuleDetailField('考核月份', buildKpiRuleDetailText(formatKpiRuleListAssessmentMonth(row))) +
     buildKpiRuleDetailField('KPI考核维度', renderDimensionTags(dimensions), { middle: true })
   );
@@ -2727,14 +2770,6 @@ function buildKpiRuleDetailHtml(row) {
 
   if (region === '印度') {
     var extraBonusHtml = '';
-    if (hasKpiRuleDetailIndiaExtraBonusDim(row, '联系率')) {
-      extraBonusHtml += renderKpiRuleDetailPerfTable('联系率', row, {
-        sectionKey: 'depositExtraBonus',
-        label: '联系率加成比例：',
-        rangeHeader: '联系率完成率区间',
-        perfHeader: '加成比例'
-      });
-    }
     if (hasKpiRuleDetailIndiaExtraBonusDim(row, '净入金')) {
       extraBonusHtml += renderKpiRuleDetailPerfTable('净入金', row, {
         sectionKey: 'depositExtraBonus',
@@ -2748,6 +2783,14 @@ function buildKpiRuleDetailHtml(row) {
         sectionKey: 'depositExtraBonus',
         label: '充值活跃人数加成比例：',
         rangeHeader: '充值活跃人数完成率区间',
+        perfHeader: '加成比例'
+      });
+    }
+    if (hasKpiRuleDetailIndiaExtraBonusDim(row, '联系率')) {
+      extraBonusHtml += renderKpiRuleDetailPerfTable('联系率', row, {
+        sectionKey: 'depositExtraBonus',
+        label: '联系率加成比例：',
+        rangeHeader: '联系率完成率区间',
         perfHeader: '加成比例'
       });
     }
@@ -3024,7 +3067,7 @@ function renderRulesTable() {
   if (currentPage > totalPages) currentPage = totalPages;
 
   if (!total) {
-    tbody.innerHTML = '<tr><td colspan="9"><div class="table-empty">暂无符合条件的 KPI 提成规则</div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10"><div class="table-empty">暂无符合条件的 KPI 提成规则</div></td></tr>';
     renderPagination(1, 1, 0);
     return;
   }
@@ -3038,6 +3081,7 @@ function renderRulesTable() {
         '<td class="col-region">' + getKpiRuleListRegion(row) + '</td>' +
         '<td class="col-name">' + buildKpiRuleListDisplayName(row) + '</td>' +
         '<td class="col-level">' + renderKpiRuleListLevel(row) + '</td>' +
+        '<td class="col-project">' + formatKpiRuleListProjects(row.projects) + '</td>' +
         '<td class="col-month">' + formatKpiRuleListAssessmentMonth(row) + '</td>' +
         '<td class="col-target' + (isKpiRuleTargetComplete(row) ? '' : ' col-target--incomplete') + '">' + renderRuleTargetSetting(row) + '</td>' +
         '<td class="col-status">' + renderRuleStatus(row) + '</td>' +
@@ -3165,7 +3209,7 @@ var KPI_RULE_DIMENSION_WEIGHTS = {
 };
 
 
-var KPI_RULE_NEW_ENTRY_DEFAULT_DIMENSIONS = ['充值活跃', '净入金'];
+var KPI_RULE_INDONESIA_ENTRY_DIMENSIONS = ['净入金', '充值活跃'];
 
 function isKpiRuleNewEntryVariant(variant) {
   var key = getKpiRuleEntryVariantConfig(variant).key;
@@ -3268,10 +3312,12 @@ var kpiRuleEntryState = {
   india: { perfStore: {}, weightRemovedModules: {}, perfRemovedModules: {}, extraBonusRemovedModules: {}, splitMonthSelection: [], splitMonthPeriodKey: '' }
 };
 
+var KPI_RULE_INDIA_EXTRA_BONUS_ORDER = ['净入金', '活跃人数', '联系率'];
+
 var KPI_RULE_INDIA_EXTRA_BONUS_FIELDS = {
-  '联系率': 'kpiRuleContactExtraBonusFieldIndia',
   '净入金': 'kpiRuleDepositExtraBonusFieldIndia',
-  '活跃人数': 'kpiRuleActiveUserExtraBonusFieldIndia'
+  '活跃人数': 'kpiRuleActiveUserExtraBonusFieldIndia',
+  '联系率': 'kpiRuleContactExtraBonusFieldIndia'
 };
 
 var KPI_RULE_INDIA_EXTRA_BONUS_FORMULA_LABELS = {
@@ -3338,6 +3384,7 @@ function rewriteKpiRuleEntryInlineHandlers(root, variant) {
         .replace(/submitKpiRuleEntryForm\(event\)/g, 'submitKpiRuleEntryForm(event, ' + v + ')')
         .replace(/onKpiRuleRegionChange\(\)/g, 'onKpiRuleRegionChange(' + v + ')')
         .replace(/onKpiRuleGroupChange\(\)/g, 'onKpiRuleGroupChange(' + v + ')')
+        .replace(/onKpiRuleProjectChange\(\)/g, 'onKpiRuleProjectChange(' + v + ')')
         .replace(/updateKpiRuleSplitMonths\(\)/g, 'updateKpiRuleSplitMonths(' + v + ')')
         .replace(/updateKpiRuleDefaultName\(\)/g, 'updateKpiRuleDefaultName(' + v + ')')
         .replace(/syncKpiRuleWeightFields\(\)/g, 'syncKpiRuleWeightFields(' + v + ')')
@@ -3353,12 +3400,57 @@ function rewriteKpiRuleEntryInlineHandlers(root, variant) {
   });
 }
 
+function applyKpiRuleRegionSelectDefault(select, region) {
+  if (!select) return;
+  select.innerHTML =
+    '<option value="印尼">印尼</option>' +
+    '<option value="尼日">尼日</option>' +
+    '<option value="印度">印度</option>';
+  Array.prototype.forEach.call(select.options, function (opt) {
+    opt.selected = opt.value === region;
+    opt.defaultSelected = opt.value === region;
+  });
+  select.value = region || '印尼';
+}
+
+function insertKpiRuleProjectField(clone, suffix) {
+  var groupSelect = clone.querySelector('#kpiRuleGroup' + suffix);
+  var groupField = groupSelect && groupSelect.closest('.kpi-rule-field');
+  if (!groupField || clone.querySelector('#kpiRuleProjectGroup' + suffix)) return;
+  var projectField = document.createElement('div');
+  projectField.className = 'kpi-rule-field kpi-rule-field--project';
+  projectField.innerHTML =
+    '<span class="kpi-rule-label"><span class="req">*</span>考核项目范围：</span>' +
+    '<div class="kpi-rule-control">' +
+      '<div class="kpi-rule-project-group" id="kpiRuleProjectGroup' + suffix + '">' +
+        '<label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleProject' + suffix + '" value="TradeWill" checked onchange="onKpiRuleProjectChange()">TradeWill</label>' +
+        '<label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiRuleProject' + suffix + '" value="Dana" checked onchange="onKpiRuleProjectChange()">Dana</label>' +
+      '</div>' +
+    '</div>';
+  groupField.parentNode.insertBefore(projectField, groupField.nextSibling);
+  var employeeCount = clone.querySelector('#kpiRuleEmployeeCount' + suffix);
+  if (employeeCount) projectField.appendChild(employeeCount);
+}
+
+function moveKpiRuleFieldBefore(anchorEl, moveEl) {
+  if (!anchorEl || !moveEl || anchorEl === moveEl || !anchorEl.parentNode) return;
+  anchorEl.parentNode.insertBefore(moveEl, anchorEl);
+}
+
+function reorderKpiRuleEntryDepositBeforeActive(root, suffix) {
+  if (!root) return;
+  moveKpiRuleFieldBefore(
+    root.querySelector('#kpiRuleWeightFieldActive' + suffix),
+    root.querySelector('#kpiRuleWeightFieldDeposit' + suffix)
+  );
+  moveKpiRuleFieldBefore(
+    root.querySelector('#kpiRulePerfFieldActive' + suffix),
+    root.querySelector('#kpiRulePerfFieldDeposit' + suffix)
+  );
+}
+
 function customizeKpiRuleEntryModalNew(clone) {
-  var regionSelect = clone.querySelector('#kpiRuleRegionNew');
-  if (regionSelect) {
-    var regionField = regionSelect.closest('.kpi-rule-field');
-    if (regionField) regionField.remove();
-  }
+  applyKpiRuleRegionSelectDefault(clone.querySelector('#kpiRuleRegionNew'), '印尼');
   var groupSelect = clone.querySelector('#kpiRuleGroupNew');
   if (groupSelect) {
     groupSelect.innerHTML =
@@ -3372,6 +3464,8 @@ function customizeKpiRuleEntryModalNew(clone) {
       groupRow.classList.add('kpi-rule-group-scope-row');
     }
   }
+  insertKpiRuleProjectField(clone, 'New');
+  reorderKpiRuleEntryDepositBeforeActive(clone, 'New');
   var nameInput = clone.querySelector('#kpiRuleNameNew');
   if (nameInput) {
     nameInput.placeholder = '请选择员工范围与考核时间后自动生成';
@@ -3518,6 +3612,9 @@ function initKpiRuleEntryModalNigeriaClone() {
   clone.querySelectorAll('[name="kpiRuleFormulaTypeNew"]').forEach(function (el) {
     el.name = 'kpiRuleFormulaTypeNigeria';
   });
+  clone.querySelectorAll('[name="kpiRuleProjectNew"]').forEach(function (el) {
+    el.name = 'kpiRuleProjectNigeria';
+  });
   rebindKpiRuleEntryVariantHandlers(clone, 'new', 'nigeria');
   customizeKpiRuleEntryModalNigeria(clone);
   var title = clone.querySelector('#kpiRuleEntryTitleNigeria');
@@ -3547,6 +3644,9 @@ function initKpiRuleEntryModalIndiaClone() {
   clone.querySelectorAll('[name="kpiRuleFormulaTypeNew"]').forEach(function (el) {
     el.name = 'kpiRuleFormulaTypeIndia';
   });
+  clone.querySelectorAll('[name="kpiRuleProjectNew"]').forEach(function (el) {
+    el.name = 'kpiRuleProjectIndia';
+  });
   rebindKpiRuleEntryVariantHandlers(clone, 'new', 'india');
   customizeKpiRuleEntryModalIndia(clone);
   var title = clone.querySelector('#kpiRuleEntryTitleIndia');
@@ -3561,6 +3661,7 @@ function initKpiRuleEntryModalIndiaClone() {
 
 function customizeKpiRuleEntryModalIndia(clone) {
   removeKpiRuleExcludeLeaderPersonalCheck(clone);
+  applyKpiRuleRegionSelectDefault(clone.querySelector('#kpiRuleRegionIndia'), '印度');
   var groupSelect = clone.querySelector('#kpiRuleGroupIndia');
   if (groupSelect) {
     groupSelect.innerHTML =
@@ -3582,25 +3683,6 @@ function customizeKpiRuleEntryModalIndia(clone) {
     extraSection.innerHTML =
       '<div class="kpi-rule-form-section-head">4. 额外奖励加成设置</div>' +
       '<div class="kpi-rule-form-section-body" id="kpiRuleDepositExtraBonusSectionBodyIndia">' +
-        '<div class="kpi-rule-field kpi-rule-field--perf" id="kpiRuleContactExtraBonusFieldIndia">' +
-          '<div class="kpi-rule-perf-module-head">' +
-            '<label class="kpi-rule-label">联系率加成比例：</label>' +
-            '<a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRuleDepositExtraBonusModule(event, \'联系率\', \'india\')">-移除此加成维度</a>' +
-          '</div>' +
-          '<div class="kpi-rule-control">' +
-            '<div class="kpi-rule-perf-table-wrap">' +
-              '<table class="kpi-rule-perf-table" data-perf-section="depositExtraBonus" data-perf-dimension="联系率">' +
-                '<thead>' +
-                  '<tr><th class="col-no">编号</th><th class="col-range">联系率完成率区间</th><th class="col-perf col-perf--with-help"><span class="kpi-rule-perf-help-label">加成比例<span class="kpi-rule-perf-help" tabindex="0" role="img">?</span></span></th><th class="col-action">操作</th></tr>' +
-                '</thead>' +
-                '<tbody></tbody>' +
-              '</table>' +
-              '<div class="kpi-rule-perf-table-foot">' +
-                '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="depositExtraBonus" data-perf-dimension="联系率">+ 新增区间</a>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
         '<div class="kpi-rule-field kpi-rule-field--perf" id="kpiRuleDepositExtraBonusFieldIndia">' +
           '<div class="kpi-rule-perf-module-head">' +
             '<label class="kpi-rule-label">净入金加成比例：</label>' +
@@ -3635,6 +3717,25 @@ function customizeKpiRuleEntryModalIndia(clone) {
               '</table>' +
               '<div class="kpi-rule-perf-table-foot">' +
                 '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="depositExtraBonus" data-perf-dimension="活跃人数">+ 新增区间</a>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="kpi-rule-field kpi-rule-field--perf" id="kpiRuleContactExtraBonusFieldIndia">' +
+          '<div class="kpi-rule-perf-module-head">' +
+            '<label class="kpi-rule-label">联系率加成比例：</label>' +
+            '<a href="#" class="kpi-rule-perf-remove-module-link" onclick="removeKpiRuleDepositExtraBonusModule(event, \'联系率\', \'india\')">-移除此加成维度</a>' +
+          '</div>' +
+          '<div class="kpi-rule-control">' +
+            '<div class="kpi-rule-perf-table-wrap">' +
+              '<table class="kpi-rule-perf-table" data-perf-section="depositExtraBonus" data-perf-dimension="联系率">' +
+                '<thead>' +
+                  '<tr><th class="col-no">编号</th><th class="col-range">联系率完成率区间</th><th class="col-perf col-perf--with-help"><span class="kpi-rule-perf-help-label">加成比例<span class="kpi-rule-perf-help" tabindex="0" role="img">?</span></span></th><th class="col-action">操作</th></tr>' +
+                '</thead>' +
+                '<tbody></tbody>' +
+              '</table>' +
+              '<div class="kpi-rule-perf-table-foot">' +
+                '<a href="#" class="kpi-rule-perf-action-link kpi-rule-perf-add-btn" data-perf-section="depositExtraBonus" data-perf-dimension="联系率">+ 新增区间</a>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -3713,6 +3814,7 @@ function customizeKpiRuleEntryModalIndia(clone) {
 
 function customizeKpiRuleEntryModalNigeria(clone) {
   removeKpiRuleExcludeLeaderPersonalCheck(clone);
+  applyKpiRuleRegionSelectDefault(clone.querySelector('#kpiRuleRegionNigeria'), '尼日');
   var groupSelect = clone.querySelector('#kpiRuleGroupNigeria');
   if (groupSelect) {
     groupSelect.innerHTML =
@@ -4009,7 +4111,7 @@ function getKpiRuleNigeriaFormulaDisplayLabel(formulaType) {
 
 function buildKpiRuleIndiaSalesFormulaText() {
   var parts = ['总交易手数', '基础提成金额', '基础提成比例', 'KPI完成率'];
-  ['联系率', '活跃人数', '净入金'].forEach(function (dim) {
+  KPI_RULE_INDIA_EXTRA_BONUS_ORDER.forEach(function (dim) {
     if (!isKpiRuleIndiaExtraBonusModuleActive(dim)) return;
     parts.push(KPI_RULE_INDIA_EXTRA_BONUS_FORMULA_LABELS[dim]);
   });
@@ -4062,7 +4164,7 @@ function buildKpiRuleIndiaSalesCommissionPreview(lotsPart, amountPart, ratioPart
     kpiRuleFormulaPreviewOp('×') + amountPart +
     kpiRuleFormulaPreviewOp('×') + ratioPart +
     kpiRuleFormulaPreviewOp('×') + kpiPart;
-  ['联系率', '活跃人数', '净入金'].forEach(function (dim) {
+  KPI_RULE_INDIA_EXTRA_BONUS_ORDER.forEach(function (dim) {
     if (!isKpiRuleIndiaExtraBonusModuleActive(dim)) return;
     var label = KPI_RULE_INDIA_EXTRA_BONUS_FORMULA_LABELS[dim];
     preview += kpiRuleFormulaPreviewOp('×') + buildKpiRuleFormulaPreviewPlaceholder(label);
@@ -4073,17 +4175,17 @@ function buildKpiRuleIndiaSalesCommissionPreview(lotsPart, amountPart, ratioPart
 function buildKpiRuleIndiaSalesCommissionExampleExpr(tradeLots, baseAmount, kpiTotal, baseRatio, contactBonus, activeBonus, depositBonus) {
   var expr = tradeLots.toLocaleString('en-US') + ' × ' + formatKpiRuleExampleMoney(baseAmount) + ' × ' +
     formatKpiRuleExamplePercent(baseRatio) + ' × ' + formatKpiRuleExamplePercent(kpiTotal);
-  if (contactBonus != null) expr += ' × ' + formatKpiRuleExamplePercent(contactBonus);
-  if (activeBonus != null) expr += ' × ' + formatKpiRuleExamplePercent(activeBonus);
   if (depositBonus != null) expr += ' × ' + formatKpiRuleExamplePercent(depositBonus);
+  if (activeBonus != null) expr += ' × ' + formatKpiRuleExamplePercent(activeBonus);
+  if (contactBonus != null) expr += ' × ' + formatKpiRuleExamplePercent(contactBonus);
   return expr;
 }
 
 function buildKpiRuleIndiaSalesCommissionExampleValue(tradeLots, baseAmount, kpiTotal, baseRatio, contactBonus, activeBonus, depositBonus) {
   var value = tradeLots * baseAmount * (baseRatio / 100) * (kpiTotal / 100);
-  if (contactBonus != null) value *= (contactBonus / 100);
-  if (activeBonus != null) value *= (activeBonus / 100);
   if (depositBonus != null) value *= (depositBonus / 100);
+  if (activeBonus != null) value *= (activeBonus / 100);
+  if (contactBonus != null) value *= (contactBonus / 100);
   return value;
 }
 
@@ -4724,7 +4826,7 @@ function syncKpiRuleLinkedFields(config, options) {
 
 function getSelectedKpiRuleDimensions() {
   if (isKpiRuleNewEntryVariant()) {
-    return KPI_RULE_NEW_ENTRY_DEFAULT_DIMENSIONS.slice();
+    return KPI_RULE_INDONESIA_ENTRY_DIMENSIONS.slice();
   }
   var form = kriForm();
   if (!form) return [];
@@ -4924,11 +5026,10 @@ function isKpiRuleLeaderSchemeChecked(variant) {
 function buildKpiRuleEmployeeCountText(count, variant) {
   if (isKpiRuleNewEntryVariant(variant)) {
     var group = kriEl('kpiRuleGroup', variant);
-    var groupVal = group && group.value;
-    if (groupVal) {
-      return '所选员工范围' + groupVal + '总人数为 ' + count + ' 人';
-    }
-    return '所选员工范围总人数为 ' + count + ' 人';
+    var groupVal = (group && group.value) || '—';
+    var selectedProjects = getSelectedKpiRuleProjects(variant);
+    var projects = selectedProjects.length ? selectedProjects.join('+') : '—';
+    return '所选「' + groupVal + '」等级员工中覆盖「' + projects + '」的总人数为 ' + count + ' 人';
   }
   return '所选员工范围总人数为 ' + count + ' 人';
 }
@@ -5053,17 +5154,17 @@ function buildKpiRuleFormulaExample() {
     var indiaActiveUserRate = KPI_RULE_INDIA_FORMULA_EXAMPLE_RATES.activeUserRate;
     var indiaDepositBonusRate = KPI_RULE_INDIA_FORMULA_EXAMPLE_RATES.depositBonusRate;
     var indiaBonuses = getKpiRuleIndiaActiveExtraBonusExamplePercents();
-    if (indiaBonuses.contactBonus != null) {
-      assumptionParts.push('联系率完成率 <strong>' + formatKpiRuleExamplePercent(indiaContactRate) + '</strong>');
-      assumptionParts.push('联系率加成比例 <strong>' + formatKpiRuleExamplePercent(indiaBonuses.contactBonus) + '</strong>');
+    if (indiaBonuses.depositBonus != null) {
+      assumptionParts.push('净入金完成率 <strong>' + formatKpiRuleExamplePercent(indiaDepositBonusRate) + '</strong>');
+      assumptionParts.push('净入金完成率加成比例 <strong>' + formatKpiRuleExamplePercent(indiaBonuses.depositBonus) + '</strong>');
     }
     if (indiaBonuses.activeBonus != null) {
       assumptionParts.push('充值活跃人数完成率 <strong>' + formatKpiRuleExamplePercent(indiaActiveUserRate) + '</strong>');
       assumptionParts.push('充值活跃加成比例 <strong>' + formatKpiRuleExamplePercent(indiaBonuses.activeBonus) + '</strong>');
     }
-    if (indiaBonuses.depositBonus != null) {
-      assumptionParts.push('净入金完成率 <strong>' + formatKpiRuleExamplePercent(indiaDepositBonusRate) + '</strong>');
-      assumptionParts.push('净入金完成率加成比例 <strong>' + formatKpiRuleExamplePercent(indiaBonuses.depositBonus) + '</strong>');
+    if (indiaBonuses.contactBonus != null) {
+      assumptionParts.push('联系率完成率 <strong>' + formatKpiRuleExamplePercent(indiaContactRate) + '</strong>');
+      assumptionParts.push('联系率加成比例 <strong>' + formatKpiRuleExamplePercent(indiaBonuses.contactBonus) + '</strong>');
     }
   }
   if (isLeader) {
@@ -5287,9 +5388,11 @@ function resetKpiRuleWeights(variant) {
 
 var KPI_RULE_CURRENT_USER_REGION = '印尼';
 
-function getKpiRuleRegionValue() {
-  var region = kriEl('kpiRuleRegion');
+function getKpiRuleRegionValue(variant) {
+  var region = kriEl('kpiRuleRegion', variant);
   if (region && region.value) return region.value;
+  var cfg = getKpiRuleEntryVariantConfig(variant);
+  if (cfg.region) return cfg.region;
   return KPI_RULE_CURRENT_USER_REGION;
 }
 
@@ -5300,44 +5403,93 @@ function onKpiRuleRegionChange(variant) {
 }
 
 function getKpiRuleEntryRegionForVariant(variant) {
-  var cfg = getKpiRuleEntryVariantConfig(variant);
-  if (cfg.region) return cfg.region;
-  return KPI_RULE_CURRENT_USER_REGION;
+  return getKpiRuleRegionValue(variant);
+}
+
+function getSelectedKpiRuleProjects(variant) {
+  var form = kriForm(variant);
+  if (!form) return [];
+  var name = 'kpiRuleProject' + getKpiRuleEntryVariantConfig(variant).suffix;
+  return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '"]:checked'), function (el) {
+    return el.value;
+  });
+}
+
+function resetKpiRuleProjectChecks(variant) {
+  var form = kriForm(variant);
+  if (!form) return;
+  var name = 'kpiRuleProject' + getKpiRuleEntryVariantConfig(variant).suffix;
+  form.querySelectorAll('input[name="' + name + '"]').forEach(function (el) {
+    el.checked = true;
+  });
+}
+
+function formatKpiRuleProjects(projects) {
+  if (!projects || !projects.length) return '—';
+  return projects.join('、');
+}
+
+function formatKpiRuleListProjects(projects) {
+  if (!projects || !projects.length) return '—';
+  var ordered = [];
+  if (projects.indexOf('TradeWill') >= 0) ordered.push('TradeWill');
+  if (projects.indexOf('Dana') >= 0) ordered.push('Dana');
+  return ordered.length ? ordered.join('+') : '—';
+}
+
+function applyKpiRuleProjectFilterToCount(total, variant) {
+  if (!isKpiRuleNewEntryVariant(variant)) return total;
+  var projects = getSelectedKpiRuleProjects(variant);
+  var hasTW = projects.indexOf('TradeWill') >= 0;
+  var hasDana = projects.indexOf('Dana') >= 0;
+  if (!hasTW && !hasDana) return 0;
+  if (hasTW && hasDana) return total;
+  var twCount = Math.round(total * 0.45);
+  if (twCount > total) twCount = total;
+  return hasTW ? twCount : (total - twCount);
+}
+
+function onKpiRuleProjectChange(variant) {
+  if (variant) setActiveKpiRuleEntryVariant(variant);
+  updateKpiRuleEmployeeCount();
 }
 
 function initKpiRuleBasicFields(variant) {
   if (variant) setActiveKpiRuleEntryVariant(variant);
-  if (!isKpiRuleNewEntryVariant()) {
-    var region = kriEl('kpiRuleRegion');
-    if (region) {
-      region.value = KPI_RULE_CURRENT_USER_REGION;
-    }
+  var region = kriEl('kpiRuleRegion');
+  if (region) {
+    var defaultRegion = isKpiRuleNewEntryVariant()
+      ? (getKpiRuleEntryVariantConfig().region || '印尼')
+      : KPI_RULE_CURRENT_USER_REGION;
+    region.value = defaultRegion;
   }
   var group = kriEl('kpiRuleGroup');
   if (group) group.value = '';
+  resetKpiRuleProjectChecks(variant);
   updateKpiRuleEmployeeCount();
 }
 
 function getKpiRuleEmployeeCount() {
   var group = kriEl('kpiRuleGroup');
   var groupVal = group && group.value;
+  var total = 0;
   if (isKpiRuleNigeriaEntryVariant()) {
     if (!groupVal) return 0;
-    return KPI_RULE_NIGERIA_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
-  }
-  if (isKpiRuleIndiaEntryVariant()) {
+    total = KPI_RULE_NIGERIA_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  } else if (isKpiRuleIndiaEntryVariant()) {
     if (!groupVal) return 0;
-    return KPI_RULE_INDIA_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
-  }
-  if (isKpiRuleNewEntryVariant()) {
+    total = KPI_RULE_INDIA_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  } else if (isKpiRuleNewEntryVariant()) {
     if (!groupVal) return 0;
-    if (groupVal === '销售组长') {
-      return KPI_RULE_SALES_LEADER_TOTAL;
-    }
-    return KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+    total = groupVal === '销售组长'
+      ? KPI_RULE_SALES_LEADER_TOTAL
+      : (KPI_RULE_LEVEL_GROUP_EMPLOYEE_COUNTS[groupVal] || 0);
+  } else if (groupVal && groupVal !== '当前地区所有人') {
+    total = KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
+  } else {
+    total = KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
   }
-  if (groupVal && groupVal !== '当前地区所有人') return KPI_RULE_GROUP_EMPLOYEE_COUNTS[groupVal] || 0;
-  return KPI_RULE_REGION_EMPLOYEE_TOTALS[getKpiRuleRegionValue()] || 0;
+  return applyKpiRuleProjectFilterToCount(total);
 }
 
 function updateKpiRuleEmployeeCount() {
@@ -5581,6 +5733,7 @@ function buildKpiRuleListRowFromNewEntry() {
     group: group,
     dimensions: dimensions.slice(),
     region: getKpiRuleEntryRegionForVariant(activeKpiRuleEntryVariant),
+    projects: getSelectedKpiRuleProjects(activeKpiRuleEntryVariant),
     period: period,
     quarter: quarter,
     splitByMonth: !!(splitEl && splitEl.checked),
@@ -5629,6 +5782,10 @@ function submitKpiRuleEntryForm(event, variant) {
     return;
   }
   if (!validateKpiRuleSchemeSection()) {
+    return;
+  }
+  if (isKpiRuleNewEntryVariant() && !getSelectedKpiRuleProjects().length) {
+    alert('请至少选择一个考核项目范围');
     return;
   }
   if (isKpiRuleNewEntryVariant()) {
