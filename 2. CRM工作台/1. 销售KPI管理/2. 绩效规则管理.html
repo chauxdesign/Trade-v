@@ -153,6 +153,7 @@
       outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
     }
     .board-filter-select--group{width:170px}
+    .board-filter-select--project{width:168px}
     .board-filter-select--period{width:160px}
     .board-filter-reset{
       height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;
@@ -739,6 +740,10 @@
     .kpi-rule-project-group{
       display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px 20px;min-height:34px;
     }
+    #kpiTargetProjectGroup .kpi-rule-dimension-item{cursor:default;color:#334155}
+    #kpiTargetProjectGroup .kpi-rule-dimension-item input{
+      cursor:default;opacity:1;accent-color:var(--accent);
+    }
     .kpi-rule-field--weight{
       grid-template-columns:minmax(148px,auto) minmax(0,1fr);
     }
@@ -1046,6 +1051,15 @@
                 <option value="销售组长">销售组长</option>
                 <option value="V23销售组长">V23销售组长</option>
                 <option value="V4销售组长">V4销售组长</option>
+              </select>
+            </div>
+            <div class="board-filter-field">
+              <label class="board-filter-label" for="filterProject">考核项目：</label>
+              <select class="board-filter-select board-filter-select--project" id="filterProject">
+                <option value="">全部</option>
+                <option value="TradeWill">TradeWill</option>
+                <option value="Dana">Dana</option>
+                <option value="TradeWill+Dana">TradeWill+Dana</option>
               </select>
             </div>
             <div class="board-filter-field">
@@ -1408,6 +1422,15 @@
                   <option value="V23销售">V23销售</option>
                   <option value="V4销售">V4销售</option>
                 </select>
+              </div>
+            </div>
+            <div class="kpi-rule-field">
+              <span class="kpi-rule-label">考核项目范围：</span>
+              <div class="kpi-rule-control">
+                <div class="kpi-rule-project-group" id="kpiTargetProjectGroup">
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiTargetProject" value="TradeWill" disabled>TradeWill</label>
+                  <label class="kpi-rule-dimension-item"><input type="checkbox" name="kpiTargetProject" value="Dana" disabled>Dana</label>
+                </div>
               </div>
             </div>
             <div class="kpi-rule-field kpi-rule-field--top kpi-rule-field--employee-select">
@@ -1905,7 +1928,7 @@ function buildKpiRuleListId(monthLabel, seq) {
   return year + month + String(seqNum).padStart(4, '0');
 }
 
-var KPI_RULE_STANDARD_DIMENSIONS = ['充值活跃', '净入金'];
+var KPI_RULE_STANDARD_DIMENSIONS = ['净入金', '充值活跃'];
 
 var KPI_RULE_LIST_WEIGHT_PRESETS = {
   '充值活跃,净入金': { '充值活跃': 30, '净入金': 70 }
@@ -2967,11 +2990,14 @@ function compareKpiRuleListRowsByMonthAsc(a, b) {
 function getFilteredRules() {
   var region = document.getElementById('filterRegion').value;
   var group = document.getElementById('filterGroup').value;
+  var projectEl = document.getElementById('filterProject');
+  var project = projectEl ? projectEl.value : '';
   var period = document.getElementById('filterPeriod').value;
   var periodMonths = period ? KPI_RULE_QUARTER_MONTHS[period] || [] : null;
   return KPI_RULES_DATA.filter(function (row) {
     if (region && row.region !== region) return false;
     if (group && row.group !== group) return false;
+    if (project && formatKpiRuleListProjects(row.projects) !== project) return false;
     if (periodMonths && periodMonths.indexOf(row.period) === -1) return false;
     return true;
   }).sort(compareKpiRuleListRowsByMonthAsc);
@@ -3103,6 +3129,8 @@ function resetFilters() {
   var regionSelect = document.getElementById('filterRegion');
   if (regionSelect) regionSelect.value = '';
   document.getElementById('filterGroup').value = '';
+  var projectSelect = document.getElementById('filterProject');
+  if (projectSelect) projectSelect.value = '';
   var periodSelect = document.getElementById('filterPeriod');
   var defaultKey = getKpiRuleCurrentQuarterKey();
   if (periodSelect) {
@@ -5834,6 +5862,14 @@ function setKpiTargetGroupDisplay(group) {
   groupEl.disabled = true;
 }
 
+function setKpiTargetProjectDisplay(projects) {
+  var selected = projects || [];
+  document.querySelectorAll('#kpiTargetProjectGroup input[name="kpiTargetProject"]').forEach(function (el) {
+    el.checked = selected.indexOf(el.value) >= 0;
+    el.disabled = true;
+  });
+}
+
 var KPI_TARGET_LEVEL_GROUP_LEVEL_MAP = {
   'V1销售': 'V1',
   'V23销售': 'V2-3',
@@ -6583,6 +6619,7 @@ function populateKpiTargetFormFromRow(row) {
   if (!row) return;
   kpiTargetScopeGroup = row.group || '';
   setKpiTargetGroupDisplay(row.group || '');
+  setKpiTargetProjectDisplay(row.projects);
 
   var activeGoal = document.getElementById('kpiTargetActiveGoal');
   var depositGoal = document.getElementById('kpiTargetDepositGoal');
