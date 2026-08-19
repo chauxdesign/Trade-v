@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>提现预警优化</title>
+  <style>
+    :root {
+      --bg: #eceff3;
+      --wire: #d1d5db;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e8ecf1;
+      --panel: #fff;
+      --accent: #2563eb;
+      --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --card-radius: 14px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .wb-sidebar-frame {
+      width: 250px;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    .wb-topbar-frame {
+      width: 100%;
+      height: 80px;
+      border: none;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .scroll-wrap {
+      flex: 1;
+      overflow: auto;
+      padding: 12px 14px 24px;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .filter-bar {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-actions-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      height: 34px;
+      min-width: 160px;
+      padding: 0 28px 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-size: 12px;
+      color: #0f172a;
+      font-family: inherit;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    .btn {
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+
+    .btn-reset {
+      background: #fff;
+      border-color: #2563eb;
+      color: #2563eb;
+    }
+
+    .btn-reset:hover {
+      background: #eff6ff;
+    }
+
+    .page-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      flex: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 12px;
+    }
+
+    .col-w-status { width: 8%; }
+    .col-w-sid { width: 10%; }
+    .col-w-order { width: 14%; }
+    .col-w-amount { width: 10%; }
+    .col-w-count { width: 6%; }
+    .col-w-total { width: 10%; }
+    .col-w-push { width: 12%; }
+    .col-w-recharge { width: 12%; }
+    .col-w-done { width: 12%; }
+    .col-w-action { width: 6%; }
+
+    th, td {
+      padding: 10px 8px;
+      text-align: left;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      background: #dbeafe;
+      color: #1e293b;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tr:hover td { background: #f8fbff; }
+
+    .cell-empty {
+      color: #94a3b8;
+    }
+
+    .col-status {
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .col-num {
+      font-variant-numeric: tabular-nums;
+      color: #0f172a;
+    }
+
+    .col-time {
+      font-variant-numeric: tabular-nums;
+      color: #475569;
+    }
+
+    .col-time.is-late {
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    .sid-link,
+    .order-link {
+      color: #2563eb;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .sid-link:hover,
+    .order-link:hover {
+      text-decoration: underline;
+    }
+
+    th.col-action,
+    td.col-action {
+      position: sticky;
+      right: 0;
+      z-index: 2;
+      white-space: nowrap;
+      width: 6%;
+      min-width: 72px;
+      padding-left: 10px;
+      padding-right: 10px;
+      overflow: visible;
+      border-left: 2px solid #bfdbfe;
+      background: linear-gradient(90deg, #eef2ff 0, #eef2ff 8px, #fff 24px);
+      box-shadow: -8px 0 14px rgba(37, 99, 235, 0.08);
+    }
+
+    th.col-action::before,
+    td.col-action::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: #94a3b8;
+      pointer-events: none;
+    }
+
+    th.col-action {
+      z-index: 4;
+      border-left-color: #93c5fd;
+      background: linear-gradient(90deg, #dbeafe 0, #dbeafe 10px, #dbeafe 32px);
+      box-shadow: -10px 0 18px rgba(37, 99, 235, 0.12);
+    }
+
+    tr:hover td.col-action {
+      background: linear-gradient(90deg, #dbeafe 0, #dbeafe 10px, #f8fbff 32px);
+    }
+
+    .action-cell {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon {
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 4px;
+      background: #2563eb;
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .btn-icon:hover { background: #1d4ed8; }
+
+    .btn-icon svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+    }
+
+    .table-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fafbfc;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+    }
+
+    .table-foot-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .table-pager-info { white-space: nowrap; }
+
+    .table-pager-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .pager-btn,
+    .pager-page {
+      border: 1px solid var(--wire);
+      background: #fff;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #374151;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+
+    .pager-btn:hover,
+    .pager-page:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .pager-btn:disabled,
+    .pager-page:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      background: #f8fafc;
+    }
+
+    .pager-page.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .pager-ellipsis { padding: 0 4px; color: #94a3b8; }
+
+    .table-empty {
+      padding: 48px 16px;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .wb-sidebar-frame {
+        width: 100%;
+        height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="1. 需求迭代/0. 菜单项/_sidebar-menu.html#active=q3-withdraw-alert" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <iframe class="wb-topbar-frame" src="1. 需求迭代/0. 菜单项/_topbar.html#active=q3-withdraw-alert" title="顶部导航"></iframe>
+
+    <div class="scroll-wrap">
+      <section class="filter-panel">
+        <div class="filter-bar">
+          <select class="filter-select" id="statusFilter" aria-label="任务状态">
+            <option value="待处理">待处理</option>
+            <option value="处理中">处理中</option>
+            <option value="已完成">已完成</option>
+            <option value="">全部</option>
+          </select>
+          <div class="filter-actions-right">
+            <button type="button" class="btn btn-reset" onclick="resetFilters()">重置</button>
+            <button type="button" class="btn btn-primary" onclick="applyFilters()">查询</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page-card">
+        <div class="table-wrap">
+          <table>
+            <colgroup>
+              <col class="col-w-status" />
+              <col class="col-w-sid" />
+              <col class="col-w-order" />
+              <col class="col-w-amount" />
+              <col class="col-w-count" />
+              <col class="col-w-total" />
+              <col class="col-w-push" />
+              <col class="col-w-recharge" />
+              <col class="col-w-done" />
+              <col class="col-w-action" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>任务状态</th>
+                <th>SID</th>
+                <th>提现订单号</th>
+                <th>提现金额($)</th>
+                <th>充值次数</th>
+                <th>充值总额($)</th>
+                <th>推送时间</th>
+                <th>最后充值时间</th>
+                <th>任务完成时间</th>
+                <th class="col-action">操作</th>
+              </tr>
+            </thead>
+            <tbody id="alertTableBody"></tbody>
+          </table>
+        </div>
+        <div class="table-foot">
+          <div class="table-foot-left">
+            <span class="table-pager-info" id="alertPagerInfo"></span>
+            <div class="table-pager-actions" id="alertPagerActions"></div>
+          </div>
+          <span>更新时间：19-08-2026 10:16</span>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+  var ICON_USER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5.5 19.5c1.2-3.2 3.6-4.8 6.5-4.8s5.3 1.6 6.5 4.8"/></svg>';
+  var ICON_EDIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
+  var PAGE_SIZE = 15;
+  var currentPage = 1;
+
+  var ALERT_DATA = [
+    { status: '待处理', sid: '20008330105', orderNo: 'TTX2020260731694553', amount: '10.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '31-07-2026 18:02', completeTime: '--' },
+    { status: '待处理', sid: '10018712311', orderNo: 'ITX1020260731831931', amount: '52.00', rechargeCount: 5, rechargeTotal: '50.00', rechargeTime: '01-08-2026 09:20', pushTime: '31-07-2026 18:00', completeTime: '--' },
+    { status: '待处理', sid: '20008330105', orderNo: 'TTX2020260730694481', amount: '10.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '30-07-2026 17:21', completeTime: '--' },
+    { status: '待处理', sid: '10019288440', orderNo: 'ITX1020260731902218', amount: '80.00', rechargeCount: 2, rechargeTotal: '120.00', rechargeTime: '29-07-2026 09:14', pushTime: '30-07-2026 16:48', completeTime: '--' },
+    { status: '待处理', sid: '20008455621', orderNo: 'TTX2020260731557820', amount: '35.00', rechargeCount: 1, rechargeTotal: '40.00', rechargeTime: '31-07-2026 08:22', pushTime: '30-07-2026 15:10', completeTime: '--' },
+    { status: '待处理', sid: '10018344790', orderNo: 'ITX1020260731442198', amount: '20.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '30-07-2026 12:44', completeTime: '--' },
+    { status: '待处理', sid: '20008211088', orderNo: 'TTX2020260731336014', amount: '60.00', rechargeCount: 3, rechargeTotal: '90.00', rechargeTime: '28-07-2026 14:05', pushTime: '29-07-2026 20:18', completeTime: '--' },
+    { status: '待处理', sid: '10019100233', orderNo: 'ITX1020260731228907', amount: '12.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '29-07-2026 18:36', completeTime: '--' },
+    { status: '待处理', sid: '20008566712', orderNo: 'TTX2020260731114782', amount: '150.00', rechargeCount: 4, rechargeTotal: '200.00', rechargeTime: '30-07-2026 10:41', pushTime: '29-07-2026 16:02', completeTime: '--' },
+    { status: '待处理', sid: '10017488901', orderNo: 'ITX1020260731003655', amount: '8.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '29-07-2026 11:27', completeTime: '--' },
+    { status: '待处理', sid: '20008622340', orderNo: 'TTX2020260729882144', amount: '45.00', rechargeCount: 2, rechargeTotal: '50.00', rechargeTime: '27-07-2026 13:16', pushTime: '28-07-2026 19:50', completeTime: '--' },
+    { status: '待处理', sid: '10019833421', orderNo: 'ITX1020260729771033', amount: '75.00', rechargeCount: 6, rechargeTotal: '180.00', rechargeTime: '29-07-2026 09:33', pushTime: '28-07-2026 17:08', completeTime: '--' },
+    { status: '待处理', sid: '20008144567', orderNo: 'TTX2020260729660921', amount: '18.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '28-07-2026 14:22', completeTime: '--' },
+    { status: '待处理', sid: '10016577890', orderNo: 'ITX1020260729554810', amount: '95.00', rechargeCount: 1, rechargeTotal: '100.00', rechargeTime: '27-07-2026 16:40', pushTime: '28-07-2026 10:15', completeTime: '--' },
+    { status: '待处理', sid: '20008790112', orderNo: 'TTX2020260729443708', amount: '22.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '27-07-2026 21:48', completeTime: '--' },
+    { status: '待处理', sid: '10019922045', orderNo: 'ITX1020260729332612', amount: '30.00', rechargeCount: 2, rechargeTotal: '35.00', rechargeTime: '28-07-2026 07:19', pushTime: '27-07-2026 18:05', completeTime: '--' },
+    { status: '处理中', sid: '20008411209', orderNo: 'TTX2020260729883102', amount: '25.00', rechargeCount: 1, rechargeTotal: '30.00', rechargeTime: '30-07-2026 08:12', pushTime: '29-07-2026 14:33', completeTime: '--' },
+    { status: '处理中', sid: '10017654022', orderNo: 'ITX1020260729774510', amount: '15.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '29-07-2026 11:20', completeTime: '--' },
+    { status: '已完成', sid: '20008199033', orderNo: 'TTX2020260728551026', amount: '100.00', rechargeCount: 3, rechargeTotal: '260.00', rechargeTime: '25-07-2026 16:42', pushTime: '28-07-2026 10:08', completeTime: '28-07-2026 15:46' },
+    { status: '已完成', sid: '10018822017', orderNo: 'ITX1020260727443891', amount: '40.00', rechargeCount: 0, rechargeTotal: '--', rechargeTime: '--', pushTime: '27-07-2026 19:55', completeTime: '28-07-2026 09:12' }
+  ];
+
+  var filteredData = ALERT_DATA.filter(function (row) { return row.status === '待处理'; });
+
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function parseDisplayTime(value) {
+    if (!value || value === '--') return null;
+    var match = String(value).match(/^(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$/);
+    if (!match) return null;
+    return new Date(
+      Number(match[3]),
+      Number(match[2]) - 1,
+      Number(match[1]),
+      Number(match[4]),
+      Number(match[5])
+    ).getTime();
+  }
+
+  function isRechargeAfterPush(rechargeTime, pushTime) {
+    var rechargeAt = parseDisplayTime(rechargeTime);
+    var pushAt = parseDisplayTime(pushTime);
+    return rechargeAt != null && pushAt != null && rechargeAt > pushAt;
+  }
+
+  function renderEmpty(value) {
+    if (!value || value === '--') {
+      return '<span class="cell-empty">--</span>';
+    }
+    return escapeHtml(value);
+  }
+
+  function renderRechargeTime(row) {
+    if (!row.rechargeTime || row.rechargeTime === '--') {
+      return '<span class="cell-empty">--</span>';
+    }
+    var lateClass = isRechargeAfterPush(row.rechargeTime, row.pushTime) ? ' is-late' : '';
+    return '<span class="col-time' + lateClass + '">' + escapeHtml(row.rechargeTime) + '</span>';
+  }
+
+  function openCustomerDetail(sid, e) {
+    if (e) e.preventDefault();
+    alert('进入客户详情\nSID：' + sid + '\n（原型占位）');
+  }
+
+  function openOrderDetail(orderNo, e) {
+    if (e) e.preventDefault();
+    alert('查看提现订单\n订单号：' + orderNo + '\n（原型占位）');
+  }
+
+  function handleAssign(sid, orderNo, e) {
+    if (e) e.preventDefault();
+    alert('分配处理人\nSID：' + sid + '\n提现订单号：' + orderNo + '\n（原型占位）');
+  }
+
+  function handleEdit(sid, orderNo, e) {
+    if (e) e.preventDefault();
+    alert('处理提现预警\nSID：' + sid + '\n提现订单号：' + orderNo + '\n（原型占位）');
+  }
+
+  function renderRow(row) {
+    return '<tr>' +
+      '<td class="col-status">' + escapeHtml(row.status) + '</td>' +
+      '<td><a href="#" class="sid-link" onclick="openCustomerDetail(\'' + escapeHtml(row.sid) + '\', event)">' + escapeHtml(row.sid) + '</a></td>' +
+      '<td><a href="#" class="order-link" onclick="openOrderDetail(\'' + escapeHtml(row.orderNo) + '\', event)">' + escapeHtml(row.orderNo) + '</a></td>' +
+      '<td class="col-num">' + escapeHtml(row.amount) + '</td>' +
+      '<td class="col-num">' + escapeHtml(row.rechargeCount) + '</td>' +
+      '<td class="col-num">' + renderEmpty(row.rechargeTotal) + '</td>' +
+      '<td class="col-time">' + escapeHtml(row.pushTime) + '</td>' +
+      '<td class="col-time">' + renderRechargeTime(row) + '</td>' +
+      '<td class="col-time">' + renderEmpty(row.completeTime) + '</td>' +
+      '<td class="col-action"><div class="action-cell">' +
+        '<button type="button" class="btn-icon" title="分配处理人" onclick="handleAssign(\'' + escapeHtml(row.sid) + '\', \'' + escapeHtml(row.orderNo) + '\', event)">' + ICON_USER + '</button>' +
+        '<button type="button" class="btn-icon" title="处理" onclick="handleEdit(\'' + escapeHtml(row.sid) + '\', \'' + escapeHtml(row.orderNo) + '\', event)">' + ICON_EDIT + '</button>' +
+      '</div></td>' +
+      '</tr>';
+  }
+
+  function getPageRows(page) {
+    var start = (page - 1) * PAGE_SIZE;
+    return filteredData.slice(start, start + PAGE_SIZE);
+  }
+
+  function buildPageNumbers(totalPages, page) {
+    var pages = [];
+    if (totalPages <= 7) {
+      for (var i = 1; i <= totalPages; i += 1) pages.push(i);
+      return pages;
+    }
+    pages.push(1);
+    if (page > 3) pages.push('...');
+    var start = Math.max(2, page - 1);
+    var end = Math.min(totalPages - 1, page + 1);
+    for (var j = start; j <= end; j += 1) pages.push(j);
+    if (page < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+    return pages;
+  }
+
+  function renderPagination(totalPages, page, total) {
+    var info = document.getElementById('alertPagerInfo');
+    var actions = document.getElementById('alertPagerActions');
+    var start = total ? (page - 1) * PAGE_SIZE + 1 : 0;
+    var end = Math.min(page * PAGE_SIZE, total);
+    info.textContent = '共 ' + total + ' 条 · 第 ' + start + '-' + end + ' 条 · 每页 ' + PAGE_SIZE + ' 条';
+    if (!total || totalPages <= 1) {
+      actions.innerHTML = totalPages <= 1 && total
+        ? '<button type="button" class="pager-btn" disabled>上一页</button>' +
+          '<button type="button" class="pager-page active" disabled>1</button>' +
+          '<button type="button" class="pager-btn" disabled>下一页</button>'
+        : '';
+      if (!total) actions.innerHTML = '';
+      return;
+    }
+    var html = '<button type="button" class="pager-btn" onclick="goToAlertPage(' + (page - 1) + ')"' + (page <= 1 ? ' disabled' : '') + '>上一页</button>';
+    buildPageNumbers(totalPages, page).forEach(function (item) {
+      if (item === '...') {
+        html += '<span class="pager-ellipsis">...</span>';
+        return;
+      }
+      html += '<button type="button" class="pager-page' + (item === page ? ' active' : '') + '" onclick="goToAlertPage(' + item + ')">' + item + '</button>';
+    });
+    html += '<button type="button" class="pager-btn" onclick="goToAlertPage(' + (page + 1) + ')"' + (page >= totalPages ? ' disabled' : '') + '>下一页</button>';
+    actions.innerHTML = html;
+  }
+
+  function goToAlertPage(page) {
+    var totalPages = Math.max(1, Math.ceil(filteredData.length / PAGE_SIZE));
+    currentPage = Math.min(Math.max(page || 1, 1), totalPages);
+    renderTable();
+  }
+
+  function renderTable() {
+    var tbody = document.getElementById('alertTableBody');
+    var total = filteredData.length;
+    var totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (!total) {
+      tbody.innerHTML = '<tr><td colspan="10"><div class="table-empty">暂无符合条件的提现预警</div></td></tr>';
+      renderPagination(0, 1, 0);
+      return;
+    }
+    tbody.innerHTML = getPageRows(currentPage).map(renderRow).join('');
+    renderPagination(totalPages, currentPage, total);
+  }
+
+  function applyFilters() {
+    var status = document.getElementById('statusFilter').value;
+    filteredData = ALERT_DATA.filter(function (row) {
+      if (!status) return true;
+      return row.status === status;
+    });
+    currentPage = 1;
+    renderTable();
+  }
+
+  function resetFilters() {
+    document.getElementById('statusFilter').value = '待处理';
+    applyFilters();
+  }
+
+  renderTable();
+</script>
+</body>
+</html>
