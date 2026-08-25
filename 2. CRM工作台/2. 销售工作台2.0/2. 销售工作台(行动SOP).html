@@ -1685,9 +1685,6 @@
       display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;
       padding:10px 8px 8px;
     }
-    .comm-channel--chat .comm-channel-metrics{
-      grid-template-columns:repeat(4,minmax(0,1fr));
-    }
     .comm-metric{
       display:flex;flex-direction:column;align-items:center;gap:3px;
       padding:4px 2px;text-align:center;
@@ -2319,6 +2316,55 @@
     }
     #commStatsFollowModal .comm-follow-row--group.is-collapsed .comm-follow-chevron,
     #alertTaskFollowModal .comm-follow-row--group.is-collapsed .comm-follow-chevron{transform:rotate(-90deg)}
+    #commQcFollowModal .alert-task-follow-dialog{width:min(840px,100%);max-height:min(86vh,680px)}
+    #commQcFollowModal .alert-task-follow-table{table-layout:fixed}
+    #commQcFollowModal .alert-task-follow-table th,
+    #commQcFollowModal .alert-task-follow-table td{padding:8px 6px}
+    #commQcFollowModal .alert-task-follow-table th:nth-child(1),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(1){width:20%}
+    #commQcFollowModal .alert-task-follow-table th:nth-child(2),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(2),
+    #commQcFollowModal .alert-task-follow-table th:nth-child(3),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(3),
+    #commQcFollowModal .alert-task-follow-table th:nth-child(4),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(4),
+    #commQcFollowModal .alert-task-follow-table th:nth-child(5),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(5),
+    #commQcFollowModal .alert-task-follow-table th:nth-child(6),
+    #commQcFollowModal .alert-task-follow-table td:nth-child(6){width:16%}
+    #commQcFollowModal .alert-task-follow-table .col-num,
+    #commQcFollowModal .alert-task-follow-table th.col-num,
+    #commQcFollowModal .alert-task-follow-table .col-name,
+    #commQcFollowModal .alert-task-follow-table th{
+      text-align:center;
+    }
+    #commQcFollowModal .comm-follow-row--team td,
+    #commQcFollowModal .comm-follow-row--member td{background:#fff}
+    #commQcFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commQcFollowModal .comm-follow-row--group td{background:#f8fafc}
+    #commQcFollowModal .comm-follow-row--group .col-name{font-weight:800;color:#0f172a}
+    #commQcFollowModal .comm-follow-row--toggle{cursor:pointer}
+    #commQcFollowModal .comm-follow-row--toggle:hover td{background:#f1f5f9}
+    #commQcFollowModal .comm-follow-row--member .col-name{font-weight:600;color:#334155}
+    #commQcFollowModal .comm-follow-name-inner{
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:20px;
+    }
+    #commQcFollowModal .comm-follow-name--level-1{padding-left:0}
+    #commQcFollowModal .comm-follow-name--level-2{
+      padding-left:0;position:relative;
+    }
+    #commQcFollowModal .comm-follow-name--level-2::before{display:none}
+    #commQcFollowModal .comm-follow-chevron{
+      display:inline-block;width:12px;font-size:10px;line-height:1;
+      color:#64748b;transition:transform .15s ease;flex-shrink:0;
+    }
+    #commQcFollowModal .comm-follow-row--group.is-collapsed .comm-follow-chevron{transform:rotate(-90deg)}
+    #commQcFollowModal .qc-follow-score{font-weight:800;color:#0f172a}
+    #commQcFollowModal .comm-follow-row--member .qc-follow-score{font-weight:400}
+    #commQcFollowModal .qc-follow-risk--low{color:#059669;font-weight:700}
+    #commQcFollowModal .qc-follow-risk--mid{color:#d97706;font-weight:700}
+    #commQcFollowModal .qc-follow-risk--high{color:#dc2626;font-weight:700}
+    body[data-view="manager"] .manager-only .comm-qc-col{cursor:pointer}
 
     /* 每日预警任务 · 完成明细抽屉（限定在主内容区，不覆盖侧栏与顶栏） */
     .alert-task-detail-drawer{
@@ -4766,10 +4812,6 @@
                         <strong class="comm-metric-val">19</strong>
                       </div>
                       <div class="comm-metric">
-                        <span class="comm-metric-label">2min内跟进</span>
-                        <strong class="comm-metric-val">15</strong>
-                      </div>
-                      <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
                         <strong class="comm-metric-val">11</strong>
                       </div>
@@ -4966,10 +5008,6 @@
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
                         <strong class="comm-metric-val">152</strong>
-                      </div>
-                      <div class="comm-metric">
-                        <span class="comm-metric-label">2min内跟进</span>
-                        <strong class="comm-metric-val">118</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
@@ -7177,6 +7215,41 @@
             </tr>
           </thead>
           <tbody id="commStatsFollowTbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="commQcFollowModal" class="alert-task-follow-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeCommQcFollowModal()"></div>
+  <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="commQcFollowTitle">
+    <div class="alert-task-follow-head">
+      <h3 id="commQcFollowTitle">—</h3>
+      <button type="button" class="alert-task-follow-close" onclick="closeCommQcFollowModal()" aria-label="关闭">×</button>
+    </div>
+    <div class="alert-task-follow-body">
+      <p class="alert-task-follow-intro">统计范围：<strong class="comm-qc-follow-period-label">今日</strong> · 各销售分组质检汇总，可展开组别查看个人明细</p>
+      <div class="rank-date-chips" role="tablist" aria-label="时间范围">
+        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="today" onclick="switchCommQcFollowPeriod('today', this)">今日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="yesterday" onclick="switchCommQcFollowPeriod('yesterday', this)">昨日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="week" onclick="switchCommQcFollowPeriod('week', this)">本周</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="month" onclick="switchCommQcFollowPeriod('month', this)">本月</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="lastmonth" onclick="switchCommQcFollowPeriod('lastmonth', this)">上月</button>
+      </div>
+      <div class="alert-task-follow-table-wrap">
+        <table class="alert-task-follow-table">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th class="col-num">质检总数</th>
+              <th class="col-num">总体评分</th>
+              <th class="col-num">低风险</th>
+              <th class="col-num">中风险</th>
+              <th class="col-num">高风险</th>
+            </tr>
+          </thead>
+          <tbody id="commQcFollowTbody"></tbody>
         </table>
       </div>
     </div>
@@ -10900,6 +10973,7 @@ var COMM_STATS_CHANNEL_LABELS = {
   chat: 'Chatroom'
 };
 var COMM_STATS_CURRENT_SALES = 'Coulson';
+var CURRENT_LOGIN_ACCOUNT = 'Steve Jobs';
 var _commStatsChannelType = '';
 var _commStatsModulePeriod = 'today';
 var _commStatsFollowPeriod = 'today';
@@ -10915,7 +10989,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 18,
       tel: { metrics: ['24', '16', '67%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 8 人' },
       wa: { metrics: ['20', '14', '70%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 6 人' },
-      chat: { metrics: ['12', '9', '7', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−4%</strong> · 未回复 5 人' },
+      chat: { metrics: ['12', '7', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−4%</strong> · 未回复 5 人' },
       qcTel: { total: '14', score: '87', low: '10', mid: '3', high: '1' },
       qcCr: { total: '9', score: '83', low: '6', mid: '2', high: '1' }
     },
@@ -10924,7 +10998,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 28,
       tel: { metrics: ['38', '26', '68%'], foot: '较团队均值 <strong style="color:#059669">+6%</strong> · 未回复 12 人' },
       wa: { metrics: ['31', '22', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 9 人' },
-      chat: { metrics: ['19', '15', '11', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人' },
+      chat: { metrics: ['19', '11', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人' },
       qcTel: { total: '26', score: '88', low: '18', mid: '6', high: '2' },
       qcCr: { total: '16', score: '84', low: '10', mid: '4', high: '2' }
     },
@@ -10933,7 +11007,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 76,
       tel: { metrics: ['96', '68', '71%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 28 人' },
       wa: { metrics: ['82', '58', '71%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 24 人' },
-      chat: { metrics: ['52', '40', '32', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 20 人' },
+      chat: { metrics: ['52', '32', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 20 人' },
       qcTel: { total: '68', score: '89', low: '48', mid: '14', high: '6' },
       qcCr: { total: '42', score: '85', low: '28', mid: '10', high: '4' }
     },
@@ -10942,7 +11016,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 228,
       tel: { metrics: ['286', '198', '69%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 88 人' },
       wa: { metrics: ['248', '176', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 72 人' },
-      chat: { metrics: ['156', '118', '98', '63%'], foot: '较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 58 人' },
+      chat: { metrics: ['156', '98', '63%'], foot: '较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 58 人' },
       qcTel: { total: '196', score: '90', low: '142', mid: '38', high: '16' },
       qcCr: { total: '128', score: '86', low: '90', mid: '26', high: '12' }
     },
@@ -10951,7 +11025,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 204,
       tel: { metrics: ['264', '182', '69%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 82 人' },
       wa: { metrics: ['228', '158', '69%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 70 人' },
-      chat: { metrics: ['142', '106', '88', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 54 人' },
+      chat: { metrics: ['142', '88', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 54 人' },
       qcTel: { total: '178', score: '88', low: '128', mid: '36', high: '14' },
       qcCr: { total: '116', score: '84', low: '82', mid: '24', high: '10' }
     }
@@ -10962,7 +11036,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 186,
       tel: { metrics: ['196', '134', '68%'], foot: '人均联系 <strong>25</strong> · 人均有效沟通率 <strong>66%</strong>' },
       wa: { metrics: ['158', '118', '75%'], foot: '人均联系 <strong>20</strong> · 人均回复率 <strong>70%</strong>' },
-      chat: { metrics: ['98', '74', '62', '63%'], foot: '人均联系 <strong>12</strong> · 人均回复率 <strong>56%</strong>' },
+      chat: { metrics: ['98', '62', '63%'], foot: '人均联系 <strong>12</strong> · 人均回复率 <strong>56%</strong>' },
       qcTel: { total: '128', score: '87', low: '92', mid: '26', high: '10' },
       qcCr: { total: '86', score: '84', low: '60', mid: '18', high: '8' }
     },
@@ -10971,7 +11045,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 296,
       tel: { metrics: ['304', '212', '70%'], foot: '人均联系 <strong>38</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['248', '186', '75%'], foot: '人均联系 <strong>31</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['152', '118', '96', '63%'], foot: '人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong>' },
+      chat: { metrics: ['152', '96', '63%'], foot: '人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong>' },
       qcTel: { total: '208', score: '86', low: '136', mid: '52', high: '20' },
       qcCr: { total: '128', score: '82', low: '78', mid: '34', high: '16' }
     },
@@ -10980,7 +11054,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 1048,
       tel: { metrics: ['1120', '780', '70%'], foot: '人均联系 <strong>140</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['910', '680', '75%'], foot: '人均联系 <strong>114</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['560', '430', '350', '63%'], foot: '人均联系 <strong>70</strong> · 人均回复率 <strong>58%</strong>' },
+      chat: { metrics: ['560', '350', '63%'], foot: '人均联系 <strong>70</strong> · 人均回复率 <strong>58%</strong>' },
       qcTel: { total: '720', score: '89', low: '520', mid: '140', high: '60' },
       qcCr: { total: '480', score: '85', low: '340', mid: '96', high: '44' }
     },
@@ -10989,7 +11063,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 3520,
       tel: { metrics: ['3720', '2580', '69%'], foot: '人均联系 <strong>465</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['3040', '2280', '75%'], foot: '人均联系 <strong>380</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['1880', '1460', '1180', '63%'], foot: '人均联系 <strong>235</strong> · 人均回复率 <strong>58%</strong>' },
+      chat: { metrics: ['1880', '1180', '63%'], foot: '人均联系 <strong>235</strong> · 人均回复率 <strong>58%</strong>' },
       qcTel: { total: '2460', score: '90', low: '1780', mid: '480', high: '200' },
       qcCr: { total: '1640', score: '86', low: '1160', mid: '330', high: '150' }
     },
@@ -10998,7 +11072,7 @@ var COMM_STATS_MODULE_DATA = {
       effectiveCount: 3220,
       tel: { metrics: ['3480', '2400', '69%'], foot: '人均联系 <strong>435</strong> · 人均有效沟通率 <strong>67%</strong>' },
       wa: { metrics: ['2820', '2080', '74%'], foot: '人均联系 <strong>353</strong> · 人均回复率 <strong>70%</strong>' },
-      chat: { metrics: ['1740', '1320', '1080', '62%'], foot: '人均联系 <strong>218</strong> · 人均回复率 <strong>57%</strong>' },
+      chat: { metrics: ['1740', '1080', '62%'], foot: '人均联系 <strong>218</strong> · 人均回复率 <strong>57%</strong>' },
       qcTel: { total: '2280', score: '88', low: '1640', mid: '450', high: '190' },
       qcCr: { total: '1520', score: '84', low: '1080', mid: '300', high: '140' }
     }
@@ -13624,10 +13698,259 @@ function initCommQcCardInteractions() {
   document.querySelectorAll('.comm-stats-section .comm-qc-col').forEach(function (col) {
     var band = col.querySelector('.comm-qc-band');
     var type = band && band.classList.contains('comm-qc-band--cr') ? 'cr' : 'tel';
+    col.setAttribute('data-qc-type', type);
     col.querySelectorAll('.comm-qc-link').forEach(function (link) {
       link.setAttribute('data-qc-type', type);
     });
+    if (col.closest('.manager-only')) {
+      var labelEl = col.querySelector('.comm-qc-band-label');
+      col.setAttribute('tabindex', '0');
+      col.setAttribute('role', 'button');
+      col.setAttribute('aria-label', (labelEl ? labelEl.textContent.trim() : '质检分析') + ' 分组统计');
+    }
   });
+  var followTbody = document.getElementById('commQcFollowTbody');
+  if (followTbody && !followTbody.dataset.bound) {
+    followTbody.dataset.bound = '1';
+    followTbody.addEventListener('click', function (e) {
+      var groupRow = e.target.closest('tr[data-comm-qc-follow-group]');
+      if (groupRow && !e.target.closest('.col-completed-link')) {
+        e.preventDefault();
+        toggleCommQcFollowGroup(groupRow.getAttribute('data-comm-qc-follow-group'));
+        return;
+      }
+      var link = e.target.closest('.col-completed-link');
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      openCommQcAnalysisPage(_commQcFollowType, {
+        agent: link.getAttribute('data-sales') || '',
+        risk: link.getAttribute('data-qc-risk') || '',
+        sid: link.getAttribute('data-qc-sid') || ''
+      });
+    });
+    followTbody.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var groupRow = e.target.closest('tr[data-comm-qc-follow-group]');
+      if (!groupRow || e.target.closest('.col-completed-link')) return;
+      e.preventDefault();
+      toggleCommQcFollowGroup(groupRow.getAttribute('data-comm-qc-follow-group'));
+    });
+  }
+}
+
+var _commQcFollowType = 'tel';
+var _commQcFollowPeriod = 'today';
+var _commQcFollowExpandedGroups = {};
+var COMM_QC_FOLLOW_LABELS = { tel: '电话质检分析', cr: 'CR质检分析' };
+
+function isCommQcFollowGroupExpanded(groupKey) {
+  return _commQcFollowExpandedGroups[groupKey] === true;
+}
+
+function toggleCommQcFollowGroup(groupKey) {
+  if (!groupKey) return;
+  _commQcFollowExpandedGroups[groupKey] = !isCommQcFollowGroupExpanded(groupKey);
+  renderCommQcFollowTable();
+}
+
+function syncCommQcFollowPeriodChips(period) {
+  var modal = document.getElementById('commQcFollowModal');
+  if (!modal) return;
+  modal.querySelectorAll('.rank-date-chip').forEach(function (chip) {
+    var active = chip.getAttribute('data-period') === period;
+    chip.classList.toggle('active', active);
+    chip.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+}
+
+function updateCommQcFollowModalMeta() {
+  var modal = document.getElementById('commQcFollowModal');
+  if (!modal) return;
+  var titleEl = document.getElementById('commQcFollowTitle');
+  var introEl = modal.querySelector('.alert-task-follow-intro');
+  var periodLabel = ALERT_TASK_FOLLOW_PERIODS[_commQcFollowPeriod] || _commQcFollowPeriod;
+  var typeLabel = COMM_QC_FOLLOW_LABELS[_commQcFollowType] || '质检分析';
+  if (titleEl) titleEl.textContent = typeLabel + ' · ' + periodLabel + '分组质检统计';
+  if (introEl) {
+    introEl.innerHTML = '统计范围：<strong class="comm-qc-follow-period-label">' + periodLabel +
+      '</strong> · 默认展示各组质检汇总，点击组别可查看个人质检统计';
+  }
+}
+
+function buildCommQcFollowRowForName(name, type, period) {
+  var names = getCommStatsManagerSalesNames();
+  var i = names.indexOf(name);
+  if (i < 0) i = 0;
+  var seed = alertTaskFollowSeed('qc|' + type + '|' + period);
+  var periodMul = getCommStatsFollowPeriodMul(period);
+  var s = seed + i * 79 + (type === 'cr' ? 17 : 0);
+  var total = Math.max(1, (3 + (s % 12)) * periodMul);
+  var high = Math.min(total, Math.floor(total * (0.04 + (s % 12) / 100)));
+  var mid = Math.min(total - high, Math.floor(total * (0.16 + (s % 18) / 100)));
+  var low = Math.max(0, total - high - mid);
+  return {
+    name: name,
+    total: total,
+    score: 72 + (s % 22),
+    low: low,
+    mid: mid,
+    high: high
+  };
+}
+
+function aggregateCommQcFollowRows(rows) {
+  var total = 0;
+  var low = 0;
+  var mid = 0;
+  var high = 0;
+  var scoreSum = 0;
+  rows.forEach(function (row) {
+    total += row.total || 0;
+    low += row.low || 0;
+    mid += row.mid || 0;
+    high += row.high || 0;
+    scoreSum += (row.score || 0) * (row.total || 0);
+  });
+  return {
+    name: '',
+    total: total,
+    score: total ? Math.round(scoreSum / total) : 0,
+    low: low,
+    mid: mid,
+    high: high
+  };
+}
+
+function buildCommQcDetailSid(salesName, risk) {
+  var names = getCommStatsManagerSalesNames();
+  var i = names.indexOf(salesName);
+  if (i < 0) i = 0;
+  var riskCode = risk === 'high' ? 3 : risk === 'mid' ? 2 : 1;
+  return String(20008000000 + i * 1000 + riskCode);
+}
+
+function renderCommQcFollowCountLink(salesName, count, metric, risk) {
+  count = parseInt(count, 10) || 0;
+  if (!count) return '<span class="col-completed-zero">0</span>';
+  var riskAttr = risk ? ' data-qc-risk="' + risk + '" data-qc-sid="' + buildCommQcDetailSid(salesName, risk) + '"' : '';
+  return '<a href="#" class="col-completed-link" data-metric="' + metric + '" data-sales="' + salesName +
+    '" data-count="' + count + '"' + riskAttr + '>' + count + '</a>';
+}
+
+function renderCommQcFollowNumCell(count, salesName, metric, risk, linkable) {
+  count = parseInt(count, 10) || 0;
+  if (linkable && salesName) {
+    return '<td class="col-num">' + renderCommQcFollowCountLink(salesName, count, metric, risk) + '</td>';
+  }
+  return '<td class="col-num">' + (count || '<span class="col-completed-zero">0</span>') + '</td>';
+}
+
+function renderCommQcFollowScoreCell(score) {
+  score = parseInt(score, 10) || 0;
+  return '<td class="col-num qc-follow-score">' + score + '</td>';
+}
+
+function renderCommQcFollowRiskCell(count, salesName, risk, linkable) {
+  var riskClass = risk === 'high' ? 'qc-follow-risk--high' : risk === 'mid' ? 'qc-follow-risk--mid' : 'qc-follow-risk--low';
+  count = parseInt(count, 10) || 0;
+  var inner;
+  if (linkable && salesName && count) {
+    inner = renderCommQcFollowCountLink(salesName, count, 'risk', risk);
+  } else {
+    inner = count || '<span class="col-completed-zero">0</span>';
+  }
+  return '<td class="col-num ' + riskClass + '">' + inner + '</td>';
+}
+
+function renderCommQcFollowCells(row, salesName, linkable) {
+  return renderCommQcFollowNumCell(row.total, salesName, 'total', '', linkable) +
+    renderCommQcFollowScoreCell(row.score) +
+    renderCommQcFollowRiskCell(row.low, salesName, 'low', linkable) +
+    renderCommQcFollowRiskCell(row.mid, salesName, 'mid', linkable) +
+    renderCommQcFollowRiskCell(row.high, salesName, 'high', linkable);
+}
+
+function renderCommQcFollowTable() {
+  var tbody = document.getElementById('commQcFollowTbody');
+  if (!tbody) return;
+  var html = [];
+  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
+    var group = MANAGER_GOAL_SALES_GROUPS[gk];
+    if (!group) return;
+    var memberRows = group.members.map(function (name) {
+      return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
+    });
+    var groupAgg = aggregateCommQcFollowRows(memberRows);
+    var expanded = isCommQcFollowGroupExpanded(gk);
+    html.push('<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
+      '" data-comm-qc-follow-group="' + gk + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">' +
+      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
+      renderCommQcFollowCells(groupAgg, '', false) +
+      '</tr>');
+    if (expanded) {
+      memberRows.forEach(function (row) {
+        html.push('<tr class="comm-follow-row--member" data-comm-qc-follow-parent="' + gk + '">' +
+          renderCommStatsFollowNameCell(row.name, { isMember: true }) +
+          renderCommQcFollowCells(row, row.name, true) +
+          '</tr>');
+      });
+    }
+  });
+  tbody.innerHTML = html.join('');
+}
+
+function openCommQcFollowModal(type) {
+  var modal = document.getElementById('commQcFollowModal');
+  if (!modal) return;
+  _commQcFollowType = type === 'cr' ? 'cr' : 'tel';
+  _commQcFollowPeriod = _commStatsModulePeriod || 'today';
+  _commQcFollowExpandedGroups = {};
+  syncCommQcFollowPeriodChips(_commQcFollowPeriod);
+  updateCommQcFollowModalMeta();
+  renderCommQcFollowTable();
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCommQcFollowModal() {
+  var modal = document.getElementById('commQcFollowModal');
+  if (!modal) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function switchCommQcFollowPeriod(period, btn) {
+  _commQcFollowPeriod = period;
+  var modal = document.getElementById('commQcFollowModal');
+  if (!modal) return;
+  modal.querySelectorAll('.rank-date-chip').forEach(function (chip) {
+    chip.classList.remove('active');
+    chip.setAttribute('aria-selected', 'false');
+  });
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+  }
+  updateCommQcFollowModalMeta();
+  renderCommQcFollowTable();
+}
+
+function getCommQcColType(col) {
+  if (!col) return 'tel';
+  if (col.getAttribute('data-qc-type')) return col.getAttribute('data-qc-type');
+  var band = col.querySelector('.comm-qc-band');
+  return band && band.classList.contains('comm-qc-band--cr') ? 'cr' : 'tel';
+}
+
+function handleCommQcColActivate(col) {
+  if (!col || !col.closest('.comm-stats-section')) return;
+  var view = document.body.dataset.view || 'sales';
+  if (view === 'manager' && col.closest('.manager-only')) {
+    openCommQcFollowModal(getCommQcColType(col));
+  }
 }
 
 function openCommQcAnalysisPage(type, options) {
@@ -13638,14 +13961,22 @@ function openCommQcAnalysisPage(type, options) {
     : '2. CRM工作台/2. 销售工作台2.0/二级页面/电话质检分析.html';
   var params = new URLSearchParams();
   params.set('view', view);
-  if (view === 'sales') params.set('agent', COMM_STATS_CURRENT_SALES || 'Coulson');
+  params.set('manager', CURRENT_LOGIN_ACCOUNT || 'Steve Jobs');
+  var agent = options.agent || (view === 'sales' ? (COMM_STATS_CURRENT_SALES || 'Coulson') : '');
+  if (agent) params.set('agent', agent);
   if (options.risk) params.set('risk', options.risk);
+  if (options.sid) params.set('sid', options.sid);
   window.open(url + '?' + params.toString(), '_blank');
 }
 
 function handleCommQcLinkActivate(link) {
   if (!link || !link.closest('.comm-stats-section')) return;
   var type = link.getAttribute('data-qc-type') || 'tel';
+  var view = document.body.dataset.view || 'sales';
+  if (view === 'manager' && link.closest('.manager-only')) {
+    openCommQcFollowModal(type);
+    return;
+  }
   var metric = link.getAttribute('data-qc-metric') || 'total';
   if (metric === 'total') {
     openCommQcAnalysisPage(type, {});
@@ -13759,6 +14090,7 @@ function restoreWorkbenchView() {
 
 function switchView(view, btn) {
   closeAlertTaskFollowModal();
+  closeCommQcFollowModal();
   closeCommStatsFollowModal();
   closeCommStatsDetailDrawer();
   closeAlertTaskDetailDrawer();
@@ -16540,7 +16872,12 @@ document.addEventListener('click', function (e) {
   if (commChannel) handleCommStatsChannelActivate(commChannel);
 
   var qcLink = e.target.closest('.comm-stats-section .comm-qc-link');
-  if (qcLink) handleCommQcLinkActivate(qcLink);
+  if (qcLink) {
+    handleCommQcLinkActivate(qcLink);
+  } else if (!e.target.closest('.goal-q-help')) {
+    var qcCol = e.target.closest('.comm-stats-section .comm-qc-col');
+    if (qcCol) handleCommQcColActivate(qcCol);
+  }
 
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!panel || !panel.classList.contains('is-scroll-follow')) return;
@@ -16610,6 +16947,7 @@ document.addEventListener('keydown', function (e) {
       closeCommFollowEntryModal();
       return;
     }
+    closeCommQcFollowModal();
     closeCommStatsFollowModal();
     closeAlertTaskFollowModal();
     return;
@@ -16631,6 +16969,12 @@ document.addEventListener('keydown', function (e) {
   if (qcLink && document.activeElement === qcLink) {
     e.preventDefault();
     handleCommQcLinkActivate(qcLink);
+    return;
+  }
+  var qcCol = e.target.closest('.comm-stats-section .comm-qc-col');
+  if (qcCol && document.activeElement === qcCol) {
+    e.preventDefault();
+    handleCommQcColActivate(qcCol);
     return;
   }
   var card = e.target.closest('.alert-task-section .alert-task-card');
