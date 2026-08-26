@@ -1410,6 +1410,25 @@
       display:flex;align-items:center;justify-content:flex-end;gap:8px;
       flex-shrink:0;min-height:30px;
     }
+    .goal-metric-help-link{
+      border:none;background:none;padding:0;margin:0;
+      color:#2563eb;font:inherit;font-weight:700;cursor:pointer;
+      text-decoration:none;
+    }
+    .goal-metric-help-link:hover{color:#1d4ed8}
+    .kpi-intro .goal-metric-help-link{font-size:inherit;font-weight:700;color:#2563eb}
+    .comm-stats-metric-help-modal .alert-task-follow-dialog{width:min(640px,100%);max-height:min(86vh,720px)}
+    .goal-metric-help-list{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .goal-metric-help-list li{
+      display:grid;grid-template-columns:118px 1fr;gap:10px;
+      padding:10px 12px;border:1px solid #e8eef5;border-radius:10px;background:#f8fafc;
+    }
+    .goal-metric-help-list .metric-name{font-size:13px;font-weight:800;color:#0f172a;line-height:1.5}
+    .goal-metric-help-list .metric-desc{font-size:13px;color:#475569;line-height:1.6}
+    .goal-metric-help-list + .alert-task-follow-intro{margin-top:14px}
+    @media(max-width:640px){
+      .goal-metric-help-list li{grid-template-columns:1fr;gap:4px}
+    }
     .comm-review-entry-btn{
       flex-shrink:0;display:inline-flex;align-items:center;gap:4px;
       padding:6px 12px;border-radius:8px;border:1px solid #fcd34d;
@@ -2095,9 +2114,10 @@
       border-color:#2563eb;color:#1d4ed8;background:#eff6ff;font-weight:700;
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-dialog{
-      width:min(780px,100%);
+      width:min(860px,100%);
       max-height:min(86vh,680px);
     }
+    #commStatsFollowModal.is-summary-scope .rank-date-chips{display:none}
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table{
       min-width:0;table-layout:fixed;
     }
@@ -2119,7 +2139,7 @@
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table th:nth-child(4),
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table td:nth-child(4){
-      width:9%;
+      width:11%;
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table th:nth-child(5),
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table td:nth-child(5){
@@ -2127,7 +2147,7 @@
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table th:nth-child(6),
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table td:nth-child(6){
-      width:10%;
+      width:11%;
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table th:nth-child(7),
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table td:nth-child(7){
@@ -2135,7 +2155,7 @@
     }
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table th:nth-child(8),
     #commStatsFollowModal.is-summary-scope .alert-task-follow-table td:nth-child(8){
-      width:12%;
+      width:10%;
     }
     #commStatsFollowModal.is-tel-scope:not(.is-summary-scope) .alert-task-follow-dialog{
       width:min(780px,100%);
@@ -2221,27 +2241,57 @@
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(1),
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(1){
-      width:14%;
+      width:22%;
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(2),
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(2){
-      width:15%;
+      width:26%;
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(3),
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(3){
-      width:13%;
+      width:26%;
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(4),
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(4){
-      width:14%;
+      width:26%;
     }
-    #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(5),
-    #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(5){
-      width:13%;
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table th,
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table td,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table th,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table td,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table th,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table td,
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table .col-num,
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table th.col-num,
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table .col-rate,
+    #commStatsFollowModal.is-tel-scope .alert-task-follow-table th.col-rate,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table .col-num,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table th.col-num,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table .col-rate,
+    #commStatsFollowModal.is-wa-scope .alert-task-follow-table th.col-rate,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table .col-num,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table th.col-num,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table .col-rate,
+    #commStatsFollowModal.is-chat-scope .alert-task-follow-table th.col-rate{
+      text-align:center;
     }
-    #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table th:nth-child(6),
-    #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table td:nth-child(6){
-      width:15%;
+    #commStatsFollowModal.is-tel-scope .comm-follow-name-inner,
+    #commStatsFollowModal.is-wa-scope .comm-follow-name-inner,
+    #commStatsFollowModal.is-chat-scope .comm-follow-name-inner{
+      justify-content:center;
+    }
+    #commStatsFollowModal.is-tel-scope .comm-follow-name--level-1,
+    #commStatsFollowModal.is-tel-scope .comm-follow-name--level-2,
+    #commStatsFollowModal.is-wa-scope .comm-follow-name--level-1,
+    #commStatsFollowModal.is-wa-scope .comm-follow-name--level-2,
+    #commStatsFollowModal.is-chat-scope .comm-follow-name--level-1,
+    #commStatsFollowModal.is-chat-scope .comm-follow-name--level-2{
+      padding-left:0;
+    }
+    #commStatsFollowModal.is-tel-scope .comm-follow-name--level-2::before,
+    #commStatsFollowModal.is-wa-scope .comm-follow-name--level-2::before,
+    #commStatsFollowModal.is-chat-scope .comm-follow-name--level-2::before{
+      display:none;
     }
     .alert-task-follow-table-wrap{
       border:1px solid #eef2f7;border-radius:8px;overflow:auto;
@@ -2598,9 +2648,8 @@
     #chatCommDetailDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
     #chatCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #chatCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
-    #chatCommDetailDrawer .alert-task-detail-table{min-width:900px}
+    #chatCommDetailDrawer .alert-task-detail-table{min-width:820px}
     #chatCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
-    #chatCommDetailDrawer .chat-comm-followup--slow{color:#dc2626;font-weight:700}
     #phoneCommDetailFilters,
     #waCommDetailFilters,
     #chatCommDetailFilters{
@@ -2626,8 +2675,7 @@
     #chatCommDetailFilters .my-follow-filter-field--period{
       width:110px;
     }
-    #phoneCommDetailFilters .my-follow-filter-field--effective,
-    #chatCommDetailFilters .my-follow-filter-field--effective{
+    #phoneCommDetailFilters .my-follow-filter-field--effective{
       width:170px;
     }
     #phoneCommDetailFilters .my-follow-filter-actions,
@@ -4720,8 +4768,8 @@
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp审核</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：今日</p>
-              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：今日</p>
+              <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：<span id="commStatsIntroSalesPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
+              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：<span id="commStatsIntroManagerPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -4730,36 +4778,36 @@
                     <span>我的客户数</span>
                     <strong>86</strong>
                   </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="total-contacts" role="button" tabindex="0" aria-label="查看客户联系明细">
-                    <span>客户联系总数</span>
-                    <strong>64</strong>
+                  <div class="comm-summary-chip">
+                    <span>客户联系数</span>
+                    <strong>42</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>回复总数</span>
-                    <strong>44</strong>
+                    <span>Call接通</span>
+                    <strong>20</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>有效沟通客户数</span>
-                    <strong>28</strong>
+                    <span>WA回复</span>
+                    <strong>14</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>客户触达率</span>
-                    <strong>74%</strong>
+                    <span>CR回复</span>
+                    <strong>7</strong>
                   </div>
                   <div class="comm-summary-chip">
+                    <span>客户联系率</span>
+                    <strong>49%</strong>
+                  </div>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="28" role="button" tabindex="0" aria-label="查看客户回复明细">
                     <span>客户回复率</span>
-                    <strong>69%</strong>
-                  </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="effective-rate" data-comm-count="28" role="button" tabindex="0" aria-label="查看有效沟通客户明细">
-                    <span>有效沟通率</span>
-                    <strong>44%</strong>
+                    <strong>67%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
                   <article class="comm-channel comm-channel--tel" data-channel-type="tel">
                     <div class="comm-channel-head">
                       <span class="comm-channel-icon">📞</span>
-                      <span class="comm-channel-name">Phone</span>
+                      <span class="comm-channel-name">Call</span>
                       <span class="comm-channel-tag">电话</span>
                     </div>
                     <div class="comm-channel-metrics">
@@ -4928,36 +4976,36 @@
                     <span>团队客户数</span>
                     <strong>680</strong>
                   </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="total-contacts" role="button" tabindex="0" aria-label="查看团队客户联系明细">
-                    <span>客户联系总数</span>
-                    <strong>512</strong>
+                  <div class="comm-summary-chip">
+                    <span>客户联系数</span>
+                    <strong>326</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>回复总数</span>
-                    <strong>358</strong>
+                    <span>Call接通</span>
+                    <strong>160</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>有效沟通客户数</span>
-                    <strong>296</strong>
+                    <span>WA回复</span>
+                    <strong>118</strong>
                   </div>
                   <div class="comm-summary-chip">
-                    <span>客户触达率</span>
-                    <strong>75%</strong>
+                    <span>CR回复</span>
+                    <strong>62</strong>
                   </div>
                   <div class="comm-summary-chip">
+                    <span>客户联系率</span>
+                    <strong>48%</strong>
+                  </div>
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="232" role="button" tabindex="0" aria-label="查看团队客户回复明细">
                     <span>客户回复率</span>
-                    <strong>70%</strong>
-                  </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="effective-rate" data-comm-count="296" role="button" tabindex="0" aria-label="查看团队有效沟通客户明细">
-                    <span>有效沟通率</span>
-                    <strong>58%</strong>
+                    <strong>71%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
                   <article class="comm-channel comm-channel--tel" data-channel-type="tel">
                     <div class="comm-channel-head">
                       <span class="comm-channel-icon">📞</span>
-                      <span class="comm-channel-name">Phone</span>
+                      <span class="comm-channel-name">Call</span>
                       <span class="comm-channel-tag">电话</span>
                     </div>
                     <div class="comm-channel-metrics">
@@ -6290,7 +6338,7 @@
                 <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchRankDate('lastmonth', this)">上月</button>
               </div>
               <div class="rank-tabs" role="tablist">
-                <button type="button" class="rank-tab active" role="tab" aria-selected="true" onclick="switchCommRankTab('tel', this)">Phone</button>
+                <button type="button" class="rank-tab active" role="tab" aria-selected="true" onclick="switchCommRankTab('tel', this)">Call</button>
                 <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCommRankTab('whatsapp', this)">WhatsApp</button>
                 <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCommRankTab('chatroom', this)">ChatRoom</button>
               </div>
@@ -6799,9 +6847,9 @@
                   <option value="">联系结果</option>
                   <option value="phone-connected">电话接通</option>
                   <option value="phone-missed">电话未接通</option>
-                  <option value="wa-replied">WA回复</option>
+                  <option value="wa-replied">WhatsApp回复</option>
                   <option value="wa-no-reply">WA未回复</option>
-                  <option value="cr-replied">CR回复</option>
+                  <option value="cr-replied">ChatRoom回复</option>
                   <option value="cr-no-reply">CR未回复</option>
                 </select>
               </label>
@@ -6849,7 +6897,7 @@
           <div>
             <h3 id="phoneCommDetailTitle">—</h3>
             <p class="alert-task-detail-sub">
-              沟通渠道：<strong>Phone</strong>
+              沟通渠道：<strong>Call</strong>
               · 统计范围：<strong id="phoneCommDetailPeriod">—</strong>
               · 共 <strong id="phoneCommDetailCount">0</strong> 条沟通记录
             </p>
@@ -7026,13 +7074,6 @@
                   <option value="no">否</option>
                 </select>
               </label>
-              <label class="my-follow-filter-field my-follow-filter-field--effective">
-                <select class="my-follow-filter-select" id="chatCommDetailFilterEffective">
-                  <option value="">回复时效</option>
-                  <option value="within2min">2min以内</option>
-                  <option value="over2min">2min以上</option>
-                </select>
-              </label>
             </div>
             <div class="my-follow-filter-actions">
               <button type="button" class="my-follow-filter-reset" onclick="resetChatCommDetailFilters()">重置</button>
@@ -7047,7 +7088,6 @@
                   <th>SID</th>
                   <th>沟通时间</th>
                   <th>是否回复</th>
-                  <th>回复时效</th>
                   <th>沟通结果</th>
                 </tr>
               </thead>
@@ -7062,6 +7102,39 @@
       </aside>
     </div>
   </main>
+</div>
+
+<div id="commStatsMetricHelpModal" class="alert-task-follow-modal comm-stats-metric-help-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeCommStatsMetricHelpModal()"></div>
+  <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="commStatsMetricHelpTitle">
+    <div class="alert-task-follow-head">
+      <h3 id="commStatsMetricHelpTitle">指标说明</h3>
+      <button type="button" class="alert-task-follow-close" onclick="closeCommStatsMetricHelpModal()" aria-label="关闭">×</button>
+    </div>
+    <div class="alert-task-follow-body">
+      <p class="alert-task-follow-intro">以下为客户触达统计总览指标定义，适用于销售/管理视角。口径随标题所选统计周期变化。</p>
+      <ul class="goal-metric-help-list">
+        <li><span class="metric-name">我的客户数 / 团队客户数</span><span class="metric-desc">当前统计周期内，个人或团队绑定的客户数量（团队视角按客户去重）</span></li>
+        <li><span class="metric-name">客户联系数</span><span class="metric-desc">当前统计周期内，通过 Call / WhatsApp / Chatroom 触达过的客户数（去重）</span></li>
+        <li><span class="metric-name">Call接通</span><span class="metric-desc">当前统计周期内，Call 渠道接通的客户数</span></li>
+        <li><span class="metric-name">WA回复</span><span class="metric-desc">当前统计周期内，WhatsApp 渠道客户有回复的数量</span></li>
+        <li><span class="metric-name">CR回复</span><span class="metric-desc">当前统计周期内，Chatroom 渠道客户有回复的数量</span></li>
+        <li><span class="metric-name">客户联系率</span><span class="metric-desc">客户联系数 / 客户数</span></li>
+        <li><span class="metric-name">客户回复率</span><span class="metric-desc">Call接通、WA回复、CR回复的客户去重后 / 客户联系数</span></li>
+      </ul>
+      <p class="alert-task-follow-intro">以下为渠道与质检指标定义。</p>
+      <ul class="goal-metric-help-list">
+        <li><span class="metric-name">联系客户数</span><span class="metric-desc">当前渠道在统计周期内触达过的客户数（去重）</span></li>
+        <li><span class="metric-name">时长60S+</span><span class="metric-desc">Call 渠道通话时长达到 60 秒及以上的客户数</span></li>
+        <li><span class="metric-name">回复数</span><span class="metric-desc">WhatsApp / Chatroom 渠道中，客户有回复的沟通数</span></li>
+        <li><span class="metric-name">回复率</span><span class="metric-desc">回复数 / 该渠道联系客户数</span></li>
+        <li><span class="metric-name">渠道有效沟通率</span><span class="metric-desc">Call：时长 60 秒及以上客户数 / 该渠道联系客户数</span></li>
+        <li><span class="metric-name">质检总数</span><span class="metric-desc">当前统计周期内完成质检的沟通记录数</span></li>
+        <li><span class="metric-name">总体评分</span><span class="metric-desc">所有质检记录的平均评分</span></li>
+        <li><span class="metric-name">低 / 中 / 高风险</span><span class="metric-desc">质检合规分级结果对应的记录数</span></li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <div id="commFollowEntryModal" class="alert-task-follow-modal comm-follow-entry-modal" hidden aria-hidden="true">
@@ -7093,11 +7166,11 @@
                 <label class="comm-follow-result-option is-fail"><input type="radio" name="contactResultPhone" value="phone-missed"><span>电话未接通</span></label>
               </div>
               <div class="comm-follow-result-group" role="radiogroup" aria-label="WA联系结果">
-                <label class="comm-follow-result-option"><input type="radio" name="contactResultWa" value="wa-replied"><span>WA回复</span></label>
+                <label class="comm-follow-result-option"><input type="radio" name="contactResultWa" value="wa-replied"><span>WhatsApp回复</span></label>
                 <label class="comm-follow-result-option is-fail"><input type="radio" name="contactResultWa" value="wa-no-reply"><span>WA未回复</span></label>
               </div>
               <div class="comm-follow-result-group" role="radiogroup" aria-label="CR联系结果">
-                <label class="comm-follow-result-option"><input type="radio" name="contactResultCr" value="cr-replied"><span>CR回复</span></label>
+                <label class="comm-follow-result-option"><input type="radio" name="contactResultCr" value="cr-replied"><span>ChatRoom回复</span></label>
                 <label class="comm-follow-result-option is-fail"><input type="radio" name="contactResultCr" value="cr-no-reply"><span>CR未回复</span></label>
               </div>
             </div>
@@ -7229,7 +7302,7 @@
       <button type="button" class="alert-task-follow-close" onclick="closeCommQcFollowModal()" aria-label="关闭">×</button>
     </div>
     <div class="alert-task-follow-body">
-      <p class="alert-task-follow-intro">统计范围：<strong class="comm-qc-follow-period-label">今日</strong> · 各销售分组质检汇总，可展开组别查看个人明细</p>
+      <p class="alert-task-follow-intro">统计范围：<strong class="comm-qc-follow-period-label">今日</strong> · 首行为地区整体质检汇总，下方按组汇总，可展开组别查看个人明细</p>
       <div class="rank-date-chips" role="tablist" aria-label="时间范围">
         <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="today" onclick="switchCommQcFollowPeriod('today', this)">今日</button>
         <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="yesterday" onclick="switchCommQcFollowPeriod('yesterday', this)">昨日</button>
@@ -9686,7 +9759,7 @@ var ALERT_TASK_CUSTOMER_NAMES = [
 ];
 
 var ALERT_TASK_CONTACT_RESULTS = [
-  'CR回复', 'CR未回复', '电话接通', '电话未接通', 'WA回复', 'WA未回复'
+  'ChatRoom回复', 'CR未回复', '电话接通', '电话未接通', 'WhatsApp回复', 'WA未回复'
 ];
 var ALERT_TASK_COMM_PURPOSES = [
   '充值', '提现', '活动', '交易', '账户', '实名', '软件', '行情', '投诉', '私人'
@@ -10968,7 +11041,7 @@ function initAlertTaskCardInteractions() {
 }
 
 var COMM_STATS_CHANNEL_LABELS = {
-  tel: 'Phone',
+  tel: 'Call',
   wa: 'WhatsApp',
   chat: 'Chatroom'
 };
@@ -10985,8 +11058,7 @@ var _commStatsDetailAllRows = [];
 var COMM_STATS_MODULE_DATA = {
   sales: {
     today: {
-      summary: ['86', '42', '28', '18', '49%', '67%', '43%'],
-      effectiveCount: 18,
+      summary: ['86', '42', '20', '14', '7'],
       tel: { metrics: ['24', '16', '67%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 8 人' },
       wa: { metrics: ['20', '14', '70%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 6 人' },
       chat: { metrics: ['12', '7', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−4%</strong> · 未回复 5 人' },
@@ -10994,8 +11066,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '9', score: '83', low: '6', mid: '2', high: '1' }
     },
     yesterday: {
-      summary: ['86', '64', '44', '28', '74%', '69%', '44%'],
-      effectiveCount: 28,
+      summary: ['86', '64', '32', '22', '11'],
       tel: { metrics: ['38', '26', '68%'], foot: '较团队均值 <strong style="color:#059669">+6%</strong> · 未回复 12 人' },
       wa: { metrics: ['31', '22', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 9 人' },
       chat: { metrics: ['19', '11', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人' },
@@ -11003,8 +11074,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '16', score: '84', low: '10', mid: '4', high: '2' }
     },
     week: {
-      summary: ['86', '168', '118', '76', '82%', '70%', '45%'],
-      effectiveCount: 76,
+      summary: ['86', '168', '82', '58', '32'],
       tel: { metrics: ['96', '68', '71%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 28 人' },
       wa: { metrics: ['82', '58', '71%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 24 人' },
       chat: { metrics: ['52', '32', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 20 人' },
@@ -11012,8 +11082,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '42', score: '85', low: '28', mid: '10', high: '4' }
     },
     month: {
-      summary: ['86', '486', '342', '228', '86%', '70%', '47%'],
-      effectiveCount: 228,
+      summary: ['86', '486', '242', '176', '98'],
       tel: { metrics: ['286', '198', '69%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 88 人' },
       wa: { metrics: ['248', '176', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 72 人' },
       chat: { metrics: ['156', '98', '63%'], foot: '较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 58 人' },
@@ -11021,8 +11090,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '128', score: '86', low: '90', mid: '26', high: '12' }
     },
     lastmonth: {
-      summary: ['86', '452', '310', '204', '84%', '69%', '45%'],
-      effectiveCount: 204,
+      summary: ['86', '452', '224', '158', '88'],
       tel: { metrics: ['264', '182', '69%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 82 人' },
       wa: { metrics: ['228', '158', '69%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 70 人' },
       chat: { metrics: ['142', '88', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 54 人' },
@@ -11032,8 +11100,7 @@ var COMM_STATS_MODULE_DATA = {
   },
   manager: {
     today: {
-      summary: ['680', '326', '228', '186', '48%', '70%', '57%'],
-      effectiveCount: 186,
+      summary: ['680', '326', '160', '118', '62'],
       tel: { metrics: ['196', '134', '68%'], foot: '人均联系 <strong>25</strong> · 人均有效沟通率 <strong>66%</strong>' },
       wa: { metrics: ['158', '118', '75%'], foot: '人均联系 <strong>20</strong> · 人均回复率 <strong>70%</strong>' },
       chat: { metrics: ['98', '62', '63%'], foot: '人均联系 <strong>12</strong> · 人均回复率 <strong>56%</strong>' },
@@ -11041,8 +11108,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '86', score: '84', low: '60', mid: '18', high: '8' }
     },
     yesterday: {
-      summary: ['680', '512', '358', '296', '75%', '70%', '58%'],
-      effectiveCount: 296,
+      summary: ['680', '512', '248', '186', '96'],
       tel: { metrics: ['304', '212', '70%'], foot: '人均联系 <strong>38</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['248', '186', '75%'], foot: '人均联系 <strong>31</strong> · 人均回复率 <strong>71%</strong>' },
       chat: { metrics: ['152', '96', '63%'], foot: '人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong>' },
@@ -11050,8 +11116,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '128', score: '82', low: '78', mid: '34', high: '16' }
     },
     week: {
-      summary: ['680', '1860', '1296', '1048', '81%', '70%', '56%'],
-      effectiveCount: 1048,
+      summary: ['680', '1860', '920', '680', '350'],
       tel: { metrics: ['1120', '780', '70%'], foot: '人均联系 <strong>140</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['910', '680', '75%'], foot: '人均联系 <strong>114</strong> · 人均回复率 <strong>71%</strong>' },
       chat: { metrics: ['560', '350', '63%'], foot: '人均联系 <strong>70</strong> · 人均回复率 <strong>58%</strong>' },
@@ -11059,8 +11124,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '480', score: '85', low: '340', mid: '96', high: '44' }
     },
     month: {
-      summary: ['680', '6280', '4380', '3520', '86%', '70%', '56%'],
-      effectiveCount: 3520,
+      summary: ['680', '6280', '3040', '2280', '1180'],
       tel: { metrics: ['3720', '2580', '69%'], foot: '人均联系 <strong>465</strong> · 人均有效沟通率 <strong>68%</strong>' },
       wa: { metrics: ['3040', '2280', '75%'], foot: '人均联系 <strong>380</strong> · 人均回复率 <strong>71%</strong>' },
       chat: { metrics: ['1880', '1180', '63%'], foot: '人均联系 <strong>235</strong> · 人均回复率 <strong>58%</strong>' },
@@ -11068,8 +11132,7 @@ var COMM_STATS_MODULE_DATA = {
       qcCr: { total: '1640', score: '86', low: '1160', mid: '330', high: '150' }
     },
     lastmonth: {
-      summary: ['680', '5860', '4040', '3220', '84%', '69%', '55%'],
-      effectiveCount: 3220,
+      summary: ['680', '5860', '2840', '2080', '1080'],
       tel: { metrics: ['3480', '2400', '69%'], foot: '人均联系 <strong>435</strong> · 人均有效沟通率 <strong>67%</strong>' },
       wa: { metrics: ['2820', '2080', '74%'], foot: '人均联系 <strong>353</strong> · 人均回复率 <strong>70%</strong>' },
       chat: { metrics: ['1740', '1080', '62%'], foot: '人均联系 <strong>218</strong> · 人均回复率 <strong>57%</strong>' },
@@ -11095,27 +11158,65 @@ function syncCommStatsFollowPeriodChips(period) {
 
 function updateCommStatsModuleIntro(period) {
   var label = getCommStatsPeriodLabel(period);
-  var salesIntro = document.getElementById('commStatsIntroSales');
-  var managerIntro = document.getElementById('commStatsIntroManager');
-  if (salesIntro) {
-    salesIntro.textContent = '按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：' + label;
-  }
-  if (managerIntro) {
-    managerIntro.textContent = '团队按渠道拆分 · Phone / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：' + label;
-  }
+  var salesPeriod = document.getElementById('commStatsIntroSalesPeriod');
+  var managerPeriod = document.getElementById('commStatsIntroManagerPeriod');
+  if (salesPeriod) salesPeriod.textContent = label;
+  if (managerPeriod) managerPeriod.textContent = label;
 }
 
-function fillCommStatsSummary(root, values, effectiveCount) {
+function openCommStatsMetricHelpModal() {
+  var modal = document.getElementById('commStatsMetricHelpModal');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCommStatsMetricHelpModal() {
+  var modal = document.getElementById('commStatsMetricHelpModal');
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function formatCommStatsPct(num, den) {
+  if (!den) return '0%';
+  return Math.round(num / den * 100) + '%';
+}
+
+function uniqueCommReplyCount(phone, wa, cr, contacts) {
+  var channels = [phone, wa, cr].sort(function (a, b) { return b - a; });
+  var unique = channels[0] + Math.round(channels[1] * 0.45) + Math.round(channels[2] * 0.3);
+  unique = Math.max(channels[0], unique);
+  return Math.min(contacts, unique);
+}
+
+function fillCommStatsSummary(root, values) {
   if (!root) return;
+  var customers = parseInt(String(values[0] || '').replace(/[^\d]/g, ''), 10) || 0;
+  var contacts = parseInt(String(values[1] || '').replace(/[^\d]/g, ''), 10) || 0;
+  var phone = parseInt(String(values[2] || '').replace(/[^\d]/g, ''), 10) || 0;
+  var wa = parseInt(String(values[3] || '').replace(/[^\d]/g, ''), 10) || 0;
+  var cr = parseInt(String(values[4] || '').replace(/[^\d]/g, ''), 10) || 0;
+  var uniqueReply = uniqueCommReplyCount(phone, wa, cr, contacts);
+  var display = [
+    values[0],
+    values[1],
+    values[2],
+    values[3],
+    values[4],
+    formatCommStatsPct(contacts, customers),
+    formatCommStatsPct(uniqueReply, contacts)
+  ];
   var chips = root.querySelectorAll('.comm-stats-summary .comm-summary-chip');
   chips.forEach(function (chip, idx) {
-    if (values[idx] == null) return;
+    if (display[idx] == null) return;
     var strong = chip.querySelector('strong');
-    if (strong) strong.textContent = values[idx];
-    if (chip.getAttribute('data-comm-chip') === 'effective-rate') {
-      chip.setAttribute('data-comm-count', String(effectiveCount || 0));
-    }
+    if (strong) strong.textContent = display[idx];
   });
+  var replyChip = root.querySelector('.comm-stats-summary [data-comm-chip="reply-rate"]');
+  if (replyChip) replyChip.setAttribute('data-comm-count', String(uniqueReply));
 }
 
 function fillCommStatsChannel(card, data) {
@@ -11151,7 +11252,7 @@ function applyCommStatsModulePeriod(period) {
     if (!block) return;
     var root = section.querySelector('.module-body > .' + (view === 'sales' ? 'sales-only' : 'manager-only'));
     if (!root) return;
-    fillCommStatsSummary(root, block.summary, block.effectiveCount);
+    fillCommStatsSummary(root, block.summary);
     fillCommStatsChannel(root.querySelector('.comm-channel--tel'), block.tel);
     fillCommStatsChannel(root.querySelector('.comm-channel--wa'), block.wa);
     fillCommStatsChannel(root.querySelector('.comm-channel--chat'), block.chat);
@@ -11297,19 +11398,19 @@ function buildCommStatsSummaryFollowRowForName(name, period) {
   var s = seed + i * 91;
   var assigned = Math.max(8, (12 + (s % 24)) * periodMul);
   var contacted = Math.min(assigned, Math.max(1, (5 + (s % 16)) * periodMul));
-  var replyPct = 50 + (s % 40);
-  var replied = Math.min(contacted, Math.max(0, Math.round(contacted * replyPct / 100)));
-  var effectivePct = 38 + (s % 42);
-  var effective = Math.min(contacted, Math.max(0, Math.round(contacted * effectivePct / 100)));
+  var telConnected = Math.min(contacted, Math.max(0, Math.round(contacted * (0.32 + (s % 22) / 100))));
+  var waReplied = Math.min(contacted, Math.max(0, Math.round(contacted * (0.26 + (s % 20) / 100))));
+  var crReplied = Math.min(contacted, Math.max(0, Math.round(contacted * (0.14 + (s % 16) / 100))));
+  var uniqueReply = uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
   return {
     name: name,
     assigned: assigned,
     contacted: contacted,
-    replied: replied,
-    effective: effective,
+    telConnected: telConnected,
+    waReplied: waReplied,
+    crReplied: crReplied,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
-    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
-    effectiveRate: contacted ? Math.round(effective / contacted * 100) : 0
+    replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
   };
 }
 
@@ -11374,22 +11475,25 @@ function aggregateCommStatsChatRows(rows) {
 function aggregateCommStatsSummaryRows(rows) {
   var assigned = 0;
   var contacted = 0;
-  var replied = 0;
-  var effective = 0;
+  var telConnected = 0;
+  var waReplied = 0;
+  var crReplied = 0;
   rows.forEach(function (row) {
     assigned += row.assigned || 0;
     contacted += row.contacted || 0;
-    replied += row.replied || 0;
-    effective += row.effective || 0;
+    telConnected += row.telConnected || 0;
+    waReplied += row.waReplied || 0;
+    crReplied += row.crReplied || 0;
   });
+  var uniqueReply = uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
   return {
     assigned: assigned,
     contacted: contacted,
-    replied: replied,
-    effective: effective,
+    telConnected: telConnected,
+    waReplied: waReplied,
+    crReplied: crReplied,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
-    replyRate: contacted ? Math.round(replied / contacted * 100) : 0,
-    effectiveRate: contacted ? Math.round(effective / contacted * 100) : 0
+    replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
   };
 }
 
@@ -11432,11 +11536,11 @@ function buildCommStatsFollowGroupRowOpenTag(groupKey, expanded) {
 function renderCommStatsFollowSummaryCells(row, salesName, linkable) {
   return renderCommStatsFollowNumCell(row.assigned, salesName, 'assigned', linkable) +
     renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
-    renderCommStatsFollowNumCell(row.replied, salesName, 'replied', linkable) +
-    renderCommStatsFollowNumCell(row.effective, salesName, 'effective', linkable) +
+    renderCommStatsFollowNumCell(row.telConnected, salesName, 'connected', linkable) +
+    renderCommStatsFollowNumCell(row.waReplied, salesName, 'wa-replied', linkable) +
+    renderCommStatsFollowNumCell(row.crReplied, salesName, 'cr-replied', linkable) +
     renderCommStatsFollowRateCell(row.reachRate) +
-    renderCommStatsFollowRateCell(row.replyRate) +
-    renderCommStatsFollowRateCell(row.effectiveRate);
+    renderCommStatsFollowRateCell(row.replyRate);
 }
 
 function renderCommStatsFollowTelCells(row, salesName, linkable) {
@@ -11459,9 +11563,7 @@ function renderCommStatsFollowWaCells(row, salesName, linkable) {
 function renderCommStatsFollowChatCells(row, salesName, linkable) {
   return renderCommStatsFollowNumCell(row.contacted, salesName, 'contacted', linkable) +
     renderCommStatsFollowNumCell(row.replied, salesName, 'replied', linkable) +
-    renderCommStatsFollowNumCell(row.followup2min, salesName, 'followup2min', linkable) +
-    renderCommStatsFollowRateCell(row.replyRate) +
-    renderCommStatsFollowRateCell(row.effectiveRate);
+    renderCommStatsFollowRateCell(row.replyRate);
 }
 
 function renderCommStatsFollowManagerHierarchy() {
@@ -11597,9 +11699,9 @@ var _commStatsDetailCustomerMode = 'my-customers';
 var COMM_STATS_CONTACT_RESULT_META = {
   'phone-connected': { label: '电话接通', channel: 'tel', isFail: false },
   'phone-missed': { label: '电话未接通', channel: 'tel', isFail: true },
-  'wa-replied': { label: 'WA回复', channel: 'wa', isFail: false },
+  'wa-replied': { label: 'WhatsApp回复', channel: 'wa', isFail: false },
   'wa-no-reply': { label: 'WA未回复', channel: 'wa', isFail: true },
-  'cr-replied': { label: 'CR回复', channel: 'chat', isFail: false },
+  'cr-replied': { label: 'ChatRoom回复', channel: 'chat', isFail: false },
   'cr-no-reply': { label: 'CR未回复', channel: 'chat', isFail: true }
 };
 
@@ -11722,11 +11824,11 @@ function renderCommStatsFollowTableHeader() {
       '<th>名称</th>' +
       '<th class="col-num">分配客户</th>' +
       '<th class="col-num">联系客户</th>' +
-      '<th class="col-num">回复数</th>' +
-      '<th class="col-num">有效沟通数</th>' +
-      '<th class="col-rate">触达率</th>' +
-      '<th class="col-rate">回复率</th>' +
-      '<th class="col-rate">有效沟通率</th>';
+      '<th class="col-num">Call接通</th>' +
+      '<th class="col-num">WA回复</th>' +
+      '<th class="col-num">CR回复</th>' +
+      '<th class="col-rate">联系率</th>' +
+      '<th class="col-rate">回复率</th>';
     return;
   }
   if (_commStatsChannelType === 'tel') {
@@ -11737,7 +11839,7 @@ function renderCommStatsFollowTableHeader() {
       '<th class="col-num">时长60S+</th>' +
       '<th class="col-num">累计通话时长</th>' +
       '<th class="col-rate">接通率</th>' +
-      '<th class="col-rate">有效沟通率</th>';
+      '<th class="col-rate">合格沟通率</th>';
   } else if (_commStatsChannelType === 'wa') {
     thead.innerHTML =
       '<th>名称</th>' +
@@ -11745,15 +11847,13 @@ function renderCommStatsFollowTableHeader() {
       '<th class="col-num">回复数</th>' +
       '<th class="col-num">审核有效数</th>' +
       '<th class="col-rate">回复率</th>' +
-      '<th class="col-rate">有效沟通率</th>';
+      '<th class="col-rate">审核有效率</th>';
   } else if (_commStatsChannelType === 'chat') {
     thead.innerHTML =
       '<th>名称</th>' +
       '<th class="col-num">客户沟通数</th>' +
       '<th class="col-num">回复数</th>' +
-      '<th class="col-num">2min内跟进</th>' +
-      '<th class="col-rate">回复率</th>' +
-      '<th class="col-rate">有效沟通率</th>';
+      '<th class="col-rate">回复率</th>';
   }
 }
 
@@ -11769,7 +11869,7 @@ function buildCommStatsSummaryFollowRows(period) {
   return getCommStatsManagerSalesNames().map(function (name) {
     return buildCommStatsSummaryFollowRowForName(name, period);
   }).sort(function (a, b) {
-    return b.effectiveRate - a.effectiveRate || b.contacted - a.contacted;
+    return b.replyRate - a.replyRate || b.contacted - a.contacted;
   });
 }
 
@@ -11840,11 +11940,16 @@ function buildCommStatsContactResultsHtml(resultIds) {
 
 function rowMatchesCommStatsMetric(row, metric, channelType) {
   if (!metric || metric === 'contacted') return true;
-  if (metric === 'connected') return row.contactResults.indexOf('phone-connected') !== -1;
+  if (metric === 'connected' || metric === 'tel-connected') return row.contactResults.indexOf('phone-connected') !== -1;
+  if (metric === 'wa-replied') return row.contactResults.indexOf('wa-replied') !== -1;
+  if (metric === 'cr-replied') return row.contactResults.indexOf('cr-replied') !== -1;
   if (metric === 'replied') {
     if (channelType === 'wa') return row.contactResults.indexOf('wa-replied') !== -1;
     if (channelType === 'chat') return row.contactResults.indexOf('cr-replied') !== -1;
-    return row.contactResults.indexOf('wa-replied') !== -1 || row.contactResults.indexOf('cr-replied') !== -1;
+    if (channelType === 'tel') return row.contactResults.indexOf('phone-connected') !== -1;
+    return row.contactResults.indexOf('phone-connected') !== -1 ||
+      row.contactResults.indexOf('wa-replied') !== -1 ||
+      row.contactResults.indexOf('cr-replied') !== -1;
   }
   if (metric === 'effective') {
     return row.contactResults && row.contactResults.some(function (resultId) {
@@ -12120,7 +12225,7 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsDetailOpenedPeriod] || _commStatsDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
   if (metricLabelEl) {
-    var metricLabels = { replied: '回复', connected: '接通', contacted: '沟通', effective: '有效沟通' };
+    var metricLabels = { replied: '回复', connected: '接通', 'wa-replied': 'WhatsApp回复', 'cr-replied': 'ChatRoom回复', contacted: '沟通', effective: '有效沟通' };
     metricLabelEl.textContent = metricLabels[_commStatsDetailMetric] || '沟通';
   }
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
@@ -12209,11 +12314,13 @@ function updateCommStatsFollowModalMeta() {
     ? '全部'
     : (COMM_STATS_CHANNEL_LABELS[_commStatsChannelType] || _commStatsChannelType || '—');
   if (titleEl) {
-    titleEl.textContent = channelLabel + '渠道·' + periodLabel + '所有销售客户沟通跟进情况';
+    titleEl.textContent = _commStatsFollowScope === 'summary'
+      ? '全部渠道·截止到今日所有销售客户沟通跟进情况'
+      : (channelLabel + '渠道·' + periodLabel + '所有销售客户沟通跟进情况');
   }
   if (_commStatsFollowScope === 'summary') {
     if (introEl) {
-      introEl.innerHTML = '统计范围：<strong class="comm-stats-follow-period-label">' + periodLabel + '</strong> · 各销售在全渠道下的客户触达与沟通跟进汇总';
+      introEl.innerHTML = '统计范围：<strong class="comm-stats-follow-period-label">截止到今日</strong> · 各销售在全渠道下的客户触达与沟通跟进汇总';
     }
     modal.classList.add('is-summary-scope');
     modal.classList.remove('is-tel-scope');
@@ -12235,7 +12342,7 @@ function openCommStatsSummaryFollowModal() {
   if (!modal) return;
   _commStatsFollowScope = 'summary';
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  _commStatsFollowPeriod = 'today';
   syncCommStatsFollowPeriodChips(_commStatsFollowPeriod);
   updateCommStatsFollowModalMeta();
   renderCommStatsFollowTable();
@@ -12958,8 +13065,6 @@ function closeWaCommDetailDrawer() {
 }
 
 var CHAT_COMM_DETAIL_PAGE_SIZE = 12;
-var CHAT_COMM_FOLLOWUP_THRESHOLD_SEC = 120;
-var CHAT_COMM_SLOW_FOLLOWUP_DEMO = [135, 168, 245];
 var _chatCommDetailRows = [];
 var _chatCommDetailAllRows = [];
 var _chatCommDetailPage = 1;
@@ -12967,16 +13072,6 @@ var _chatCommDetailMetric = 'contacted';
 var _chatCommDetailSalesName = '';
 var _chatCommDetailBaseCount = 0;
 var _chatCommDetailOpenedPeriod = 'today';
-
-function formatChatFollowupTimelinessHtml(totalSeconds) {
-  var sec = Math.max(0, totalSeconds | 0);
-  if (!sec) return '—';
-  var text = formatPhoneCommDuration(sec);
-  if (sec > CHAT_COMM_FOLLOWUP_THRESHOLD_SEC) {
-    return '<span class="chat-comm-followup chat-comm-followup--slow">' + text + '</span>';
-  }
-  return '<span class="chat-comm-followup">' + text + '</span>';
-}
 
 function buildChatCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('chat-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
@@ -12987,22 +13082,15 @@ function buildChatCommDetailRows(salesName, rowCount, metric) {
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
     var isReplied = (s % 4) !== 0;
-    var followupSec;
-    if (i < CHAT_COMM_SLOW_FOLLOWUP_DEMO.length) {
-      followupSec = CHAT_COMM_SLOW_FOLLOWUP_DEMO[i];
-    } else {
-      followupSec = 20 + (s % 180);
-    }
+    var followupSec = 20 + (s % 180);
     var isFollowup2min = isReplied && followupSec <= 120;
     rows.push({
       name: name,
       sid: sid,
       commTime: buildCommStatsCommTime(s),
       isReplied: isReplied,
-      followupSec: followupSec,
       isFollowup2min: isFollowup2min,
       repliedLabel: isReplied ? '是' : '否',
-      followupHtml: formatChatFollowupTimelinessHtml(followupSec),
       resultHtml: buildChannelCommResultHtml(s)
     });
   }
@@ -13017,11 +13105,9 @@ function buildChatCommDetailRows(salesName, rowCount, metric) {
 function getChatCommDetailFilterValues() {
   var keywordEl = document.getElementById('chatCommDetailFilterKeyword');
   var repliedEl = document.getElementById('chatCommDetailFilterReplied');
-  var effectiveEl = document.getElementById('chatCommDetailFilterEffective');
   return {
     keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
-    replied: repliedEl ? repliedEl.value : '',
-    effective: effectiveEl ? effectiveEl.value : ''
+    replied: repliedEl ? repliedEl.value : ''
   };
 }
 
@@ -13034,8 +13120,6 @@ function filterChatCommDetailRows(rows, filters) {
     }
     if (filters.replied === 'yes' && !row.isReplied) return false;
     if (filters.replied === 'no' && row.isReplied) return false;
-    if (filters.effective === 'within2min' && !row.isFollowup2min) return false;
-    if (filters.effective === 'over2min' && !(row.isReplied && row.followupSec > 120)) return false;
     return true;
   });
 }
@@ -13046,7 +13130,6 @@ function renderChatCommDetailRowHtml(row) {
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
-    '<td class="col-followup">' + row.followupHtml + '</td>' +
     '<td class="col-comm-result">' + row.resultHtml + '</td>' +
     '</tr>';
 }
@@ -13107,10 +13190,8 @@ function goChatCommDetailPage(page) {
 function clearChatCommDetailFilterInputs() {
   var keywordEl = document.getElementById('chatCommDetailFilterKeyword');
   var repliedEl = document.getElementById('chatCommDetailFilterReplied');
-  var effectiveEl = document.getElementById('chatCommDetailFilterEffective');
   if (keywordEl) keywordEl.value = '';
   if (repliedEl) repliedEl.value = '';
-  if (effectiveEl) effectiveEl.value = '';
 }
 
 function applyChatCommDetailFilters(options) {
@@ -13217,12 +13298,12 @@ function handleCommStatsSummaryChipActivate(chip) {
     return;
   }
   if (view === 'sales' && chip.closest('.sales-only')) {
-    if (chipType === 'effective-rate') {
-      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'effective', 'all');
+    if (chipType === 'my-customers') {
+      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'contacted', 'all');
       return;
     }
-    if (chipType === 'my-customers' || chipType === 'total-contacts') {
-      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'contacted', 'all');
+    if (chipType === 'reply-rate') {
+      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'replied', 'all');
     }
   }
 }
@@ -13774,7 +13855,7 @@ function updateCommQcFollowModalMeta() {
   if (titleEl) titleEl.textContent = typeLabel + ' · ' + periodLabel + '分组质检统计';
   if (introEl) {
     introEl.innerHTML = '统计范围：<strong class="comm-qc-follow-period-label">' + periodLabel +
-      '</strong> · 默认展示各组质检汇总，点击组别可查看个人质检统计';
+      '</strong> · 首行为地区整体质检汇总，下方展示各组质检汇总，点击组别可查看个人质检统计';
   }
 }
 
@@ -13875,6 +13956,13 @@ function renderCommQcFollowTable() {
   var tbody = document.getElementById('commQcFollowTbody');
   if (!tbody) return;
   var html = [];
+  var teamRows = getCommStatsManagerSalesNames().map(function (name) {
+    return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
+  });
+  html.push(buildCommStatsFollowTeamRowOpenTag() +
+    renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
+    renderCommQcFollowCells(aggregateCommQcFollowRows(teamRows), '', false) +
+    '</tr>');
   COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
     var group = MANAGER_GOAL_SALES_GROUPS[gk];
     if (!group) return;
@@ -14092,6 +14180,7 @@ function switchView(view, btn) {
   closeAlertTaskFollowModal();
   closeCommQcFollowModal();
   closeCommStatsFollowModal();
+  closeCommStatsMetricHelpModal();
   closeCommStatsDetailDrawer();
   closeAlertTaskDetailDrawer();
   document.body.dataset.view = view;
@@ -16892,6 +16981,11 @@ document.addEventListener('click', function (e) {
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
+    var commStatsMetricHelpModal = document.getElementById('commStatsMetricHelpModal');
+    if (commStatsMetricHelpModal && !commStatsMetricHelpModal.hidden) {
+      closeCommStatsMetricHelpModal();
+      return;
+    }
     var breakthroughDrawer = document.getElementById('breakthroughStarDrawer');
     if (breakthroughDrawer && !breakthroughDrawer.hidden && breakthroughDrawer.classList.contains('is-open')) {
       closeBreakthroughStarDrawer();
