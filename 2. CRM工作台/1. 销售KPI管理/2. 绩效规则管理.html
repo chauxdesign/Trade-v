@@ -128,14 +128,15 @@
 
     .filter-panel{
       background:var(--panel);border:1px solid var(--line);border-radius:14px;
-      box-shadow:0 4px 20px rgba(15,23,42,.06);overflow:hidden;flex-shrink:0;
+      box-shadow:0 4px 20px rgba(15,23,42,.06);overflow:visible;flex-shrink:0;
     }
-    .filter-bar{padding:12px 16px}
+    .filter-bar{padding:12px 14px}
     .board-filter-form{
-      display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 18px;
+      display:flex;flex-wrap:nowrap;align-items:center;gap:8px 10px;
     }
     .board-filter-field{
-      display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 10px;align-items:center;
+      display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 6px;align-items:center;
+      flex:0 1 auto;min-width:0;
     }
     .board-filter-label{
       font-size:12px;font-weight:700;color:#475569;line-height:34px;white-space:nowrap;
@@ -143,8 +144,8 @@
     .board-filter-select{
       border:1px solid var(--line);border-radius:8px;background:#fff;
       font-size:12px;color:#0f172a;font-family:inherit;box-sizing:border-box;
-      height:34px;padding:0 28px 0 12px;cursor:pointer;
-      width:150px;transition:border-color .15s ease,box-shadow .15s ease;
+      height:34px;padding:0 24px 0 10px;cursor:pointer;
+      width:118px;min-width:0;transition:border-color .15s ease,box-shadow .15s ease;
       appearance:none;-webkit-appearance:none;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
       background-repeat:no-repeat;background-position:right 12px center;
@@ -152,16 +153,40 @@
     .board-filter-select:focus{
       outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
     }
-    .board-filter-select--group{width:170px}
-    .board-filter-select--project{width:168px}
-    .board-filter-select--period{width:160px}
+    .board-filter-select--group{width:126px}
+    .board-filter-select--project{width:128px}
+    .board-filter-select--status{width:100px}
+    .board-filter-select--period{width:120px}
+    .board-filter-multiselect{position:relative}
+    .board-filter-ms-trigger{
+      display:block;text-align:left;overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;line-height:32px;font-weight:400;
+    }
+    .board-filter-ms-trigger.is-open,
+    .board-filter-ms-trigger:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .board-filter-ms-panel{
+      position:absolute;top:calc(100% + 4px);left:0;z-index:30;
+      min-width:148px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;
+      box-shadow:0 10px 28px rgba(15,23,42,.12);padding:6px 0;
+    }
+    .board-filter-ms-panel[hidden]{display:none}
+    .board-filter-ms-option{
+      display:flex;align-items:center;gap:8px;padding:7px 12px;
+      font-size:12px;color:#0f172a;cursor:pointer;white-space:nowrap;
+    }
+    .board-filter-ms-option:hover{background:#f8fafc}
+    .board-filter-ms-option input{
+      width:14px;height:14px;margin:0;accent-color:#2563eb;cursor:pointer;flex-shrink:0;
+    }
     .board-filter-reset{
       height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;
       background:#fff;color:#475569;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;
     }
     .board-filter-reset:hover{border-color:#cbd5e1;background:#f8fafc}
     .board-filter-actions{
-      margin-left:auto;display:flex;align-items:center;gap:8px;
+      margin-left:auto;display:flex;align-items:center;gap:8px;flex-shrink:0;
     }
     .board-filter-query{
       height:34px;padding:0 16px;border:1px solid var(--accent);border-radius:8px;
@@ -1063,6 +1088,18 @@
               </select>
             </div>
             <div class="board-filter-field">
+              <label class="board-filter-label" for="filterStatusTrigger">状态：</label>
+              <div class="board-filter-multiselect" id="filterStatusWrap">
+                <button type="button" class="board-filter-select board-filter-select--status board-filter-ms-trigger" id="filterStatusTrigger" aria-haspopup="listbox" aria-expanded="false" aria-controls="filterStatusPanel" onclick="toggleFilterStatusPanel()">全部</button>
+                <div class="board-filter-ms-panel" id="filterStatusPanel" hidden role="listbox" aria-multiselectable="true" aria-label="状态">
+                  <label class="board-filter-ms-option"><input type="checkbox" name="filterStatus" value="pending" onchange="onFilterStatusChange()">待生效</label>
+                  <label class="board-filter-ms-option"><input type="checkbox" name="filterStatus" value="assessing" onchange="onFilterStatusChange()">考核中</label>
+                  <label class="board-filter-ms-option"><input type="checkbox" name="filterStatus" value="settled" onchange="onFilterStatusChange()">已核算</label>
+                  <label class="board-filter-ms-option"><input type="checkbox" name="filterStatus" value="voided" onchange="onFilterStatusChange()">已作废</label>
+                </div>
+              </div>
+            </div>
+            <div class="board-filter-field">
               <label class="board-filter-label" for="filterPeriod">考核时间范围：</label>
               <select class="board-filter-select board-filter-select--period" id="filterPeriod">
                 <option value="">全部</option>
@@ -1450,7 +1487,7 @@
                         </th>
                         <th class="col-sid">SID</th>
                         <th class="col-name-level">销售/等级</th>
-                        <th class="col-goals">充值活跃/净入金</th>
+                        <th class="col-goals">净入金/充值活跃</th>
                       </tr>
                     </thead>
                     <tbody id="kpiTargetEmployeeTableBody"></tbody>
@@ -1529,8 +1566,8 @@
               <th class="col-level">考核等级</th>
               <th class="col-group">组别</th>
               <th class="col-month">月份</th>
-              <th class="col-active-goal">充值活跃目标</th>
               <th class="col-deposit-goal">净入金目标</th>
+              <th class="col-active-goal">充值活跃目标</th>
             </tr>
           </thead>
           <tbody id="kpiTargetDetailTableBody"></tbody>
@@ -2987,17 +3024,81 @@ function compareKpiRuleListRowsByMonthAsc(a, b) {
   return String(a.id || '').localeCompare(String(b.id || ''), undefined, { numeric: true });
 }
 
+var KPI_RULE_STATUS_FILTER_OPTIONS = [
+  { key: 'pending', label: '待生效' },
+  { key: 'assessing', label: '考核中' },
+  { key: 'settled', label: '已核算' },
+  { key: 'voided', label: '已作废' }
+];
+
+function getFilterStatusCheckboxes() {
+  return Array.prototype.slice.call(document.querySelectorAll('input[name="filterStatus"]'));
+}
+
+function getSelectedFilterStatusKeys() {
+  return getFilterStatusCheckboxes().filter(function (el) {
+    return el.checked;
+  }).map(function (el) {
+    return el.value;
+  });
+}
+
+function updateFilterStatusTriggerLabel() {
+  var trigger = document.getElementById('filterStatusTrigger');
+  if (!trigger) return;
+  var selected = getSelectedFilterStatusKeys();
+  if (!selected.length || selected.length === KPI_RULE_STATUS_FILTER_OPTIONS.length) {
+    trigger.textContent = '全部';
+    return;
+  }
+  var labels = KPI_RULE_STATUS_FILTER_OPTIONS.filter(function (opt) {
+    return selected.indexOf(opt.key) > -1;
+  }).map(function (opt) {
+    return opt.label;
+  });
+  trigger.textContent = labels.join('、');
+}
+
+function setFilterStatusPanelOpen(open) {
+  var panel = document.getElementById('filterStatusPanel');
+  var trigger = document.getElementById('filterStatusTrigger');
+  if (!panel || !trigger) return;
+  panel.hidden = !open;
+  trigger.classList.toggle('is-open', !!open);
+  trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function toggleFilterStatusPanel() {
+  var panel = document.getElementById('filterStatusPanel');
+  setFilterStatusPanelOpen(!!(panel && panel.hidden));
+}
+
+function onFilterStatusChange() {
+  updateFilterStatusTriggerLabel();
+}
+
+function resetFilterStatus() {
+  getFilterStatusCheckboxes().forEach(function (el) {
+    el.checked = false;
+  });
+  updateFilterStatusTriggerLabel();
+  setFilterStatusPanelOpen(false);
+}
+
 function getFilteredRules() {
   var region = document.getElementById('filterRegion').value;
   var group = document.getElementById('filterGroup').value;
   var projectEl = document.getElementById('filterProject');
   var project = projectEl ? projectEl.value : '';
+  var statuses = getSelectedFilterStatusKeys();
+  var statusFilterActive = statuses.length > 0 && statuses.length < KPI_RULE_STATUS_FILTER_OPTIONS.length;
   var period = document.getElementById('filterPeriod').value;
   var periodMonths = period ? KPI_RULE_QUARTER_MONTHS[period] || [] : null;
   return KPI_RULES_DATA.filter(function (row) {
     if (region && row.region !== region) return false;
     if (group && row.group !== group) return false;
     if (project && formatKpiRuleListProjects(row.projects) !== project) return false;
+    if (statusFilterActive && statuses.indexOf(getKpiRuleRowStatusKey(row)) === -1) return false;
     if (periodMonths && periodMonths.indexOf(row.period) === -1) return false;
     return true;
   }).sort(compareKpiRuleListRowsByMonthAsc);
@@ -3121,6 +3222,7 @@ function renderRulesTable() {
 }
 
 function applyFilters() {
+  setFilterStatusPanelOpen(false);
   currentPage = 1;
   renderRulesTable();
 }
@@ -3131,6 +3233,7 @@ function resetFilters() {
   document.getElementById('filterGroup').value = '';
   var projectSelect = document.getElementById('filterProject');
   if (projectSelect) projectSelect.value = '';
+  resetFilterStatus();
   var periodSelect = document.getElementById('filterPeriod');
   var defaultKey = getKpiRuleCurrentQuarterKey();
   if (periodSelect) {
@@ -6159,7 +6262,7 @@ function initKpiTargetEmployeeAlerts(row) {
 function buildKpiTargetEmployeeAlertTitle(emp, alertInfo) {
   if (!emp || !alertInfo) return '';
   var perfName = alertInfo.perfName || '其他绩效方案';
-  return '已为 【' + emp.name + '】 设置过 【' + perfName + '】的KPI目标：充值活跃：' + alertInfo.activeGoal + '，净入金：' + alertInfo.depositGoal + '，';
+  return '已为 【' + emp.name + '】 设置过 【' + perfName + '】的KPI目标：净入金：' + alertInfo.depositGoal + '，充值活跃：' + alertInfo.activeGoal + '，';
 }
 
 function formatKpiTargetEmployeeNameLevel(emp) {
@@ -6268,7 +6371,7 @@ function formatKpiTargetEmployeeGoalsCell(emp) {
   }
   var activeText = emp.activeGoal == null || emp.activeGoal === '' ? '--' : String(emp.activeGoal);
   var depositText = emp.depositGoal == null || emp.depositGoal === '' ? '--' : String(emp.depositGoal);
-  return activeText + ' / ' + depositText;
+  return depositText + ' / ' + activeText;
 }
 
 function formatKpiTargetEmployeeGoalValue(value) {
@@ -6460,8 +6563,8 @@ function renderKpiTargetDetailTable() {
       '<td class="col-level">' + (item.assessmentLevel || '—') + '</td>' +
       '<td class="col-group">' + (item.twGroup || '—') + '</td>' +
       '<td class="col-month">' + item.month + '</td>' +
-      '<td class="col-active-goal">' + formatKpiTargetDetailGoalValue(item, 'activeGoal') + '</td>' +
       '<td class="col-deposit-goal">' + formatKpiTargetDetailGoalValue(item, 'depositGoal') + '</td>' +
+      '<td class="col-active-goal">' + formatKpiTargetDetailGoalValue(item, 'activeGoal') + '</td>' +
     '</tr>';
   }).join('');
 
@@ -7550,6 +7653,14 @@ initKpiRulePeriodOptions('new');
 initKpiRulePeriodOptions('nigeria');
 initKpiRulePeriodOptions('india');
 initKpiRuleFilterPeriodOptions();
+document.addEventListener('click', function (event) {
+  var wrap = document.getElementById('filterStatusWrap');
+  if (!wrap || wrap.contains(event.target)) return;
+  setFilterStatusPanelOpen(false);
+});
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') setFilterStatusPanelOpen(false);
+});
 syncKpiRuleWeightFields('legacy');
 syncKpiRuleWeightFields('new');
 syncKpiRuleWeightFields('nigeria');
