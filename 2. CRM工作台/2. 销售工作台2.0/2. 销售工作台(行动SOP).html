@@ -1013,7 +1013,7 @@
       padding:8px 10px;border-radius:8px;
       background:#0f172a;color:#fff;
       font-size:10px;font-weight:500;line-height:1.5;
-      white-space:normal;word-break:break-word;
+      white-space:pre-line;word-break:break-word;
       box-shadow:0 10px 28px rgba(15,23,42,.24);
       pointer-events:none;opacity:0;visibility:hidden;
       transition:opacity .12s ease,visibility .12s ease;
@@ -1441,7 +1441,7 @@
       border-color:#fbbf24;box-shadow:0 2px 8px rgba(245,158,11,.18);filter:brightness(1.02);
     }
     #commReviewFilters{
-      display:flex;align-items:flex-end;gap:10px;
+      display:flex;align-items:center;gap:10px;
     }
     #commReviewFilters .my-follow-drawer-filters-grid{flex:1;min-width:0}
     #alertTaskDetailFilters{
@@ -1463,6 +1463,17 @@
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
     #commReviewDrawer .alert-task-detail-panel{width:85%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
+    #commReviewDrawer .col-screenshot{white-space:normal}
+    #commReviewDrawer .col-screenshot-stack{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+    #waCommDetailDrawer .col-screenshot{white-space:normal}
+    #waCommDetailDrawer .col-screenshot-stack{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+    #commReviewDrawer th .goal-q-help{
+      display:inline-grid;place-items:center;
+      width:14px;height:14px;margin-left:4px;border-radius:50%;
+      border:1px solid #cbd5e1;font-size:9px;font-weight:800;
+      color:#94a3b8;cursor:help;vertical-align:middle;
+      position:relative;top:-1px;
+    }
     .alert-task-detail-table .col-screenshot-link{
       border:none;background:none;padding:0;margin:0;
       color:#2563eb;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;
@@ -1479,10 +1490,15 @@
     .comm-review-action-link--void{color:#64748b}
     .comm-review-action-link--void:hover{color:#475569}
     #commReviewDrawer .col-customer{min-width:130px;white-space:normal}
+    #commReviewDrawer .col-sales{min-width:110px;white-space:normal}
+    #commReviewDrawer .col-sales-stack{display:flex;flex-direction:column;gap:2px}
+    #commReviewDrawer .col-sales-stack .col-level-line{font-size:11px;line-height:1.35;color:#64748b}
     #commReviewDrawer .col-customer-stack{display:flex;flex-direction:column;gap:2px}
     #commReviewDrawer .col-customer-stack .col-sid-line{font-size:11px;line-height:1.35}
     #commReviewDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #commReviewDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #commReviewDrawer .col-comm-result{min-width:280px;max-width:420px}
+    #commReviewDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
     .alert-task-detail-table .task-status-tag--reviewed{
       color:#059669;background:#ecfdf5;border:1px solid #bbf7d0;
     }
@@ -1971,9 +1987,9 @@
     }
     .alert-task-band:first-child{margin-top:0;padding-top:4px}
     .alert-task-band-label{
-      font-size:12px;font-weight:800;color:#334155;line-height:1.3;
+      font-size:14px;font-weight:800;color:#2563eb;line-height:1.3;white-space:nowrap;
     }
-    .alert-task-band--warn .alert-task-band-label{color:#b45309}
+    .alert-task-band--warn .alert-task-band-label{color:#2563eb}
     .alert-task-band-line{flex:1;height:1px;background:#eef2f7}
     .alert-task-band-count{
       font-size:10px;font-weight:600;color:#64748b;
@@ -2615,6 +2631,7 @@
     #commStatsDetailFilters .my-follow-filter-field--period{
       width:110px;
     }
+    #commStatsDetailDrawer.is-all-time #commStatsDetailFilters .my-follow-filter-field--period{display:none}
     #commStatsDetailFilters .my-follow-filter-actions{
       display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
     }
@@ -2631,9 +2648,27 @@
       background:#1d4ed8;border-color:#1d4ed8;
     }
     #commStatsDetailFilters.is-customer-mode .my-follow-filter-field--comm-only{display:none}
-    #commStatsDetailDrawer .alert-task-detail-panel{width:80%;max-width:85%}
+    #commStatsDetailDrawer .alert-task-detail-panel{width:75%;max-width:75%}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #commStatsDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #commStatsDetailDrawer .alert-task-detail-table{min-width:0}
+    #commStatsDetailDrawer:not(.is-customer-list) .col-customer,
+    #commStatsDetailDrawer:not(.is-customer-list) .col-phone,
+    #commStatsDetailDrawer:not(.is-customer-list) .col-contact-results,
+    #commStatsDetailDrawer:not(.is-customer-list) .col-contacted{
+      width:11.25%;white-space:nowrap;
+    }
+    #commStatsDetailDrawer:not(.is-customer-list) .col-contact-results{min-width:150px}
+    #commStatsDetailDrawer:not(.is-customer-list) .col-contacted{min-width:76px}
+    #commStatsDetailDrawer .col-customer{padding-right:4px}
+    #commStatsDetailDrawer .col-customer-stack{display:flex;flex-direction:column;gap:2px;white-space:nowrap}
+    #commStatsDetailDrawer .col-customer-stack .col-sid-line{font-size:11px;line-height:1.35}
+    #commStatsDetailDrawer .col-phone{padding-left:4px}
+    #commStatsDetailDrawer .col-phone-stack{display:flex;flex-direction:column;gap:2px;white-space:nowrap}
+    #commStatsDetailDrawer .col-phone-line{display:block;line-height:1.35}
+    #commStatsDetailDrawer:not(.is-customer-list) .col-action{width:8%;white-space:nowrap}
+    #commStatsDetailDrawer:not(.is-customer-list) .col-comm-result{width:47%;min-width:0;max-width:none}
+    #commStatsDetailDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
     #phoneCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #phoneCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #phoneCommDetailDrawer .alert-task-detail-table{min-width:920px}
@@ -2778,6 +2813,9 @@
     .alert-task-detail-table .comm-result-tag{
       display:inline-block;margin:0 4px 4px 0;padding:2px 7px;border-radius:999px;
       font-size:10px;font-weight:700;line-height:1.4;color:#1d4ed8;background:#eff6ff;border:1px solid #bfdbfe;
+    }
+    .alert-task-detail-table .comm-result-tag--ok{
+      color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe;
     }
     .alert-task-detail-table .comm-result-tag--fail{
       color:#dc2626;background:#fef2f2;border-color:#fecaca;
@@ -4768,39 +4806,39 @@
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp审核</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：<span id="commStatsIntroSalesPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
-              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 统计范围：<span id="commStatsIntroManagerPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
+              <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 总览指标为历史至今累计 · 渠道与质检统计范围：<span id="commStatsIntroSalesPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
+              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 总览指标为历史至今累计 · 渠道与质检统计范围：<span id="commStatsIntroManagerPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
                 <div class="comm-stats-summary">
                   <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="my-customers" role="button" tabindex="0" aria-label="查看我的客户明细">
                     <span>我的客户数</span>
-                    <strong>86</strong>
+                    <strong>586</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系数</span>
-                    <strong>42</strong>
+                    <strong>545</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>Call接通</span>
-                    <strong>20</strong>
+                    <strong>267</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>WA回复</span>
-                    <strong>14</strong>
+                    <strong>218</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>CR回复</span>
-                    <strong>7</strong>
+                    <strong>169</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系率</span>
-                    <strong>49%</strong>
+                    <strong>93%</strong>
                   </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="28" role="button" tabindex="0" aria-label="查看客户回复明细">
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="416" role="button" tabindex="0" aria-label="查看客户回复明细">
                     <span>客户回复率</span>
-                    <strong>67%</strong>
+                    <strong>76%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -4813,18 +4851,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">38</strong>
+                        <strong class="comm-metric-val">14</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">时长60S+</span>
-                        <strong class="comm-metric-val">26</strong>
+                        <strong class="comm-metric-val">10</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">有效沟通率</span>
-                        <strong class="comm-metric-val">68%</strong>
+                        <strong class="comm-metric-val">71%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+6%</strong> · 未回复 12 人</div>
+                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 2 人</div>
                   </article>
                   <article class="comm-channel comm-channel--wa" data-channel-type="wa">
                     <div class="comm-channel-head">
@@ -4835,18 +4873,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">31</strong>
+                        <strong class="comm-metric-val">11</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">22</strong>
+                        <strong class="comm-metric-val">8</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
-                        <strong class="comm-metric-val">71%</strong>
+                        <strong class="comm-metric-val">73%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 9 人</div>
+                    <div class="comm-channel-foot">较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 3 人</div>
                   </article>
                   <article class="comm-channel comm-channel--chat" data-channel-type="chat">
                     <div class="comm-channel-head">
@@ -4857,18 +4895,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">19</strong>
+                        <strong class="comm-metric-val">7</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">11</strong>
+                        <strong class="comm-metric-val">5</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
-                        <strong class="comm-metric-val">58%</strong>
+                        <strong class="comm-metric-val">71%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人</div>
+                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+8%</strong> · 未回复 2 人</div>
                   </article>
                 </div>
                 <div class="comm-qc-split">
@@ -4885,7 +4923,55 @@
                         <div class="comm-qc-metric-card-body">
                           <div class="comm-qc-dual">
                             <div class="comm-qc-dual-item">
-                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">26</strong>
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">9</strong>
+                              <span>质检总数</span>
+                            </div>
+                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
+                              <strong>90</strong>
+                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">合规统计</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-compliance" aria-label="低风险 6，中风险 2，高风险 1">
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">6</strong>
+                              <em>低风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">2</strong>
+                              <em>中风险</em>
+                            </div>
+                            <span class="comm-qc-compliance-sep">/</span>
+                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">1</strong>
+                              <em>高风险</em>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="comm-qc-col">
+                    <div class="comm-qc-band comm-qc-band--cr">
+                      <span class="comm-qc-band-label">CR质检分析</span>
+                      <span class="comm-qc-band-line"></span>
+                    </div>
+                    <div class="comm-qc-cards">
+                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
+                        <div class="comm-qc-metric-card-head">
+                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
+                        </div>
+                        <div class="comm-qc-metric-card-body">
+                          <div class="comm-qc-dual">
+                            <div class="comm-qc-dual-item">
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">7</strong>
                               <span>质检总数</span>
                             </div>
                             <div class="comm-qc-dual-item comm-qc-dual-item--score">
@@ -4900,67 +4986,19 @@
                           <span class="comm-qc-metric-card-name">合规统计</span>
                         </div>
                         <div class="comm-qc-metric-card-body">
-                          <div class="comm-qc-compliance" aria-label="低风险 18，中风险 6，高风险 2">
+                          <div class="comm-qc-compliance" aria-label="低风险 4，中风险 2，高风险 1">
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">18</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">4</strong>
                               <em>低风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">6</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">2</strong>
                               <em>中风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">2</strong>
-                              <em>高风险</em>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                  </div>
-                  <div class="comm-qc-col">
-                    <div class="comm-qc-band comm-qc-band--cr">
-                      <span class="comm-qc-band-label">CR质检分析</span>
-                      <span class="comm-qc-band-line"></span>
-                    </div>
-                    <div class="comm-qc-cards">
-                      <article class="comm-qc-metric-card comm-qc-metric-card--overview">
-                        <div class="comm-qc-metric-card-head">
-                          <span class="comm-qc-metric-card-name">质检总数 / 总体评分</span>
-                        </div>
-                        <div class="comm-qc-metric-card-body">
-                          <div class="comm-qc-dual">
-                            <div class="comm-qc-dual-item">
-                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">16</strong>
-                              <span>质检总数</span>
-                            </div>
-                            <div class="comm-qc-dual-item comm-qc-dual-item--score">
-                              <strong>84</strong>
-                              <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
-                            </div>
-                          </div>
-                        </div>
-                      </article>
-                      <article class="comm-qc-metric-card comm-qc-metric-card--compliance">
-                        <div class="comm-qc-metric-card-head">
-                          <span class="comm-qc-metric-card-name">合规统计</span>
-                        </div>
-                        <div class="comm-qc-metric-card-body">
-                          <div class="comm-qc-compliance" aria-label="低风险 10，中风险 4，高风险 2">
-                            <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">10</strong>
-                              <em>低风险</em>
-                            </div>
-                            <span class="comm-qc-compliance-sep">/</span>
-                            <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">4</strong>
-                              <em>中风险</em>
-                            </div>
-                            <span class="comm-qc-compliance-sep">/</span>
-                            <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">2</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">1</strong>
                               <em>高风险</em>
                             </div>
                           </div>
@@ -4974,31 +5012,31 @@
                 <div class="comm-stats-summary">
                   <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="team-customers" role="button" tabindex="0" aria-label="查看团队客户明细">
                     <span>团队客户数</span>
-                    <strong>680</strong>
+                    <strong>8340</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系数</span>
-                    <strong>326</strong>
+                    <strong>7184</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>Call接通</span>
-                    <strong>160</strong>
+                    <strong>3458</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>WA回复</span>
-                    <strong>118</strong>
+                    <strong>2907</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>CR回复</span>
-                    <strong>62</strong>
+                    <strong>1965</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系率</span>
-                    <strong>48%</strong>
+                    <strong>86%</strong>
                   </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="232" role="button" tabindex="0" aria-label="查看团队客户回复明细">
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="5356" role="button" tabindex="0" aria-label="查看团队客户回复明细">
                     <span>客户回复率</span>
-                    <strong>71%</strong>
+                    <strong>75%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -5011,18 +5049,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">304</strong>
+                        <strong class="comm-metric-val">196</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">时长60S+</span>
-                        <strong class="comm-metric-val">212</strong>
+                        <strong class="comm-metric-val">134</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">有效沟通率</span>
-                        <strong class="comm-metric-val">70%</strong>
+                        <strong class="comm-metric-val">68%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">人均联系 <strong>38</strong> · 人均有效沟通率 <strong>68%</strong></div>
+                    <div class="comm-channel-foot">人均联系 <strong>12</strong> · 人均有效沟通率 <strong>68%</strong></div>
                   </article>
                   <article class="comm-channel comm-channel--wa" data-channel-type="wa">
                     <div class="comm-channel-head">
@@ -5033,18 +5071,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">248</strong>
+                        <strong class="comm-metric-val">158</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">186</strong>
+                        <strong class="comm-metric-val">118</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
                         <strong class="comm-metric-val">75%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">人均联系 <strong>31</strong> · 人均回复率 <strong>71%</strong></div>
+                    <div class="comm-channel-foot">人均联系 <strong>9</strong> · 人均回复率 <strong>75%</strong></div>
                   </article>
                   <article class="comm-channel comm-channel--chat" data-channel-type="chat">
                     <div class="comm-channel-head">
@@ -5055,18 +5093,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">152</strong>
+                        <strong class="comm-metric-val">98</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">96</strong>
+                        <strong class="comm-metric-val">62</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
                         <strong class="comm-metric-val">63%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong></div>
+                    <div class="comm-channel-foot">人均联系 <strong>6</strong> · 人均回复率 <strong>63%</strong></div>
                   </article>
                 </div>
                 <div class="comm-qc-split">
@@ -5083,7 +5121,7 @@
                         <div class="comm-qc-metric-card-body">
                           <div class="comm-qc-dual">
                             <div class="comm-qc-dual-item">
-                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">208</strong>
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">128</strong>
                               <span>质检总数</span>
                             </div>
                             <div class="comm-qc-dual-item comm-qc-dual-item--score">
@@ -5098,19 +5136,19 @@
                           <span class="comm-qc-metric-card-name">合规统计</span>
                         </div>
                         <div class="comm-qc-metric-card-body">
-                          <div class="comm-qc-compliance" aria-label="低风险 136，中风险 52，高风险 20">
+                          <div class="comm-qc-compliance" aria-label="低风险 92，中风险 26，高风险 10">
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">136</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">92</strong>
                               <em>低风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">52</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">26</strong>
                               <em>中风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">20</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">10</strong>
                               <em>高风险</em>
                             </div>
                           </div>
@@ -5131,11 +5169,11 @@
                         <div class="comm-qc-metric-card-body">
                           <div class="comm-qc-dual">
                             <div class="comm-qc-dual-item">
-                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">128</strong>
+                              <strong class="comm-qc-link" data-qc-metric="total" tabindex="0" role="link" aria-label="查看质检总数明细">86</strong>
                               <span>质检总数</span>
                             </div>
                             <div class="comm-qc-dual-item comm-qc-dual-item--score">
-                              <strong>82</strong>
+                              <strong>86</strong>
                               <span>总体评分<span class="goal-q-help" tabindex="0" data-tip="总体质检评分为所有质检记录的平均评分" aria-label="总体质检评分为所有质检记录的平均评分">?</span></span>
                             </div>
                           </div>
@@ -5146,19 +5184,19 @@
                           <span class="comm-qc-metric-card-name">合规统计</span>
                         </div>
                         <div class="comm-qc-metric-card-body">
-                          <div class="comm-qc-compliance" aria-label="低风险 78，中风险 34，高风险 16">
+                          <div class="comm-qc-compliance" aria-label="低风险 60，中风险 18，高风险 8">
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--low">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">78</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="low" tabindex="0" role="link" aria-label="查看低风险明细">60</strong>
                               <em>低风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--mid">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">34</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="mid" tabindex="0" role="link" aria-label="查看中风险明细">18</strong>
                               <em>中风险</em>
                             </div>
                             <span class="comm-qc-compliance-sep">/</span>
                             <div class="comm-qc-compliance-item comm-qc-compliance-item--high">
-                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">16</strong>
+                              <strong class="comm-qc-link" data-qc-metric="risk" data-qc-risk="high" tabindex="0" role="link" aria-label="查看高风险明细">8</strong>
                               <em>高风险</em>
                             </div>
                           </div>
@@ -6763,28 +6801,20 @@
           <div class="my-follow-drawer-filters" id="commReviewFilters">
             <div class="my-follow-drawer-filters-grid">
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">销售</span>
-                <input type="text" class="my-follow-filter-input" id="commReviewFilterSales" placeholder="输入销售姓名关键词" oninput="applyCommReviewFilters()">
+                <input type="text" class="my-follow-filter-input" id="commReviewFilterSales" placeholder="销售" aria-label="销售" oninput="applyCommReviewFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">客户名称</span>
-                <input type="text" class="my-follow-filter-input" id="commReviewFilterNick" placeholder="输入客户名称关键词" oninput="applyCommReviewFilters()">
+                <input type="text" class="my-follow-filter-input" id="commReviewFilterCustomer" placeholder="客户名称或 SID" aria-label="客户名称或 SID" oninput="applyCommReviewFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="commReviewFilterSid" placeholder="输入 SID" oninput="applyCommReviewFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">审核状态</span>
-                <select class="my-follow-filter-select" id="commReviewFilterStatus" onchange="applyCommReviewFilters()">
-                  <option value="">全部</option>
+                <select class="my-follow-filter-select" id="commReviewFilterStatus" aria-label="审核状态" onchange="applyCommReviewFilters()">
+                  <option value="">审核状态</option>
                   <option value="approved">已审核</option>
                   <option value="pending">未审核</option>
                 </select>
               </label>
             </div>
             <div class="my-follow-filter-field my-follow-filter-field--action">
-              <span class="my-follow-filter-label" aria-hidden="true">&nbsp;</span>
               <button type="button" class="my-follow-filter-reset" onclick="resetCommReviewFilters()">重置筛选</button>
             </div>
           </div>
@@ -6794,10 +6824,10 @@
                 <tr>
                   <th>销售</th>
                   <th>客户名称/SID</th>
-                  <th>沟通时间</th>
-                  <th>沟通内容</th>
-                  <th>截图文件</th>
-                  <th>审核状态</th>
+                  <th>提交时间</th>
+                  <th>沟通结果</th>
+                  <th>沟通截图</th>
+                  <th>审核状态<span class="goal-q-help" tabindex="0" data-tip="审核状态说明：&#10;若客户已经为有效沟通客户，则WhatsApp沟通记录默认设置为已审核状态" aria-label="审核状态说明：若客户已经为有效沟通客户，则WhatsApp沟通记录默认设置为已审核状态">?</span></th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -6821,7 +6851,8 @@
             <p class="alert-task-detail-sub">
               沟通渠道：<strong id="commStatsDetailChannel">—</strong>
               · 统计范围：<strong id="commStatsDetailPeriod">—</strong>
-              · 共 <strong id="commStatsDetailCount">0</strong> 条<strong id="commStatsDetailMetricLabel">沟通</strong>记录
+              · 共 <strong id="commStatsDetailCount">0</strong> 条
+              <strong id="commStatsDetailMetricLabel" hidden>沟通</strong>
             </p>
             <p class="alert-task-detail-update">数据更新时间：<strong id="commStatsDetailUpdatedAt">—</strong></p>
           </div>
@@ -6845,11 +6876,11 @@
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
                 <select class="my-follow-filter-select" id="commStatsDetailFilterResult">
                   <option value="">联系结果</option>
-                  <option value="phone-connected">电话接通</option>
-                  <option value="phone-missed">电话未接通</option>
-                  <option value="wa-replied">WhatsApp回复</option>
+                  <option value="phone-connected">Call接通</option>
+                  <option value="phone-missed">Call未接通</option>
+                  <option value="wa-replied">WA回复</option>
                   <option value="wa-no-reply">WA未回复</option>
-                  <option value="cr-replied">ChatRoom回复</option>
+                  <option value="cr-replied">CR回复</option>
                   <option value="cr-no-reply">CR未回复</option>
                 </select>
               </label>
@@ -6870,13 +6901,12 @@
             <table class="alert-task-detail-table">
               <thead id="commStatsDetailThead">
                 <tr>
-                  <th>客户名称</th>
-                  <th>SID</th>
-                  <th>联系电话</th>
-                  <th>联系结果</th>
-                  <th>有效沟通</th>
-                  <th>最后沟通内容</th>
-                  <th>操作</th>
+                  <th class="col-customer">客户名称</th>
+                  <th class="col-phone">联系电话</th>
+                  <th class="col-contact-results">联系结果</th>
+                  <th class="col-contacted">有效沟通</th>
+                  <th class="col-comm-result">最后沟通内容</th>
+                  <th class="col-action">操作</th>
                 </tr>
               </thead>
               <tbody id="commStatsDetailTbody"></tbody>
@@ -6930,8 +6960,8 @@
               <label class="my-follow-filter-field my-follow-filter-field--effective">
                 <select class="my-follow-filter-select" id="phoneCommDetailFilterEffective">
                   <option value="">沟通时长</option>
-                  <option value="gte60">60S以上</option>
-                  <option value="lt60">60S以内</option>
+                  <option value="gte60">≥60S</option>
+                  <option value="lt60">＜60S</option>
                 </select>
               </label>
             </div>
@@ -7112,13 +7142,13 @@
       <button type="button" class="alert-task-follow-close" onclick="closeCommStatsMetricHelpModal()" aria-label="关闭">×</button>
     </div>
     <div class="alert-task-follow-body">
-      <p class="alert-task-follow-intro">以下为客户触达统计总览指标定义，适用于销售/管理视角。口径随标题所选统计周期变化。</p>
+      <p class="alert-task-follow-intro">以下为客户触达统计总览指标定义，适用于销售/管理视角。口径为历史至今累计，不受标题所选统计周期影响。</p>
       <ul class="goal-metric-help-list">
-        <li><span class="metric-name">我的客户数 / 团队客户数</span><span class="metric-desc">当前统计周期内，个人或团队绑定的客户数量（团队视角按客户去重）</span></li>
-        <li><span class="metric-name">客户联系数</span><span class="metric-desc">当前统计周期内，通过 Call / WhatsApp / Chatroom 触达过的客户数（去重）</span></li>
-        <li><span class="metric-name">Call接通</span><span class="metric-desc">当前统计周期内，Call 渠道接通的客户数</span></li>
-        <li><span class="metric-name">WA回复</span><span class="metric-desc">当前统计周期内，WhatsApp 渠道客户有回复的数量</span></li>
-        <li><span class="metric-name">CR回复</span><span class="metric-desc">当前统计周期内，Chatroom 渠道客户有回复的数量</span></li>
+        <li><span class="metric-name">我的客户数 / 团队客户数</span><span class="metric-desc">历史至今，个人或团队绑定的客户数量（团队视角按客户去重）</span></li>
+        <li><span class="metric-name">客户联系数</span><span class="metric-desc">历史至今，通过 Call / WhatsApp / Chatroom 触达过的客户数（去重）</span></li>
+        <li><span class="metric-name">Call接通</span><span class="metric-desc">历史至今，Call 渠道接通的客户数</span></li>
+        <li><span class="metric-name">WA回复</span><span class="metric-desc">历史至今，WhatsApp 渠道客户有回复的数量</span></li>
+        <li><span class="metric-name">CR回复</span><span class="metric-desc">历史至今，Chatroom 渠道客户有回复的数量</span></li>
         <li><span class="metric-name">客户联系率</span><span class="metric-desc">客户联系数 / 客户数</span></li>
         <li><span class="metric-name">客户回复率</span><span class="metric-desc">Call接通、WA回复、CR回复的客户去重后 / 客户联系数</span></li>
       </ul>
@@ -9614,7 +9644,8 @@ var ALERT_TASK_FOLLOW_PERIODS = {
   yesterday: '昨日',
   week: '本周',
   month: '本月',
-  lastmonth: '上月'
+  lastmonth: '上月',
+  all: '历史至今'
 };
 var _alertTaskFollowType = '';
 var _alertTaskFollowPeriod = 'today';
@@ -11055,92 +11086,126 @@ var COMM_STATS_DETAIL_PAGE_SIZE = 12;
 var _commStatsDetailRows = [];
 var _commStatsDetailAllRows = [];
 
-var COMM_STATS_MODULE_DATA = {
-  sales: {
-    today: {
-      summary: ['86', '42', '20', '14', '7'],
-      tel: { metrics: ['24', '16', '67%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 8 人' },
-      wa: { metrics: ['20', '14', '70%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 6 人' },
-      chat: { metrics: ['12', '7', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−4%</strong> · 未回复 5 人' },
-      qcTel: { total: '14', score: '87', low: '10', mid: '3', high: '1' },
-      qcCr: { total: '9', score: '83', low: '6', mid: '2', high: '1' }
-    },
-    yesterday: {
-      summary: ['86', '64', '32', '22', '11'],
-      tel: { metrics: ['38', '26', '68%'], foot: '较团队均值 <strong style="color:#059669">+6%</strong> · 未回复 12 人' },
-      wa: { metrics: ['31', '22', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 9 人' },
-      chat: { metrics: ['19', '11', '58%'], foot: '较团队均值 <strong style="color:#dc2626">−5%</strong> · 未回复 8 人' },
-      qcTel: { total: '26', score: '88', low: '18', mid: '6', high: '2' },
-      qcCr: { total: '16', score: '84', low: '10', mid: '4', high: '2' }
-    },
-    week: {
-      summary: ['86', '168', '82', '58', '32'],
-      tel: { metrics: ['96', '68', '71%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 28 人' },
-      wa: { metrics: ['82', '58', '71%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 24 人' },
-      chat: { metrics: ['52', '32', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 20 人' },
-      qcTel: { total: '68', score: '89', low: '48', mid: '14', high: '6' },
-      qcCr: { total: '42', score: '85', low: '28', mid: '10', high: '4' }
-    },
-    month: {
-      summary: ['86', '486', '242', '176', '98'],
-      tel: { metrics: ['286', '198', '69%'], foot: '较团队均值 <strong style="color:#059669">+5%</strong> · 未回复 88 人' },
-      wa: { metrics: ['248', '176', '71%'], foot: '较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 72 人' },
-      chat: { metrics: ['156', '98', '63%'], foot: '较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 58 人' },
-      qcTel: { total: '196', score: '90', low: '142', mid: '38', high: '16' },
-      qcCr: { total: '128', score: '86', low: '90', mid: '26', high: '12' }
-    },
-    lastmonth: {
-      summary: ['86', '452', '224', '158', '88'],
-      tel: { metrics: ['264', '182', '69%'], foot: '较团队均值 <strong style="color:#059669">+4%</strong> · 未回复 82 人' },
-      wa: { metrics: ['228', '158', '69%'], foot: '较团队均值 <strong style="color:#059669">+2%</strong> · 未回复 70 人' },
-      chat: { metrics: ['142', '88', '62%'], foot: '较团队均值 <strong style="color:#dc2626">−3%</strong> · 未回复 54 人' },
-      qcTel: { total: '178', score: '88', low: '128', mid: '36', high: '14' },
-      qcCr: { total: '116', score: '84', low: '82', mid: '24', high: '10' }
-    }
+// 每位销售历史至今绑定的客户总数（单人 400–600），团队客户数为全员合计
+var COMM_STATS_SALES_CUSTOMER_TOTALS = {
+  Coulson: 586, May: 542, Daisy: 561, Fitz: 528, Simmons: 503, Mack: 487,
+  Fury: 466, Hunter: 452, Ward: 574, Bobbi: 519, Skye: 498, Melinda: 476,
+  Trip: 461, Antoine: 443, 'Yo-Yo': 427, Deke: 412, Jemma: 405
+};
+var COMM_STATS_DEFAULT_CUSTOMER_TOTAL = 480;
+
+// 团队全员合计的渠道与质检数据；个人数据按客户量权重从团队值拆分，个人合计恒等于团队值
+var COMM_STATS_TEAM_CHANNEL_DATA = {
+  today: {
+    tel: { contacted: 196, connected: 162, duration60: 134, durationMin: 1180 },
+    wa: { contacted: 158, replied: 118, auditValid: 92 },
+    chat: { contacted: 98, replied: 62, followup2min: 40 },
+    qcTel: { low: 92, mid: 26, high: 10 },
+    qcCr: { low: 60, mid: 18, high: 8 }
   },
-  manager: {
-    today: {
-      summary: ['680', '326', '160', '118', '62'],
-      tel: { metrics: ['196', '134', '68%'], foot: '人均联系 <strong>25</strong> · 人均有效沟通率 <strong>66%</strong>' },
-      wa: { metrics: ['158', '118', '75%'], foot: '人均联系 <strong>20</strong> · 人均回复率 <strong>70%</strong>' },
-      chat: { metrics: ['98', '62', '63%'], foot: '人均联系 <strong>12</strong> · 人均回复率 <strong>56%</strong>' },
-      qcTel: { total: '128', score: '87', low: '92', mid: '26', high: '10' },
-      qcCr: { total: '86', score: '84', low: '60', mid: '18', high: '8' }
-    },
-    yesterday: {
-      summary: ['680', '512', '248', '186', '96'],
-      tel: { metrics: ['304', '212', '70%'], foot: '人均联系 <strong>38</strong> · 人均有效沟通率 <strong>68%</strong>' },
-      wa: { metrics: ['248', '186', '75%'], foot: '人均联系 <strong>31</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['152', '96', '63%'], foot: '人均联系 <strong>19</strong> · 人均回复率 <strong>58%</strong>' },
-      qcTel: { total: '208', score: '86', low: '136', mid: '52', high: '20' },
-      qcCr: { total: '128', score: '82', low: '78', mid: '34', high: '16' }
-    },
-    week: {
-      summary: ['680', '1860', '920', '680', '350'],
-      tel: { metrics: ['1120', '780', '70%'], foot: '人均联系 <strong>140</strong> · 人均有效沟通率 <strong>68%</strong>' },
-      wa: { metrics: ['910', '680', '75%'], foot: '人均联系 <strong>114</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['560', '350', '63%'], foot: '人均联系 <strong>70</strong> · 人均回复率 <strong>58%</strong>' },
-      qcTel: { total: '720', score: '89', low: '520', mid: '140', high: '60' },
-      qcCr: { total: '480', score: '85', low: '340', mid: '96', high: '44' }
-    },
-    month: {
-      summary: ['680', '6280', '3040', '2280', '1180'],
-      tel: { metrics: ['3720', '2580', '69%'], foot: '人均联系 <strong>465</strong> · 人均有效沟通率 <strong>68%</strong>' },
-      wa: { metrics: ['3040', '2280', '75%'], foot: '人均联系 <strong>380</strong> · 人均回复率 <strong>71%</strong>' },
-      chat: { metrics: ['1880', '1180', '63%'], foot: '人均联系 <strong>235</strong> · 人均回复率 <strong>58%</strong>' },
-      qcTel: { total: '2460', score: '90', low: '1780', mid: '480', high: '200' },
-      qcCr: { total: '1640', score: '86', low: '1160', mid: '330', high: '150' }
-    },
-    lastmonth: {
-      summary: ['680', '5860', '2840', '2080', '1080'],
-      tel: { metrics: ['3480', '2400', '69%'], foot: '人均联系 <strong>435</strong> · 人均有效沟通率 <strong>67%</strong>' },
-      wa: { metrics: ['2820', '2080', '74%'], foot: '人均联系 <strong>353</strong> · 人均回复率 <strong>70%</strong>' },
-      chat: { metrics: ['1740', '1080', '62%'], foot: '人均联系 <strong>218</strong> · 人均回复率 <strong>57%</strong>' },
-      qcTel: { total: '2280', score: '88', low: '1640', mid: '450', high: '190' },
-      qcCr: { total: '1520', score: '84', low: '1080', mid: '300', high: '140' }
-    }
+  yesterday: {
+    tel: { contacted: 304, connected: 252, duration60: 212, durationMin: 1900 },
+    wa: { contacted: 248, replied: 186, auditValid: 145 },
+    chat: { contacted: 152, replied: 96, followup2min: 62 },
+    qcTel: { low: 136, mid: 52, high: 20 },
+    qcCr: { low: 78, mid: 34, high: 16 }
+  },
+  week: {
+    tel: { contacted: 1120, connected: 930, duration60: 780, durationMin: 7200 },
+    wa: { contacted: 910, replied: 680, auditValid: 530 },
+    chat: { contacted: 560, replied: 350, followup2min: 226 },
+    qcTel: { low: 520, mid: 140, high: 60 },
+    qcCr: { low: 340, mid: 96, high: 44 }
+  },
+  month: {
+    tel: { contacted: 3720, connected: 3080, duration60: 2580, durationMin: 24800 },
+    wa: { contacted: 3040, replied: 2280, auditValid: 1780 },
+    chat: { contacted: 1880, replied: 1180, followup2min: 762 },
+    qcTel: { low: 1780, mid: 480, high: 200 },
+    qcCr: { low: 1160, mid: 330, high: 150 }
+  },
+  lastmonth: {
+    tel: { contacted: 3480, connected: 2880, duration60: 2400, durationMin: 23200 },
+    wa: { contacted: 2820, replied: 2080, auditValid: 1620 },
+    chat: { contacted: 1740, replied: 1080, followup2min: 698 },
+    qcTel: { low: 1640, mid: 450, high: 190 },
+    qcCr: { low: 1080, mid: 300, high: 140 }
   }
 };
+
+function getCommStatsSalesCustomerTotal(name) {
+  return COMM_STATS_SALES_CUSTOMER_TOTALS[name] || COMM_STATS_DEFAULT_CUSTOMER_TOTAL;
+}
+
+// 最大余额法拆分，各销售分得的数值合计恒等于 total；以父级数量作权重时子项不会超过父项
+function allocateCommStatsTotal(total, weights) {
+  if (!weights || !weights.length) return [];
+  total = Math.max(0, Math.round(total || 0));
+  var weightSum = weights.reduce(function (a, b) { return a + b; }, 0);
+  var shares = [];
+  var remainders = [];
+  var used = 0;
+  weights.forEach(function (w, i) {
+    var exact = weightSum > 0 ? total * w / weightSum : total / weights.length;
+    shares[i] = Math.floor(exact);
+    remainders.push({ index: i, frac: exact - shares[i] });
+    used += shares[i];
+  });
+  remainders.sort(function (a, b) { return b.frac - a.frac || a.index - b.index; });
+  for (var k = 0; k < total - used; k++) {
+    shares[remainders[k % remainders.length].index] += 1;
+  }
+  return shares;
+}
+
+var _commStatsChannelSplitCache = {};
+
+function getCommStatsChannelSplit(period) {
+  var block = COMM_STATS_TEAM_CHANNEL_DATA[period];
+  if (!block) return null;
+  var names = getCommStatsManagerSalesNames();
+  var cacheKey = period + '|' + names.length;
+  if (_commStatsChannelSplitCache[cacheKey]) return _commStatsChannelSplitCache[cacheKey];
+  var custWeights = names.map(getCommStatsSalesCustomerTotal);
+  var telContacted = allocateCommStatsTotal(block.tel.contacted, custWeights);
+  var telConnected = allocateCommStatsTotal(block.tel.connected, telContacted);
+  var telDuration60 = allocateCommStatsTotal(block.tel.duration60, telConnected);
+  var telDurationMin = allocateCommStatsTotal(block.tel.durationMin, telContacted);
+  var waContacted = allocateCommStatsTotal(block.wa.contacted, custWeights);
+  var waReplied = allocateCommStatsTotal(block.wa.replied, waContacted);
+  var waAuditValid = allocateCommStatsTotal(block.wa.auditValid, waReplied);
+  var chatContacted = allocateCommStatsTotal(block.chat.contacted, custWeights);
+  var chatReplied = allocateCommStatsTotal(block.chat.replied, chatContacted);
+  var chatFollowup = allocateCommStatsTotal(block.chat.followup2min, chatReplied);
+  var split = { tel: {}, wa: {}, chat: {}, qcTel: {}, qcCr: {} };
+  names.forEach(function (name, i) {
+    split.tel[name] = {
+      contacted: telContacted[i],
+      connected: telConnected[i],
+      duration60: telDuration60[i],
+      totalDurationMin: telDurationMin[i]
+    };
+    split.wa[name] = { contacted: waContacted[i], replied: waReplied[i], auditValid: waAuditValid[i] };
+    split.chat[name] = { contacted: chatContacted[i], replied: chatReplied[i], followup2min: chatFollowup[i] };
+  });
+  [['qcTel', 'tel'], ['qcCr', 'cr']].forEach(function (pair) {
+    var qc = block[pair[0]];
+    var low = allocateCommStatsTotal(qc.low, custWeights);
+    var mid = allocateCommStatsTotal(qc.mid, custWeights);
+    var high = allocateCommStatsTotal(qc.high, custWeights);
+    names.forEach(function (name, i) {
+      split[pair[0]][name] = {
+        low: low[i],
+        mid: mid[i],
+        high: high[i],
+        total: low[i] + mid[i] + high[i],
+        score: 76 + (alertTaskFollowSeed('qc-score|' + pair[1] + '|' + period + '|' + name) % 18)
+      };
+    });
+  });
+  _commStatsChannelSplitCache[cacheKey] = split;
+  return split;
+}
 
 function getCommStatsPeriodLabel(period) {
   return ALERT_TASK_FOLLOW_PERIODS[period] || period || '—';
@@ -11244,27 +11309,81 @@ function fillCommStatsQc(col, data) {
   }
 }
 
+// 总览指标为历史至今累计：销售视角取本人一行，管理视角取全员合计
+function getCommStatsSummaryValues(names) {
+  var agg = aggregateCommStatsSummaryRows(names.map(function (name) {
+    return buildCommStatsSummaryFollowRowForName(name, 'all');
+  }));
+  return [agg.assigned, agg.contacted, agg.telConnected, agg.waReplied, agg.crReplied].map(String);
+}
+
+function formatCommStatsRateDiff(diff) {
+  diff = Math.round(diff);
+  var color = diff >= 0 ? '#059669' : '#dc2626';
+  return '<strong style="color:' + color + '">' + (diff >= 0 ? '+' : '−') + Math.abs(diff) + '%</strong>';
+}
+
+function buildCommStatsSalesChannelFoot(row, teamRow, rateKey, reachedKey) {
+  var noReply = Math.max(0, (row.contacted || 0) - (row[reachedKey] || 0));
+  return '较团队均值 ' + formatCommStatsRateDiff((row[rateKey] || 0) - (teamRow[rateKey] || 0)) +
+    ' · 未回复 ' + noReply + ' 人';
+}
+
+function buildCommStatsManagerChannelFoot(row, memberCount, rateKey, rateLabel) {
+  var avgContacted = memberCount ? Math.round((row.contacted || 0) / memberCount) : 0;
+  return '人均联系 <strong>' + avgContacted + '</strong> · ' + rateLabel + ' <strong>' + (row[rateKey] || 0) + '%</strong>';
+}
+
 function applyCommStatsModulePeriod(period) {
   var section = document.querySelector('.comm-stats-section');
   if (!section) return;
+  if (!COMM_STATS_TEAM_CHANNEL_DATA[period]) return;
+  var teamNames = getCommStatsManagerSalesNames();
+  var buildRows = function (names, channelType) {
+    return names.map(function (name) { return buildCommStatsFollowRowForName(name, channelType, period); });
+  };
+  var buildQcRows = function (names, qcType) {
+    return names.map(function (name) { return buildCommQcFollowRowForName(name, qcType, period); });
+  };
+  var teamTel = aggregateCommStatsTelRows(buildRows(teamNames, 'tel'));
+  var teamWa = aggregateCommStatsWaRows(buildRows(teamNames, 'wa'));
+  var teamChat = aggregateCommStatsChatRows(buildRows(teamNames, 'chat'));
   ['sales', 'manager'].forEach(function (view) {
-    var block = COMM_STATS_MODULE_DATA[view] && COMM_STATS_MODULE_DATA[view][period];
-    if (!block) return;
     var root = section.querySelector('.module-body > .' + (view === 'sales' ? 'sales-only' : 'manager-only'));
     if (!root) return;
-    fillCommStatsSummary(root, block.summary);
-    fillCommStatsChannel(root.querySelector('.comm-channel--tel'), block.tel);
-    fillCommStatsChannel(root.querySelector('.comm-channel--wa'), block.wa);
-    fillCommStatsChannel(root.querySelector('.comm-channel--chat'), block.chat);
+    var isManager = view === 'manager';
+    var names = isManager ? teamNames : [COMM_STATS_CURRENT_SALES];
+    var tel = isManager ? teamTel : aggregateCommStatsTelRows(buildRows(names, 'tel'));
+    var wa = isManager ? teamWa : aggregateCommStatsWaRows(buildRows(names, 'wa'));
+    var chat = isManager ? teamChat : aggregateCommStatsChatRows(buildRows(names, 'chat'));
+    fillCommStatsSummary(root, getCommStatsSummaryValues(names));
+    fillCommStatsChannel(root.querySelector('.comm-channel--tel'), {
+      metrics: [String(tel.contacted), String(tel.duration60), tel.effectiveRate + '%'],
+      foot: isManager
+        ? buildCommStatsManagerChannelFoot(tel, teamNames.length, 'effectiveRate', '人均有效沟通率')
+        : buildCommStatsSalesChannelFoot(tel, teamTel, 'effectiveRate', 'connected')
+    });
+    fillCommStatsChannel(root.querySelector('.comm-channel--wa'), {
+      metrics: [String(wa.contacted), String(wa.replied), wa.replyRate + '%'],
+      foot: isManager
+        ? buildCommStatsManagerChannelFoot(wa, teamNames.length, 'replyRate', '人均回复率')
+        : buildCommStatsSalesChannelFoot(wa, teamWa, 'replyRate', 'replied')
+    });
+    fillCommStatsChannel(root.querySelector('.comm-channel--chat'), {
+      metrics: [String(chat.contacted), String(chat.replied), chat.replyRate + '%'],
+      foot: isManager
+        ? buildCommStatsManagerChannelFoot(chat, teamNames.length, 'replyRate', '人均回复率')
+        : buildCommStatsSalesChannelFoot(chat, teamChat, 'replyRate', 'replied')
+    });
     var qcCols = root.querySelectorAll('.comm-qc-col');
-    fillCommStatsQc(qcCols[0], block.qcTel);
-    fillCommStatsQc(qcCols[1], block.qcCr);
+    fillCommStatsQc(qcCols[0], aggregateCommQcFollowRows(buildQcRows(names, 'tel')));
+    fillCommStatsQc(qcCols[1], aggregateCommQcFollowRows(buildQcRows(names, 'cr')));
   });
   updateCommStatsModuleIntro(period);
 }
 
 function switchCommStatsPeriod(period, btn) {
-  if (!period || !COMM_STATS_MODULE_DATA.sales[period]) return;
+  if (!period || !COMM_STATS_TEAM_CHANNEL_DATA[period]) return;
   _commStatsModulePeriod = period;
   _commStatsFollowPeriod = period;
   var section = document.querySelector('.comm-stats-section');
@@ -11327,80 +11446,54 @@ function toggleCommStatsFollowGroup(groupKey) {
   renderCommStatsFollowTable();
 }
 
-function getCommStatsFollowPeriodMul(period) {
-  return period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
-}
-
 function buildCommStatsFollowRowForName(name, channelType, period) {
-  var names = getCommStatsManagerSalesNames();
-  var i = names.indexOf(name);
-  if (i < 0) i = 0;
-  var seed = alertTaskFollowSeed('comm|' + channelType + '|' + period);
-  var periodMul = getCommStatsFollowPeriodMul(period);
-  var s = seed + i * 83;
+  var split = getCommStatsChannelSplit(period) || getCommStatsChannelSplit('today');
   if (channelType === 'tel') {
-    var contacted = Math.max(1, (4 + (s % 15)) * periodMul);
-    var connectRatePct = 55 + (s % 35);
-    var connected = Math.min(contacted, Math.max(0, Math.round(contacted * connectRatePct / 100)));
-    var duration60Pct = 45 + (s % 40);
-    var duration60 = Math.min(connected, Math.max(0, Math.round(connected * duration60Pct / 100)));
-    var totalDurationMin = (18 + (s % 90)) * periodMul + connected * (2 + (s % 6));
+    var tel = (split && split.tel[name]) || { contacted: 0, connected: 0, duration60: 0, totalDurationMin: 0 };
     return {
       name: name,
-      contacted: contacted,
-      connected: connected,
-      duration60: duration60,
-      totalDuration: formatCommStatsCallDuration(totalDurationMin),
-      totalDurationMin: totalDurationMin,
-      connectRate: contacted ? Math.round(connected / contacted * 100) : 0,
-      effectiveRate: contacted ? Math.round(duration60 / contacted * 100) : 0
+      contacted: tel.contacted,
+      connected: tel.connected,
+      duration60: tel.duration60,
+      totalDuration: formatCommStatsCallDuration(tel.totalDurationMin),
+      totalDurationMin: tel.totalDurationMin,
+      connectRate: tel.contacted ? Math.round(tel.connected / tel.contacted * 100) : 0,
+      effectiveRate: tel.contacted ? Math.round(tel.duration60 / tel.contacted * 100) : 0
     };
   }
   if (channelType === 'wa') {
-    var contactedWa = Math.max(1, (4 + (s % 15)) * periodMul);
-    var replyPctWa = 48 + (s % 48);
-    var repliedWa = Math.min(contactedWa, Math.max(0, Math.round(contactedWa * replyPctWa / 100)));
-    var auditValidPct = 42 + (s % 38);
-    var auditValid = Math.min(repliedWa, Math.max(0, Math.round(repliedWa * auditValidPct / 100)));
+    var wa = (split && split.wa[name]) || { contacted: 0, replied: 0, auditValid: 0 };
     return {
       name: name,
-      contacted: contactedWa,
-      replied: repliedWa,
-      auditValid: auditValid,
-      replyRate: contactedWa ? Math.round(repliedWa / contactedWa * 100) : 0,
-      effectiveRate: contactedWa ? Math.round(auditValid / contactedWa * 100) : 0
+      contacted: wa.contacted,
+      replied: wa.replied,
+      auditValid: wa.auditValid,
+      replyRate: wa.contacted ? Math.round(wa.replied / wa.contacted * 100) : 0,
+      effectiveRate: wa.contacted ? Math.round(wa.auditValid / wa.contacted * 100) : 0
     };
   }
   if (channelType === 'chat') {
-    var contactedChat = Math.max(1, (4 + (s % 15)) * periodMul);
-    var replyPctChat = 48 + (s % 48);
-    var repliedChat = Math.min(contactedChat, Math.max(0, Math.round(contactedChat * replyPctChat / 100)));
-    var followup2minPct = 50 + (s % 35);
-    var followup2min = Math.min(repliedChat, Math.max(0, Math.round(repliedChat * followup2minPct / 100)));
+    var chat = (split && split.chat[name]) || { contacted: 0, replied: 0, followup2min: 0 };
     return {
       name: name,
-      contacted: contactedChat,
-      replied: repliedChat,
-      followup2min: followup2min,
-      replyRate: contactedChat ? Math.round(repliedChat / contactedChat * 100) : 0,
-      effectiveRate: contactedChat ? Math.round(followup2min / contactedChat * 100) : 0
+      contacted: chat.contacted,
+      replied: chat.replied,
+      followup2min: chat.followup2min,
+      replyRate: chat.contacted ? Math.round(chat.replied / chat.contacted * 100) : 0,
+      effectiveRate: chat.contacted ? Math.round(chat.followup2min / chat.contacted * 100) : 0
     };
   }
   return { name: name };
 }
 
+// 有效沟通客户管理为历史至今累计，分配客户取该销售绑定的客户总数，不随周期变化
 function buildCommStatsSummaryFollowRowForName(name, period) {
-  var names = getCommStatsManagerSalesNames();
-  var i = names.indexOf(name);
-  if (i < 0) i = 0;
-  var seed = alertTaskFollowSeed('comm-summary|' + period);
-  var periodMul = getCommStatsFollowPeriodMul(period);
-  var s = seed + i * 91;
-  var assigned = Math.max(8, (12 + (s % 24)) * periodMul);
-  var contacted = Math.min(assigned, Math.max(1, (5 + (s % 16)) * periodMul));
-  var telConnected = Math.min(contacted, Math.max(0, Math.round(contacted * (0.32 + (s % 22) / 100))));
-  var waReplied = Math.min(contacted, Math.max(0, Math.round(contacted * (0.26 + (s % 20) / 100))));
-  var crReplied = Math.min(contacted, Math.max(0, Math.round(contacted * (0.14 + (s % 16) / 100))));
+  var s = alertTaskFollowSeed('comm-summary|' + name);
+  var assigned = getCommStatsSalesCustomerTotal(name);
+  var contacted = Math.min(assigned, Math.max(1, Math.round(assigned * (78 + (s % 17)) / 100)));
+  var telConnected = Math.min(contacted, Math.round(contacted * (42 + (s % 19)) / 100));
+  var waReplied = Math.min(contacted, Math.round(contacted * (32 + (s % 16)) / 100));
+  var crReplied = Math.min(contacted, Math.round(contacted * (18 + (s % 15)) / 100));
   var uniqueReply = uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
   return {
     name: name,
@@ -11697,17 +11790,19 @@ var _commStatsDetailListMode = 'records';
 var _commStatsDetailCustomerMode = 'my-customers';
 
 var COMM_STATS_CONTACT_RESULT_META = {
-  'phone-connected': { label: '电话接通', channel: 'tel', isFail: false },
-  'phone-missed': { label: '电话未接通', channel: 'tel', isFail: true },
-  'wa-replied': { label: 'WhatsApp回复', channel: 'wa', isFail: false },
+  'phone-connected': { label: 'Call接通', channel: 'tel', isFail: false },
+  'phone-missed': { label: 'Call未接通', channel: 'tel', isFail: true },
+  'wa-replied': { label: 'WA回复', channel: 'wa', isFail: false },
   'wa-no-reply': { label: 'WA未回复', channel: 'wa', isFail: true },
-  'cr-replied': { label: 'ChatRoom回复', channel: 'chat', isFail: false },
+  'cr-replied': { label: 'CR回复', channel: 'chat', isFail: false },
   'cr-no-reply': { label: 'CR未回复', channel: 'chat', isFail: true }
 };
 
-function renderCommStatsDetailTitle(salesName, scope) {
+function renderCommStatsDetailTitle(salesName, scope, titleKind) {
   var suffix;
-  if (scope === 'all') {
+  if (titleKind === 'my-customers') {
+    suffix = '的有效沟通客户管理';
+  } else if (scope === 'all') {
     suffix = '和客户的所有沟通明细';
   } else {
     var channelLabel = COMM_STATS_CHANNEL_LABELS[_commStatsChannelType] || _commStatsChannelType;
@@ -11762,7 +11857,13 @@ function filterCommStatsDetailRows(rows, filters) {
 function applyCommStatsDetailFilters(options) {
   options = options || {};
   if (options.rebuild !== false) {
-    syncCommDetailPeriodFromSelect('commStatsDetailFilterPeriod', 'commStatsDetailPeriod');
+    if (_commStatsDetailOpenedPeriod === 'all') {
+      _commStatsFollowPeriod = 'all';
+      var periodLabelEl = document.getElementById('commStatsDetailPeriod');
+      if (periodLabelEl) periodLabelEl.textContent = ALERT_TASK_FOLLOW_PERIODS.all;
+    } else {
+      syncCommDetailPeriodFromSelect('commStatsDetailFilterPeriod', 'commStatsDetailPeriod');
+    }
     if (_commStatsDetailSalesName && _commStatsDetailBaseCount) {
       if (_commStatsDetailListMode === 'customers') {
         _commStatsDetailAllRows = buildCommStatsCustomerDetailRows(
@@ -11875,57 +11976,55 @@ function buildCommStatsSummaryFollowRows(period) {
 
 function buildCommStatsCommTime(seed) {
   var base = new Date(2026, 5, 1, 9, 0, 0);
-  var dayShift = _commStatsFollowPeriod === 'week' ? (seed % 5) : _commStatsFollowPeriod === 'month' ? (seed % 20) : _commStatsFollowPeriod === 'lastmonth' ? (seed % 18) + 5 : 0;
+  var dayShift = _commStatsFollowPeriod === 'all' ? (seed % 90)
+    : _commStatsFollowPeriod === 'week' ? (seed % 5)
+    : _commStatsFollowPeriod === 'month' ? (seed % 20)
+    : _commStatsFollowPeriod === 'lastmonth' ? (seed % 18) + 5
+    : 0;
   base.setDate(base.getDate() - dayShift);
   base.setHours(8 + (seed % 10), (seed * 11) % 60, 0, 0);
   return base.getFullYear() + '-' + padAlertTaskNum(base.getMonth() + 1) + '-' + padAlertTaskNum(base.getDate()) +
     ' ' + padAlertTaskNum(base.getHours()) + ':' + padAlertTaskNum(base.getMinutes());
 }
 
-function buildCommStatsContactPhone(seed) {
-  var num = '09' + String(10000000 + (seed % 90000000)).slice(-8);
+function buildCommStatsContactPhone(seed, index) {
+  var num = '09' + String(10000000 + ((seed + (index || 0) * 7919) % 90000000)).slice(-8);
   return num.slice(0, 4) + ' ' + num.slice(4, 7) + ' ' + num.slice(7);
 }
 
-function pickCommStatsContactResults(seed) {
-  var channels = [
-    { positive: 'phone-connected', negative: 'phone-missed' },
-    { positive: 'wa-replied', negative: 'wa-no-reply' },
-    { positive: 'cr-replied', negative: 'cr-no-reply' }
-  ];
-  var countRoll = seed % 100;
-  var resultCount;
-  if (countRoll < 45) resultCount = 1;
-  else if (countRoll < 80) resultCount = 2;
-  else resultCount = 3;
+function buildCommStatsContactPhoneCount(seed) {
+  var bucket = seed % 10;
+  if (bucket < 7) return 1;
+  if (bucket < 9) return 2;
+  return 3;
+}
 
-  var selectedIndices;
-  if (resultCount === 1) {
-    selectedIndices = [seed % 3];
-  } else if (resultCount === 2) {
-    var pairs = [[0, 1], [0, 2], [1, 2]];
-    selectedIndices = pairs[seed % 3];
-  } else {
-    selectedIndices = [0, 1, 2];
+function buildCommStatsContactPhonesHtml(seed) {
+  var count = buildCommStatsContactPhoneCount(seed);
+  var html = [];
+  var i;
+  for (i = 0; i < count; i++) {
+    html.push('<span class="col-phone-line">' + buildCommStatsContactPhone(seed, i) + '</span>');
   }
+  return '<div class="col-phone-stack">' + html.join('') + '</div>';
+}
 
-  var results = selectedIndices.map(function (ci, i) {
-    var ch = channels[ci];
-    return (seed + ci * 13 + i * 7) % 2 === 0 ? ch.positive : ch.negative;
-  });
-
-  if (resultCount > 1 && seed % 4 !== 0) {
-    var hasPositive = results.some(function (id) {
-      var meta = COMM_STATS_CONTACT_RESULT_META[id];
-      return meta && !meta.isFail;
-    });
-    if (!hasPositive) {
-      var flipIndex = (seed + 5) % results.length;
-      results[flipIndex] = channels[selectedIndices[flipIndex]].positive;
-    }
+function pickCommStatsContactResults(seed, forceIneffective) {
+  var positives = ['phone-connected', 'wa-replied', 'cr-replied'];
+  var negatives = ['phone-missed', 'wa-no-reply', 'cr-no-reply'];
+  var resultCount = (seed % 2) + 1;
+  var order = [0, 1, 2];
+  var i;
+  for (i = 2; i > 0; i--) {
+    var j = (seed + i * 17) % (i + 1);
+    var tmp = order[i];
+    order[i] = order[j];
+    order[j] = tmp;
   }
-
-  return results;
+  var selected = order.slice(0, resultCount);
+  var isIneffective = forceIneffective === true || (forceIneffective !== false && (seed % 5) < 2);
+  var pool = isIneffective ? negatives : positives;
+  return selected.map(function (ci) { return pool[ci]; });
 }
 
 function buildCommStatsContactResultsHtml(resultIds) {
@@ -11933,36 +12032,9 @@ function buildCommStatsContactResultsHtml(resultIds) {
   return resultIds.map(function (resultId) {
     var meta = COMM_STATS_CONTACT_RESULT_META[resultId];
     if (!meta) return '';
-    var cls = meta.isFail ? 'comm-result-tag comm-result-tag--fail' : 'comm-result-tag';
+    var cls = meta.isFail ? 'comm-result-tag comm-result-tag--fail' : 'comm-result-tag comm-result-tag--ok';
     return '<span class="' + cls + '">' + meta.label + '</span>';
   }).join('');
-}
-
-function rowMatchesCommStatsMetric(row, metric, channelType) {
-  if (!metric || metric === 'contacted') return true;
-  if (metric === 'connected' || metric === 'tel-connected') return row.contactResults.indexOf('phone-connected') !== -1;
-  if (metric === 'wa-replied') return row.contactResults.indexOf('wa-replied') !== -1;
-  if (metric === 'cr-replied') return row.contactResults.indexOf('cr-replied') !== -1;
-  if (metric === 'replied') {
-    if (channelType === 'wa') return row.contactResults.indexOf('wa-replied') !== -1;
-    if (channelType === 'chat') return row.contactResults.indexOf('cr-replied') !== -1;
-    if (channelType === 'tel') return row.contactResults.indexOf('phone-connected') !== -1;
-    return row.contactResults.indexOf('phone-connected') !== -1 ||
-      row.contactResults.indexOf('wa-replied') !== -1 ||
-      row.contactResults.indexOf('cr-replied') !== -1;
-  }
-  if (metric === 'effective') {
-    return row.contactResults && row.contactResults.some(function (resultId) {
-      var meta = COMM_STATS_CONTACT_RESULT_META[resultId];
-      return meta && !meta.isFail;
-    });
-  }
-  return true;
-}
-
-function buildCommStatsCommContentText(seed, hasResults) {
-  if (!hasResults) return '—';
-  return ALERT_TASK_COMM_CONTENTS[seed % ALERT_TASK_COMM_CONTENTS.length];
 }
 
 function buildCommStatsContactedHtml(label) {
@@ -11978,30 +12050,52 @@ function buildCommStatsContactedLabel(contactResults) {
   }) ? '是' : '否';
 }
 
+// 指标口径下必须命中的联系结果，保证生成的明细条数恰好等于被点击的统计值
+function pickCommStatsMetricContactResults(seed, index, metric, channelType) {
+  var positives = ['phone-connected', 'wa-replied', 'cr-replied'];
+  var forced = '';
+  if (metric === 'connected' || metric === 'tel-connected') forced = 'phone-connected';
+  else if (metric === 'wa-replied') forced = 'wa-replied';
+  else if (metric === 'cr-replied') forced = 'cr-replied';
+  else if (metric === 'replied') {
+    forced = channelType === 'wa' ? 'wa-replied'
+      : channelType === 'chat' ? 'cr-replied'
+      : channelType === 'tel' ? 'phone-connected'
+      : positives[seed % positives.length];
+  } else if (metric === 'effective') {
+    forced = positives[seed % positives.length];
+  }
+  if (!forced) return pickCommStatsContactResults(seed + index * 3, (index % 5) < 2);
+  var forcedChannel = COMM_STATS_CONTACT_RESULT_META[forced].channel;
+  var results = [forced];
+  if (seed % 3 === 0) {
+    var extras = ['phone-missed', 'wa-no-reply', 'cr-no-reply'].filter(function (resultId) {
+      return COMM_STATS_CONTACT_RESULT_META[resultId].channel !== forcedChannel;
+    });
+    results.push(extras[seed % extras.length]);
+  }
+  return results;
+}
+
 function buildCommStatsDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
-  var poolSize = Math.max(rowCount * 4, 48);
+  var total = Math.max(0, parseInt(rowCount, 10) || 0);
   var channelType = _commStatsDetailChannelFilter || _commStatsChannelType || '';
   var rows = [];
-  for (var i = 0; i < poolSize; i++) {
+  for (var i = 0; i < total; i++) {
     var s = seed + i * 127;
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
-    var contactResults = pickCommStatsContactResults(s + i * 3);
+    var contactResults = pickCommStatsMetricContactResults(s, i, metric, channelType);
     rows.push({
       name: name,
       sid: sid,
       commTime: buildCommStatsCommTime(s),
-      contactPhone: buildCommStatsContactPhone(s),
+      contactPhone: buildCommStatsContactPhonesHtml(s),
       contactResults: contactResults,
       contactResultsHtml: buildCommStatsContactResultsHtml(contactResults),
       contactedLabel: buildCommStatsContactedLabel(contactResults),
-      contentText: buildCommStatsCommContentText(s + i * 9, contactResults.length > 0)
-    });
-  }
-  if (metric && metric !== 'contacted') {
-    rows = rows.filter(function (row) {
-      return rowMatchesCommStatsMetric(row, metric, channelType);
+      contentText: contactResults.length ? buildChannelCommResultHtml(s + i * 9) : '—'
     });
   }
   return rows;
@@ -12030,18 +12124,20 @@ function renderCommStatsDetailActionHtml(row) {
 
 function renderCommStatsDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-customer"><div class="col-customer-stack">' +
+    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
+    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
+    '</div></td>' +
     '<td class="col-phone">' + (row.contactPhone || '—') + '</td>' +
     '<td class="col-contact-results">' + row.contactResultsHtml + '</td>' +
     '<td class="col-contacted">' + buildCommStatsContactedHtml(row.contactedLabel || '否') + '</td>' +
-    '<td class="col-content">' + row.contentText + '</td>' +
+    '<td class="col-comm-result">' + row.contentText + '</td>' +
     '<td class="col-action">' + renderCommStatsDetailActionHtml(row) + '</td>' +
     '</tr>';
 }
 
 function buildCommStatsCustomerDetailRows(salesName, rowCount, customerMode) {
-  rowCount = Math.max(15, rowCount || 0);
+  rowCount = Math.max(0, parseInt(rowCount, 10) || 0);
   var seed = alertTaskFollowSeed('comm-customers|' + salesName + '|' + customerMode);
   var rows = [];
   for (var i = 0; i < rowCount; i++) {
@@ -12094,20 +12190,22 @@ function renderCommStatsDetailTableHeader() {
   }
   thead.innerHTML =
     '<tr>' +
-    '<th>客户名称</th>' +
-    '<th>SID</th>' +
-    '<th>联系电话</th>' +
-    '<th>联系结果</th>' +
-    '<th>有效沟通</th>' +
-    '<th>最后沟通内容</th>' +
+    '<th class="col-customer">客户名称</th>' +
+    '<th class="col-phone">联系电话</th>' +
+    '<th class="col-contact-results">联系结果</th>' +
+    '<th class="col-contacted">有效沟通</th>' +
+    '<th class="col-comm-result">最后沟通内容</th>' +
     '<th class="col-action">操作</th>' +
     '</tr>';
 }
 
 function updateCommStatsDetailFilterVisibility() {
+  var isCustomerList = _commStatsDetailListMode === 'customers';
+  var drawer = document.getElementById('commStatsDetailDrawer');
+  if (drawer) drawer.classList.toggle('is-customer-list', isCustomerList);
   var filtersEl = document.getElementById('commStatsDetailFilters');
   if (!filtersEl) return;
-  filtersEl.classList.toggle('is-customer-mode', _commStatsDetailListMode === 'customers');
+  filtersEl.classList.toggle('is-customer-mode', isCustomerList);
 }
 
 function renderCommStatsCustomerDetailTitle(salesName, customerMode) {
@@ -12200,7 +12298,8 @@ function renderCommStatsDetailTable(salesName, rowCount, metric) {
   applyCommStatsDetailFilters({ rebuild: false });
 }
 
-function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
+function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope, titleKind) {
+  rowCount = parseInt(rowCount, 10) || 0;
   if (!salesName || !rowCount) return;
   _commStatsDetailListMode = 'records';
   _commStatsDetailCustomerMode = 'my-customers';
@@ -12208,7 +12307,13 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   _commStatsDetailScope = detailScope || (_commStatsChannelType ? 'channel' : 'all');
   _commStatsDetailSalesName = salesName;
   _commStatsDetailBaseCount = rowCount;
-  _commStatsDetailOpenedPeriod = getDefaultCommDetailPeriod();
+  var isAllTime = titleKind === 'my-customers' || _commStatsFollowScope === 'summary';
+  if (isAllTime) {
+    _commStatsFollowPeriod = 'all';
+    _commStatsDetailOpenedPeriod = 'all';
+  } else {
+    _commStatsDetailOpenedPeriod = getDefaultCommDetailPeriod();
+  }
   var drawer = document.getElementById('commStatsDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('commStatsDetailTitle');
@@ -12220,7 +12325,7 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   var channelLabel = _commStatsDetailScope === 'all'
     ? '全部'
     : (COMM_STATS_CHANNEL_LABELS[_commStatsChannelType] || _commStatsChannelType);
-  if (titleEl) titleEl.innerHTML = renderCommStatsDetailTitle(salesName, _commStatsDetailScope);
+  if (titleEl) titleEl.innerHTML = renderCommStatsDetailTitle(salesName, _commStatsDetailScope, titleKind);
   if (channelEl) channelEl.textContent = channelLabel;
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_commStatsDetailOpenedPeriod] || _commStatsDetailOpenedPeriod;
   if (countEl) countEl.textContent = String(rowCount);
@@ -12231,7 +12336,8 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   _commStatsDetailChannelFilter = (_commStatsDetailScope === 'channel' && _commStatsChannelType) ? _commStatsChannelType : '';
   clearCommStatsDetailFilterInputs();
-  setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
+  if (!isAllTime) setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
+  drawer.classList.toggle('is-all-time', isAllTime);
   renderCommStatsDetailTableHeader();
   updateCommStatsDetailFilterVisibility();
   renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
@@ -12245,16 +12351,17 @@ function openCommStatsDetailDrawer(salesName, rowCount, metric, detailScope) {
 }
 
 function openCommStatsCustomerDrawer(salesName, rowCount, customerMode) {
+  rowCount = parseInt(rowCount, 10) || 0;
   if (!salesName || !rowCount) return;
   _commStatsDetailListMode = 'customers';
   _commStatsDetailCustomerMode = customerMode || 'my-customers';
   _commStatsDetailMetric = 'contacted';
   _commStatsDetailScope = 'all';
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  _commStatsFollowPeriod = 'all';
   _commStatsDetailSalesName = salesName;
   _commStatsDetailBaseCount = rowCount;
-  _commStatsDetailOpenedPeriod = getDefaultCommDetailPeriod();
+  _commStatsDetailOpenedPeriod = 'all';
   var drawer = document.getElementById('commStatsDetailDrawer');
   if (!drawer) return;
   var titleEl = document.getElementById('commStatsDetailTitle');
@@ -12271,7 +12378,7 @@ function openCommStatsCustomerDrawer(salesName, rowCount, customerMode) {
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   _commStatsDetailChannelFilter = '';
   clearCommStatsDetailFilterInputs();
-  setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
+  if (_commStatsDetailOpenedPeriod !== 'all') setCommDetailPeriodSelect('commStatsDetailFilterPeriod', _commStatsDetailOpenedPeriod);
   renderCommStatsDetailTableHeader();
   updateCommStatsDetailFilterVisibility();
   renderCommStatsDetailTable(salesName, rowCount, _commStatsDetailMetric);
@@ -12297,6 +12404,7 @@ function closeCommStatsDetailDrawer() {
   _commStatsDetailPage = 1;
   _commStatsDetailListMode = 'records';
   _commStatsDetailCustomerMode = 'my-customers';
+  drawer.classList.remove('is-all-time');
   var pager = document.getElementById('commStatsDetailPager');
   if (pager) pager.hidden = true;
   setTimeout(function () {
@@ -12315,12 +12423,12 @@ function updateCommStatsFollowModalMeta() {
     : (COMM_STATS_CHANNEL_LABELS[_commStatsChannelType] || _commStatsChannelType || '—');
   if (titleEl) {
     titleEl.textContent = _commStatsFollowScope === 'summary'
-      ? '全部渠道·截止到今日所有销售客户沟通跟进情况'
+      ? '团队所有组员·有效沟通客户管理情况'
       : (channelLabel + '渠道·' + periodLabel + '所有销售客户沟通跟进情况');
   }
   if (_commStatsFollowScope === 'summary') {
     if (introEl) {
-      introEl.innerHTML = '统计范围：<strong class="comm-stats-follow-period-label">截止到今日</strong> · 各销售在全渠道下的客户触达与沟通跟进汇总';
+      introEl.innerHTML = '统计范围：<strong class="comm-stats-follow-period-label">历史至今</strong> · 团队所有组员的有效沟通客户管理汇总，数据不受标题时间条件影响';
     }
     modal.classList.add('is-summary-scope');
     modal.classList.remove('is-tel-scope');
@@ -12342,7 +12450,7 @@ function openCommStatsSummaryFollowModal() {
   if (!modal) return;
   _commStatsFollowScope = 'summary';
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = 'today';
+  _commStatsFollowPeriod = 'all';
   syncCommStatsFollowPeriodChips(_commStatsFollowPeriod);
   updateCommStatsFollowModalMeta();
   renderCommStatsFollowTable();
@@ -12373,6 +12481,7 @@ function closeCommStatsFollowModal() {
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   _commStatsFollowScope = 'channel';
+  if (_commStatsFollowPeriod === 'all') _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
   modal.classList.remove('is-summary-scope');
   modal.classList.remove('is-tel-scope');
   modal.classList.remove('is-wa-scope');
@@ -12430,7 +12539,8 @@ function initCommStatsCardInteractions() {
           link.getAttribute('data-sales'),
           link.getAttribute('data-count'),
           metric === 'assigned' ? 'contacted' : metric,
-          'all'
+          'all',
+          'my-customers'
         );
         return;
       }
@@ -12611,16 +12721,27 @@ function buildPhoneCommResultHtml(seed) {
 }
 
 function buildChannelCommScreenshotMeta(s, sid, filePrefix) {
-  var hasScreenshot = s % 5 !== 0;
+  var count = 1 + (s % 2);
+  var screenshotNames = [];
+  var n;
+  for (n = 1; n <= count; n++) {
+    screenshotNames.push(filePrefix + sid.slice(-6) + '_' + n + '.png');
+  }
   return {
-    hasScreenshot: hasScreenshot,
-    screenshotName: hasScreenshot ? filePrefix + sid.slice(-6) + '.png' : ''
+    hasScreenshot: true,
+    screenshotName: screenshotNames[0] || '',
+    screenshotNames: screenshotNames
   };
 }
 
 function renderChannelCommScreenshotHtml(row) {
-  if (!row.hasScreenshot) return '<span class="col-screenshot-empty">—</span>';
-  return '<button type="button" class="col-screenshot-link" data-nick="' + row.name + '" data-screenshot="' + row.screenshotName + '">' + row.screenshotName + '</button>';
+  var names = row.screenshotNames && row.screenshotNames.length
+    ? row.screenshotNames
+    : (row.screenshotName ? [row.screenshotName] : []);
+  if (!names.length) return '<span class="col-screenshot-empty">—</span>';
+  return '<div class="col-screenshot-stack">' + names.map(function (fileName) {
+    return '<button type="button" class="col-screenshot-link" data-nick="' + row.name + '" data-screenshot="' + fileName + '">' + fileName + '</button>';
+  }).join('') + '</div>';
 }
 
 function handleChannelCommScreenshotPreview(nick, screenshotName) {
@@ -12630,15 +12751,17 @@ function handleChannelCommScreenshotPreview(nick, screenshotName) {
 
 function buildPhoneCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('phone-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
-  var poolSize = Math.max(rowCount * 4, 48);
+  var total = Math.max(0, parseInt(rowCount, 10) || 0);
+  var needConnected = metric === 'connected' || metric === 'duration60';
+  var need60 = metric === 'duration60';
   var rows = [];
-  for (var i = 0; i < poolSize; i++) {
+  for (var i = 0; i < total; i++) {
     var s = seed + i * 127;
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
-    var isConnected = (s % 5) !== 0;
+    var isConnected = needConnected || (s % 5) !== 0;
     var durationSec = 0;
-    if (i < PHONE_COMM_SHORT_DURATION_DEMO.length) {
+    if (!need60 && i < PHONE_COMM_SHORT_DURATION_DEMO.length) {
       isConnected = true;
       durationSec = PHONE_COMM_SHORT_DURATION_DEMO[i];
     } else if (isConnected) {
@@ -12654,11 +12777,6 @@ function buildPhoneCommDetailRows(salesName, rowCount, metric) {
       durationHtml: formatPhoneCommDurationHtml(durationSec),
       resultHtml: buildPhoneCommResultHtml(s)
     });
-  }
-  if (metric === 'connected') {
-    rows = rows.filter(function (row) { return row.isConnected; });
-  } else if (metric === 'duration60') {
-    rows = rows.filter(function (row) { return row.isConnected && row.durationSec >= 60; });
   }
   return rows;
 }
@@ -12851,14 +12969,16 @@ var _waCommDetailOpenedPeriod = 'today';
 
 function buildWaCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('wa-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
-  var poolSize = Math.max(rowCount * 4, 48);
+  var total = Math.max(0, parseInt(rowCount, 10) || 0);
+  var needReplied = metric === 'replied' || metric === 'auditValid';
+  var needAudited = metric === 'auditValid';
   var rows = [];
-  for (var i = 0; i < poolSize; i++) {
+  for (var i = 0; i < total; i++) {
     var s = seed + i * 127;
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
-    var isReplied = (s % 4) !== 0;
-    var isAudited = (s % 3) !== 0;
+    var isReplied = needReplied || (s % 4) !== 0;
+    var isAudited = needAudited || (s % 3) !== 0;
     var isAuditValid = isReplied && isAudited;
     var screenshotMeta = buildChannelCommScreenshotMeta(s, sid, 'wa_chat_');
     rows.push({
@@ -12872,13 +12992,9 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
       auditedLabel: isAudited ? '已审核' : '未审核',
       hasScreenshot: screenshotMeta.hasScreenshot,
       screenshotName: screenshotMeta.screenshotName,
+      screenshotNames: screenshotMeta.screenshotNames,
       resultHtml: buildChannelCommResultHtml(s)
     });
-  }
-  if (metric === 'replied') {
-    rows = rows.filter(function (row) { return row.isReplied; });
-  } else if (metric === 'auditValid') {
-    rows = rows.filter(function (row) { return row.isAuditValid; });
   }
   return rows;
 }
@@ -13075,14 +13191,16 @@ var _chatCommDetailOpenedPeriod = 'today';
 
 function buildChatCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('chat-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
-  var poolSize = Math.max(rowCount * 4, 48);
+  var total = Math.max(0, parseInt(rowCount, 10) || 0);
+  var needReplied = metric === 'replied' || metric === 'followup2min';
+  var need2min = metric === 'followup2min';
   var rows = [];
-  for (var i = 0; i < poolSize; i++) {
+  for (var i = 0; i < total; i++) {
     var s = seed + i * 127;
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
-    var isReplied = (s % 4) !== 0;
-    var followupSec = 20 + (s % 180);
+    var isReplied = needReplied || (s % 4) !== 0;
+    var followupSec = need2min ? 20 + (s % 100) : 20 + (s % 180);
     var isFollowup2min = isReplied && followupSec <= 120;
     rows.push({
       name: name,
@@ -13093,11 +13211,6 @@ function buildChatCommDetailRows(salesName, rowCount, metric) {
       repliedLabel: isReplied ? '是' : '否',
       resultHtml: buildChannelCommResultHtml(s)
     });
-  }
-  if (metric === 'replied') {
-    rows = rows.filter(function (row) { return row.isReplied; });
-  } else if (metric === 'followup2min') {
-    rows = rows.filter(function (row) { return row.isFollowup2min; });
   }
   return rows;
 }
@@ -13291,19 +13404,18 @@ function handleCommStatsSummaryChipActivate(chip) {
   if (!count) return;
 
   _commStatsChannelType = '';
-  _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
+  _commStatsFollowPeriod = 'all';
 
   if (view === 'manager' && chip.closest('.manager-only')) {
     openCommStatsSummaryFollowModal();
     return;
   }
   if (view === 'sales' && chip.closest('.sales-only')) {
-    if (chipType === 'my-customers') {
-      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'contacted', 'all');
-      return;
-    }
-    if (chipType === 'reply-rate') {
-      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, count, 'replied', 'all');
+    if (chipType === 'my-customers' || chipType === 'reply-rate') {
+      var customersChip = chip.closest('.comm-stats-summary');
+      customersChip = customersChip && customersChip.querySelector('[data-comm-chip="my-customers"]');
+      var customerCount = getCommSummaryChipCount(customersChip) || count;
+      openCommStatsDetailDrawer(COMM_STATS_CURRENT_SALES, customerCount, 'contacted', 'all', 'my-customers');
     }
   }
 }
@@ -13498,15 +13610,22 @@ var _commReviewAllRows = [];
 var _commReviewRows = [];
 var _commReviewPage = 1;
 
-var COMM_REVIEW_WA_CONTENTS = [
-  '【WhatsApp】已向客户发送活动说明，客户回复表示会考虑参与',
-  '【WhatsApp】客户询问提现进度，已截图说明处理节点并获客户确认',
-  '【WhatsApp】跟进充值意向，客户表示本周内会完成小额入金',
-  '【WhatsApp】发送行情解读后客户追问止损设置，已补充操作指引',
-  '【WhatsApp】客户反馈软件登录异常，已引导重装并确认恢复正常',
-  '【WhatsApp】回访实名认证进度，客户承诺今日内补齐材料',
-  '【WhatsApp】客户投诉回复不及时，已致歉并约定优先处理其工单'
-];
+var COMM_REVIEW_ASSESS_LEVELS = ['新人销售', 'V1销售', 'V23销售', 'V4销售', '销售组长'];
+
+function getCommReviewAssessLevel(salesName) {
+  var sum = 0;
+  var text = String(salesName || '');
+  for (var i = 0; i < text.length; i++) sum += text.charCodeAt(i);
+  return COMM_REVIEW_ASSESS_LEVELS[sum % COMM_REVIEW_ASSESS_LEVELS.length];
+}
+
+function buildCommReviewSubmitTime(seed) {
+  var base = new Date(2026, 5, 1, 9, 0, 0);
+  base.setDate(base.getDate() - (seed % 12));
+  base.setHours(8 + (seed % 10), (seed * 11) % 60, 0, 0);
+  return padAlertTaskNum(base.getDate()) + '-' + padAlertTaskNum(base.getMonth() + 1) + '-' + base.getFullYear() +
+    ' ' + padAlertTaskNum(base.getHours()) + ':' + padAlertTaskNum(base.getMinutes());
+}
 
 function buildCommReviewRows() {
   var seed = alertTaskFollowSeed('comm-review-wa|today');
@@ -13516,16 +13635,20 @@ function buildCommReviewRows() {
     var salesName = RANK_SALES_POOL[s % RANK_SALES_POOL.length];
     var name = ALERT_TASK_CUSTOMER_NAMES[(s + i) % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
-    var hasScreenshot = s % 5 !== 0;
+    var screenshotCount = 1 + (s % 3);
+    var screenshotNames = [];
+    for (var n = 1; n <= screenshotCount; n++) {
+      screenshotNames.push('wa_chat_' + sid.slice(-6) + '_' + n + '.png');
+    }
     rows.push({
       id: 'review-wa-' + i,
       salesName: salesName,
+      assessLevel: getCommReviewAssessLevel(salesName),
       name: name,
       sid: sid,
-      commTime: buildCommStatsCommTime(s),
-      contentText: COMM_REVIEW_WA_CONTENTS[(s + i * 3) % COMM_REVIEW_WA_CONTENTS.length],
-      hasScreenshot: hasScreenshot,
-      screenshotName: hasScreenshot ? 'wa_chat_' + sid.slice(-6) + '.png' : '',
+      commTime: buildCommReviewSubmitTime(s),
+      resultHtml: buildChannelCommResultHtml(s),
+      screenshotNames: screenshotNames,
       auditStatus: s % 3 === 0 ? 'approved' : 'pending'
     });
   }
@@ -13540,8 +13663,11 @@ function renderCommReviewStatusHtml(status) {
 }
 
 function renderCommReviewScreenshotHtml(row) {
-  if (!row.hasScreenshot) return '<span class="col-screenshot-empty">—</span>';
-  return '<button type="button" class="col-screenshot-link" data-action="preview-screenshot" data-id="' + row.id + '">' + row.screenshotName + '</button>';
+  var names = row.screenshotNames || [];
+  if (!names.length) return '<span class="col-screenshot-empty">—</span>';
+  return '<div class="col-screenshot-stack">' + names.map(function (fileName) {
+    return '<button type="button" class="col-screenshot-link" data-action="preview-screenshot" data-id="' + row.id + '" data-screenshot="' + fileName + '">' + fileName + '</button>';
+  }).join('') + '</div>';
 }
 
 function renderCommReviewActionHtml(row) {
@@ -13553,13 +13679,16 @@ function renderCommReviewActionHtml(row) {
 
 function renderCommReviewRowHtml(row) {
   return '<tr data-review-id="' + row.id + '">' +
-    '<td class="col-sales">' + row.salesName + '</td>' +
+    '<td class="col-sales"><div class="col-sales-stack">' +
+    '<span>' + row.salesName + '</span>' +
+    '<span class="col-level-line">' + (row.assessLevel || '—') + '</span>' +
+    '</div></td>' +
     '<td class="col-customer"><div class="col-customer-stack">' +
     '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
     '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
     '</div></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
-    '<td class="col-content">' + row.contentText + '</td>' +
+    '<td class="col-comm-result">' + row.resultHtml + '</td>' +
     '<td class="col-screenshot">' + renderCommReviewScreenshotHtml(row) + '</td>' +
     '<td class="col-status">' + renderCommReviewStatusHtml(row.auditStatus) + '</td>' +
     '<td class="col-action">' + renderCommReviewActionHtml(row) + '</td>' +
@@ -13568,13 +13697,11 @@ function renderCommReviewRowHtml(row) {
 
 function getCommReviewFilterValues() {
   var salesEl = document.getElementById('commReviewFilterSales');
-  var nickEl = document.getElementById('commReviewFilterNick');
-  var sidEl = document.getElementById('commReviewFilterSid');
+  var customerEl = document.getElementById('commReviewFilterCustomer');
   var statusEl = document.getElementById('commReviewFilterStatus');
   return {
     sales: salesEl ? salesEl.value.trim().toLowerCase() : '',
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim().toLowerCase() : '',
+    customer: customerEl ? customerEl.value.trim().toLowerCase() : '',
     status: statusEl ? statusEl.value : ''
   };
 }
@@ -13582,8 +13709,11 @@ function getCommReviewFilterValues() {
 function filterCommReviewRows(rows, filters) {
   return rows.filter(function (row) {
     if (filters.sales && row.salesName.toLowerCase().indexOf(filters.sales) === -1) return false;
-    if (filters.nick && row.name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && row.sid.toLowerCase().indexOf(filters.sid) === -1) return false;
+    if (filters.customer) {
+      var nick = (row.name || '').toLowerCase();
+      var sid = (row.sid || '').toLowerCase();
+      if (nick.indexOf(filters.customer) === -1 && sid.indexOf(filters.customer) === -1) return false;
+    }
     if (filters.status && row.auditStatus !== filters.status) return false;
     return true;
   });
@@ -13641,12 +13771,10 @@ function applyCommReviewFilters() {
 
 function clearCommReviewFilterInputs() {
   var salesEl = document.getElementById('commReviewFilterSales');
-  var nickEl = document.getElementById('commReviewFilterNick');
-  var sidEl = document.getElementById('commReviewFilterSid');
+  var customerEl = document.getElementById('commReviewFilterCustomer');
   var statusEl = document.getElementById('commReviewFilterStatus');
   if (salesEl) salesEl.value = '';
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  if (customerEl) customerEl.value = '';
   if (statusEl) statusEl.value = '';
 }
 
@@ -13683,10 +13811,12 @@ function handleCommReviewVoid(id) {
   applyCommReviewFilters();
 }
 
-function handleCommReviewScreenshotPreview(id) {
+function handleCommReviewScreenshotPreview(id, screenshotName) {
   var row = findCommReviewRowById(id);
-  if (!row || !row.hasScreenshot) return;
-  alert('查看截图\n客户：' + row.name + '\n文件：' + row.screenshotName + '\n（原型占位）');
+  if (!row) return;
+  var fileName = screenshotName || (row.screenshotNames && row.screenshotNames[0]) || '';
+  if (!fileName) return;
+  alert('查看截图\n客户：' + row.name + '\n文件：' + fileName + '\n（原型占位）');
 }
 
 function openCommReviewDrawer() {
@@ -13735,7 +13865,7 @@ function initCommReviewDrawer() {
       var id = actionBtn.getAttribute('data-id');
       if (action === 'approve') handleCommReviewApprove(id);
       else if (action === 'void') handleCommReviewVoid(id);
-      else if (action === 'preview-screenshot') handleCommReviewScreenshotPreview(id);
+      else if (action === 'preview-screenshot') handleCommReviewScreenshotPreview(id, actionBtn.getAttribute('data-screenshot'));
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -13860,23 +13990,16 @@ function updateCommQcFollowModalMeta() {
 }
 
 function buildCommQcFollowRowForName(name, type, period) {
-  var names = getCommStatsManagerSalesNames();
-  var i = names.indexOf(name);
-  if (i < 0) i = 0;
-  var seed = alertTaskFollowSeed('qc|' + type + '|' + period);
-  var periodMul = getCommStatsFollowPeriodMul(period);
-  var s = seed + i * 79 + (type === 'cr' ? 17 : 0);
-  var total = Math.max(1, (3 + (s % 12)) * periodMul);
-  var high = Math.min(total, Math.floor(total * (0.04 + (s % 12) / 100)));
-  var mid = Math.min(total - high, Math.floor(total * (0.16 + (s % 18) / 100)));
-  var low = Math.max(0, total - high - mid);
+  var split = getCommStatsChannelSplit(period) || getCommStatsChannelSplit('today');
+  var key = type === 'cr' ? 'qcCr' : 'qcTel';
+  var qc = (split && split[key][name]) || { total: 0, score: 0, low: 0, mid: 0, high: 0 };
   return {
     name: name,
-    total: total,
-    score: 72 + (s % 22),
-    low: low,
-    mid: mid,
-    high: high
+    total: qc.total,
+    score: qc.score,
+    low: qc.low,
+    mid: qc.mid,
+    high: qc.high
   };
 }
 

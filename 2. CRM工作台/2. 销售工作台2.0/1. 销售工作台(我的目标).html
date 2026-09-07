@@ -923,7 +923,7 @@
     }
     .cust-active-pct{font-size:10px;font-weight:700;color:#b45309}
     .cust-active-tier-badge{
-      font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;
+      font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;margin-left:auto;
     }
     .cust-active-tier-badge.tier--0{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
     .cust-active-tier-badge.tier--40{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
@@ -931,6 +931,7 @@
     .cust-active-tier-badge.tier--80{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
     .cust-active-tier-badge.tier--100{background:#f0fdf4;color:#047857;border:1px solid #86efac}
     .cust-active-tier-badge.tier--over{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff}
+    .cust-active-tier-badge.tier--time{background:#f5f5ff;color:#4f46e5;border:1px solid #ddd6fe}
     .cust-active-tier-desc{
       font-size:9px;color:#64748b;line-height:1.45;margin-top:6px;padding-top:6px;
       border-top:1px dashed #e2e8f0;
@@ -981,7 +982,7 @@
     }
     .net-deposit-pct{font-size:10px;font-weight:700;color:#b45309}
     .net-deposit-tier-badge{
-      font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;
+      font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;margin-left:auto;
     }
     .net-deposit-tier-badge.tier--0{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
     .net-deposit-tier-badge.tier--40{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
@@ -989,6 +990,7 @@
     .net-deposit-tier-badge.tier--80{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
     .net-deposit-tier-badge.tier--100{background:#f0fdf4;color:#047857;border:1px solid #86efac}
     .net-deposit-tier-badge.tier--over{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff}
+    .net-deposit-tier-badge.tier--time{background:#f5f5ff;color:#4f46e5;border:1px solid #ddd6fe}
     .net-deposit-tier-desc{
       font-size:9px;color:#64748b;line-height:1.45;margin-top:6px;padding-top:6px;
       border-top:1px dashed #e2e8f0;
@@ -4698,7 +4700,7 @@
                       <div class="trade-lots-mini trade-lots-mini--commission">
                         <div class="trade-lots-mini-inner">
                           <div class="trade-lots-mini-label">基础提成核算金额：<strong class="trade-lots-commission-amount">$858</strong></div>
-                          <div class="trade-lots-mini-sub">按 <strong class="trade-lots-month-val">2,860</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
+                          <div class="trade-lots-mini-sub"><span class="trade-lots-calc-prefix"></span>按 <strong class="trade-lots-month-val">2,860</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
                         </div>
                       </div>
                     </div>
@@ -4809,10 +4811,10 @@
               <div class="detail-section-title">客户明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
               <div id="detail-team">
               <div class="goal-cards">
-                <article class="goal-card goal-card--net-deposit" data-net-deposit-target="512000">
+                <article class="goal-card goal-card--net-deposit" data-net-deposit-target="512000" data-kpi-badge-mode="time">
                   <div class="goal-card-head">
                     <span class="goal-badge">净</span>
-                    <div><h3>团队净入金</h3><p class="goal-q">昨日、本周、本月净入金及当月 KPI 完成进度与核算档位</p></div>
+                    <div><h3>团队净入金</h3><p class="goal-q">昨日、本周、本月净入金及当月 KPI 完成进度与时间进度对照</p></div>
                   </div>
                   <div class="net-deposit-panel">
                     <div class="net-deposit-counts">
@@ -4827,17 +4829,17 @@
                       </div>
                       <div class="net-deposit-bar"><div class="net-deposit-bar-fill high" style="width:86%"></div></div>
                       <div class="net-deposit-progress-foot">
-                        <span class="net-deposit-pct">实际完成 86%</span>
-                        <span class="net-deposit-tier-badge tier--80">核算完成率 80%</span>
+                        <span class="net-deposit-pct" hidden>实际完成 86%</span>
+                        <span class="net-deposit-tier-badge tier--time">团队完成率 86%</span>
                       </div>
-                      <div class="net-deposit-tier-desc">当前档位：<strong>80%～100%</strong>（实际完成度 86%，核算完成率按 80% 档计）</div>
+                      <div class="net-deposit-tier-desc">当月时间进度：<strong>20 / 30 天</strong>（团队视角不核算完成率档位）</div>
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--cust-active" data-cust-active-target="3200">
+                <article class="goal-card goal-card--cust-active" data-cust-active-target="3200" data-kpi-badge-mode="time">
                   <div class="goal-card-head">
                     <span class="goal-badge">跃</span>
-                    <div><h3>团队充值活跃</h3><p class="goal-q">昨日、本周、本月充值活跃客户人数及当月 KPI 完成进度与核算档位<span class="goal-q-help" tabindex="0" data-tip="印尼地区充值活跃规则说明：&#10;分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户" aria-label="印尼地区充值活跃规则说明：分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户">?</span></p></div>
+                    <div><h3>团队充值活跃</h3><p class="goal-q">昨日、本周、本月充值活跃客户人数及当月 KPI 完成进度与时间进度对照<span class="goal-q-help" tabindex="0" data-tip="印尼地区充值活跃规则说明：&#10;分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户" aria-label="印尼地区充值活跃规则说明：分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户">?</span></p></div>
                   </div>
                   <div class="cust-active-panel">
                     <div class="cust-active-counts">
@@ -4852,10 +4854,10 @@
                       </div>
                       <div class="cust-active-bar"><div class="cust-active-bar-fill mid"></div></div>
                       <div class="cust-active-progress-foot">
-                        <span class="cust-active-pct">实际完成 64%</span>
-                        <span class="cust-active-tier-badge tier--60">核算完成率 60%</span>
+                        <span class="cust-active-pct" hidden>实际完成 64%</span>
+                        <span class="cust-active-tier-badge tier--time">团队完成率 64%</span>
                       </div>
-                      <div class="cust-active-tier-desc">当前档位：<strong>60%～80%</strong>（实际完成度 64%，核算完成率按 60% 档计）</div>
+                      <div class="cust-active-tier-desc">当月时间进度：<strong>20 / 30 天</strong>（团队视角不核算完成率档位）</div>
                     </div>
                   </div>
                 </article>
@@ -4905,7 +4907,7 @@
                       <div class="trade-lots-mini trade-lots-mini--commission">
                         <div class="trade-lots-mini-inner">
                           <div class="trade-lots-mini-label">基础提成核算金额：<strong class="trade-lots-commission-amount">$5,460</strong></div>
-                          <div class="trade-lots-mini-sub">按 <strong class="trade-lots-month-val">18,200</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
+                          <div class="trade-lots-mini-sub"><span class="trade-lots-calc-prefix">假设</span>按 <strong class="trade-lots-month-val">18,200</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
                         </div>
                       </div>
                     </div>
@@ -14894,6 +14896,26 @@ function renderKpiTierDesc(desc, tier, pctLabel, formatRate) {
   }
 }
 
+/** 团队视角（团队/分组汇总）不核算完成率档位，标签改为展示团队完成率 */
+function isKpiTimeRateCard(card) {
+  return !!card && card.getAttribute('data-kpi-badge-mode') === 'time';
+}
+
+function renderKpiTimeRateBadge(badge, desc, pctEl, badgeBaseClass, actualPct) {
+  var pace = getGoalMonthPaceMeta();
+  if (pctEl) {
+    pctEl.hidden = true;
+    pctEl.textContent = '';
+  }
+  if (badge) {
+    badge.className = badgeBaseClass + ' tier--time';
+    badge.textContent = '团队完成率 ' + formatKpiPct(actualPct) + '%';
+  }
+  if (desc) {
+    desc.innerHTML = '当月时间进度：<strong>' + pace.day + ' / ' + pace.days + ' 天</strong>（团队视角不核算完成率档位）';
+  }
+}
+
 function formatNetDepositUsd(amount) {
   return '$' + Math.round(amount).toLocaleString('en-US');
 }
@@ -15996,6 +16018,16 @@ function syncManagerGoalGcaMode(isTeam) {
   }
 }
 
+/** 团队/分组汇总视角展示团队完成率，单销售视角仍展示核算完成率档位 */
+function applyManagerGoalKpiBadgeMode(card, isTeam, teamQText, salesQText) {
+  if (isTeam) card.setAttribute('data-kpi-badge-mode', 'time');
+  else card.removeAttribute('data-kpi-badge-mode');
+  var q = card.querySelector('.goal-q');
+  if (q && q.firstChild && q.firstChild.nodeType === 3) {
+    q.firstChild.nodeValue = isTeam ? teamQText : salesQText;
+  }
+}
+
 function setManagerGoalRiskLabel(btn, prefix, base) {
   if (!btn) return;
   var span = btn.querySelector('span');
@@ -16036,6 +16068,9 @@ function applyManagerGoalSalesFilter(value) {
   if (activeCard) {
     activeCard.setAttribute('data-cust-active-target', data.active.target);
     activeCard.querySelector('h3').textContent = data.labels.activeTitle;
+    applyManagerGoalKpiBadgeMode(activeCard, data.isTeam,
+      '昨日、本周、本月充值活跃客户人数及当月 KPI 完成进度与时间进度对照',
+      '昨日、本周、本月充值活跃客户人数及当月 KPI 完成进度与核算档位');
     var activeCounts = activeCard.querySelectorAll('.cust-active-counts .metric-item strong');
     if (activeCounts.length >= 3) {
       activeCounts[0].textContent = data.active.today.toLocaleString('en-US');
@@ -16050,6 +16085,9 @@ function applyManagerGoalSalesFilter(value) {
   if (netCard) {
     netCard.setAttribute('data-net-deposit-target', data.netDeposit.target);
     netCard.querySelector('h3').textContent = data.labels.netTitle;
+    applyManagerGoalKpiBadgeMode(netCard, data.isTeam,
+      '昨日、本周、本月净入金及当月 KPI 完成进度与时间进度对照',
+      '昨日、本周、本月净入金及当月 KPI 完成进度与核算档位');
     netCard.querySelector('[data-net-field="today"]').textContent = formatNetDepositUsd(data.netDeposit.today);
     netCard.querySelector('[data-net-field="week"]').textContent = formatNetDepositUsd(data.netDeposit.week);
     netCard.querySelector('[data-net-field="month"]').textContent = formatNetDepositUsd(data.netDeposit.month);
@@ -16164,6 +16202,9 @@ function initTradeLotsCards() {
     var priceVal = block.querySelector('.trade-lots-unit-price-val');
     if (priceVal) priceVal.textContent = '$' + unitPrice;
 
+    var prefixEl = block.querySelector('.trade-lots-calc-prefix');
+    if (prefixEl) prefixEl.textContent = personalMonth ? '' : '假设';
+
     var diffText = block.querySelector('.trade-lots-diff-text');
     if (!diffText) return;
     if (!personalMonth) {
@@ -16226,13 +16267,21 @@ function initCustActiveCards() {
       amountEl.innerHTML = month.toLocaleString('en-US') + '<em> / ' + target.toLocaleString('en-US') + '</em>';
     }
     var pctEl = progress.querySelector('.cust-active-pct');
-    if (pctEl) pctEl.textContent = '实际完成 ' + formatKpiPct(actualPct) + '%';
     var badge = progress.querySelector('.cust-active-tier-badge');
+    var desc = progress.querySelector('.cust-active-tier-desc');
+    if (isKpiTimeRateCard(card)) {
+      renderKpiTimeRateBadge(badge, desc, pctEl, 'cust-active-tier-badge', actualPct);
+      return;
+    }
+    if (pctEl) {
+      pctEl.hidden = false;
+      pctEl.textContent = '实际完成 ' + formatKpiPct(actualPct) + '%';
+    }
     if (badge) {
       badge.className = 'cust-active-tier-badge tier--' + tier.tierKey;
       badge.textContent = '核算完成率 ' + (tier.tierKey === 'over' ? formatKpiPct(tier.rate) : tier.rate) + '%';
     }
-    renderKpiTierDesc(progress.querySelector('.cust-active-tier-desc'), tier, formatKpiPct(actualPct) + '%', formatKpiPct);
+    renderKpiTierDesc(desc, tier, formatKpiPct(actualPct) + '%', formatKpiPct);
   });
 }
 
@@ -17044,13 +17093,21 @@ function initNetDepositCards() {
       amountEl.innerHTML = formatNetDepositUsd(month) + '<em> / ' + formatNetDepositUsd(target) + '</em>';
     }
     var pctEl = progress.querySelector('.net-deposit-pct');
-    if (pctEl) pctEl.textContent = '实际完成 ' + formatKpiPct(actualPct) + '%';
     var badge = progress.querySelector('.net-deposit-tier-badge');
+    var desc = progress.querySelector('.net-deposit-tier-desc');
+    if (isKpiTimeRateCard(card)) {
+      renderKpiTimeRateBadge(badge, desc, pctEl, 'net-deposit-tier-badge', actualPct);
+      return;
+    }
+    if (pctEl) {
+      pctEl.hidden = false;
+      pctEl.textContent = '实际完成 ' + formatKpiPct(actualPct) + '%';
+    }
     if (badge) {
       badge.className = 'net-deposit-tier-badge tier--' + tier.tierKey;
       badge.textContent = '核算完成率 ' + (tier.tierKey === 'over' ? formatKpiPct(tier.rate) : tier.rate) + '%';
     }
-    renderKpiTierDesc(progress.querySelector('.net-deposit-tier-desc'), tier, formatKpiPct(actualPct) + '%', formatKpiPct);
+    renderKpiTierDesc(desc, tier, formatKpiPct(actualPct) + '%', formatKpiPct);
   });
 }
 
