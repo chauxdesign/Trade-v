@@ -3489,18 +3489,63 @@
     }
     #leadClueBandDrawerPager{margin-top:14px;padding-top:12px;border-top:1px solid #eef2f7}
     #goalRiskDrawerFilters{
-      display:flex;align-items:flex-end;gap:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
     }
     #goalRiskDrawerFilters .my-follow-drawer-filters-grid{
-      flex:1;min-width:0;
+      display:flex;align-items:center;justify-content:flex-start;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
-    #goalRiskDrawerFilters .my-follow-filter-field--action{
-      flex-shrink:0;
+    #goalRiskDrawerFilters .my-follow-filter-field{
+      flex:0 0 auto;min-width:0;margin:0;
     }
-    #goalRiskDrawerFilters .my-follow-filter-reset{
-      height:30px;padding:0 10px;white-space:nowrap;
+    #goalRiskDrawerFilters .my-follow-filter-input{
+      width:150px;
     }
-    #goalRiskDrawerPager{margin-top:14px;padding-top:12px;border-top:1px solid #eef2f7}
+    #goalRiskDrawerFilters .my-follow-filter-select{
+      width:120px;
+    }
+    #goalRiskDrawerFilters .my-follow-filter-field--metric .my-follow-filter-select{
+      width:150px;
+    }
+    #goalRiskDrawerFilters .my-follow-filter-actions{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
+    }
+    #goalRiskDrawerFilters .my-follow-filter-reset,
+    #goalRiskDrawerFilters .my-follow-filter-query{
+      flex-shrink:0;height:30px;padding:0 12px;white-space:nowrap;
+    }
+    #goalRiskDrawerFilters .my-follow-filter-query{
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #goalRiskDrawerFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
+    }
+    #goalRiskDrawer .alert-task-detail-panel{width:80%;max-width:85%}
+    #goalRiskDrawer .alert-task-detail-table{min-width:1040px}
+    #goalRiskDrawer .alert-task-detail-table tbody tr{transition:background .15s}
+    #goalRiskDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #goalRiskDrawer .col-band{white-space:nowrap}
+    #goalRiskDrawer .col-band .my-follow-drawer-card-band{
+      margin-left:0;font-size:10px;padding:2px 8px;line-height:1.4;
+    }
+    #goalRiskDrawer .col-level{white-space:nowrap;color:#334155;font-weight:700}
+    #goalRiskDrawer .col-funds{white-space:nowrap;font-variant-numeric:tabular-nums}
+    #goalRiskDrawer .col-funds-sub{
+      display:block;margin-top:2px;font-size:11px;color:#94a3b8;font-weight:600;white-space:normal;
+    }
+    #goalRiskDrawer .col-tags{min-width:200px;max-width:260px;white-space:normal}
+    #goalRiskDrawer .col-tags .lead-clue-customer-card-tags{
+      margin:0;padding:0;border-top:none;min-height:0;gap:4px;
+    }
+    #goalRiskDrawer .col-tags .lead-clue-customer-tag,
+    #goalRiskDrawer .col-tags .lead-clue-customer-tag-more{
+      font-size:10px;padding:2px 6px;line-height:1.4;
+    }
+    #goalRiskDrawer .col-suggest{min-width:150px;white-space:normal;color:#0f172a;font-weight:700}
+    #goalRiskDrawer .col-empty{
+      padding:28px 10px;text-align:center;color:#94a3b8;font-size:12px;line-height:1.7;font-weight:600;
+    }
     .chance-ai-remind--risk{
       border-color:#fed7aa;background:linear-gradient(135deg,#fffaf5,#fff7ed);
     }
@@ -5539,18 +5584,15 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="goalRiskDrawerFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">昵称</span>
-                <input type="text" class="my-follow-filter-input" id="goalRiskFilterNick" placeholder="输入昵称关键词" oninput="applyGoalRiskDrawerFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--nick">
+                <input type="text" class="my-follow-filter-input" id="goalRiskFilterNick" placeholder="昵称" onkeydown="if(event.key==='Enter'){event.preventDefault();applyGoalRiskDrawerFilters();}">
+              </label>
+              <label class="my-follow-filter-field my-follow-filter-field--sid">
+                <input type="text" class="my-follow-filter-input" id="goalRiskFilterSid" placeholder="SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyGoalRiskDrawerFilters();}">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="goalRiskFilterSid" placeholder="输入 SID" oninput="applyGoalRiskDrawerFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">VIP等级</span>
-                <select class="my-follow-filter-select" id="goalRiskFilterLevel" onchange="applyGoalRiskDrawerFilters()">
-                  <option value="">全部</option>
+                <select class="my-follow-filter-select" id="goalRiskFilterLevel">
+                  <option value="">VIP等级</option>
                   <option value="V4">V4</option>
                   <option value="V3">V3</option>
                   <option value="V2">V2</option>
@@ -5558,8 +5600,7 @@
                   <option value="V0">V0</option>
                 </select>
               </label>
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">风险指标</span>
+              <label class="my-follow-filter-field my-follow-filter-field--metric">
                 <select class="my-follow-filter-select" id="goalRiskFilterMetric" disabled aria-disabled="true">
                   <option value="deposit-no-trade">充值无交易</option>
                   <option value="trade-no-deposit">交易无充值</option>
@@ -5571,14 +5612,27 @@
                 </select>
               </label>
             </div>
-            <div class="my-follow-filter-field my-follow-filter-field--action">
-              <span class="my-follow-filter-label" aria-hidden="true">&nbsp;</span>
-              <button type="button" class="my-follow-filter-reset" onclick="resetGoalRiskDrawerFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetGoalRiskDrawerFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyGoalRiskDrawerFilters()">查询</button>
             </div>
           </div>
-          <div class="my-follow-drawer-cards-wrap">
-            <div class="my-follow-drawer-cards" id="goalRiskDrawerCards" role="list"></div>
-            <div class="my-follow-drawer-empty" id="goalRiskDrawerEmpty" hidden>暂无匹配客户<br>请调整筛选条件后重试</div>
+          <div class="alert-task-detail-table-wrap">
+            <table class="alert-task-detail-table">
+              <thead>
+                <tr>
+                  <th>客户昵称</th>
+                  <th>SID</th>
+                  <th>风险指标</th>
+                  <th>等级</th>
+                  <th>资金</th>
+                  <th>客户标签</th>
+                  <th>建议</th>
+                  <th class="col-action">操作</th>
+                </tr>
+              </thead>
+              <tbody id="goalRiskDrawerTbody"></tbody>
+            </table>
           </div>
           <div class="alert-task-detail-pager" id="goalRiskDrawerPager" hidden>
             <span class="alert-task-detail-pager-info" id="goalRiskDrawerPagerInfo"></span>
@@ -13929,19 +13983,25 @@ function renderGoalRiskDrawerPagination() {
   }
   var totalPages = getGoalRiskDrawerTotalPages();
   if (_goalRiskDrawerPage > totalPages) _goalRiskDrawerPage = totalPages;
+  if (total <= GOAL_RISK_DRAWER_PAGE_SIZE) {
+    pager.hidden = true;
+    return;
+  }
   pager.hidden = false;
   var start = (_goalRiskDrawerPage - 1) * GOAL_RISK_DRAWER_PAGE_SIZE + 1;
   var end = Math.min(_goalRiskDrawerPage * GOAL_RISK_DRAWER_PAGE_SIZE, total);
-  infoEl.innerHTML = '共 <strong>' + total + '</strong> 位 · 每页 <strong>' + GOAL_RISK_DRAWER_PAGE_SIZE + '</strong> 张 · 当前 <strong>' + start + '–' + end + '</strong> · 第 <strong>' + _goalRiskDrawerPage + '</strong> / ' + totalPages + ' 页';
-  if (totalPages <= 1) {
-    actionsEl.innerHTML = '';
-    return;
-  }
-  var html = '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(' + (_goalRiskDrawerPage - 1) + ')"' + (_goalRiskDrawerPage <= 1 ? ' disabled' : '') + '>上一页</button>';
-  for (var p = 1; p <= totalPages; p++) {
+  infoEl.innerHTML = '共 <strong>' + total + '</strong> 条 · 每页 <strong>' + GOAL_RISK_DRAWER_PAGE_SIZE + '</strong> 条 · 当前 <strong>' + start + '–' + end + '</strong> 条 · 第 <strong>' + _goalRiskDrawerPage + '</strong> / ' + totalPages + ' 页';
+
+  var html =
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(1)"' + (_goalRiskDrawerPage <= 1 ? ' disabled' : '') + '>首页</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(' + (_goalRiskDrawerPage - 1) + ')"' + (_goalRiskDrawerPage <= 1 ? ' disabled' : '') + '>上一页</button>';
+  var pageNumbers = buildLimitedPagerPages(totalPages, _goalRiskDrawerPage, 6);
+  pageNumbers.forEach(function (p) {
     html += '<button type="button" class="alert-task-detail-page-btn' + (p === _goalRiskDrawerPage ? ' active' : '') + '" onclick="goGoalRiskDrawerPage(' + p + ')">' + p + '</button>';
-  }
-  html += '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(' + (_goalRiskDrawerPage + 1) + ')"' + (_goalRiskDrawerPage >= totalPages ? ' disabled' : '') + '>下一页</button>';
+  });
+  html +=
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(' + (_goalRiskDrawerPage + 1) + ')"' + (_goalRiskDrawerPage >= totalPages ? ' disabled' : '') + '>下一页</button>' +
+    '<button type="button" class="alert-task-detail-page-btn" onclick="goGoalRiskDrawerPage(' + totalPages + ')"' + (_goalRiskDrawerPage >= totalPages ? ' disabled' : '') + '>末页</button>';
   actionsEl.innerHTML = html;
 }
 
@@ -13950,28 +14010,49 @@ function goGoalRiskDrawerPage(page) {
   var nextPage = Math.max(1, Math.min(page, totalPages));
   if (nextPage === _goalRiskDrawerPage) return;
   _goalRiskDrawerPage = nextPage;
-  renderGoalRiskDrawerCardsPage();
-  var body = document.querySelector('#goalRiskDrawer .alert-task-detail-body');
-  if (body) body.scrollTop = 0;
+  renderGoalRiskDrawerTablePage();
+  var wrap = document.querySelector('#goalRiskDrawer .alert-task-detail-table-wrap');
+  if (wrap) wrap.scrollTop = 0;
 }
 
-function renderGoalRiskDrawerCardsPage() {
-  var cardsEl = document.getElementById('goalRiskDrawerCards');
-  var emptyEl = document.getElementById('goalRiskDrawerEmpty');
-  if (!cardsEl) return;
+function renderGoalRiskDrawerRowHtml(entry) {
+  var name = entry.name;
+  var sid = entry.sid;
+  var bandType = entry.bandType;
+  var bandLabel = entry.bandLabel || MY_FOLLOW_BAND_LABELS[bandType] || bandType;
+  var funds = leadClueParseFunds(entry.funds);
+  var fundsVal = leadClueFundsShort(funds.primary);
+  var nickArg = "'" + name.replace(/'/g, "\\'") + "'";
+  var sidArg = "'" + sid + "'";
+  return '<tr>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" onclick="openMyFollowCustomerDetail(' + sidArg + ',' + nickArg + ')">' + name + '</button></td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" onclick="event.preventDefault();openMyFollowCustomerDetail(' + sidArg + ',' + nickArg + ')">' + sid + '</a></td>' +
+    '<td class="col-band"><span class="my-follow-drawer-card-band my-follow-drawer-card-band--' + bandType + '">' + bandLabel + '</span></td>' +
+    '<td class="col-level">' + entry.level + '</td>' +
+    '<td class="col-funds">' + fundsVal +
+    (funds.secondary ? '<span class="col-funds-sub">' + funds.secondary + '</span>' : '') + '</td>' +
+    '<td class="col-tags"><div class="lead-clue-customer-card-tags" aria-label="客户标签">' + renderLeadClueCustomerCardTagsHtml(entry.tags || []) + '</div></td>' +
+    '<td class="col-suggest">' + entry.action + '</td>' +
+    '<td class="col-action"><span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link" onclick="event.preventDefault();openMyFollowPrivateChat(' + sidArg + ',' + nickArg + ')">私聊</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link" onclick="event.preventDefault();openMyFollowTradeAnalysis(' + sidArg + ',' + nickArg + ')">贸易分析</a>' +
+    '</span></td>' +
+    '</tr>';
+}
+
+function renderGoalRiskDrawerTablePage() {
+  var tbody = document.getElementById('goalRiskDrawerTbody');
+  if (!tbody) return;
   var startIdx = (_goalRiskDrawerPage - 1) * GOAL_RISK_DRAWER_PAGE_SIZE;
   var pageEntries = _goalRiskDrawerFilteredEntries.slice(startIdx, startIdx + GOAL_RISK_DRAWER_PAGE_SIZE);
   if (!pageEntries.length) {
-    cardsEl.innerHTML = '';
-    if (emptyEl) {
-      emptyEl.hidden = false;
-      emptyEl.innerHTML = getGoalRiskDrawerEntries(_goalRiskDrawerMetric, _goalRiskDrawerView).length
-        ? '暂无匹配客户<br>请调整筛选条件后重试'
-        : '暂无客户数据';
-    }
+    var emptyText = getGoalRiskDrawerEntries(_goalRiskDrawerMetric, _goalRiskDrawerView).length
+      ? '暂无匹配客户<br>请调整筛选条件后重试'
+      : '暂无客户数据';
+    tbody.innerHTML = '<tr><td class="col-empty" colspan="8">' + emptyText + '</td></tr>';
   } else {
-    if (emptyEl) emptyEl.hidden = true;
-    cardsEl.innerHTML = pageEntries.map(renderMyFollowDrawerCard).join('');
+    tbody.innerHTML = pageEntries.map(renderGoalRiskDrawerRowHtml).join('');
   }
   renderGoalRiskDrawerPagination();
 }
@@ -13987,7 +14068,7 @@ function applyGoalRiskDrawerFilters() {
   _goalRiskDrawerFilteredEntries = filterGoalRiskDrawerEntries(allEntries, filters);
   _goalRiskDrawerPage = 1;
   updateGoalRiskDrawerSummary(allEntries.length);
-  renderGoalRiskDrawerCardsPage();
+  renderGoalRiskDrawerTablePage();
 }
 
 function resetGoalRiskDrawerFilters() {
