@@ -90,18 +90,19 @@
     .tab{padding:4px 12px;font-size:12px;border:1px solid var(--wire);background:#fff;border-radius:4px}
     .tab.active{border-color:#2563eb;background:#eff6ff;color:#1d4ed8;font-weight:700}
     .tab span{margin-left:6px;color:#64748b}
-    .view-switch{display:flex;align-items:center;gap:6px;flex-shrink:0}
+    .view-switch{display:flex;align-items:center;gap:8px;flex-shrink:1;min-width:0}
+    .view-switch-hint{
+      font-size:12px;color:#64748b;line-height:1.35;white-space:nowrap;
+      max-width:min(560px,46vw);overflow:hidden;text-overflow:ellipsis;
+    }
     .view-btn{
       border:1px solid var(--wire);background:#fff;padding:6px 14px;
       font-size:12px;font-weight:700;border-radius:6px;cursor:pointer;color:#374151;
+      flex-shrink:0;
     }
     .view-btn:hover{border-color:#93c5fd;background:#f8fafc}
     .view-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
-    .view-banner{
-      font-size:12px;color:#475569;background:#fff;border:1px solid #e8ecf1;
-      padding:8px 12px;border-radius:8px;margin-bottom:0;
-      box-shadow:0 1px 4px rgba(15,23,42,.04);
-    }
+    .view-banner{display:none !important}
     body[data-view="manager"] .sales-only{display:none}
     body[data-view="sales"] .manager-only{display:none}
 
@@ -1461,7 +1462,7 @@
       flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
     }
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
-    #commReviewDrawer .alert-task-detail-panel{width:85%}
+    #commReviewDrawer .alert-task-detail-panel{width:80%;max-width:80%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
     #commReviewDrawer .col-screenshot{white-space:normal}
     #commReviewDrawer .col-screenshot-stack{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
@@ -1489,18 +1490,37 @@
     .comm-review-action-link:hover{text-decoration:underline}
     .comm-review-action-link--void{color:#64748b}
     .comm-review-action-link--void:hover{color:#475569}
-    #commReviewDrawer .col-customer{min-width:130px;white-space:normal}
-    #commReviewDrawer .col-sales{min-width:110px;white-space:normal}
+    .comm-review-action-link--reject{color:#dc2626}
+    .comm-review-action-link--reject:hover{color:#b91c1c}
+    #commReviewDrawer .col-action .comm-review-action-stack{
+      display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+    }
+    #commReviewDrawer .alert-task-detail-table{min-width:0}
+    #commReviewDrawer .alert-task-detail-table th,
+    #commReviewDrawer .alert-task-detail-table td{padding:8px 6px}
+    #commReviewDrawer .col-sales{width:80px;min-width:80px;white-space:normal}
+    #commReviewDrawer .col-customer{width:100px;min-width:100px;white-space:normal}
+    #commReviewDrawer .col-time{width:86px;min-width:86px;white-space:normal;line-height:1.35}
     #commReviewDrawer .col-sales-stack{display:flex;flex-direction:column;gap:2px}
     #commReviewDrawer .col-sales-stack .col-level-line{font-size:11px;line-height:1.35;color:#64748b}
     #commReviewDrawer .col-customer-stack{display:flex;flex-direction:column;gap:2px}
-    #commReviewDrawer .col-customer-stack .col-sid-line{font-size:11px;line-height:1.35}
+    #commReviewDrawer .col-customer-stack .col-sid-line{font-size:12px;line-height:1.35}
+    #commReviewDrawer .col-customer-stack .col-nick-link{font-size:11px;font-weight:600;line-height:1.35;color:#64748b}
     #commReviewDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #commReviewDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
-    #commReviewDrawer .col-comm-result{min-width:280px;max-width:420px}
-    #commReviewDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
+    #commReviewDrawer .col-comm-result{min-width:239px;max-width:359px;overflow:hidden}
+    #commReviewDrawer .channel-comm-result-block{max-width:359px;min-width:0}
+    #commReviewDrawer .channel-comm-result-block .alert-task-note-line{
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
     .alert-task-detail-table .task-status-tag--reviewed{
       color:#059669;background:#ecfdf5;border:1px solid #bbf7d0;
+    }
+    .alert-task-detail-table .task-status-tag--rejected{
+      color:#dc2626;background:#fef2f2;border:1px solid #fecaca;
+    }
+    .alert-task-detail-table .task-status-tag--voided{
+      color:#64748b;background:#f1f5f9;border:1px solid #e2e8f0;
     }
     #commFollowEntryModal{z-index:1400}
     .comm-follow-entry-modal .alert-task-follow-dialog{
@@ -2667,24 +2687,35 @@
     #commStatsDetailDrawer .col-phone-stack{display:flex;flex-direction:column;gap:2px;white-space:nowrap}
     #commStatsDetailDrawer .col-phone-line{display:block;line-height:1.35}
     #commStatsDetailDrawer:not(.is-customer-list) .col-action{width:8%;white-space:nowrap}
-    #commStatsDetailDrawer:not(.is-customer-list) .col-comm-result{width:47%;min-width:0;max-width:none}
-    #commStatsDetailDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
+    #commStatsDetailDrawer:not(.is-customer-list) .col-comm-result{width:47%;min-width:0;max-width:none;overflow:hidden}
+    #commStatsDetailDrawer .channel-comm-result-block{max-width:380px;min-width:0}
     #phoneCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #phoneCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #phoneCommDetailDrawer .alert-task-detail-table{min-width:920px}
-    #phoneCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #phoneCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px;overflow:hidden}
     #phoneCommDetailDrawer .phone-comm-duration--short{color:#dc2626;font-weight:700}
+    #phoneCommDetailDrawer .channel-comm-result-block,
+    #phoneCommDetailDrawer .phone-comm-result-block,
+    #waCommDetailDrawer .channel-comm-result-block,
+    #chatCommDetailDrawer .channel-comm-result-block,
+    #commStatsDetailDrawer .channel-comm-result-block{
+      max-width:380px;min-width:0;
+    }
     #waCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #waCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #waCommDetailDrawer .alert-task-detail-table{min-width:940px}
-    #waCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #waCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px;overflow:hidden}
     #waCommDetailDrawer .channel-comm-result-block .alert-task-note-line,
     #phoneCommDetailDrawer .phone-comm-result-block .alert-task-note-line,
-    #chatCommDetailDrawer .channel-comm-result-block .alert-task-note-line{white-space:normal;word-break:break-word}
+    #phoneCommDetailDrawer .channel-comm-result-block .alert-task-note-line,
+    #chatCommDetailDrawer .channel-comm-result-block .alert-task-note-line,
+    #commStatsDetailDrawer .channel-comm-result-block .alert-task-note-line{
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
     #chatCommDetailDrawer .alert-task-detail-table tbody tr{transition:background .15s}
     #chatCommDetailDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     #chatCommDetailDrawer .alert-task-detail-table{min-width:820px}
-    #chatCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px}
+    #chatCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px;overflow:hidden}
     #phoneCommDetailFilters,
     #waCommDetailFilters,
     #chatCommDetailFilters{
@@ -4766,6 +4797,8 @@
           <div class="tab active">工作台 <span>×</span></div>
         </div>
         <div class="view-switch">
+          <span class="view-switch-hint sales-only">当前为<strong>销售视角</strong>：聚焦本人每日 KPI、SOP 执行与客户跟进。</span>
+          <span class="view-switch-hint manager-only">当前为<strong>管理视角</strong>：聚焦团队覆盖率、人均效率、积压任务与经营结果。</span>
           <button type="button" id="btnSalesView" class="view-btn active" onclick="switchView('sales', this)">销售视角</button>
           <button type="button" id="btnManagerView" class="view-btn" onclick="switchView('manager', this)">管理视角</button>
         </div>
@@ -4774,10 +4807,6 @@
 
     <div class="scroll-wrap">
       <div class="workbench">
-        <div class="view-banner">
-          <span class="sales-only">当前为<strong>销售视角</strong>：聚焦本人每日 KPI、SOP 执行与客户跟进。</span>
-          <span class="manager-only">当前为<strong>管理视角</strong>：聚焦团队覆盖率、人均效率、积压任务与经营结果。</span>
-        </div>
 
                 <nav class="wb-tabs" role="tablist" aria-label="工作台分区">
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="goals" href="2. CRM工作台/2. 销售工作台2.0/1. 销售工作台(我的目标).html">我的目标</a>
@@ -6809,8 +6838,10 @@
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="commReviewFilterStatus" aria-label="审核状态" onchange="applyCommReviewFilters()">
                   <option value="">审核状态</option>
+                  <option value="pending">待审核</option>
                   <option value="approved">已审核</option>
-                  <option value="pending">未审核</option>
+                  <option value="rejected">已驳回</option>
+                  <option value="voided">已作废</option>
                 </select>
               </label>
             </div>
@@ -6823,7 +6854,7 @@
               <thead>
                 <tr>
                   <th>销售</th>
-                  <th>客户名称/SID</th>
+                  <th>客户SID/名称</th>
                   <th>提交时间</th>
                   <th>沟通结果</th>
                   <th>沟通截图</th>
@@ -6974,8 +7005,8 @@
             <table class="alert-task-detail-table">
               <thead>
                 <tr>
-                  <th>客户昵称</th>
                   <th>SID</th>
+                  <th>客户昵称</th>
                   <th>沟通时间</th>
                   <th>是否接通</th>
                   <th>沟通时长</th>
@@ -7033,8 +7064,10 @@
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="waCommDetailFilterAudited">
                   <option value="">组长审核</option>
-                  <option value="yes">已审核</option>
-                  <option value="no">未审核</option>
+                  <option value="pending">待审核</option>
+                  <option value="approved">已审核</option>
+                  <option value="rejected">已驳回</option>
+                  <option value="voided">已作废</option>
                 </select>
               </label>
             </div>
@@ -7047,8 +7080,8 @@
             <table class="alert-task-detail-table">
               <thead>
                 <tr>
-                  <th>客户昵称</th>
                   <th>SID</th>
+                  <th>客户昵称</th>
                   <th>沟通时间</th>
                   <th>是否回复</th>
                   <th>组长审核</th>
@@ -7114,8 +7147,8 @@
             <table class="alert-task-detail-table">
               <thead>
                 <tr>
-                  <th>客户昵称</th>
                   <th>SID</th>
+                  <th>客户昵称</th>
                   <th>沟通时间</th>
                   <th>是否回复</th>
                   <th>沟通结果</th>
@@ -12125,8 +12158,8 @@ function renderCommStatsDetailActionHtml(row) {
 function renderCommStatsDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-customer"><div class="col-customer-stack">' +
-    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
     '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
+    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
     '</div></td>' +
     '<td class="col-phone">' + (row.contactPhone || '—') + '</td>' +
     '<td class="col-contact-results">' + row.contactResultsHtml + '</td>' +
@@ -12809,8 +12842,8 @@ function filterPhoneCommDetailRows(rows, filters) {
 
 function renderPhoneCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-connected">' + buildCommStatsContactedHtml(row.connectedLabel) + '</td>' +
     '<td class="col-duration">' + row.durationHtml + '</td>' +
@@ -12978,7 +13011,10 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
     var name = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
     var isReplied = needReplied || (s % 4) !== 0;
-    var isAudited = needAudited || (s % 3) !== 0;
+    var auditStatus = needAudited
+      ? 'approved'
+      : ['pending', 'approved', 'rejected', 'voided'][s % 4];
+    var isAudited = auditStatus === 'approved';
     var isAuditValid = isReplied && isAudited;
     var screenshotMeta = buildChannelCommScreenshotMeta(s, sid, 'wa_chat_');
     rows.push({
@@ -12988,8 +13024,9 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
       isReplied: isReplied,
       isAudited: isAudited,
       isAuditValid: isAuditValid,
+      auditStatus: auditStatus,
       repliedLabel: isReplied ? '是' : '否',
-      auditedLabel: isAudited ? '已审核' : '未审核',
+      auditedLabel: auditStatus === 'approved' ? '已审核' : auditStatus === 'rejected' ? '已驳回' : auditStatus === 'voided' ? '已作废' : '待审核',
       hasScreenshot: screenshotMeta.hasScreenshot,
       screenshotName: screenshotMeta.screenshotName,
       screenshotNames: screenshotMeta.screenshotNames,
@@ -13019,19 +13056,16 @@ function filterWaCommDetailRows(rows, filters) {
     }
     if (filters.replied === 'yes' && !row.isReplied) return false;
     if (filters.replied === 'no' && row.isReplied) return false;
-    if (filters.audited === 'yes' && !row.isAudited) return false;
-    if (filters.audited === 'no' && row.isAudited) return false;
+    if (filters.audited && row.auditStatus !== filters.audited) return false;
     return true;
   });
 }
 
 function renderWaCommDetailRowHtml(row) {
-  var auditedHtml = row.isAudited
-    ? '<span class="task-status-tag task-status-tag--reviewed">已审核</span>'
-    : '<span class="task-status-tag task-status-tag--pending">未审核</span>';
+  var auditedHtml = renderCommReviewStatusHtml(row.auditStatus);
   return '<tr>' +
-    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
     '<td class="col-audited">' + auditedHtml + '</td>' +
@@ -13239,8 +13273,8 @@ function filterChatCommDetailRows(rows, filters) {
 
 function renderChatCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
     '<td class="col-comm-result">' + row.resultHtml + '</td>' +
@@ -13649,7 +13683,7 @@ function buildCommReviewRows() {
       commTime: buildCommReviewSubmitTime(s),
       resultHtml: buildChannelCommResultHtml(s),
       screenshotNames: screenshotNames,
-      auditStatus: s % 3 === 0 ? 'approved' : 'pending'
+      auditStatus: ['pending', 'approved', 'rejected', 'voided'][s % 4]
     });
   }
   return rows;
@@ -13659,7 +13693,13 @@ function renderCommReviewStatusHtml(status) {
   if (status === 'approved') {
     return '<span class="task-status-tag task-status-tag--reviewed">已审核</span>';
   }
-  return '<span class="col-status-empty">--</span>';
+  if (status === 'rejected') {
+    return '<span class="task-status-tag task-status-tag--rejected">已驳回</span>';
+  }
+  if (status === 'voided') {
+    return '<span class="task-status-tag task-status-tag--voided">已作废</span>';
+  }
+  return '<span class="task-status-tag task-status-tag--pending">待审核</span>';
 }
 
 function renderCommReviewScreenshotHtml(row) {
@@ -13671,10 +13711,16 @@ function renderCommReviewScreenshotHtml(row) {
 }
 
 function renderCommReviewActionHtml(row) {
+  if (row.auditStatus === 'pending') {
+    return '<div class="comm-review-action-stack">' +
+      '<a href="#" class="comm-review-action-link" data-action="approve" data-id="' + row.id + '">同意</a>' +
+      '<a href="#" class="comm-review-action-link comm-review-action-link--reject" data-action="reject" data-id="' + row.id + '">驳回</a>' +
+      '</div>';
+  }
   if (row.auditStatus === 'approved') {
     return '<a href="#" class="comm-review-action-link comm-review-action-link--void" data-action="void" data-id="' + row.id + '">作废</a>';
   }
-  return '<a href="#" class="comm-review-action-link" data-action="approve" data-id="' + row.id + '">审核通过</a>';
+  return '<span class="col-status-empty">—</span>';
 }
 
 function renderCommReviewRowHtml(row) {
@@ -13684,8 +13730,8 @@ function renderCommReviewRowHtml(row) {
     '<span class="col-level-line">' + (row.assessLevel || '—') + '</span>' +
     '</div></td>' +
     '<td class="col-customer"><div class="col-customer-stack">' +
-    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
     '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
+    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button>' +
     '</div></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-comm-result">' + row.resultHtml + '</td>' +
@@ -13799,15 +13845,22 @@ function findCommReviewRowById(id) {
 
 function handleCommReviewApprove(id) {
   var row = findCommReviewRowById(id);
-  if (!row || row.auditStatus === 'approved') return;
+  if (!row || row.auditStatus !== 'pending') return;
   row.auditStatus = 'approved';
+  applyCommReviewFilters();
+}
+
+function handleCommReviewReject(id) {
+  var row = findCommReviewRowById(id);
+  if (!row || row.auditStatus !== 'pending') return;
+  row.auditStatus = 'rejected';
   applyCommReviewFilters();
 }
 
 function handleCommReviewVoid(id) {
   var row = findCommReviewRowById(id);
   if (!row || row.auditStatus !== 'approved') return;
-  row.auditStatus = 'pending';
+  row.auditStatus = 'voided';
   applyCommReviewFilters();
 }
 
@@ -13864,6 +13917,7 @@ function initCommReviewDrawer() {
       var action = actionBtn.getAttribute('data-action');
       var id = actionBtn.getAttribute('data-id');
       if (action === 'approve') handleCommReviewApprove(id);
+      else if (action === 'reject') handleCommReviewReject(id);
       else if (action === 'void') handleCommReviewVoid(id);
       else if (action === 'preview-screenshot') handleCommReviewScreenshotPreview(id, actionBtn.getAttribute('data-screenshot'));
       e.preventDefault();
