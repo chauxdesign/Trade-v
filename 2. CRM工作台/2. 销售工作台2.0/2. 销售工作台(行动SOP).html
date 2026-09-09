@@ -6833,7 +6833,7 @@
                 <input type="text" class="my-follow-filter-input" id="commReviewFilterSales" placeholder="销售" aria-label="销售" oninput="applyCommReviewFilters()">
               </label>
               <label class="my-follow-filter-field">
-                <input type="text" class="my-follow-filter-input" id="commReviewFilterCustomer" placeholder="客户名称或 SID" aria-label="客户名称或 SID" oninput="applyCommReviewFilters()">
+                <input type="text" class="my-follow-filter-input" id="commReviewFilterCustomer" placeholder="客户昵称或 SID" aria-label="客户昵称或 SID" oninput="applyCommReviewFilters()">
               </label>
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="commReviewFilterStatus" aria-label="审核状态" onchange="applyCommReviewFilters()">
@@ -6854,7 +6854,7 @@
               <thead>
                 <tr>
                   <th>销售</th>
-                  <th>客户SID/名称</th>
+                  <th>客户SID/昵称</th>
                   <th>提交时间</th>
                   <th>沟通结果</th>
                   <th>沟通截图</th>
@@ -6902,7 +6902,7 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
-                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCommStatsDetailFilters();}">
+                <input type="text" class="my-follow-filter-input" id="commStatsDetailFilterKeyword" placeholder="客户昵称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCommStatsDetailFilters();}">
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--comm-only">
                 <select class="my-follow-filter-select" id="commStatsDetailFilterResult">
@@ -6932,7 +6932,7 @@
             <table class="alert-task-detail-table">
               <thead id="commStatsDetailThead">
                 <tr>
-                  <th class="col-customer">客户名称</th>
+                  <th class="col-customer">客户SID/昵称</th>
                   <th class="col-phone">联系电话</th>
                   <th class="col-contact-results">联系结果</th>
                   <th class="col-contacted">有效沟通</th>
@@ -6979,7 +6979,7 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
-                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPhoneCommDetailFilters();}">
+                <input type="text" class="my-follow-filter-input" id="phoneCommDetailFilterKeyword" placeholder="客户昵称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyPhoneCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="phoneCommDetailFilterConnected">
@@ -7052,7 +7052,7 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
-                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyWaCommDetailFilters();}">
+                <input type="text" class="my-follow-filter-input" id="waCommDetailFilterKeyword" placeholder="客户昵称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyWaCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="waCommDetailFilterReplied">
@@ -7128,7 +7128,7 @@
                 </select>
               </label>
               <label class="my-follow-filter-field my-follow-filter-field--keyword">
-                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterKeyword" placeholder="客户名称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyChatCommDetailFilters();}">
+                <input type="text" class="my-follow-filter-input" id="chatCommDetailFilterKeyword" placeholder="客户昵称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyChatCommDetailFilters();}">
               </label>
               <label class="my-follow-filter-field">
                 <select class="my-follow-filter-select" id="chatCommDetailFilterReplied">
@@ -7213,7 +7213,7 @@
           <label class="comm-follow-label" for="commFollowEntryCustomer"><span class="req">*</span>选择客户：</label>
           <div class="comm-follow-control">
             <div class="comm-follow-customer-combo" id="commFollowCustomerCombo">
-              <input type="text" class="comm-follow-input" id="commFollowEntryCustomer" name="customerQuery" autocomplete="off" placeholder="输入客户名称或 SID" required>
+              <input type="text" class="comm-follow-input" id="commFollowEntryCustomer" name="customerQuery" autocomplete="off" placeholder="输入客户昵称或 SID" required>
               <input type="hidden" id="commFollowEntryCustomerSid" name="customerSid">
               <input type="hidden" id="commFollowEntryCustomerName" name="customerName">
               <div class="comm-follow-customer-suggest" id="commFollowCustomerSuggest" hidden role="listbox" aria-label="客户推荐"></div>
@@ -12212,7 +12212,7 @@ function renderCommStatsDetailTableHeader() {
   if (_commStatsDetailListMode === 'customers') {
     thead.innerHTML =
       '<tr>' +
-      '<th>客户名称</th>' +
+      '<th>客户昵称</th>' +
       '<th>SID</th>' +
       '<th>VIP等级</th>' +
       '<th>最近联系时间</th>' +
@@ -12223,7 +12223,7 @@ function renderCommStatsDetailTableHeader() {
   }
   thead.innerHTML =
     '<tr>' +
-    '<th class="col-customer">客户名称</th>' +
+    '<th class="col-customer">客户SID/昵称</th>' +
     '<th class="col-phone">联系电话</th>' +
     '<th class="col-contact-results">联系结果</th>' +
     '<th class="col-contacted">有效沟通</th>' +
