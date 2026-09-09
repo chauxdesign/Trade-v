@@ -4742,10 +4742,10 @@
                 <div class="gca-reach-trade-tips" id="gca-sprint-extra-tips"></div>
               </div>
 
-              <div class="layer-title">近 9 月完成趋势（对比团队平均） <span class="tag">趋势</span></div>
+              <div class="layer-title">近 9 月完成趋势（对比区域平均） <span class="tag">趋势</span></div>
               <div class="gca-history-panel">
                 <div class="gca-history-head">
-                  <p class="gca-history-hint">切换维度查看近 9 月柱状对比 · 每月两根柱分别为该维度完成值与团队平均，共用真实刻度。</p>
+                  <p class="gca-history-hint">切换维度查看近 9 月柱状对比 · 每月两根柱分别为该维度完成值与区域平均，共用真实刻度。</p>
                   <div class="rank-tabs" id="gca-history-tabs" role="tablist" aria-label="趋势维度切换">
                     <button type="button" class="rank-tab active" role="tab" aria-selected="true" data-dim="active">客户活跃</button>
                     <button type="button" class="rank-tab" role="tab" aria-selected="false" data-dim="net">净入金</button>
@@ -16150,8 +16150,10 @@ function getManagerGoalGcaScopeKey(data) {
 
 function syncManagerGoalGcaMode(data) {
   var inst = GCA_INSTANCES.manager;
-  var preset = GCA_MGR_SCOPE_PRESETS[getManagerGoalGcaScopeKey(data)];
+  var scopeKey = getManagerGoalGcaScopeKey(data);
+  var preset = GCA_MGR_SCOPE_PRESETS[scopeKey];
   var p = preset.prefix;
+  if (scopeKey === 'sales' && data.salesName) p = data.salesName + '的';
   inst.compareName = preset.compareName;
   inst.showCompare = preset.showCompare !== false;
   inst.benchmarkLabel = preset.benchmarkLabel;
@@ -16173,7 +16175,11 @@ function syncManagerGoalGcaMode(data) {
     layerTitle.innerHTML = titleText + ' <span class="tag">趋势</span>';
   }
   var hintEl = document.querySelector('#view-team .gca-history-hint');
-  if (hintEl) hintEl.textContent = preset.hint;
+  if (hintEl) {
+    hintEl.textContent = scopeKey === 'sales' && data.salesName
+      ? '切换维度查看近 9 月柱状对比 · 每月两根柱分别为 ' + data.salesName + ' 的完成值与区域平均，共用真实刻度。'
+      : preset.hint;
+  }
 }
 
 /** 团队/分组汇总视角展示团队完成率，单销售视角仍展示核算完成率档位 */
@@ -16441,13 +16447,13 @@ var GCA_HISTORY_LAST_MONTH_IDX = 7;
 var gcaHistoryMonths = ['10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '本月'];
 var gcaHistoryData = {
   active: { label: '客户活跃', unit: '人', data: [205, 186, 196, 172, 152, 160, 175, 192, 186] },
-  teamActive: { label: '团队平均客户活跃', unit: '人', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  teamActive: { label: '区域平均客户活跃', unit: '人', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
   net: { label: '净入金', unit: '', isMoney: true, data: [54000, 48200, 50500, 44000, 38200, 40200, 44800, 50200, 55040] },
-  teamNet: { label: '团队平均净入金', unit: '', isMoney: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  teamNet: { label: '区域平均净入金', unit: '', isMoney: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
   reach: { label: '沟通覆盖率', unit: '%', isPct: true, data: [72, 64, 68, 58, 50, 53, 60, 67, 74] },
-  teamReach: { label: '团队平均沟通覆盖率', unit: '%', isPct: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
+  teamReach: { label: '区域平均沟通覆盖率', unit: '%', isPct: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
   trade: { label: '交易手数', unit: '手', data: [2500, 2230, 2360, 1940, 1680, 1790, 2070, 2330, 2860] },
-  teamTrade: { label: '团队平均交易手数', unit: '手', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] }
+  teamTrade: { label: '区域平均交易手数', unit: '手', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] }
 };
 var gcaHistoryDataMgr = {
   active: { label: '团队客户活跃', unit: '人', data: [1825, 1685, 1765, 1524, 1384, 1454, 1625, 1926, 2054] },
@@ -16522,7 +16528,7 @@ function gcaRebuildTeamHistoryData() {
     { me: 'net', team: 'teamNet', key: 'net', isPct: false },
     { me: 'reach', team: 'teamReach', key: 'reach', isPct: true },
     { me: 'trade', team: 'teamTrade', key: 'trade', isPct: false }
-  ], GCA_TEAM_GAP_RATIOS);
+  ], GCA_REGION_GAP_RATIOS);
 }
 
 function gcaRebuildRegionHistoryData() {
@@ -16548,7 +16554,7 @@ var GCA_INSTANCES = {
     blockId: 'goal-completion-analysis',
     historyStore: gcaHistoryData,
     historyDimKey: 'sales',
-    compareName: '团队平均',
+    compareName: '区域平均',
     benchmarkLabel: '团队上月平均',
     rewardName: '绩效预估奖励',
     activeName: '客户活跃',
