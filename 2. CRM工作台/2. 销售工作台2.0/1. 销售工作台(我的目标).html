@@ -4949,7 +4949,7 @@
                 <div class="gca-reach-trade-tips" id="gca-sprint-extra-tips-mgr"></div>
               </div>
 
-              <div class="layer-title">近 9 月完成趋势（对比区域平均） <span class="tag">趋势</span></div>
+              <div class="layer-title" id="gca-history-layer-title-mgr">近 9 月完成趋势（对比区域平均） <span class="tag">趋势</span></div>
               <div class="gca-history-panel">
                 <div class="gca-history-head">
                   <p class="gca-history-hint">切换维度查看近 9 月柱状对比 · 每月两根柱分别为团队完成值与区域平均，共用真实刻度。</p>
@@ -5319,7 +5319,7 @@
                   <span class="perf-icon" aria-hidden="true">👥</span>
                   <div class="perf-body">
                     <div class="perf-label">团队交易客户数</div>
-                    <div class="perf-desc">本月累计团队交易开仓客户数</div>
+                    <div class="perf-desc">本月累计团队实盘交易开仓客户数</div>
                     <div class="perf-value">312 人</div>
                   </div>
                 </div>
@@ -15482,7 +15482,7 @@ var MANAGER_GOAL_TEAM_SIDEBAR = {
   perfFootnote: '基于团队 KPI、积压任务与历史经营数据预估。',
   perfItems: [
     { label: '团队净入金总额', desc: '本月累计团队净入金', value: '$440,320' },
-    { label: '团队交易客户数', desc: '本月累计团队交易开仓客户数', value: '312 人' },
+    { label: '团队交易客户数', desc: '本月累计团队实盘交易开仓客户数', value: '312 人' },
     {
       label: '团队手续费总额',
       desc: '本月累计团队手续费',
@@ -15994,8 +15994,26 @@ function applyManagerGoalSidebar(data) {
   applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb);
 }
 
+var GCA_MGR_PANEL_TITLES = {
+  team: ['团队客户活跃', '团队净入金', '团队沟通覆盖率', '团队交易手数'],
+  sales: ['客户活跃', '净入金', '沟通覆盖率', '交易手数']
+};
+
+function syncManagerGoalGcaHistoryLabels(isTeam) {
+  var titles = isTeam ? GCA_MGR_PANEL_TITLES.team : GCA_MGR_PANEL_TITLES.sales;
+  GCA_MGR_HISTORY_PANELS.forEach(function (panel, i) {
+    panel.title = titles[i];
+  });
+  var layerTitle = document.getElementById('gca-history-layer-title-mgr');
+  if (layerTitle) {
+    layerTitle.innerHTML = '近 9 月完成趋势（对比' + (isTeam ? '区域平均' : '团队平均') +
+      '） <span class="tag">趋势</span>';
+  }
+}
+
 function syncManagerGoalGcaMode(isTeam) {
   var inst = GCA_INSTANCES.manager;
+  syncManagerGoalGcaHistoryLabels(isTeam);
   if (isTeam) {
     inst.compareName = '区域平均';
     inst.benchmarkLabel = '区域上月平均';
@@ -16307,6 +16325,31 @@ var gcaHistoryDataMgr = {
   trade: { label: '团队交易手数', unit: '手', data: [15200, 14100, 14800, 12600, 11200, 11800, 13500, 16400, 18200] },
   regionTrade: { label: '区域平均交易手数', unit: '手', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] }
 };
+var GCA_MGR_HISTORY_KEYS = ['active', 'net', 'reach', 'trade'];
+/** 管理视角历史月份相对本月的形态比例，用于按所选范围（团队/分组/单个销售）等比缩放 */
+var GCA_MGR_HISTORY_SHAPE = (function () {
+  var shape = {};
+  GCA_MGR_HISTORY_KEYS.forEach(function (key) {
+    var data = gcaHistoryDataMgr[key].data;
+    var base = data[GCA_HISTORY_CURRENT_IDX] || 1;
+    shape[key] = data.map(function (v) { return v / base; });
+  });
+  return shape;
+})();
+
+/** 以本月实际值为基准重算前 8 个月，使趋势随管理视角所选范围联动 */
+function gcaRescaleMgrHistory() {
+  GCA_MGR_HISTORY_KEYS.forEach(function (key) {
+    var series = gcaHistoryDataMgr[key];
+    var current = series.data[GCA_HISTORY_CURRENT_IDX] || 0;
+    var shape = GCA_MGR_HISTORY_SHAPE[key];
+    for (var i = 0; i < GCA_HISTORY_CURRENT_IDX; i++) {
+      var v = Math.round(current * shape[i]);
+      series.data[i] = series.isPct ? Math.max(0, Math.min(100, v)) : v;
+    }
+  });
+}
+
 /** 团队相对个人的差额比例，逐月在 ±30%~±50% 之间波动 */
 var GCA_TEAM_GAP_RATIOS = {
   active: [0.45, -0.35, 0.40, -0.42, -0.50, -0.33, 0.38, -0.45, -0.38],
@@ -17060,8 +17103,12 @@ function initGoalCompletionAnalysis(mode) {
   store.net.data[GCA_HISTORY_CURRENT_IDX] = metrics.net.month;
   store.reach.data[GCA_HISTORY_CURRENT_IDX] = Math.round(metrics.reach.coverage);
   store.trade.data[GCA_HISTORY_CURRENT_IDX] = metrics.trade.month;
-  if (instance.historyDimKey === 'manager') gcaRebuildRegionHistoryData();
-  else gcaRebuildTeamHistoryData();
+  if (instance.historyDimKey === 'manager') {
+    gcaRescaleMgrHistory();
+    gcaRebuildRegionHistoryData();
+  } else {
+    gcaRebuildTeamHistoryData();
+  }
   renderGcaForecastGrid(metrics, instance);
   renderGcaSprintSection(metrics, instance);
   initGcaHistoryTabs(instance);
