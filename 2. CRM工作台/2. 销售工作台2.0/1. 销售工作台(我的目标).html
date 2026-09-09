@@ -4949,10 +4949,10 @@
                 <div class="gca-reach-trade-tips" id="gca-sprint-extra-tips-mgr"></div>
               </div>
 
-              <div class="layer-title" id="gca-history-layer-title-mgr">近 9 月完成趋势（对比区域平均） <span class="tag">趋势</span></div>
+              <div class="layer-title" id="gca-history-layer-title-mgr">近 9 月完成趋势 <span class="tag">趋势</span></div>
               <div class="gca-history-panel">
                 <div class="gca-history-head">
-                  <p class="gca-history-hint">切换维度查看近 9 月柱状对比 · 每月两根柱分别为团队完成值与区域平均，共用真实刻度。</p>
+                  <p class="gca-history-hint">切换维度查看近 9 月完成趋势 · 每月一根柱为团队完成值。</p>
                   <div class="rank-tabs" id="gca-history-tabs-mgr" role="tablist" aria-label="趋势维度切换">
                     <button type="button" class="rank-tab active" role="tab" aria-selected="true" data-dim="active">客户活跃</button>
                     <button type="button" class="rank-tab" role="tab" aria-selected="false" data-dim="net">净入金</button>
@@ -16117,26 +16117,29 @@ var GCA_MGR_SCOPE_PRESETS = {
   team: {
     prefix: '团队',
     compareName: '区域平均',
+    showCompare: false,
     benchmarkLabel: '区域上月平均',
     rewardName: '团队绩效预估奖励',
     sprintTradeLeadLabel: '团队人均',
-    hint: '切换维度查看近 9 月柱状对比 · 每月两根柱分别为团队完成值与区域平均，共用真实刻度。'
+    hint: '切换维度查看近 9 月完成趋势 · 每月一根柱为团队完成值。'
   },
   group: {
     prefix: '本组',
-    compareName: '团队平均',
-    benchmarkLabel: '团队上月平均',
+    compareName: '区域平均',
+    showCompare: true,
+    benchmarkLabel: '区域上月平均',
     rewardName: '本组绩效预估奖励',
     sprintTradeLeadLabel: '本组人均',
-    hint: '切换维度查看近 9 月柱状对比 · 每月两根柱分别为本组完成值与团队平均，共用真实刻度。'
+    hint: '切换维度查看近 9 月柱状对比 · 每月两根柱分别为本组完成值与区域平均，共用真实刻度。'
   },
   sales: {
     prefix: '',
-    compareName: '团队平均',
-    benchmarkLabel: '团队上月平均',
+    compareName: '区域平均',
+    showCompare: true,
+    benchmarkLabel: '区域上月平均',
     rewardName: '绩效预估奖励',
     sprintTradeLeadLabel: '团队人均',
-    hint: '切换维度查看近 9 月柱状对比 · 每月两根柱分别为该销售完成值与团队平均，共用真实刻度。'
+    hint: '切换维度查看近 9 月柱状对比 · 每月两根柱分别为该销售完成值与区域平均，共用真实刻度。'
   }
 };
 
@@ -16150,6 +16153,7 @@ function syncManagerGoalGcaMode(data) {
   var preset = GCA_MGR_SCOPE_PRESETS[getManagerGoalGcaScopeKey(data)];
   var p = preset.prefix;
   inst.compareName = preset.compareName;
+  inst.showCompare = preset.showCompare !== false;
   inst.benchmarkLabel = preset.benchmarkLabel;
   inst.rewardName = preset.rewardName;
   inst.activeName = p + '客户活跃';
@@ -16163,7 +16167,10 @@ function syncManagerGoalGcaMode(data) {
   });
   var layerTitle = document.getElementById('gca-history-layer-title-mgr');
   if (layerTitle) {
-    layerTitle.innerHTML = '近 9 月完成趋势（对比' + preset.compareName + '） <span class="tag">趋势</span>';
+    var titleText = inst.showCompare
+      ? '近 9 月完成趋势（对比' + preset.compareName + '）'
+      : '近 9 月完成趋势';
+    layerTitle.innerHTML = titleText + ' <span class="tag">趋势</span>';
   }
   var hintEl = document.querySelector('#view-team .gca-history-hint');
   if (hintEl) hintEl.textContent = preset.hint;
@@ -16558,6 +16565,7 @@ var GCA_INSTANCES = {
     historyStore: gcaHistoryDataMgr,
     historyDimKey: 'manager',
     compareName: '区域平均',
+    showCompare: false,
     benchmarkLabel: '区域上月平均',
     rewardName: '团队绩效预估奖励',
     activeName: '团队客户活跃',
@@ -17069,18 +17077,64 @@ function buildGcaHistoryOption(dimKey, instance) {
   var panels = instance.historyDimKey === 'manager' ? GCA_MGR_HISTORY_PANELS : GCA_HISTORY_PANELS;
   var store = instance.historyStore;
   var compareName = instance.compareName;
+  var showCompare = instance.showCompare !== false;
   var panel = getGcaHistoryPanel(dimKey, panels);
   var meSeries = store[panel.me];
   var teamSeries = store[panel.team];
-  var range = gcaHistoryGroupRange([panel.me, panel.team], store);
+  var range = gcaHistoryGroupRange(showCompare ? [panel.me, panel.team] : [panel.me], store);
   var months = gcaHistoryMonths.slice();
   var meColor = panel.color;
   var teamColor = gcaHistoryTeamBarColor(panel);
   var meData = (meSeries.data || []).slice();
   var teamData = (teamSeries.data || []).slice();
   var momPercents = gcaCalcMomPercents(meData);
+  var series = [
+    {
+      id: panel.me,
+      name: panel.title,
+      type: 'bar',
+      barMaxWidth: showCompare ? 20 : 28,
+      barGap: '12%',
+      itemStyle: { color: meColor, borderRadius: [4, 4, 0, 0] },
+      label: {
+        show: true,
+        position: 'top',
+        distance: 3,
+        fontSize: 9,
+        fontWeight: 600,
+        color: '#475569',
+        formatter: function (p) {
+          return gcaFormatHistoryValue(p.value, meSeries);
+        }
+      },
+      data: meData
+    }
+  ];
+  if (showCompare) {
+    series.push({
+      id: panel.team,
+      name: compareName,
+      type: 'bar',
+      barMaxWidth: 20,
+      itemStyle: { color: teamColor, borderRadius: [4, 4, 0, 0] },
+      label: {
+        show: true,
+        position: 'top',
+        distance: 3,
+        fontSize: 9,
+        fontWeight: 600,
+        color: '#94a3b8',
+        formatter: function (p) {
+          return gcaFormatHistoryValue(p.value, teamSeries);
+        }
+      },
+      data: teamData
+    });
+  }
+  series.push(gcaBuildTrendCustomSeries(0, meData, false, GCA_TREND_LINE_COLOR));
+  if (showCompare) series.push(gcaBuildTrendCustomSeries(1, teamData, true, GCA_TREND_TEAM_LINE_COLOR));
   return {
-    color: [meColor, teamColor],
+    color: showCompare ? [meColor, teamColor] : [meColor],
     tooltip: {
       trigger: 'axis',
       axisPointer: { type: 'shadow' },
@@ -17104,7 +17158,7 @@ function buildGcaHistoryOption(dimKey, instance) {
     legend: {
       bottom: 0,
       left: 'center',
-      data: [panel.title, compareName],
+      data: showCompare ? [panel.title, compareName] : [panel.title],
       itemWidth: 10,
       itemHeight: 10,
       itemGap: 14,
@@ -17132,49 +17186,7 @@ function buildGcaHistoryOption(dimKey, instance) {
       },
       splitLine: { lineStyle: { color: '#eef2f7', type: 'dashed' } }
     },
-    series: [
-      {
-        id: panel.me,
-        name: panel.title,
-        type: 'bar',
-        barMaxWidth: 20,
-        barGap: '12%',
-        itemStyle: { color: meColor, borderRadius: [4, 4, 0, 0] },
-        label: {
-          show: true,
-          position: 'top',
-          distance: 3,
-          fontSize: 9,
-          fontWeight: 600,
-          color: '#475569',
-          formatter: function (p) {
-            return gcaFormatHistoryValue(p.value, meSeries);
-          }
-        },
-        data: meData
-      },
-      {
-        id: panel.team,
-        name: compareName,
-        type: 'bar',
-        barMaxWidth: 20,
-        itemStyle: { color: teamColor, borderRadius: [4, 4, 0, 0] },
-        label: {
-          show: true,
-          position: 'top',
-          distance: 3,
-          fontSize: 9,
-          fontWeight: 600,
-          color: '#94a3b8',
-          formatter: function (p) {
-            return gcaFormatHistoryValue(p.value, teamSeries);
-          }
-        },
-        data: teamData
-      },
-      gcaBuildTrendCustomSeries(0, meData, false, GCA_TREND_LINE_COLOR),
-      gcaBuildTrendCustomSeries(1, teamData, true, GCA_TREND_TEAM_LINE_COLOR)
-    ]
+    series: series
   };
 }
 
