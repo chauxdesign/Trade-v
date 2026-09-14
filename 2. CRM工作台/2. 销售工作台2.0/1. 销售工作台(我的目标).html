@@ -816,19 +816,19 @@
     }
     .cust-reach-bar-fill{
       height:100%;border-radius:4px;
-      background:linear-gradient(90deg,#f472b6,#db2777);
+      background:linear-gradient(90deg,#34d399,#10b981);
       transition:width .35s ease;
     }
-    .cust-reach-bar-fill.mid{background:linear-gradient(90deg,#fcd34d,#f59e0b)}
-    .cust-reach-bar-fill.low{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
+    .cust-reach-bar-fill.mid,
+    .cust-reach-bar-fill.low,
     .cust-reach-bar-fill.high{background:linear-gradient(90deg,#34d399,#10b981)}
     .cust-reach-progress-foot{
       display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;flex-wrap:wrap;
     }
-    .cust-reach-pct{font-size:10px;font-weight:700;color:#db2777}
+    .cust-reach-pct{font-size:10px;font-weight:700;color:#2563eb}
     .cust-reach-coverage-badge{
       font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;
-      background:#fdf2f8;color:#db2777;border:1px solid #fbcfe8;
+      background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;
     }
     .goal-card--convert .goal-badge{background:linear-gradient(135deg,#db2777,#f472b6)}
     .goal-card--risk{grid-column:1/-1}
@@ -913,13 +913,13 @@
     }
     .cust-active-bar-fill{
       height:100%;border-radius:4px;
-      background:linear-gradient(90deg,#fcd34d,#f59e0b);
+      background:linear-gradient(90deg,#93c5fd,#3b82f6);
       transition:width .35s ease;
     }
-    .cust-active-bar-fill.mid{background:linear-gradient(90deg,#fcd34d,#f59e0b)}
-    .cust-active-bar-fill.low{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
-    .cust-active-bar-fill.high{background:linear-gradient(90deg,#34d399,#10b981)}
-    .cust-active-bar-fill.zero{background:linear-gradient(90deg,#cbd5e1,#94a3b8)}
+    .cust-active-bar-fill.mid,
+    .cust-active-bar-fill.low,
+    .cust-active-bar-fill.high,
+    .cust-active-bar-fill.zero{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
     .cust-active-progress-foot{
       display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;flex-wrap:wrap;
     }
@@ -927,12 +927,14 @@
     .cust-active-tier-badge{
       font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;margin-left:auto;
     }
-    .cust-active-tier-badge.tier--0{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
-    .cust-active-tier-badge.tier--40{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
-    .cust-active-tier-badge.tier--60{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
-    .cust-active-tier-badge.tier--80{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
-    .cust-active-tier-badge.tier--100{background:#f0fdf4;color:#047857;border:1px solid #86efac}
-    .cust-active-tier-badge.tier--over{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff}
+    .cust-active-tier-badge.tier--0,
+    .cust-active-tier-badge.tier--40,
+    .cust-active-tier-badge.tier--60,
+    .cust-active-tier-badge.tier--80,
+    .cust-active-tier-badge.tier--100,
+    .cust-active-tier-badge.tier--over,
+    .cust-active-tier-badge.tier--pass{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
+    .cust-active-tier-badge.tier--fail{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
     .cust-active-tier-badge.tier--time{background:#f5f5ff;color:#4f46e5;border:1px solid #ddd6fe}
     .cust-active-tier-desc{
       font-size:9px;color:#64748b;line-height:1.45;margin-top:6px;padding-top:6px;
@@ -972,13 +974,13 @@
     }
     .net-deposit-bar-fill{
       height:100%;border-radius:4px;
-      background:linear-gradient(90deg,#fcd34d,#f59e0b);
+      background:linear-gradient(90deg,#93c5fd,#3b82f6);
       transition:width .35s ease;
     }
-    .net-deposit-bar-fill.mid{background:linear-gradient(90deg,#fcd34d,#f59e0b)}
-    .net-deposit-bar-fill.low{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
-    .net-deposit-bar-fill.high{background:linear-gradient(90deg,#34d399,#10b981)}
-    .net-deposit-bar-fill.zero{background:linear-gradient(90deg,#cbd5e1,#94a3b8)}
+    .net-deposit-bar-fill.mid,
+    .net-deposit-bar-fill.low,
+    .net-deposit-bar-fill.high,
+    .net-deposit-bar-fill.zero{background:linear-gradient(90deg,#93c5fd,#3b82f6)}
     .net-deposit-progress-foot{
       display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px;flex-wrap:wrap;
     }
@@ -986,12 +988,14 @@
     .net-deposit-tier-badge{
       font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;line-height:1.4;margin-left:auto;
     }
-    .net-deposit-tier-badge.tier--0{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
-    .net-deposit-tier-badge.tier--40{background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe}
-    .net-deposit-tier-badge.tier--60{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
-    .net-deposit-tier-badge.tier--80{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
-    .net-deposit-tier-badge.tier--100{background:#f0fdf4;color:#047857;border:1px solid #86efac}
-    .net-deposit-tier-badge.tier--over{background:#fdf4ff;color:#7c3aed;border:1px solid #e9d5ff}
+    .net-deposit-tier-badge.tier--0,
+    .net-deposit-tier-badge.tier--40,
+    .net-deposit-tier-badge.tier--60,
+    .net-deposit-tier-badge.tier--80,
+    .net-deposit-tier-badge.tier--100,
+    .net-deposit-tier-badge.tier--over,
+    .net-deposit-tier-badge.tier--pass{background:#ecfdf5;color:#059669;border:1px solid #bbf7d0}
+    .net-deposit-tier-badge.tier--fail{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
     .net-deposit-tier-badge.tier--time{background:#f5f5ff;color:#4f46e5;border:1px solid #ddd6fe}
     .net-deposit-tier-desc{
       font-size:9px;color:#64748b;line-height:1.45;margin-top:6px;padding-top:6px;
@@ -4576,27 +4580,27 @@
             <div class="kpi-summary">
               <div class="kpi-card">
                 <div class="label">我的客户数</div>
-                <div class="value">248</div>
+                <div class="value">480</div>
               </div>
               <div class="kpi-card">
                 <div class="label">充值客户数</div>
-                <div class="value">12</div>
+                <div class="value">23</div>
               </div>
               <div class="kpi-card">
                 <div class="label">交易客户数</div>
-                <div class="value">37</div>
+                <div class="value">72</div>
               </div>
               <div class="kpi-card">
                 <div class="label">交易手数 / 平均</div>
-                <div class="value kpi-value-split"><span>2,860</span><span class="kpi-value-sep">/</span><span class="kpi-value-sub">77.3</span></div>
+                <div class="value kpi-value-split"><span>5,535</span><span class="kpi-value-sep">/</span><span class="kpi-value-sub">76.9</span></div>
               </div>
               <div class="kpi-card">
                 <div class="label">本月联系 / 覆盖率</div>
-                <div class="value kpi-value-split"><span>183</span><span class="kpi-value-sep">/</span><span class="kpi-value-sub">74%</span></div>
+                <div class="value kpi-value-split"><span>355</span><span class="kpi-value-sep">/</span><span class="kpi-value-sub">74%</span></div>
               </div>
               <div class="kpi-card risk">
                 <div class="label">本月高风险客户数</div>
-                <div class="value">6</div>
+                <div class="value">12</div>
               </div>
             </div>
 
@@ -4604,21 +4608,21 @@
               <div class="detail-section-title">绩效明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
               <div id="detail-personal">
               <div class="goal-cards">
-                <article class="goal-card goal-card--net-deposit" data-net-deposit-target="64000">
+                <article class="goal-card goal-card--net-deposit" data-net-deposit-target="123870">
                   <div class="goal-card-head">
                     <span class="goal-badge">净</span>
                     <div><h3>净入金</h3><p class="goal-q">昨日、本周、本月净入金及当月 KPI 完成进度与核算档位</p></div>
                   </div>
                   <div class="net-deposit-panel">
                     <div class="net-deposit-counts">
-                      <div class="metric-item highlight"><span>昨日</span><strong data-net-field="today">$2,580</strong><span class="net-deposit-unit">净入金</span></div>
-                      <div class="metric-item"><span>本周</span><strong data-net-field="week">$14,200</strong><span class="net-deposit-unit">净入金</span></div>
-                      <div class="metric-item"><span>本月</span><strong data-net-field="month">$55,040</strong><span class="net-deposit-unit">净入金</span></div>
+                      <div class="metric-item highlight"><span>昨日</span><strong data-net-field="today">$4,990</strong><span class="net-deposit-unit">净入金</span></div>
+                      <div class="metric-item"><span>本周</span><strong data-net-field="week">$27,480</strong><span class="net-deposit-unit">净入金</span></div>
+                      <div class="metric-item"><span>本月</span><strong data-net-field="month">$106,530</strong><span class="net-deposit-unit">净入金</span></div>
                     </div>
-                    <div class="net-deposit-progress-overall" data-net-deposit-month="55040">
+                    <div class="net-deposit-progress-overall" data-net-deposit-month="106530">
                       <div class="net-deposit-progress-head">
                         <span>当月 KPI 完成进度</span>
-                        <strong class="net-deposit-progress-amount">$55,040<em> / $64,000</em></strong>
+                        <strong class="net-deposit-progress-amount">$106,530<em> / $123,870</em></strong>
                       </div>
                       <div class="net-deposit-bar"><div class="net-deposit-bar-fill high" style="width:86%"></div></div>
                       <div class="net-deposit-progress-foot">
@@ -4629,21 +4633,21 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--cust-active" data-cust-active-target="400">
+                <article class="goal-card goal-card--cust-active" data-cust-active-target="770">
                   <div class="goal-card-head">
                     <span class="goal-badge">跃</span>
                     <div><h3>充值活跃</h3><p class="goal-q">昨日、本周、本月充值活跃客户人数及当月 KPI 完成进度与核算档位<span class="goal-q-help" tabindex="0" data-tip="印尼地区充值活跃规则说明：&#10;分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户" aria-label="印尼地区充值活跃规则说明：分配客户之后，只要客户沟通已回复或者电话已接通，同时在当月客户完成充值，算为当月充值活跃客户">?</span></p></div>
                   </div>
                   <div class="cust-active-panel">
                     <div class="cust-active-counts">
-                      <div class="metric-item highlight"><span>昨日</span><strong>37</strong><span class="cust-active-unit">活跃人数</span></div>
-                      <div class="metric-item"><span>本周</span><strong>112</strong><span class="cust-active-unit">活跃人数</span></div>
-                      <div class="metric-item"><span>本月</span><strong>186</strong><span class="cust-active-unit">活跃人数</span></div>
+                      <div class="metric-item highlight"><span>昨日</span><strong>72</strong><span class="cust-active-unit">活跃人数</span></div>
+                      <div class="metric-item"><span>本周</span><strong>217</strong><span class="cust-active-unit">活跃人数</span></div>
+                      <div class="metric-item"><span>本月</span><strong>360</strong><span class="cust-active-unit">活跃人数</span></div>
                     </div>
-                    <div class="cust-active-progress-overall" data-cust-active-month="186">
+                    <div class="cust-active-progress-overall" data-cust-active-month="360">
                       <div class="cust-active-progress-head">
                         <span>当月 KPI 完成进度</span>
-                        <strong class="cust-active-progress-amount">186<em> / 400</em></strong>
+                        <strong class="cust-active-progress-amount">360<em> / 770</em></strong>
                       </div>
                       <div class="cust-active-bar"><div class="cust-active-bar-fill mid"></div></div>
                       <div class="cust-active-progress-foot">
@@ -4654,22 +4658,22 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--reach" data-reach-connected="136" data-reach-contacts="183">
+                <article class="goal-card goal-card--reach" data-reach-connected="264" data-reach-contacts="355">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
                     <div><h3>客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
-                      <div class="metric-item highlight"><span>联系数</span><strong>183</strong><span class="cust-reach-unit">人</span></div>
-                      <div class="metric-item"><span>CR回复</span><strong>136</strong><span class="cust-reach-unit">人</span></div>
-                      <div class="metric-item"><span>Call接通</span><strong>42</strong><span class="cust-reach-unit">人</span></div>
-                      <div class="metric-item"><span>Call&gt;60s</span><strong>28</strong><span class="cust-reach-unit">通</span></div>
+                      <div class="metric-item highlight"><span>联系数</span><strong>355</strong><span class="cust-reach-unit">人</span></div>
+                      <div class="metric-item"><span>CR回复</span><strong>264</strong><span class="cust-reach-unit">人</span></div>
+                      <div class="metric-item"><span>Call接通</span><strong>81</strong><span class="cust-reach-unit">人</span></div>
+                      <div class="metric-item"><span>Call&gt;60s</span><strong>54</strong><span class="cust-reach-unit">通</span></div>
                     </div>
                     <div class="cust-reach-progress-overall">
                       <div class="cust-reach-progress-head">
                         <span>客户沟通覆盖率</span>
-                        <strong class="cust-reach-progress-amount">136<em> / 183</em></strong>
+                        <strong class="cust-reach-progress-amount">264<em> / 355</em></strong>
                       </div>
                       <div class="cust-reach-bar"><div class="cust-reach-bar-fill high"></div></div>
                       <div class="cust-reach-progress-foot">
@@ -4686,21 +4690,21 @@
                   </div>
                   <div class="trade-lots-panel">
                     <div class="trade-lots-counts">
-                      <div class="metric-item highlight"><span>昨日</span><strong data-trade-field="today">86</strong><span class="trade-lots-unit">手</span></div>
-                      <div class="metric-item"><span>本周</span><strong data-trade-field="week">512</strong><span class="trade-lots-unit">手</span></div>
-                      <div class="metric-item"><span>本月</span><strong data-trade-field="month">2,860</strong><span class="trade-lots-unit">手</span></div>
+                      <div class="metric-item highlight"><span>昨日</span><strong data-trade-field="today">166</strong><span class="trade-lots-unit">手</span></div>
+                      <div class="metric-item"><span>本周</span><strong data-trade-field="week">991</strong><span class="trade-lots-unit">手</span></div>
+                      <div class="metric-item"><span>本月</span><strong data-trade-field="month">5,535</strong><span class="trade-lots-unit">手</span></div>
                     </div>
-                    <div class="trade-lots-second-row" data-trade-lots-month="2860" data-trade-lots-unit-price="0.3" data-team-month-lots="28957" data-team-members="17" data-personal-month="2860">
+                    <div class="trade-lots-second-row" data-trade-lots-month="5535" data-trade-lots-unit-price="0.3" data-team-month-lots="28957" data-team-members="17" data-personal-month="5535">
                       <div class="trade-lots-mini trade-lots-mini--team">
                         <div class="trade-lots-mini-inner">
-                          <div class="trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--ahead">本月超越团队平均手数 <strong class="trade-lots-avg-diff-val">1,157</strong><span class="trade-lots-unit-once">手</span></div>
+                          <div class="trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--ahead">本月超越团队平均手数 <strong class="trade-lots-avg-diff-val">3,832</strong><span class="trade-lots-unit-once">手</span></div>
                           <div class="trade-lots-mini-foot">本月团队平均 <strong class="trade-lots-team-avg-val">1,703</strong><span class="trade-lots-unit-once">手</span></div>
                         </div>
                       </div>
                       <div class="trade-lots-mini trade-lots-mini--commission">
                         <div class="trade-lots-mini-inner">
-                          <div class="trade-lots-mini-label">基础提成核算金额：<strong class="trade-lots-commission-amount">$858</strong></div>
-                          <div class="trade-lots-mini-sub"><span class="trade-lots-calc-prefix"></span>按 <strong class="trade-lots-month-val">2,860</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
+                          <div class="trade-lots-mini-label">基础提成核算金额：<strong class="trade-lots-commission-amount">$1,661</strong></div>
+                          <div class="trade-lots-mini-sub"><span class="trade-lots-calc-prefix"></span>按 <strong class="trade-lots-month-val">5,535</strong> 手 × 单价 <strong class="trade-lots-unit-price-val">$0.3</strong>/手 核算</div>
                         </div>
                       </div>
                     </div>
@@ -4712,13 +4716,13 @@
                     <div><h3>风险</h3><p class="goal-q">需要关注与处置的客户风险有哪些？（数据为7日内数据）</p></div>
                   </div>
                   <div class="metric-grid">
-                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('deposit-no-trade')"><span>充值无交易</span><strong>5</strong></button>
-                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('trade-no-deposit')"><span>交易无充值</span><strong>4</strong></button>
-                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('cancelled')"><span>注销客户</span><strong>3</strong></button>
-                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('margin-call')"><span>穿仓客户</span><strong>1</strong></button>
-                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('withdraw-alert')"><span>提现预警客户</span><strong>2</strong></button>
-                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('high-risk')"><span>高风险客户</span><strong>4</strong></button>
-                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('uninstalled')"><span>卸载客户</span><strong>3</strong></button>
+                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('deposit-no-trade')"><span>充值无交易</span><strong>10</strong></button>
+                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('trade-no-deposit')"><span>交易无充值</span><strong>8</strong></button>
+                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('cancelled')"><span>注销客户</span><strong>6</strong></button>
+                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('margin-call')"><span>穿仓客户</span><strong>2</strong></button>
+                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('withdraw-alert')"><span>提现预警客户</span><strong>4</strong></button>
+                    <button type="button" class="metric-item metric-item--link highlight" onclick="openGoalRiskDrawer('high-risk')"><span>高风险客户</span><strong>8</strong></button>
+                    <button type="button" class="metric-item metric-item--link" onclick="openGoalRiskDrawer('uninstalled')"><span>卸载客户</span><strong>6</strong></button>
                   </div>
                 </article>
               </div>
@@ -4727,7 +4731,7 @@
 
             <div class="dimension-block dimension-block--completion goal-completion-block sales-only" id="goal-completion-analysis"
               data-day-of-month="20" data-days-in-month="30"
-              data-reach-contacts-target="248">
+              data-reach-contacts-target="480">
               <div class="gca-pending-wrap" aria-label="本期暂不开发">
                 <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
                 <h2>目标完成分析</h2>
@@ -4764,15 +4768,15 @@
               <div class="ai-suggest-list">
                 <div class="ai-item">
                   <span class="ai-icon">AI</span>
-                  <span>联系覆盖率 <strong>74%</strong>，仍有 <strong>22</strong> 名昨日分配客户未联系，建议优先触达高意向与待实名客户。</span>
+                  <span>联系覆盖率 <strong>74%</strong>，仍有 <strong>43</strong> 名昨日分配客户未联系，建议优先触达高意向与待实名客户。</span>
                 </div>
                 <div class="ai-item">
                   <span class="ai-icon">AI</span>
-                  <span>有 <strong>6</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。</span>
+                  <span>有 <strong>12</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。</span>
                 </div>
                 <div class="ai-item">
                   <span class="ai-icon">AI</span>
-                  <span>本月活跃客户 <strong>186</strong> 人，KPI 完成 <strong>47%</strong>（目标 400 人），建议加大本周唤醒触达以冲刺月度活跃目标。</span>
+                  <span>本月活跃客户 <strong>360</strong> 人，KPI 完成 <strong>47%</strong>（目标 770 人），建议加大本周唤醒触达以冲刺月度活跃目标。</span>
                 </div>
               </div>
             </div>
@@ -5001,7 +5005,7 @@
                   <div class="perf-body">
                     <div class="perf-label">净入金总额</div>
                     <div class="perf-desc">本月累计净入金</div>
-                    <div class="perf-value">$182,000</div>
+                    <div class="perf-value">$352,258</div>
                   </div>
                 </div>
                 <div class="perf-item">
@@ -5009,7 +5013,7 @@
                   <div class="perf-body">
                     <div class="perf-label">交易客户数</div>
                     <div class="perf-desc">本月累计实盘交易开仓客户数</div>
-                    <div class="perf-value">12 人</div>
+                    <div class="perf-value">72 人</div>
                   </div>
                 </div>
                 <div class="perf-item">
@@ -5017,7 +5021,7 @@
                   <div class="perf-body">
                     <div class="perf-label">手续费总额</div>
                     <div class="perf-desc">本月累计手续费</div>
-                    <div class="perf-value">$18,600</div>
+                    <div class="perf-value">$36,000</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--upgrade">
@@ -5025,7 +5029,7 @@
                   <div class="perf-body">
                     <div class="perf-label">V3→V4 升级奖励</div>
                     <div class="perf-desc">本月累计 V3→V4 升级 · 每位奖励 $100</div>
-                    <div class="perf-value">3 人 / $300</div>
+                    <div class="perf-value">6 人 / $600</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--bonus">
@@ -5041,7 +5045,7 @@
                   <div class="perf-body">
                     <div class="perf-label">昨日风险提醒</div>
                     <div class="perf-desc">可能流失高价值客户</div>
-                    <div class="perf-value">2 人</div>
+                    <div class="perf-value">4 人</div>
                   </div>
                 </div>
               </div>
@@ -7485,7 +7489,7 @@ var growthAchievementByRange = {
         ['💬', '活跃领先', '7 日活跃率高于团队均值 5%'],
         ['🎯', '风险可控', '高风险客户 2 人已全部跟进']
       ],
-      ability: { customers: 186, personal: [76, 72, 74, 68, 82], teamAvg: [72, 70, 72, 66, 78] }
+      ability: { customers: 360, personal: [76, 72, 74, 68, 82], teamAvg: [72, 70, 72, 66, 78] }
     },
     '3d': {
       intro: '近3日 · 4-15 ~ 4-17 · 维护客户经营表现',
@@ -7496,7 +7500,7 @@ var growthAchievementByRange = {
         ['💎', '高价值客户突破', '维护客户中新增 VIP 意向 2 人'],
         ['🎯', '转化提升', 'KYC→首充转化率 38%，高于均值 4%']
       ],
-      ability: { customers: 186, personal: [82, 76, 84, 72, 80], teamAvg: [78, 74, 80, 70, 78] }
+      ability: { customers: 360, personal: [82, 76, 84, 72, 80], teamAvg: [78, 74, 80, 70, 78] }
     },
     '7d': {
       intro: '近7日 · 4-10 ~ 4-17 · 维护客户经营表现',
@@ -7507,7 +7511,7 @@ var growthAchievementByRange = {
         ['💎', '高价值客户突破', '维护客户中新增 VIP 3 人'],
         ['🎯', '风险处置及时', '高风险客户跟进率 96%']
       ],
-      ability: { customers: 186, personal: [86, 78, 88, 74, 84], teamAvg: [80, 74, 82, 72, 80] }
+      ability: { customers: 360, personal: [86, 78, 88, 74, 84], teamAvg: [80, 74, 82, 72, 80] }
     },
     '15d': {
       intro: '近15天 · 4-03 ~ 4-17 · 维护客户经营表现',
@@ -7518,7 +7522,7 @@ var growthAchievementByRange = {
         ['💎', '高净值维护', '成功唤醒沉默高净值客户 2 人'],
         ['🎯', '交易回暖', '15 日交易活跃客户 +12%']
       ],
-      ability: { customers: 186, personal: [88, 80, 90, 78, 86], teamAvg: [82, 76, 84, 74, 82] }
+      ability: { customers: 360, personal: [88, 80, 90, 78, 86], teamAvg: [82, 76, 84, 74, 82] }
     },
     '30d': {
       intro: '近30天 · 3-20 ~ 4-17 · 维护客户经营表现',
@@ -7529,7 +7533,7 @@ var growthAchievementByRange = {
         ['💎', '高价值客户突破', '本月维护客户新增 VIP 5 人'],
         ['🏅', '客户经营之星', '开发+经营双维度区域 TOP5']
       ],
-      ability: { customers: 186, personal: [90, 84, 92, 82, 88], teamAvg: [84, 78, 86, 76, 84] }
+      ability: { customers: 360, personal: [90, 84, 92, 82, 88], teamAvg: [84, 78, 86, 76, 84] }
     }
   },
   manager: {
@@ -13874,13 +13878,13 @@ var GOAL_RISK_METRIC_LABELS = {
 };
 
 var GOAL_RISK_SALES_COUNTS = {
-  'deposit-no-trade': 5,
-  'trade-no-deposit': 4,
-  cancelled: 3,
-  'margin-call': 1,
-  'withdraw-alert': 2,
-  'high-risk': 4,
-  uninstalled: 3
+  'deposit-no-trade': 10,
+  'trade-no-deposit': 8,
+  cancelled: 6,
+  'margin-call': 2,
+  'withdraw-alert': 4,
+  'high-risk': 8,
+  uninstalled: 6
 };
 
 var GOAL_RISK_MGR_COUNTS = {
@@ -16490,13 +16494,13 @@ var GCA_HISTORY_CURRENT_IDX = 8;
 var GCA_HISTORY_LAST_MONTH_IDX = 7;
 var gcaHistoryMonths = ['10月', '11月', '12月', '1月', '2月', '3月', '4月', '5月', '本月'];
 var gcaHistoryData = {
-  active: { label: '客户活跃', unit: '人', data: [205, 186, 196, 172, 152, 160, 175, 192, 186] },
+  active: { label: '客户活跃', unit: '人', data: [397, 360, 379, 333, 294, 310, 339, 372, 360] },
   teamActive: { label: '区域平均客户活跃', unit: '人', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  net: { label: '净入金', unit: '', isMoney: true, data: [54000, 48200, 50500, 44000, 38200, 40200, 44800, 50200, 55040] },
+  net: { label: '净入金', unit: '', isMoney: true, data: [104516, 93290, 97742, 85161, 73935, 77806, 86710, 97161, 106530] },
   teamNet: { label: '区域平均净入金', unit: '', isMoney: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
   reach: { label: '沟通覆盖率', unit: '%', isPct: true, data: [72, 64, 68, 58, 50, 53, 60, 67, 74] },
   teamReach: { label: '区域平均沟通覆盖率', unit: '%', isPct: true, isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] },
-  trade: { label: '交易手数', unit: '手', data: [2500, 2230, 2360, 1940, 1680, 1790, 2070, 2330, 2860] },
+  trade: { label: '交易手数', unit: '手', data: [4839, 4316, 4568, 3755, 3252, 3465, 4006, 4510, 5535] },
   teamTrade: { label: '区域平均交易手数', unit: '手', isTeam: true, data: [0, 0, 0, 0, 0, 0, 0, 0, 0] }
 };
 var gcaHistoryDataMgr = {
@@ -16665,17 +16669,16 @@ function collectGcaSourceMetrics(instance) {
   if (!root || !block) return null;
   var day = Number(block.getAttribute('data-day-of-month')) || 20;
   var days = Number(block.getAttribute('data-days-in-month')) || 30;
-  var reachTarget = Number(block.getAttribute('data-reach-contacts-target')) || 248;
-
+  var reachTarget = Number(block.getAttribute('data-reach-contacts-target')) || 480;
   var activeCard = root.querySelector('.goal-card--cust-active');
   var activeProg = activeCard && activeCard.querySelector('[data-cust-active-month]');
   var activeMonth = activeProg ? Number(activeProg.getAttribute('data-cust-active-month')) : 0;
-  var activeTarget = activeCard ? Number(activeCard.getAttribute('data-cust-active-target')) : 400;
+  var activeTarget = activeCard ? Number(activeCard.getAttribute('data-cust-active-target')) : 770;
 
   var netCard = root.querySelector('.goal-card--net-deposit');
   var netProg = netCard && netCard.querySelector('[data-net-deposit-month]');
   var netMonth = netProg ? Number(netProg.getAttribute('data-net-deposit-month')) : 0;
-  var netTarget = netCard ? Number(netCard.getAttribute('data-net-deposit-target')) : 64000;
+  var netTarget = netCard ? Number(netCard.getAttribute('data-net-deposit-target')) : 123870;
 
   var reachCard = root.querySelector('.goal-card--reach');
   var reachConnected = reachCard ? Number(reachCard.getAttribute('data-reach-connected')) : 0;

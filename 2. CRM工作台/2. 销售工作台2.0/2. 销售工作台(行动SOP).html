@@ -4843,31 +4843,31 @@
                 <div class="comm-stats-summary">
                   <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="my-customers" role="button" tabindex="0" aria-label="查看我的客户明细">
                     <span>我的客户数</span>
-                    <strong>586</strong>
+                    <strong>480</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系数</span>
-                    <strong>545</strong>
+                    <strong>355</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>Call接通</span>
-                    <strong>267</strong>
+                    <strong>81</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>WA回复</span>
-                    <strong>218</strong>
+                    <strong>142</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>CR回复</span>
-                    <strong>169</strong>
+                    <strong>264</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系率</span>
-                    <strong>93%</strong>
+                    <strong>74%</strong>
                   </div>
-                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="416" role="button" tabindex="0" aria-label="查看客户回复明细">
+                  <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="264" role="button" tabindex="0" aria-label="查看客户回复明细">
                     <span>客户回复率</span>
-                    <strong>76%</strong>
+                    <strong>74%</strong>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -4880,15 +4880,15 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">14</strong>
+                        <strong class="comm-metric-val">5</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">时长60S+</span>
-                        <strong class="comm-metric-val">10</strong>
+                        <strong class="comm-metric-val">3</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">有效沟通率</span>
-                        <strong class="comm-metric-val">71%</strong>
+                        <strong class="comm-metric-val">60%</strong>
                       </div>
                     </div>
                     <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+3%</strong> · 未回复 2 人</div>
@@ -4902,15 +4902,15 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">11</strong>
+                        <strong class="comm-metric-val">10</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">8</strong>
+                        <strong class="comm-metric-val">7</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
-                        <strong class="comm-metric-val">73%</strong>
+                        <strong class="comm-metric-val">70%</strong>
                       </div>
                     </div>
                     <div class="comm-channel-foot">较团队均值 <strong style="color:#dc2626">−2%</strong> · 未回复 3 人</div>
@@ -4924,18 +4924,18 @@
                     <div class="comm-channel-metrics">
                       <div class="comm-metric">
                         <span class="comm-metric-label">联系客户数</span>
-                        <strong class="comm-metric-val">7</strong>
+                        <strong class="comm-metric-val">18</strong>
                       </div>
                       <div class="comm-metric">
                         <span class="comm-metric-label">回复数</span>
-                        <strong class="comm-metric-val">5</strong>
+                        <strong class="comm-metric-val">14</strong>
                       </div>
                       <div class="comm-metric comm-metric--rate">
                         <span class="comm-metric-label">回复率</span>
-                        <strong class="comm-metric-val">71%</strong>
+                        <strong class="comm-metric-val">78%</strong>
                       </div>
                     </div>
-                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+8%</strong> · 未回复 2 人</div>
+                    <div class="comm-channel-foot">较团队均值 <strong style="color:#059669">+8%</strong> · 未回复 4 人</div>
                   </article>
                 </div>
                 <div class="comm-qc-split">
@@ -5041,7 +5041,7 @@
                 <div class="comm-stats-summary">
                   <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="team-customers" role="button" tabindex="0" aria-label="查看团队客户明细">
                     <span>团队客户数</span>
-                    <strong>8340</strong>
+                    <strong>8234</strong>
                   </div>
                   <div class="comm-summary-chip">
                     <span>客户联系数</span>
@@ -11121,11 +11121,31 @@ var _commStatsDetailAllRows = [];
 
 // 每位销售历史至今绑定的客户总数（单人 400–600），团队客户数为全员合计
 var COMM_STATS_SALES_CUSTOMER_TOTALS = {
-  Coulson: 586, May: 542, Daisy: 561, Fitz: 528, Simmons: 503, Mack: 487,
+  Coulson: 480, May: 542, Daisy: 561, Fitz: 528, Simmons: 503, Mack: 487,
   Fury: 466, Hunter: 452, Ward: 574, Bobbi: 519, Skye: 498, Melinda: 476,
   Trip: 461, Antoine: 443, 'Yo-Yo': 427, Deke: 412, Jemma: 405
 };
 var COMM_STATS_DEFAULT_CUSTOMER_TOTAL = 480;
+
+/** 销售视角总览与「我的目标」客户沟通对齐：客户数 480、联系 355、Call接通 81、CR回复 264、Call>60s 54 */
+var COMM_STATS_SALES_GOAL_ALIGN = {
+  assigned: 480,
+  contacted: 355,
+  telConnected: 81,
+  waReplied: 142,
+  crReplied: 264,
+  uniqueReply: 264,
+  tel: { contacted: 98, connected: 81, duration60: 54, durationMin: 476 },
+  wa: { contacted: 190, replied: 142, auditValid: 111 },
+  chat: { contacted: 355, replied: 264, followup2min: 170 }
+};
+var COMM_STATS_SALES_PERIOD_RATIO = {
+  today: { tel: 196 / 3720, wa: 158 / 3040, chat: 98 / 1880 },
+  yesterday: { tel: 304 / 3720, wa: 248 / 3040, chat: 152 / 1880 },
+  week: { tel: 1120 / 3720, wa: 910 / 3040, chat: 560 / 1880 },
+  month: { tel: 1, wa: 1, chat: 1 },
+  lastmonth: { tel: 3480 / 3720, wa: 2820 / 3040, chat: 1740 / 1880 }
+};
 
 // 团队全员合计的渠道与质检数据；个人数据按客户量权重从团队值拆分，个人合计恒等于团队值
 var COMM_STATS_TEAM_CHANNEL_DATA = {
@@ -11290,14 +11310,14 @@ function uniqueCommReplyCount(phone, wa, cr, contacts) {
   return Math.min(contacts, unique);
 }
 
-function fillCommStatsSummary(root, values) {
+function fillCommStatsSummary(root, values, uniqueReplyOpt) {
   if (!root) return;
   var customers = parseInt(String(values[0] || '').replace(/[^\d]/g, ''), 10) || 0;
   var contacts = parseInt(String(values[1] || '').replace(/[^\d]/g, ''), 10) || 0;
   var phone = parseInt(String(values[2] || '').replace(/[^\d]/g, ''), 10) || 0;
   var wa = parseInt(String(values[3] || '').replace(/[^\d]/g, ''), 10) || 0;
   var cr = parseInt(String(values[4] || '').replace(/[^\d]/g, ''), 10) || 0;
-  var uniqueReply = uniqueCommReplyCount(phone, wa, cr, contacts);
+  var uniqueReply = uniqueReplyOpt != null ? uniqueReplyOpt : uniqueCommReplyCount(phone, wa, cr, contacts);
   var display = [
     values[0],
     values[1],
@@ -11347,7 +11367,10 @@ function getCommStatsSummaryValues(names) {
   var agg = aggregateCommStatsSummaryRows(names.map(function (name) {
     return buildCommStatsSummaryFollowRowForName(name, 'all');
   }));
-  return [agg.assigned, agg.contacted, agg.telConnected, agg.waReplied, agg.crReplied].map(String);
+  return {
+    values: [agg.assigned, agg.contacted, agg.telConnected, agg.waReplied, agg.crReplied].map(String),
+    uniqueReply: agg.uniqueReply
+  };
 }
 
 function formatCommStatsRateDiff(diff) {
@@ -11389,7 +11412,8 @@ function applyCommStatsModulePeriod(period) {
     var tel = isManager ? teamTel : aggregateCommStatsTelRows(buildRows(names, 'tel'));
     var wa = isManager ? teamWa : aggregateCommStatsWaRows(buildRows(names, 'wa'));
     var chat = isManager ? teamChat : aggregateCommStatsChatRows(buildRows(names, 'chat'));
-    fillCommStatsSummary(root, getCommStatsSummaryValues(names));
+    var summary = getCommStatsSummaryValues(names);
+    fillCommStatsSummary(root, summary.values, summary.uniqueReply);
     fillCommStatsChannel(root.querySelector('.comm-channel--tel'), {
       metrics: [String(tel.contacted), String(tel.duration60), tel.effectiveRate + '%'],
       foot: isManager
@@ -11479,10 +11503,51 @@ function toggleCommStatsFollowGroup(groupKey) {
   renderCommStatsFollowTable();
 }
 
+function scaleCommStatsAlignedChannel(base, ratio) {
+  var rnd = function (n) { return Math.max(0, Math.round(n * ratio)); };
+  if (base.connected != null) {
+    var contacted = Math.max(1, rnd(base.contacted));
+    var connected = Math.min(contacted, rnd(base.connected));
+    var duration60 = Math.min(connected, rnd(base.duration60));
+    return {
+      contacted: contacted,
+      connected: connected,
+      duration60: duration60,
+      totalDurationMin: rnd(base.durationMin)
+    };
+  }
+  if (base.auditValid != null) {
+    var waContacted = Math.max(1, rnd(base.contacted));
+    var waReplied = Math.min(waContacted, rnd(base.replied));
+    return {
+      contacted: waContacted,
+      replied: waReplied,
+      auditValid: Math.min(waReplied, rnd(base.auditValid))
+    };
+  }
+  var chatContacted = Math.max(1, rnd(base.contacted));
+  var chatReplied = Math.min(chatContacted, rnd(base.replied));
+  return {
+    contacted: chatContacted,
+    replied: chatReplied,
+    followup2min: Math.min(chatReplied, rnd(base.followup2min))
+  };
+}
+
+function getCommStatsAlignedSalesChannel(channelType, period) {
+  var a = COMM_STATS_SALES_GOAL_ALIGN;
+  var ratios = COMM_STATS_SALES_PERIOD_RATIO[period] || COMM_STATS_SALES_PERIOD_RATIO.today;
+  if (channelType === 'tel') return scaleCommStatsAlignedChannel(a.tel, ratios.tel);
+  if (channelType === 'wa') return scaleCommStatsAlignedChannel(a.wa, ratios.wa);
+  if (channelType === 'chat') return scaleCommStatsAlignedChannel(a.chat, ratios.chat);
+  return null;
+}
+
 function buildCommStatsFollowRowForName(name, channelType, period) {
+  var aligned = name === COMM_STATS_CURRENT_SALES ? getCommStatsAlignedSalesChannel(channelType, period) : null;
   var split = getCommStatsChannelSplit(period) || getCommStatsChannelSplit('today');
   if (channelType === 'tel') {
-    var tel = (split && split.tel[name]) || { contacted: 0, connected: 0, duration60: 0, totalDurationMin: 0 };
+    var tel = aligned || (split && split.tel[name]) || { contacted: 0, connected: 0, duration60: 0, totalDurationMin: 0 };
     return {
       name: name,
       contacted: tel.contacted,
@@ -11495,7 +11560,7 @@ function buildCommStatsFollowRowForName(name, channelType, period) {
     };
   }
   if (channelType === 'wa') {
-    var wa = (split && split.wa[name]) || { contacted: 0, replied: 0, auditValid: 0 };
+    var wa = aligned || (split && split.wa[name]) || { contacted: 0, replied: 0, auditValid: 0 };
     return {
       name: name,
       contacted: wa.contacted,
@@ -11506,7 +11571,7 @@ function buildCommStatsFollowRowForName(name, channelType, period) {
     };
   }
   if (channelType === 'chat') {
-    var chat = (split && split.chat[name]) || { contacted: 0, replied: 0, followup2min: 0 };
+    var chat = aligned || (split && split.chat[name]) || { contacted: 0, replied: 0, followup2min: 0 };
     return {
       name: name,
       contacted: chat.contacted,
@@ -11521,6 +11586,20 @@ function buildCommStatsFollowRowForName(name, channelType, period) {
 
 // 有效沟通客户管理为历史至今累计，分配客户取该销售绑定的客户总数，不随周期变化
 function buildCommStatsSummaryFollowRowForName(name, period) {
+  if (name === COMM_STATS_CURRENT_SALES) {
+    var a = COMM_STATS_SALES_GOAL_ALIGN;
+    return {
+      name: name,
+      assigned: a.assigned,
+      contacted: a.contacted,
+      telConnected: a.telConnected,
+      waReplied: a.waReplied,
+      crReplied: a.crReplied,
+      uniqueReply: a.uniqueReply,
+      reachRate: a.assigned ? Math.round(a.contacted / a.assigned * 100) : 0,
+      replyRate: a.contacted ? Math.round(a.uniqueReply / a.contacted * 100) : 0
+    };
+  }
   var s = alertTaskFollowSeed('comm-summary|' + name);
   var assigned = getCommStatsSalesCustomerTotal(name);
   var contacted = Math.min(assigned, Math.max(1, Math.round(assigned * (78 + (s % 17)) / 100)));
@@ -11535,6 +11614,7 @@ function buildCommStatsSummaryFollowRowForName(name, period) {
     telConnected: telConnected,
     waReplied: waReplied,
     crReplied: crReplied,
+    uniqueReply: uniqueReply,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
     replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
   };
@@ -11611,13 +11691,16 @@ function aggregateCommStatsSummaryRows(rows) {
     waReplied += row.waReplied || 0;
     crReplied += row.crReplied || 0;
   });
-  var uniqueReply = uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
+  var uniqueReply = rows.length === 1 && rows[0].uniqueReply != null
+    ? rows[0].uniqueReply
+    : uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
   return {
     assigned: assigned,
     contacted: contacted,
     telConnected: telConnected,
     waReplied: waReplied,
     crReplied: crReplied,
+    uniqueReply: uniqueReply,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
     replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
   };
