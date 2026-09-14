@@ -661,6 +661,7 @@
     .perf-item .perf-value{font-size:18px;font-weight:800;color:#1d4ed8;line-height:1.1;letter-spacing:-.3px}
     .perf-item--rank .perf-icon{background:#ecfdf5}
     .perf-item--rank .perf-value{color:#059669}
+    .perf-item--upgrade .perf-value{color:#059669}
     .perf-item--top3 .perf-desc{margin-bottom:4px}
     .perf-item--top3 .perf-value{display:none}
     .perf-top3-list{
@@ -4565,7 +4566,7 @@
 <div class="wb-panel active" id="panel-goals" role="tabpanel">
         <div class="content-row">
         <section class="module module-main" id="customer-target-module">
-          <h1 id="manager-goal-customer-target-title">客户目标</h1>
+          <h1 id="manager-goal-customer-target-title">绩效目标</h1>
           <p class="module-note" id="customer-target-module-note">
             客户指标按 <strong>客户活跃、净入金、客户沟通、交易手数、风险</strong> 等 5 大维度，系统性展示团队/个人客户目标的跟进情况，总览数据为本月截止到昨日的数据汇总（<button type="button" class="goal-metric-help-link" onclick="openGoalMetricHelpModal()">查看指标说明</button>）。
           </p>
@@ -4600,7 +4601,7 @@
             </div>
 
             <div class="detail-section">
-              <div class="detail-section-title">客户明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
+              <div class="detail-section-title">绩效明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
               <div id="detail-personal">
               <div class="goal-cards">
                 <article class="goal-card goal-card--net-deposit" data-net-deposit-target="64000">
@@ -4807,7 +4808,7 @@
             </div>
 
             <div class="detail-section">
-              <div class="detail-section-title">客户明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
+              <div class="detail-section-title">绩效明细指标（<button type="button" class="goal-metric-help-link" onclick="openGoalDetailMetricHelpModal()">指标说明</button>）</div>
               <div id="detail-team">
               <div class="goal-cards">
                 <article class="goal-card goal-card--net-deposit" data-net-deposit-target="768000" data-kpi-badge-mode="time">
@@ -5017,6 +5018,14 @@
                     <div class="perf-label">手续费总额</div>
                     <div class="perf-desc">本月累计手续费</div>
                     <div class="perf-value">$18,600</div>
+                  </div>
+                </div>
+                <div class="perf-item perf-item--upgrade">
+                  <span class="perf-icon" aria-hidden="true">⬆️</span>
+                  <div class="perf-body">
+                    <div class="perf-label">V3→V4 升级奖励</div>
+                    <div class="perf-desc">本月累计 V3→V4 升级 · 每位奖励 $100</div>
+                    <div class="perf-value">3 人 / $300</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--bonus">
@@ -5329,6 +5338,14 @@
                     <div class="perf-label">团队手续费总额</div>
                     <div class="perf-desc">本月累计团队手续费</div>
                     <div class="perf-value">$124.4K</div>
+                  </div>
+                </div>
+                <div class="perf-item perf-item--upgrade">
+                  <span class="perf-icon" aria-hidden="true">⬆️</span>
+                  <div class="perf-body">
+                    <div class="perf-label">团队 V3→V4 升级奖励</div>
+                    <div class="perf-desc">本月累计 V3→V4 升级 · 每位奖励 $100</div>
+                    <div class="perf-value">14 人 / $1,400</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--bonus">
@@ -5683,7 +5700,7 @@
         <li><span class="metric-name">本月</span><span class="metric-desc">对应指标本月累计到昨日的数据</span></li>
         <li><span class="metric-name">上月</span><span class="metric-desc">对应指标上月的数据</span></li>
       </ul>
-      <p class="alert-task-follow-intro">以下为客户明细指标定义，适用于团队/个人视角。</p>
+      <p class="alert-task-follow-intro">以下为绩效明细指标定义，适用于团队/个人视角。</p>
       <ul class="goal-metric-help-list">
         <li>
           <span class="metric-name">充值活跃</span>
@@ -15147,6 +15164,7 @@ function buildManagerGoalGroupSidebar(groupKey) {
       { label: '本组净入金总额', desc: '本月累计本组净入金', value: formatNetDepositUsd(groupData.netDeposit.month) },
       { label: '本组交易客户数', desc: '本月累计本组实盘交易开仓客户数', value: groupData.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
       { label: '本组手续费总额', desc: '本月累计本组手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee', members)) },
+      buildV34UpgradePerfItem('本组 ', members),
       { label: '本组本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(sumManagerGoalTeamReward(members)) }
     ],
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + group.label + '</strong> 名下客户',
@@ -15527,24 +15545,48 @@ function buildManagerGoalCustRankSelf(salesName, scale, kind, ownerLabel) {
 }
 
 var MANAGER_GOAL_SALES_META = {
-  Coulson: { rank: 1, reward: '$4,280', revenueRank: 1, netK: '$286K', feeK: '$17.2K', tradeLots: '1,280', topLabel: 'TOP 1' },
-  May: { rank: 2, reward: '$3,860', personalReward: 2860, teamReward: 1000, revenueRank: 2, netK: '$248K', feeK: '$18.6K', tradeLots: '1,156', topLabel: 'TOP 2' },
-  Daisy: { rank: 3, reward: '$3,520', revenueRank: 3, netK: '$212K', feeK: '$14.8K', tradeLots: '1,024', topLabel: 'TOP 3' },
-  Fitz: { rank: 4, reward: '$3,180', personalReward: 2480, teamReward: 700, revenueRank: 4, netK: '$198K', feeK: '$12.4K', tradeLots: '968', topLabel: '第 4 名' },
-  Simmons: { rank: 5, reward: '$2,940', revenueRank: 5, netK: '$176K', feeK: '$10.6K', tradeLots: '892', topLabel: '第 5 名' },
-  Mack: { rank: 6, reward: '$2,680', revenueRank: 6, netK: '$154K', feeK: '$8.2K', tradeLots: '816', topLabel: '第 6 名' },
-  Fury: { rank: 7, reward: '$2,420', revenueRank: 7, netK: '$132K', feeK: '$7.1K', tradeLots: '724', topLabel: '第 7 名' },
-  Hunter: { rank: 8, reward: '$2,180', revenueRank: 8, netK: '$118K', feeK: '$5.5K', tradeLots: '648', topLabel: '第 8 名' },
-  Ward: { rank: 9, reward: '$1,960', revenueRank: 9, netK: '$106K', feeK: '$4.9K', tradeLots: '584', topLabel: '第 9 名' },
-  Bobbi: { rank: 10, reward: '$1,760', revenueRank: 10, netK: '$96K', feeK: '$4.4K', tradeLots: '528', topLabel: '第 10 名' },
-  Skye: { rank: 11, reward: '$1,580', revenueRank: 11, netK: '$88K', feeK: '$4.0K', tradeLots: '476', topLabel: '第 11 名' },
-  Melinda: { rank: 12, reward: '$1,420', revenueRank: 12, netK: '$80K', feeK: '$3.6K', tradeLots: '428', topLabel: '第 12 名' },
-  Trip: { rank: 13, reward: '$1,280', revenueRank: 13, netK: '$72K', feeK: '$3.2K', tradeLots: '384', topLabel: '第 13 名' },
-  Antoine: { rank: 14, reward: '$1,150', revenueRank: 14, netK: '$66K', feeK: '$2.9K', tradeLots: '346', topLabel: '第 14 名' },
-  'Yo-Yo': { rank: 15, reward: '$1,040', revenueRank: 15, netK: '$60K', feeK: '$2.6K', tradeLots: '312', topLabel: '第 15 名' },
-  Deke: { rank: 16, reward: '$940', revenueRank: 16, netK: '$54K', feeK: '$2.3K', tradeLots: '282', topLabel: '第 16 名' },
-  Jemma: { rank: 17, reward: '$860', revenueRank: 17, netK: '$48K', feeK: '$2.1K', tradeLots: '256', topLabel: '第 17 名' }
+  Coulson: { rank: 1, reward: '$4,280', revenueRank: 1, netK: '$286K', feeK: '$17.2K', tradeLots: '1,280', v34: 3, topLabel: 'TOP 1' },
+  May: { rank: 2, reward: '$3,860', personalReward: 2860, teamReward: 1000, revenueRank: 2, netK: '$248K', feeK: '$18.6K', tradeLots: '1,156', v34: 3, topLabel: 'TOP 2' },
+  Daisy: { rank: 3, reward: '$3,520', revenueRank: 3, netK: '$212K', feeK: '$14.8K', tradeLots: '1,024', v34: 2, topLabel: 'TOP 3' },
+  Fitz: { rank: 4, reward: '$3,180', personalReward: 2480, teamReward: 700, revenueRank: 4, netK: '$198K', feeK: '$12.4K', tradeLots: '968', v34: 1, topLabel: '第 4 名' },
+  Simmons: { rank: 5, reward: '$2,940', revenueRank: 5, netK: '$176K', feeK: '$10.6K', tradeLots: '892', v34: 1, topLabel: '第 5 名' },
+  Mack: { rank: 6, reward: '$2,680', revenueRank: 6, netK: '$154K', feeK: '$8.2K', tradeLots: '816', v34: 1, topLabel: '第 6 名' },
+  Fury: { rank: 7, reward: '$2,420', revenueRank: 7, netK: '$132K', feeK: '$7.1K', tradeLots: '724', v34: 1, topLabel: '第 7 名' },
+  Hunter: { rank: 8, reward: '$2,180', revenueRank: 8, netK: '$118K', feeK: '$5.5K', tradeLots: '648', v34: 1, topLabel: '第 8 名' },
+  Ward: { rank: 9, reward: '$1,960', revenueRank: 9, netK: '$106K', feeK: '$4.9K', tradeLots: '584', v34: 1, topLabel: '第 9 名' },
+  Bobbi: { rank: 10, reward: '$1,760', revenueRank: 10, netK: '$96K', feeK: '$4.4K', tradeLots: '528', v34: 0, topLabel: '第 10 名' },
+  Skye: { rank: 11, reward: '$1,580', revenueRank: 11, netK: '$88K', feeK: '$4.0K', tradeLots: '476', v34: 0, topLabel: '第 11 名' },
+  Melinda: { rank: 12, reward: '$1,420', revenueRank: 12, netK: '$80K', feeK: '$3.6K', tradeLots: '428', v34: 0, topLabel: '第 12 名' },
+  Trip: { rank: 13, reward: '$1,280', revenueRank: 13, netK: '$72K', feeK: '$3.2K', tradeLots: '384', v34: 0, topLabel: '第 13 名' },
+  Antoine: { rank: 14, reward: '$1,150', revenueRank: 14, netK: '$66K', feeK: '$2.9K', tradeLots: '346', v34: 0, topLabel: '第 14 名' },
+  'Yo-Yo': { rank: 15, reward: '$1,040', revenueRank: 15, netK: '$60K', feeK: '$2.6K', tradeLots: '312', v34: 0, topLabel: '第 15 名' },
+  Deke: { rank: 16, reward: '$940', revenueRank: 16, netK: '$54K', feeK: '$2.3K', tradeLots: '282', v34: 0, topLabel: '第 16 名' },
+  Jemma: { rank: 17, reward: '$860', revenueRank: 17, netK: '$48K', feeK: '$2.1K', tradeLots: '256', v34: 0, topLabel: '第 17 名' }
 };
+
+var V34_UPGRADE_REWARD_USD = 100;
+
+function sumManagerGoalV34(members) {
+  var list = (members && members.length) ? members : getAllManagerGoalSalesNames();
+  return list.reduce(function (sum, name) {
+    var meta = MANAGER_GOAL_SALES_META[name];
+    return sum + (meta && meta.v34 ? meta.v34 : 0);
+  }, 0);
+}
+
+function formatV34UpgradePerfValue(count) {
+  var n = Number(count) || 0;
+  return n.toLocaleString('en-US') + ' 人 / $' + (n * V34_UPGRADE_REWARD_USD).toLocaleString('en-US');
+}
+
+function buildV34UpgradePerfItem(prefix, members) {
+  var labelPrefix = prefix ? prefix : '';
+  return {
+    label: labelPrefix + 'V3→V4 升级奖励',
+    desc: '本月累计 V3→V4 升级 · 每位奖励 $100',
+    value: formatV34UpgradePerfValue(sumManagerGoalV34(members))
+  };
+}
 
 /** 创收榜（销售维度）：合计、TOP1 与占比统一按所选范围的销售明细汇总，保证 团队 = 各组之和 */
 function buildManagerGoalScopeRevenueRank(members, scopeLabel) {
@@ -15610,6 +15652,7 @@ var MANAGER_GOAL_TEAM_SIDEBAR = (function () {
       { label: '团队净入金总额', desc: '本月累计团队净入金', value: formatNetDepositUsd(team.netDeposit.month) },
       { label: '团队交易客户数', desc: '本月累计团队实盘交易开仓客户数', value: team.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
       { label: '团队手续费总额', desc: '本月累计团队手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee')) },
+      buildV34UpgradePerfItem('团队 ', null),
       { label: '团队本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(sumManagerGoalTeamReward()) }
     ],
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong>',
@@ -15636,6 +15679,7 @@ function buildManagerGoalSalesSidebar(salesName) {
       { label: '净入金总额', desc: '本月累计净入金', value: formatNetDepositUsd(netMonth) },
       { label: '交易客户数', desc: '本月累计实盘交易开仓客户数', value: goal.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
       { label: '手续费总额', desc: '本月累计手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee', [salesName])) },
+      buildV34UpgradePerfItem('', [salesName]),
       { label: '本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(meta.reward), split: isManagerGoalGroupLeader(salesName) ? formatLeaderPerfSplit(meta) : '' },
       { label: '昨日风险提醒', desc: '可能流失高价值客户', value: goal.summary.highRisk + ' 人' }
     ],
@@ -16049,7 +16093,7 @@ function renderManagerGoalModuleTitle(el, teamTitle, personalTitle, salesName, i
 
 function resetManagerGoalModuleTitles() {
   var customerTargetTitle = document.getElementById('manager-goal-customer-target-title');
-  if (customerTargetTitle) customerTargetTitle.textContent = '客户目标';
+  if (customerTargetTitle) customerTargetTitle.textContent = '绩效目标';
   var noteEl = document.getElementById('customer-target-module-note');
   if (noteEl) noteEl.innerHTML = GOAL_CUSTOMER_TARGET_NOTE_DEFAULT;
 }
@@ -16068,7 +16112,7 @@ function applyManagerGoalSidebar(data) {
   if (data.isGroup) {
     renderManagerGoalModuleTitle(
       document.getElementById('manager-goal-customer-target-title'),
-      '', '客户目标', data.groupLabel, false
+      '', '绩效目标', data.groupLabel, false
     );
     renderManagerGoalModuleTitle(
       document.getElementById('manager-goal-customer-rank-title'),
@@ -16077,7 +16121,7 @@ function applyManagerGoalSidebar(data) {
   } else {
     renderManagerGoalModuleTitle(
       document.getElementById('manager-goal-customer-target-title'),
-      '团队客户目标', '客户目标', data.salesName, data.isTeam
+      '团队绩效目标', '绩效目标', data.salesName, data.isTeam
     );
     renderManagerGoalModuleTitle(
       document.getElementById('manager-goal-customer-rank-title'),
