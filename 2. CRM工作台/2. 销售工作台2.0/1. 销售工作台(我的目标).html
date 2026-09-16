@@ -4676,11 +4676,11 @@
                     <div class="cust-reach-progress-overall">
                       <div class="cust-reach-progress-head">
                         <span>客户沟通覆盖率</span>
-                        <strong class="cust-reach-progress-amount">355<em> / 480</em></strong>
+                        <strong class="cust-reach-progress-amount">264<em> / 480</em></strong>
                       </div>
-                      <div class="cust-reach-bar"><div class="cust-reach-bar-fill high"></div></div>
+                      <div class="cust-reach-bar"><div class="cust-reach-bar-fill mid"></div></div>
                       <div class="cust-reach-progress-foot">
-                        <span class="cust-reach-pct">沟通覆盖率 74%</span>
+                        <span class="cust-reach-pct">沟通覆盖率 55%</span>
                         <span class="cust-reach-coverage-badge">接通或回复占比</span>
                       </div>
                     </div>
@@ -4871,7 +4871,7 @@
                 <article class="goal-card goal-card--reach" data-reach-connected="1423" data-reach-contacts="2084" data-reach-customers="3102">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
-                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（联系数 / 客户数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
+                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 客户数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
@@ -4883,12 +4883,12 @@
                     <div class="cust-reach-progress-overall">
                       <div class="cust-reach-progress-head">
                         <span>客户沟通覆盖率</span>
-                        <strong class="cust-reach-progress-amount">2,084<em> / 3,102</em></strong>
+                        <strong class="cust-reach-progress-amount">1,423<em> / 3,102</em></strong>
                       </div>
-                      <div class="cust-reach-bar"><div class="cust-reach-bar-fill high"></div></div>
+                      <div class="cust-reach-bar"><div class="cust-reach-bar-fill low"></div></div>
                       <div class="cust-reach-progress-foot">
-                        <span class="cust-reach-pct">沟通覆盖率 67%</span>
-                        <span class="cust-reach-coverage-badge">联系数 / 客户数</span>
+                        <span class="cust-reach-pct">沟通覆盖率 46%</span>
+                        <span class="cust-reach-coverage-badge">接通或回复占比</span>
                       </div>
                     </div>
                   </div>
@@ -16437,11 +16437,11 @@ function initTradeLotsCards() {
 
 function initCustReachCards() {
   document.querySelectorAll('.goal-card--reach').forEach(function (card) {
-    var contacts = Number(card.getAttribute('data-reach-contacts')) || 0;
+    var replied = Number(card.getAttribute('data-reach-connected')) || 0;
     var customers = Number(card.getAttribute('data-reach-customers')) || 0;
     var progress = card.querySelector('.cust-reach-progress-overall');
     if (!progress) return;
-    var pct = customers > 0 ? (contacts / customers) * 100 : 0;
+    var pct = customers > 0 ? (replied / customers) * 100 : 0;
     var barPct = Math.min(pct, 100);
     var fill = progress.querySelector('.cust-reach-bar-fill');
     if (fill) {
@@ -16450,7 +16450,7 @@ function initCustReachCards() {
     }
     var amountEl = progress.querySelector('.cust-reach-progress-amount');
     if (amountEl) {
-      amountEl.innerHTML = contacts.toLocaleString('en-US') + '<em> / ' + customers.toLocaleString('en-US') + '</em>';
+      amountEl.innerHTML = replied.toLocaleString('en-US') + '<em> / ' + customers.toLocaleString('en-US') + '</em>';
     }
     var pctEl = progress.querySelector('.cust-reach-pct');
     if (pctEl) pctEl.textContent = '沟通覆盖率 ' + Math.round(pct) + '%';
