@@ -172,6 +172,9 @@
     .kpi-card{background:linear-gradient(135deg,#fff,#f8fbff);border:1px solid #dbe4f0;border-radius:14px;padding:14px 12px;text-align:center;cursor:default;transition:transform .15s,box-shadow .15s}
     .kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(15,23,42,.08)}
     .kpi-card .label{font-size:11px;color:var(--muted);line-height:1.35;min-height:30px;display:flex;align-items:center;justify-content:center}
+    .kpi-summary .kpi-card{padding:12.6px 12px}
+    .kpi-summary .kpi-card .label{font-size:13px;min-height:27px}
+    .kpi-summary .kpi-card .value{margin-top:2px}
     .kpi-card .value{font-size:24px;font-weight:800;margin-top:6px;color:#0f172a}
     .kpi-card .value.pct{font-size:22px}
     .kpi-card .value.kpi-value-split{
@@ -4658,10 +4661,10 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--reach" data-reach-connected="264" data-reach-contacts="355">
+                <article class="goal-card goal-card--reach" data-reach-connected="264" data-reach-contacts="355" data-reach-customers="480">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
-                    <div><h3>客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
+                    <div><h3>客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 我的客户数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
@@ -4673,7 +4676,7 @@
                     <div class="cust-reach-progress-overall">
                       <div class="cust-reach-progress-head">
                         <span>客户沟通覆盖率</span>
-                        <strong class="cust-reach-progress-amount">264<em> / 355</em></strong>
+                        <strong class="cust-reach-progress-amount">355<em> / 480</em></strong>
                       </div>
                       <div class="cust-reach-bar"><div class="cust-reach-bar-fill high"></div></div>
                       <div class="cust-reach-progress-foot">
@@ -4865,10 +4868,10 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--reach" data-reach-connected="1423" data-reach-contacts="2084">
+                <article class="goal-card goal-card--reach" data-reach-connected="1423" data-reach-contacts="2084" data-reach-customers="3102">
                   <div class="goal-card-head">
                     <span class="goal-badge">沟</span>
-                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（接通或回复 / 联系数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
+                    <div><h3>团队客户沟通</h3><p class="goal-q">联系与接通/回复质量，及沟通覆盖率（联系数 / 客户数）<span class="goal-q-help" tabindex="0" data-tip="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新" aria-label="客户沟通数据为当前月1日到昨日的数据，如果当前时间为1日需要第2天更新">?</span></p></div>
                   </div>
                   <div class="cust-reach-panel">
                     <div class="cust-reach-metrics">
@@ -4880,12 +4883,12 @@
                     <div class="cust-reach-progress-overall">
                       <div class="cust-reach-progress-head">
                         <span>客户沟通覆盖率</span>
-                        <strong class="cust-reach-progress-amount">1,423<em> / 2,084</em></strong>
+                        <strong class="cust-reach-progress-amount">2,084<em> / 3,102</em></strong>
                       </div>
                       <div class="cust-reach-bar"><div class="cust-reach-bar-fill high"></div></div>
                       <div class="cust-reach-progress-foot">
-                        <span class="cust-reach-pct">沟通覆盖率 68%</span>
-                        <span class="cust-reach-coverage-badge">接通或回复占比</span>
+                        <span class="cust-reach-pct">沟通覆盖率 67%</span>
+                        <span class="cust-reach-coverage-badge">联系数 / 客户数</span>
                       </div>
                     </div>
                   </div>
@@ -5683,7 +5686,7 @@
         <li><span class="metric-name">交易手数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户完成的所有开仓交易手数的总数</span></li>
         <li><span class="metric-name">交易平均</span><span class="metric-desc">当月截止到昨日，周期内团队/个人绑定的客户所有人的平均开仓交易手数</span></li>
         <li><span class="metric-name">本月联系</span><span class="metric-desc">当月截止到昨日，周期内团队/个人触达客户的数量</span></li>
-        <li><span class="metric-name">覆盖率</span><span class="metric-desc">当月截止到昨日，周期内团队/个人触达客户相对于所有绑定客户总量的覆盖率</span></li>
+        <li><span class="metric-name">覆盖率 / 沟通覆盖率</span><span class="metric-desc">联系数 / 我的客户数（或团队客户数）</span></li>
         <li><span class="metric-name">高风险客户数</span><span class="metric-desc">当月截止到昨日，周期内团队/个人当月的高风险客户数</span></li>
       </ul>
     </div>
@@ -16311,6 +16314,7 @@ function applyManagerGoalSalesFilter(value) {
   if (reachCard) {
     reachCard.setAttribute('data-reach-connected', data.reach.connected);
     reachCard.setAttribute('data-reach-contacts', data.reach.contacts);
+    reachCard.setAttribute('data-reach-customers', data.summary.customers);
     reachCard.querySelector('h3').textContent = data.labels.reachTitle;
     var reachMetrics = reachCard.querySelectorAll('.cust-reach-metrics .metric-item strong');
     if (reachMetrics.length >= 4) {
@@ -16433,11 +16437,11 @@ function initTradeLotsCards() {
 
 function initCustReachCards() {
   document.querySelectorAll('.goal-card--reach').forEach(function (card) {
-    var connected = Number(card.getAttribute('data-reach-connected')) || 0;
     var contacts = Number(card.getAttribute('data-reach-contacts')) || 0;
+    var customers = Number(card.getAttribute('data-reach-customers')) || 0;
     var progress = card.querySelector('.cust-reach-progress-overall');
     if (!progress) return;
-    var pct = contacts > 0 ? (connected / contacts) * 100 : 0;
+    var pct = customers > 0 ? (contacts / customers) * 100 : 0;
     var barPct = Math.min(pct, 100);
     var fill = progress.querySelector('.cust-reach-bar-fill');
     if (fill) {
@@ -16446,7 +16450,7 @@ function initCustReachCards() {
     }
     var amountEl = progress.querySelector('.cust-reach-progress-amount');
     if (amountEl) {
-      amountEl.innerHTML = connected.toLocaleString('en-US') + '<em> / ' + contacts.toLocaleString('en-US') + '</em>';
+      amountEl.innerHTML = contacts.toLocaleString('en-US') + '<em> / ' + customers.toLocaleString('en-US') + '</em>';
     }
     var pctEl = progress.querySelector('.cust-reach-pct');
     if (pctEl) pctEl.textContent = '沟通覆盖率 ' + Math.round(pct) + '%';
@@ -16683,7 +16687,9 @@ function collectGcaSourceMetrics(instance) {
   var reachCard = root.querySelector('.goal-card--reach');
   var reachConnected = reachCard ? Number(reachCard.getAttribute('data-reach-connected')) : 0;
   var reachContacts = reachCard ? Number(reachCard.getAttribute('data-reach-contacts')) : 0;
-  var reachCoverage = reachContacts > 0 ? (reachConnected / reachContacts) * 100 : 0;
+  var reachCustomers = reachCard ? Number(reachCard.getAttribute('data-reach-customers')) : 0;
+  if (!reachCustomers) reachCustomers = reachTarget;
+  var reachCoverage = reachCustomers > 0 ? (reachContacts / reachCustomers) * 100 : 0;
 
   var tradeRow = root.querySelector('.trade-lots-second-row');
   var tradeMonth = tradeRow ? Number(tradeRow.getAttribute('data-trade-lots-month')) : 0;
@@ -16697,6 +16703,7 @@ function collectGcaSourceMetrics(instance) {
     reach: {
       connected: reachConnected,
       contacts: reachContacts,
+      customers: reachCustomers,
       coverage: reachCoverage,
       contactsTarget: reachTarget
     },
@@ -16908,22 +16915,22 @@ function renderGcaSprintSection(metrics, instance) {
       buildGcaTierGap(netPct, netProj, metrics.net.target, true, 'net'), '');
 
   var reachContactsProj = gcaProjectMonthValue(metrics.reach.contacts, day, days);
-  var reachConnectedProj = gcaProjectMonthValue(metrics.reach.connected, day, days);
-  var reachCovProj = reachContactsProj > 0 ? (reachConnectedProj / reachContactsProj) * 100 : 0;
+  var reachCustomers = metrics.reach.customers || metrics.reach.contactsTarget || 0;
+  var reachCovProj = reachCustomers > 0 ? (reachContactsProj / reachCustomers) * 100 : 0;
   var reachCovTarget = 80;
   var covGapPt = Math.max(0, Math.round((reachCovTarget - reachCovProj) * 10) / 10);
-  var needConnectedFor80 = Math.ceil(reachContactsProj * (reachCovTarget / 100));
-  var connectedGap = Math.max(0, needConnectedFor80 - Math.round(reachConnectedProj));
+  var needContactsFor80 = Math.ceil(reachCustomers * (reachCovTarget / 100));
+  var contactsGap = Math.max(0, needContactsFor80 - Math.round(reachContactsProj));
   var reachSprintGapHtml;
   if (covGapPt <= 0) {
     reachSprintGapHtml =
-      '预计月底沟通覆盖率为 <strong>' + Math.round(reachCovProj) + '%</strong>（预计接通/回复 <strong>' +
-      Math.round(reachConnectedProj).toLocaleString('en-US') + '</strong> 人 ÷ 联系 <strong>' +
-      Math.round(reachContactsProj).toLocaleString('en-US') + '</strong> 人），已达到 <strong>80%</strong> 冲刺目标。';
+      '预计月底沟通覆盖率为 <strong>' + Math.round(reachCovProj) + '%</strong>（预计联系 <strong>' +
+      Math.round(reachContactsProj).toLocaleString('en-US') + '</strong> 人 ÷ 客户 <strong>' +
+      Math.round(reachCustomers).toLocaleString('en-US') + '</strong> 人），已达到 <strong>80%</strong> 冲刺目标。';
   } else {
     reachSprintGapHtml =
       '冲刺 <strong>80%</strong> 目标覆盖率还差 <strong>' + covGapPt + '%</strong>；预计需再增加约 <strong>' +
-      connectedGap.toLocaleString('en-US') + '</strong> 人接通或回复。';
+      contactsGap.toLocaleString('en-US') + '</strong> 人联系。';
   }
   var tradeProj = gcaProjectMonthValue(metrics.trade.month, day, days);
   var tradeRow = document.querySelector(instance.sprintTradeScope);
