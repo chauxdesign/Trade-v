@@ -212,7 +212,11 @@
       position: relative;
       z-index: 1;
       width: min(1140px, 94vw);
-      padding: 56px 24px 64px;
+      height: 100vh;
+      max-height: 100vh;
+      padding: clamp(24px, 4vh, 56px) 24px clamp(28px, 5vh, 64px);
+      display: flex;
+      flex-direction: column;
       text-align: center;
     }
 
@@ -243,8 +247,9 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      margin: 0 auto 16px;
-      min-height: 140px;
+      flex: none;
+      margin: 0 auto 12px;
+      min-height: clamp(90px, 15vh, 140px);
     }
 
     .title-ring {
@@ -288,10 +293,12 @@
       position: relative;
       z-index: 2;
       display: inline-flex;
+      align-self: center;
+      flex: none;
       align-items: center;
       gap: 10px;
       padding: 8px 22px;
-      margin-bottom: 32px;
+      margin-bottom: clamp(12px, 3vh, 32px);
       border-radius: 4px;
       border: 1px solid rgba(0, 180, 255, 0.4);
       background: rgba(10, 30, 61, 0.06);
@@ -335,7 +342,8 @@
       z-index: 2;
       font-size: clamp(14px, 2vw, 17px);
       color: #3b5f8a;
-      margin-bottom: 56px;
+      flex: none;
+      margin-bottom: clamp(18px, 5vh, 56px);
       letter-spacing: 1px;
     }
 
@@ -349,23 +357,23 @@
 
     /* ── 入口卡片 ── */
     .entry-list {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 28px;
-      justify-content: center;
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: clamp(14px, 2.4vh, 28px);
       align-items: stretch;
     }
 
     .entry-card {
-      flex: 1;
-      max-width: 360px;
-      min-height: 300px;
+      min-width: 0;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       justify-content: flex-end;
-      padding: 36px 32px;
+      padding: clamp(18px, 3vh, 36px) clamp(20px, 2.4vw, 32px);
       border-radius: 4px;
       border: 1px solid rgba(37, 99, 235, 0.25);
       background: rgba(255, 255, 255, 0.55);
@@ -429,12 +437,13 @@
     .entry-icon {
       position: relative;
       z-index: 1;
-      width: 60px;
-      height: 60px;
+      flex: none;
+      width: clamp(44px, 6vh, 60px);
+      height: clamp(44px, 6vh, 60px);
       border-radius: 4px;
       display: grid;
       place-items: center;
-      font-size: 28px;
+      font-size: clamp(22px, 3vh, 28px);
       margin-bottom: auto;
       border: 1px solid rgba(0, 180, 255, 0.3);
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(0, 180, 255, 0.08) 100%);
@@ -453,7 +462,7 @@
       font-weight: 700;
       letter-spacing: 2.5px;
       color: var(--blue-electric);
-      margin-bottom: 10px;
+      margin-bottom: clamp(6px, 1vh, 10px);
       text-shadow: 0 0 20px rgba(0, 180, 255, 0.3);
     }
 
@@ -480,7 +489,7 @@
     .entry-meta {
       position: relative;
       z-index: 1;
-      margin-top: 14px;
+      margin-top: clamp(8px, 1.4vh, 14px);
       font-size: 11px;
       color: #5a7fa8;
       letter-spacing: 0.5px;
@@ -490,7 +499,7 @@
     .entry-arrow {
       position: relative;
       z-index: 1;
-      margin-top: 18px;
+      margin-top: clamp(8px, 1.8vh, 18px);
       font-size: 20px;
       font-weight: 300;
       color: var(--blue-electric);
@@ -623,12 +632,13 @@
     }
 
     @media (max-width: 768px) {
-      .portal { padding: 40px 16px 48px; }
+      body { overflow-y: auto; }
+      .portal { height: auto; max-height: none; padding: 40px 16px 48px; }
       .title-ring--1 { width: 240px; height: 240px; }
       .title-ring--2 { width: 190px; height: 190px; }
       .portal-subtitle { margin-bottom: 40px; }
-      .entry-list { flex-direction: column; align-items: center; }
-      .entry-card { width: 100%; max-width: 440px; min-height: 240px; }
+      .entry-list { grid-template-columns: 1fr; grid-template-rows: none; }
+      .entry-card { min-height: 240px; }
       .bg-network { opacity: 0.45; }
       .bg-floor { height: 40%; }
     }
@@ -736,17 +746,6 @@
     <p class="portal-subtitle">选择下方入口，进入对应产品方案原型</p>
 
     <div class="entry-list">
-      <a class="entry-card entry-card--crm" href="1. 需求迭代/0. 菜单项/_req-entry.html">
-        <span class="card-corner card-corner--tl"></span>
-        <span class="card-corner card-corner--tr"></span>
-        <span class="card-corner card-corner--bl"></span>
-        <span class="card-corner card-corner--br"></span>
-        <div class="entry-icon">◎</div>
-        <div class="entry-label">CRM PROTOTYPE</div>
-        <div class="entry-title">CRM需求原型迭代入口</div>
-        <div class="entry-meta">// MODULE: CRM_V2.0</div>
-        <div class="entry-arrow">→ →</div>
-      </a>
       <a class="entry-card entry-card--workbench" href="2. CRM工作台/2. 销售工作台2.0/工作台KPI中文版.html">
         <span class="card-corner card-corner--tl"></span>
         <span class="card-corner card-corner--tr"></span>
@@ -767,6 +766,17 @@
         <div class="entry-label">SALES WORKBENCH 2.0</div>
         <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（开发评审用）</span></div>
         <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · REVIEW</div>
+        <div class="entry-arrow">→ →</div>
+      </a>
+      <a class="entry-card entry-card--crm" href="1. 需求迭代/0. 菜单项/_req-entry.html">
+        <span class="card-corner card-corner--tl"></span>
+        <span class="card-corner card-corner--tr"></span>
+        <span class="card-corner card-corner--bl"></span>
+        <span class="card-corner card-corner--br"></span>
+        <div class="entry-icon">◎</div>
+        <div class="entry-label">CRM PROTOTYPE</div>
+        <div class="entry-title">CRM需求原型迭代入口</div>
+        <div class="entry-meta">// MODULE: CRM_V2.0</div>
         <div class="entry-arrow">→ →</div>
       </a>
       <a class="entry-card entry-card--cs" href="2. CRM工作台/3. 留存客服工作台2.0/留存客服工作台.html">
