@@ -359,10 +359,14 @@
     .entry-list {
       flex: 1;
       min-height: 0;
+      width: 90%;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: clamp(14px, 2.4vh, 28px);
+      grid-template-rows: repeat(2, minmax(0, clamp(147px, 22.05vh, 242px)));
+      row-gap: calc(clamp(8px, 1.4vh, 16px) + 10px);
+      column-gap: calc(clamp(8px, 1.4vh, 16px) + 20px);
+      align-content: center;
       align-items: stretch;
     }
 
@@ -370,10 +374,10 @@
       min-width: 0;
       min-height: 0;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
-      padding: clamp(18px, 3vh, 36px) clamp(20px, 2.4vw, 32px);
+      flex-direction: row;
+      align-items: center;
+      gap: clamp(14px, 1.8vw, 22px);
+      padding: clamp(14px, 2.4vh, 28px) clamp(18px, 2.2vw, 28px);
       border-radius: 4px;
       border: 1px solid rgba(37, 99, 235, 0.25);
       background: rgba(255, 255, 255, 0.55);
@@ -438,17 +442,32 @@
       position: relative;
       z-index: 1;
       flex: none;
-      width: clamp(44px, 6vh, 60px);
-      height: clamp(44px, 6vh, 60px);
+      width: clamp(48px, 6.5vh, 64px);
+      height: clamp(48px, 6.5vh, 64px);
       border-radius: 4px;
       display: grid;
       place-items: center;
-      font-size: clamp(22px, 3vh, 28px);
-      margin-bottom: auto;
       border: 1px solid rgba(0, 180, 255, 0.3);
       background: linear-gradient(135deg, rgba(37, 99, 235, 0.12) 0%, rgba(0, 180, 255, 0.08) 100%);
       color: var(--blue-bright);
       box-shadow: 0 0 16px rgba(0, 180, 255, 0.15), inset 0 0 12px rgba(0, 180, 255, 0.05);
+    }
+
+    .entry-icon svg {
+      width: 55%;
+      height: 55%;
+      display: block;
+    }
+
+    .entry-body {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
     }
 
     .entry-card--crm .entry-icon { color: var(--blue-mid); }
@@ -637,8 +656,8 @@
       .title-ring--1 { width: 240px; height: 240px; }
       .title-ring--2 { width: 190px; height: 190px; }
       .portal-subtitle { margin-bottom: 40px; }
-      .entry-list { grid-template-columns: 1fr; grid-template-rows: none; }
-      .entry-card { min-height: 240px; }
+      .entry-list { grid-template-columns: 1fr; }
+      .entry-card { height: auto; min-height: 216px; }
       .bg-network { opacity: 0.45; }
       .bg-floor { height: 40%; }
     }
@@ -751,44 +770,73 @@
         <span class="card-corner card-corner--tr"></span>
         <span class="card-corner card-corner--bl"></span>
         <span class="card-corner card-corner--br"></span>
-        <div class="entry-icon">▣</div>
-        <div class="entry-label">SALES WORKBENCH 2.0</div>
-        <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（演示用）</span></div>
-        <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · DEMO</div>
-        <div class="entry-arrow">→ →</div>
+        <div class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18"/><path d="M8 14v3"/><path d="M12 12v5"/><path d="M16 15v2"/>
+          </svg>
+        </div>
+        <div class="entry-body">
+          <div class="entry-label">SALES WORKBENCH 2.0</div>
+          <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（演示用）</span></div>
+          <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · DEMO</div>
+          <div class="entry-arrow">→ →</div>
+        </div>
       </a>
       <a class="entry-card entry-card--workbench" href="2. CRM工作台/2. 销售工作台2.0/1. 销售工作台(我的目标).html">
         <span class="card-corner card-corner--tl"></span>
         <span class="card-corner card-corner--tr"></span>
         <span class="card-corner card-corner--bl"></span>
         <span class="card-corner card-corner--br"></span>
-        <div class="entry-icon">▣</div>
-        <div class="entry-label">SALES WORKBENCH 2.0</div>
-        <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（开发评审用）</span></div>
-        <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · REVIEW</div>
-        <div class="entry-arrow">→ →</div>
+        <div class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M7 15l3-4 3 3 4-6"/>
+          </svg>
+        </div>
+        <div class="entry-body">
+          <div class="entry-label">SALES WORKBENCH 2.0</div>
+          <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（开发评审用）</span></div>
+          <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · REVIEW</div>
+          <div class="entry-arrow">→ →</div>
+        </div>
       </a>
       <a class="entry-card entry-card--crm" href="1. 需求迭代/0. 菜单项/_req-entry.html">
         <span class="card-corner card-corner--tl"></span>
         <span class="card-corner card-corner--tr"></span>
         <span class="card-corner card-corner--bl"></span>
         <span class="card-corner card-corner--br"></span>
-        <div class="entry-icon">◎</div>
-        <div class="entry-label">CRM PROTOTYPE</div>
-        <div class="entry-title">CRM需求原型迭代入口</div>
-        <div class="entry-meta">// MODULE: CRM_V2.0</div>
-        <div class="entry-arrow">→ →</div>
+        <div class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/>
+          </svg>
+        </div>
+        <div class="entry-body">
+          <div class="entry-label">CRM PROTOTYPE</div>
+          <div class="entry-title">CRM需求原型迭代入口</div>
+          <div class="entry-meta">// MODULE: CRM_V2.0</div>
+          <div class="entry-arrow">→ →</div>
+        </div>
       </a>
       <a class="entry-card entry-card--cs" href="2. CRM工作台/3. 留存客服工作台2.0/留存客服工作台.html">
         <span class="card-corner card-corner--tl"></span>
         <span class="card-corner card-corner--tr"></span>
         <span class="card-corner card-corner--bl"></span>
         <span class="card-corner card-corner--br"></span>
-        <div class="entry-icon">◈</div>
-        <div class="entry-label">RETENTION CS 2.0</div>
-        <div class="entry-title">留存客服工作台2.0方案</div>
-        <div class="entry-meta">// MODULE: RETENTION_CS_V2.0</div>
-        <div class="entry-arrow">→ →</div>
+        <div class="entry-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 14v-2a8 8 0 0 1 16 0v2"/>
+            <path d="M4 14h3v5H5.5A1.5 1.5 0 0 1 4 17.5z"/>
+            <path d="M20 14h-3v5h1.5a1.5 1.5 0 0 0 1.5-1.5z"/>
+          </svg>
+        </div>
+        <div class="entry-body">
+          <div class="entry-label">RETENTION CS 2.0</div>
+          <div class="entry-title">留存客服工作台2.0方案</div>
+          <div class="entry-meta">// MODULE: RETENTION_CS_V2.0</div>
+          <div class="entry-arrow">→ →</div>
+        </div>
       </a>
     </div>
   </div>
