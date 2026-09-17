@@ -351,6 +351,7 @@
     .entry-list {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       gap: 28px;
       justify-content: center;
       align-items: stretch;
@@ -421,6 +422,10 @@
       background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, rgba(224,242,254,0.5) 100%);
     }
 
+    .entry-card--cs {
+      background: linear-gradient(160deg, rgba(255,255,255,0.7) 0%, rgba(207,250,254,0.5) 100%);
+    }
+
     .entry-icon {
       position: relative;
       z-index: 1;
@@ -439,6 +444,7 @@
 
     .entry-card--crm .entry-icon { color: var(--blue-mid); }
     .entry-card--workbench .entry-icon { color: #0369a1; }
+    .entry-card--cs .entry-icon { color: #0e7490; }
 
     .entry-label {
       position: relative;
@@ -761,6 +767,17 @@
         <div class="entry-label">SALES WORKBENCH 2.0</div>
         <div class="entry-title">销售工作台2.0方案<br><span class="entry-title-sub">（开发评审用）</span></div>
         <div class="entry-meta">// MODULE: SALES_KPI_V2.0 · REVIEW</div>
+        <div class="entry-arrow">→ →</div>
+      </a>
+      <a class="entry-card entry-card--cs" href="2. CRM工作台/3. 留存客服工作台2.0/留存客服工作台.html">
+        <span class="card-corner card-corner--tl"></span>
+        <span class="card-corner card-corner--tr"></span>
+        <span class="card-corner card-corner--bl"></span>
+        <span class="card-corner card-corner--br"></span>
+        <div class="entry-icon">◈</div>
+        <div class="entry-label">RETENTION CS 2.0</div>
+        <div class="entry-title">留存客服工作台2.0方案</div>
+        <div class="entry-meta">// MODULE: RETENTION_CS_V2.0</div>
         <div class="entry-arrow">→ →</div>
       </a>
     </div>
