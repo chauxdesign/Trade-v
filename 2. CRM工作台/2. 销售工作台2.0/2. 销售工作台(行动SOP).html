@@ -2013,10 +2013,10 @@
     }
     .alert-task-chip.warn strong{color:#dc2626}
     .alert-task-chip.new{
-      background:linear-gradient(135deg,#ecfdf5,#f0fdf4);
-      border-color:#bbf7d0;
+      background:linear-gradient(135deg,#eff6ff,#f0f9ff);
+      border-color:#bfdbfe;
     }
-    .alert-task-chip.new strong{color:#059669}
+    .alert-task-chip.new strong{color:#1d4ed8}
     .alert-task-split{
       display:flex;flex-direction:column;gap:4px;
     }
@@ -2079,6 +2079,32 @@
     .alert-task-card--ok .alert-task-card-head{background:linear-gradient(135deg,#ecfdf5,#f0fdf4)}
     .alert-task-card--mid .alert-task-card-head{background:linear-gradient(135deg,#fffbeb,#fefce8)}
     .alert-task-card--urgent .alert-task-card-head{background:linear-gradient(135deg,#fef2f2,#fff1f2)}
+    .alert-task-grid--risk .alert-task-card,
+    .alert-task-grid--risk .alert-task-card--ok,
+    .alert-task-grid--risk .alert-task-card--mid,
+    .alert-task-grid--risk .alert-task-card--urgent{
+      border-color:#bfdbfe;background:#fff;
+    }
+    .alert-task-grid--risk .alert-task-card-head,
+    .alert-task-grid--risk .alert-task-card--ok .alert-task-card-head,
+    .alert-task-grid--risk .alert-task-card--mid .alert-task-card-head,
+    .alert-task-grid--risk .alert-task-card--urgent .alert-task-card-head{
+      background:linear-gradient(135deg,#eff6ff,#f0f9ff);
+      border-bottom-color:#bfdbfe;
+    }
+    .alert-task-grid--daily .alert-task-card,
+    .alert-task-grid--daily .alert-task-card--ok,
+    .alert-task-grid--daily .alert-task-card--mid,
+    .alert-task-grid--daily .alert-task-card--urgent{
+      border-color:#fde68a;background:#fff;
+    }
+    .alert-task-grid--daily .alert-task-card-head,
+    .alert-task-grid--daily .alert-task-card--ok .alert-task-card-head,
+    .alert-task-grid--daily .alert-task-card--mid .alert-task-card-head,
+    .alert-task-grid--daily .alert-task-card--urgent .alert-task-card-head{
+      background:linear-gradient(135deg,#fffbeb,#fefce8);
+      border-bottom-color:#fde68a;
+    }
     .alert-task-card-name{
       width:100%;max-width:100%;
       font-size:12px;font-weight:800;color:#0f172a;line-height:1.3;
@@ -2101,12 +2127,12 @@
     .alert-task-bar{
       height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;
     }
-    .alert-task-bar-fill{
+    .alert-task-bar-fill,
+    .alert-task-bar-fill.mid,
+    .alert-task-bar-fill.low{
       height:100%;border-radius:3px;
       background:linear-gradient(90deg,#34d399,#10b981);
     }
-    .alert-task-bar-fill.mid{background:linear-gradient(90deg,#fcd34d,#f59e0b)}
-    .alert-task-bar-fill.low{background:linear-gradient(90deg,#fca5a5,#ef4444)}
     .alert-task-rate{
       font-size:10px;font-weight:700;color:#64748b;text-align:right;
       display:block;margin-top:4px;
@@ -2116,6 +2142,7 @@
       border-top:1px dashed #eef2f7;background:#fafbfc;font-size:9px;color:#64748b;
     }
     .alert-task-card-meta strong{color:#0f172a;font-weight:800}
+    .alert-task-card-meta .meta-overdue,
     .alert-task-card-meta .meta-overdue strong{color:#dc2626}
     @media(max-width:1200px){
       .alert-task-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -3134,6 +3161,7 @@
       border-color:#bfdbfe;
     }
     .task-rank-panel .rev-hero-card--mine .rev-hero-val{color:#2563eb}
+    body[data-view="sales"] .task-rank-panel .rev-rank-hero{display:none;margin:0}
     .task-rank-panel .revenue-rank-table .rank-val-main{color:#2563eb}
     .task-rank-panel .rank-mini-bar-fill{
       background:linear-gradient(90deg,#93c5fd,#3b82f6);
@@ -5305,11 +5333,11 @@
               <div class="module-head-row">
                 <h2>每日预警任务</h2>
                 <div class="rank-date-chips alert-task-period-chips" role="tablist" aria-label="每日预警任务统计周期">
-                  <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-alert-task-period="today" onclick="switchAlertTaskModulePeriod('today', this)">今日</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="today" onclick="switchAlertTaskModulePeriod('today', this)">今日</button>
                   <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="yesterday" onclick="switchAlertTaskModulePeriod('yesterday', this)">昨日</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="week" onclick="switchAlertTaskModulePeriod('week', this)">本周</button>
+                  <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-alert-task-period="week" onclick="switchAlertTaskModulePeriod('week', this)">本周</button>
                   <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="month" onclick="switchAlertTaskModulePeriod('month', this)">本月</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="lastmonth" onclick="switchAlertTaskModulePeriod('lastmonth', this)">上月</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="quarter" onclick="switchAlertTaskModulePeriod('quarter', this)">本季度</button>
                 </div>
               </div>
               <p class="kpi-intro sales-only">预警任务与日常任务 · 轻量分类查看完成进度、待处理与超时情况</p>
@@ -5319,7 +5347,7 @@
               <div class="sales-only">
                 <div class="alert-task-summary">
                   <div class="alert-task-chip highlight">
-                    <span>下发任务总数</span>
+                    <span>任务下发总数</span>
                     <strong>54</strong>
                   </div>
                   <div class="alert-task-chip">
@@ -5327,24 +5355,28 @@
                     <strong>40</strong>
                   </div>
                   <div class="alert-task-chip">
-                    <span>待处理</span>
+                    <span>待完成</span>
                     <strong>14</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>完成率</span>
                     <strong>74%</strong>
                   </div>
-                  <div class="alert-task-chip">
-                    <span>今日完成率</span>
-                    <strong>85%</strong>
-                  </div>
                   <div class="alert-task-chip new">
                     <span>今日新增</span>
                     <strong>12</strong>
                   </div>
+                  <div class="alert-task-chip new">
+                    <span>今日完成</span>
+                    <strong>10</strong>
+                  </div>
+                  <div class="alert-task-chip new">
+                    <span>今日完成率</span>
+                    <strong>85%</strong>
+                  </div>
                   <div class="alert-task-chip warn">
-                    <span>超时任务</span>
-                    <strong>4</strong>
+                    <span>超时24h</span>
+                    <strong>2</strong>
                   </div>
                 </div>
                 <div class="alert-task-split">
@@ -5353,7 +5385,7 @@
                     <span class="alert-task-band-line"></span>
                     <span class="alert-task-band-count">10 类</span>
                   </div>
-                  <div class="alert-task-grid">
+                  <div class="alert-task-grid alert-task-grid--risk">
                   <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">AI总结待确认</span>
@@ -5367,7 +5399,7 @@
                       <span class="alert-task-rate">60%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
+                      <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>2</strong></span>
                       
                     </div>
@@ -5424,7 +5456,7 @@
                       <span class="alert-task-rate">78%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
+                      <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>2</strong></span>
                       
                     </div>
@@ -5487,7 +5519,7 @@
                     </div>
                   </article>
 
-                  <article class="alert-task-card alert-task-card--urgent">
+                  <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">高风险流失挽回</span>
                     </div>
@@ -5500,7 +5532,7 @@
                       <span class="alert-task-rate">83%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
+                      <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>1</strong></span>
                       
                     </div>
@@ -5525,7 +5557,7 @@
                     </div>
                   </article>
 
-                  <article class="alert-task-card alert-task-card--ok">
+                  <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">提现预警</span>
                     </div>
@@ -5538,7 +5570,7 @@
                       <span class="alert-task-rate">75%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span>超时 <strong>0</strong></span>
+                      <span class="meta-overdue">超时 <strong>1</strong></span>
                       <span>今日新增 <strong>0</strong></span>
                       
                     </div>
@@ -5550,7 +5582,7 @@
                     <span class="alert-task-band-line"></span>
                     <span class="alert-task-band-count">4 类</span>
                   </div>
-                  <div class="alert-task-grid">
+                  <div class="alert-task-grid alert-task-grid--daily">
                   <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">意见反馈</span>
@@ -5633,32 +5665,36 @@
               <div class="manager-only">
                 <div class="alert-task-summary">
                   <div class="alert-task-chip highlight">
-                    <span>团队下发任务总数</span>
-                    <strong>432</strong>
+                    <span>任务下发总数</span>
+                    <strong>918</strong>
                   </div>
                   <div class="alert-task-chip">
-                    <span>团队已完成</span>
-                    <strong>316</strong>
+                    <span>已完成</span>
+                    <strong>680</strong>
                   </div>
                   <div class="alert-task-chip">
-                    <span>团队待处理</span>
-                    <strong>116</strong>
+                    <span>待完成</span>
+                    <strong>238</strong>
                   </div>
                   <div class="alert-task-chip">
-                    <span>团队完成率</span>
-                    <strong>73%</strong>
-                  </div>
-                  <div class="alert-task-chip">
-                    <span>团队今日完成率</span>
+                    <span>完成率</span>
                     <strong>74%</strong>
                   </div>
                   <div class="alert-task-chip new">
                     <span>今日新增</span>
-                    <strong>96</strong>
+                    <strong>204</strong>
+                  </div>
+                  <div class="alert-task-chip new">
+                    <span>今日完成</span>
+                    <strong>170</strong>
+                  </div>
+                  <div class="alert-task-chip new">
+                    <span>今日完成率</span>
+                    <strong>85%</strong>
                   </div>
                   <div class="alert-task-chip warn">
-                    <span>团队超时任务</span>
-                    <strong>22</strong>
+                    <span>超时24h</span>
+                    <strong>34</strong>
                   </div>
                 </div>
                 <div class="alert-task-split">
@@ -5667,7 +5703,7 @@
                     <span class="alert-task-band-line"></span>
                     <span class="alert-task-band-count">10 类</span>
                   </div>
-                  <div class="alert-task-grid">
+                  <div class="alert-task-grid alert-task-grid--risk">
                   <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">AI总结待确认</span>
@@ -5675,15 +5711,15 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>24<em> / 40</em></strong>
+                        <strong>51<em> / 85</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:60%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:60%"></div></div>
                       <span class="alert-task-rate">60%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>3</strong></span>
-                      <span>今日新增 <strong>16</strong></span>
-                      <span>人均 <strong>4.0</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>34</strong></span>
+                      <span>人均 <strong>3.0</strong></span>
                     </div>
                   </article>
 
@@ -5694,14 +5730,14 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>16<em> / 24</em></strong>
+                        <strong>34<em> / 51</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:67%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:67%"></div></div>
                       <span class="alert-task-rate">67%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>2</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>2.0</strong></span>
                     </div>
                   </article>
@@ -5713,15 +5749,15 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>14<em> / 16</em></strong>
+                        <strong>34<em> / 34</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:88%"></div></div>
-                      <span class="alert-task-rate">88%</span>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:100%"></div></div>
+                      <span class="alert-task-rate">100%</span>
                     </div>
                     <div class="alert-task-card-meta">
                       <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>0</strong></span>
-                      <span>人均 <strong>1.8</strong></span>
+                      <span>人均 <strong>2.0</strong></span>
                     </div>
                   </article>
 
@@ -5732,14 +5768,14 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>56<em> / 72</em></strong>
+                        <strong>119<em> / 153</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:78%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:78%"></div></div>
                       <span class="alert-task-rate">78%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>4</strong></span>
-                      <span>今日新增 <strong>16</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>34</strong></span>
                       <span>人均 <strong>7.0</strong></span>
                     </div>
                   </article>
@@ -5751,14 +5787,14 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>16<em> / 24</em></strong>
+                        <strong>34<em> / 51</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:67%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:67%"></div></div>
                       <span class="alert-task-rate">67%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>2.0</strong></span>
                     </div>
                   </article>
@@ -5770,13 +5806,13 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>8<em> / 16</em></strong>
+                        <strong>17<em> / 34</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill low" style="width:50%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:50%"></div></div>
                       <span class="alert-task-rate">50%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>3</strong></span>
+                      <span class="meta-overdue">超时 <strong>17</strong></span>
                       <span>今日新增 <strong>0</strong></span>
                       <span>人均 <strong>1.0</strong></span>
                     </div>
@@ -5789,33 +5825,33 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>32<em> / 40</em></strong>
+                        <strong>68<em> / 85</em></strong>
                       </div>
                       <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:80%"></div></div>
                       <span class="alert-task-rate">80%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>4.0</strong></span>
                     </div>
                   </article>
 
-                  <article class="alert-task-card alert-task-card--urgent">
+                  <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">高风险流失挽回</span>
                     </div>
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>40<em> / 48</em></strong>
+                        <strong>85<em> / 102</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:83%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:83%"></div></div>
                       <span class="alert-task-rate">83%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>4</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>5.0</strong></span>
                     </div>
                   </article>
@@ -5827,32 +5863,32 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>8<em> / 16</em></strong>
+                        <strong>17<em> / 34</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:50%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:50%"></div></div>
                       <span class="alert-task-rate">50%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>1.0</strong></span>
                     </div>
                   </article>
 
-                  <article class="alert-task-card alert-task-card--ok">
+                  <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">提现预警</span>
                     </div>
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>24<em> / 32</em></strong>
+                        <strong>51<em> / 68</em></strong>
                       </div>
                       <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:75%"></div></div>
                       <span class="alert-task-rate">75%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
+                      <span class="meta-overdue">超时 <strong>17</strong></span>
                       <span>今日新增 <strong>0</strong></span>
                       <span>人均 <strong>3.0</strong></span>
                     </div>
@@ -5864,22 +5900,22 @@
                     <span class="alert-task-band-line"></span>
                     <span class="alert-task-band-count">4 类</span>
                   </div>
-                  <div class="alert-task-grid">
-                  <article class="alert-task-card alert-task-card--urgent">
+                  <div class="alert-task-grid alert-task-grid--daily">
+                  <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">意见反馈</span>
                     </div>
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>8<em> / 16</em></strong>
+                        <strong>17<em> / 34</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:50%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:50%"></div></div>
                       <span class="alert-task-rate">50%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>1.0</strong></span>
                     </div>
                   </article>
@@ -5891,15 +5927,15 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>14<em> / 16</em></strong>
+                        <strong>34<em> / 34</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:88%"></div></div>
-                      <span class="alert-task-rate">88%</span>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:100%"></div></div>
+                      <span class="alert-task-rate">100%</span>
                     </div>
                     <div class="alert-task-card-meta">
                       <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>0</strong></span>
-                      <span>人均 <strong>1.8</strong></span>
+                      <span>人均 <strong>2.0</strong></span>
                     </div>
                   </article>
 
@@ -5910,14 +5946,14 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>40<em> / 48</em></strong>
+                        <strong>85<em> / 102</em></strong>
                       </div>
                       <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:83%"></div></div>
                       <span class="alert-task-rate">83%</span>
                     </div>
                     <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>1</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>超时 <strong>0</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>5.0</strong></span>
                     </div>
                   </article>
@@ -5929,14 +5965,14 @@
                     <div class="alert-task-card-body">
                       <div class="alert-task-card-progress">
                         <span>已完成 / 总数</span>
-                        <strong>16<em> / 24</em></strong>
+                        <strong>34<em> / 51</em></strong>
                       </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:67%"></div></div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:67%"></div></div>
                       <span class="alert-task-rate">67%</span>
                     </div>
                     <div class="alert-task-card-meta">
                       <span>超时 <strong>0</strong></span>
-                      <span>今日新增 <strong>8</strong></span>
+                      <span>今日新增 <strong>17</strong></span>
                       <span>人均 <strong>2.0</strong></span>
                     </div>
                   </article>
@@ -6629,21 +6665,6 @@
 
               <div class="rev-rank-tab-panel active" data-task-panel="risk" role="tabpanel">
                 <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">186 项</div>
-                    <div class="rev-hero-sub">10 类预警任务</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">完成数 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">24 项 · 占 12.9%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine sales-only">
-                    <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">22 项</div>
-                    <div class="rev-hero-sub">排名第 2 · 超均值 +6%</div>
-                  </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
                     <div class="rev-hero-val">20.7 项</div>
@@ -6668,7 +6689,7 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>20.7 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
-                  <span class="rev-rank-chip">待处理高危 <strong>42 项</strong></span>
+                  <span class="rev-rank-chip">团队平均占比 <strong>11.1%</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
                   <div class="rev-rank-self-line rev-rank-self-line--main">
@@ -6694,21 +6715,6 @@
 
               <div class="rev-rank-tab-panel" data-task-panel="daily" role="tabpanel">
                 <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">142 项</div>
-                    <div class="rev-hero-sub">4 类日常任务</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">完成数 TOP1</div>
-                    <div class="rev-hero-val">May</div>
-                    <div class="rev-hero-sub">18 项 · 占 12.7%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine sales-only">
-                    <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">18 项</div>
-                    <div class="rev-hero-sub">排名第 1 · 超均值 +14%</div>
-                  </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
                     <div class="rev-hero-val">15.8 项</div>
@@ -6760,21 +6766,6 @@
               <div class="rev-rank-tab-panel gca-pending-wrap" data-task-panel="marketing" role="tabpanel" aria-label="本期暂不开发">
                 <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
                 <div class="rev-rank-hero">
-                  <div class="rev-hero-card">
-                    <div class="rev-hero-label">团队完成数</div>
-                    <div class="rev-hero-val">132 项</div>
-                    <div class="rev-hero-sub">4 类营销任务</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--gold">
-                    <div class="rev-hero-label">完成数 TOP1</div>
-                    <div class="rev-hero-val">Coulson</div>
-                    <div class="rev-hero-sub">17 项 · 占 12.9%</div>
-                  </div>
-                  <div class="rev-hero-card rev-hero-card--mine sales-only">
-                    <div class="rev-hero-label">我的完成数</div>
-                    <div class="rev-hero-val">15 项</div>
-                    <div class="rev-hero-sub">排名第 3 · 超均值 +2%</div>
-                  </div>
                   <div class="rev-hero-card rev-hero-card--gold manager-only">
                     <div class="rev-hero-label">人均完成数</div>
                     <div class="rev-hero-val">14.7 项</div>
@@ -7471,13 +7462,13 @@
       <button type="button" class="alert-task-follow-close" onclick="closeAlertTaskFollowModal()" aria-label="关闭">×</button>
     </div>
     <div class="alert-task-follow-body">
-      <p class="alert-task-follow-intro">统计范围：<strong class="alert-task-follow-period-label">今日</strong> · 各销售在当前任务类型下的跟进汇总</p>
+      <p class="alert-task-follow-intro">统计范围：<strong class="alert-task-follow-period-label">本周</strong> · 各销售在当前任务类型下的跟进汇总</p>
       <div class="rank-date-chips" role="tablist" aria-label="时间范围">
-        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="today" onclick="switchAlertTaskFollowPeriod('today', this)">今日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="today" onclick="switchAlertTaskFollowPeriod('today', this)">今日</button>
         <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="yesterday" onclick="switchAlertTaskFollowPeriod('yesterday', this)">昨日</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="week" onclick="switchAlertTaskFollowPeriod('week', this)">本周</button>
+        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="week" onclick="switchAlertTaskFollowPeriod('week', this)">本周</button>
         <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="month" onclick="switchAlertTaskFollowPeriod('month', this)">本月</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="lastmonth" onclick="switchAlertTaskFollowPeriod('lastmonth', this)">上月</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="quarter" onclick="switchAlertTaskFollowPeriod('quarter', this)">本季度</button>
       </div>
       <div class="alert-task-follow-table-wrap">
         <table class="alert-task-follow-table">
@@ -9749,20 +9740,21 @@ var ALERT_TASK_FOLLOW_PERIODS = {
   yesterday: '昨日',
   week: '本周',
   month: '本月',
-  lastmonth: '上月',
+  quarter: '本季度',
   all: '历史至今'
 };
 var _alertTaskFollowType = '';
-var _alertTaskFollowPeriod = 'today';
-var _alertTaskModulePeriod = 'today';
+var _alertTaskFollowPeriod = 'week';
+var _alertTaskModulePeriod = 'week';
 var ALERT_TASK_MODULE_PERIOD_FLOW = {
   today: 1,
   yesterday: 0.92,
-  week: 5.2,
-  month: 18,
-  lastmonth: 16.5
+  week: 8,
+  month: 28,
+  quarter: 80
 };
 var _alertTaskFollowExpandedGroups = {};
+var _alertTaskFollowDistCache = {};
 var ALERT_TASK_FOLLOW_TEAM_LABEL = '团队整体进度';
 var ALERT_TASK_DETAIL_PAGE_SIZE = 10;
 var ALERT_TASK_DETAIL_MIN_ROWS = 15;
@@ -9942,19 +9934,141 @@ function buildAlertTaskFollowRows(taskType, period) {
   }).sort(function (a, b) { return b.rate - a.rate || b.completed - a.completed; });
 }
 
-function buildAlertTaskFollowRowForName(name, taskType, period) {
+/** 读取任务卡片在指定周期下的总量，作为跟进弹窗的拆分基数（scope：manager 团队 / sales 本人） */
+function getAlertTaskCardTotals(taskType, period, scope) {
+  var cards = document.querySelectorAll('.alert-task-section .' + scope + '-only .alert-task-card');
+  var matched = null;
+  cards.forEach(function (card) {
+    var nameEl = card.querySelector('.alert-task-card-name');
+    if (nameEl && nameEl.textContent.trim() === taskType) matched = card;
+  });
+  if (!matched) return null;
+  captureAlertTaskCardBaseline(matched);
+  var factor = ALERT_TASK_MODULE_PERIOD_FLOW[period] || 1;
+  var assigned = Math.max(0, Math.round((parseInt(matched.dataset.alertBaseTotal, 10) || 0) * factor));
+  var completed = Math.min(assigned, Math.max(0, Math.round((parseInt(matched.dataset.alertBaseDone, 10) || 0) * factor)));
+  var added = Math.max(0, parseInt(matched.dataset.alertBaseNew, 10) || 0);
+  return {
+    assigned: assigned,
+    completed: completed,
+    overdue: Math.max(0, assigned - completed - added)
+  };
+}
+
+function getAlertTaskManagerCardTotals(taskType, period) {
+  return getAlertTaskCardTotals(taskType, period, 'manager');
+}
+
+/** 按权重把总量拆成整数份，合计严格等于 total */
+function allocateAlertTaskFollowTotal(total, weights, caps) {
+  var n = weights.length;
+  var out = [];
+  var i;
+  var weightSum = 0;
+  for (i = 0; i < n; i++) weightSum += weights[i];
+  for (i = 0; i < n; i++) {
+    out.push(weightSum > 0 ? Math.floor(total * weights[i] / weightSum) : 0);
+  }
+  if (caps) {
+    for (i = 0; i < n; i++) out[i] = Math.min(out[i], caps[i]);
+  }
+  var placed = 0;
+  for (i = 0; i < n; i++) placed += out[i];
+  var remain = total - placed;
+  var guard = 0;
+  while (remain > 0 && guard < total + n * 2) {
+    var moved = false;
+    for (i = 0; i < n && remain > 0; i++) {
+      if (caps && out[i] >= caps[i]) continue;
+      out[i]++;
+      remain--;
+      moved = true;
+    }
+    if (!moved) break;
+    guard++;
+  }
+  return out;
+}
+
+function buildAlertTaskFollowDistribution(taskType, period) {
   var names = getCommStatsManagerSalesNames();
-  var i = names.indexOf(name);
-  if (i < 0) i = 0;
+  var totals = getAlertTaskManagerCardTotals(taskType, period);
   var seed = alertTaskFollowSeed(taskType + '|' + period);
-  var periodMul = period === 'week' ? 5 : period === 'month' ? 14 : period === 'lastmonth' ? 13 : 1;
-  var s = seed + i * 97;
-  var assigned = Math.max(1, (3 + (s % 12)) * periodMul);
-  var ratePct = 52 + (s % 46);
-  var completed = Math.min(assigned, Math.round(assigned * ratePct / 100));
-  var overdue = Math.min(assigned - completed, s % 5);
-  var rate = assigned ? Math.round(completed / assigned * 100) : 0;
-  return { name: name, assigned: assigned, completed: completed, overdue: overdue, rate: rate };
+  var dist = {};
+  var i;
+  if (!totals) {
+    // 卡片中没有该任务类型（如营销活动任务）时退回模拟数据
+    var periodMul = period === 'week' ? 8 : period === 'month' ? 28 : period === 'quarter' ? 80 : 1;
+    for (i = 0; i < names.length; i++) {
+      var s = seed + i * 97;
+      var a = Math.max(1, (3 + (s % 12)) * periodMul);
+      var c = Math.min(a, Math.round(a * (52 + (s % 46)) / 100));
+      dist[names[i]] = {
+        name: names[i], assigned: a, completed: c,
+        overdue: Math.min(a - c, s % 5),
+        rate: a ? Math.round(c / a * 100) : 0
+      };
+    }
+    return dist;
+  }
+  // 本人一行与销售视角卡片保持完全一致，其余成员分摊剩余量
+  var mine = getAlertTaskCardTotals(taskType, period, 'sales');
+  var selfIdx = names.indexOf(COMM_STATS_CURRENT_SALES);
+  if (!mine || selfIdx < 0 ||
+      mine.assigned > totals.assigned ||
+      mine.completed > totals.completed ||
+      mine.overdue > totals.overdue) {
+    mine = null;
+    selfIdx = -1;
+  }
+  var others = [];
+  for (i = 0; i < names.length; i++) {
+    if (i !== selfIdx) others.push(i);
+  }
+  var restAssigned = totals.assigned - (mine ? mine.assigned : 0);
+  var restCompleted = totals.completed - (mine ? mine.completed : 0);
+  var restOverdue = totals.overdue - (mine ? mine.overdue : 0);
+  var assignedWeights = [];
+  var completedWeights = [];
+  for (i = 0; i < others.length; i++) {
+    assignedWeights.push(14 + ((seed + others[i] * 97) % 5));
+    completedWeights.push(14 + ((seed + others[i] * 131) % 5));
+  }
+  var assignedList = allocateAlertTaskFollowTotal(restAssigned, assignedWeights, null);
+  var completedList = allocateAlertTaskFollowTotal(restCompleted, completedWeights, assignedList);
+  var overdueCaps = [];
+  for (i = 0; i < others.length; i++) {
+    overdueCaps.push(Math.max(0, assignedList[i] - completedList[i]));
+  }
+  var overdueList = allocateAlertTaskFollowTotal(restOverdue, overdueCaps, overdueCaps);
+  if (mine) {
+    dist[names[selfIdx]] = {
+      name: names[selfIdx],
+      assigned: mine.assigned,
+      completed: mine.completed,
+      overdue: mine.overdue,
+      rate: mine.assigned ? Math.round(mine.completed / mine.assigned * 100) : 0
+    };
+  }
+  for (i = 0; i < others.length; i++) {
+    dist[names[others[i]]] = {
+      name: names[others[i]],
+      assigned: assignedList[i],
+      completed: completedList[i],
+      overdue: overdueList[i],
+      rate: assignedList[i] ? Math.round(completedList[i] / assignedList[i] * 100) : 0
+    };
+  }
+  return dist;
+}
+
+function buildAlertTaskFollowRowForName(name, taskType, period) {
+  var key = taskType + '|' + period;
+  if (!_alertTaskFollowDistCache[key]) {
+    _alertTaskFollowDistCache[key] = buildAlertTaskFollowDistribution(taskType, period);
+  }
+  var row = _alertTaskFollowDistCache[key][name];
+  return row || { name: name, assigned: 0, completed: 0, overdue: 0, rate: 0 };
 }
 
 function aggregateAlertTaskFollowRows(rows) {
@@ -10053,7 +10167,7 @@ function formatAlertTaskUpdateTime() {
 
 function buildAlertTaskDateTime(seed, offsetHours) {
   var base = new Date(2026, 5, 1, 9, 0, 0);
-  var dayShift = _alertTaskFollowPeriod === 'week' ? (seed % 5) : _alertTaskFollowPeriod === 'month' ? (seed % 20) : _alertTaskFollowPeriod === 'lastmonth' ? (seed % 18) + 5 : 0;
+  var dayShift = _alertTaskFollowPeriod === 'week' ? (seed % 5) : _alertTaskFollowPeriod === 'month' ? (seed % 20) : _alertTaskFollowPeriod === 'quarter' ? (seed % 70) + 5 : 0;
   base.setDate(base.getDate() - dayShift);
   base.setHours(8 + (seed % 10), (seed * 7 + offsetHours * 13) % 60, 0, 0);
   return base.getFullYear() + '-' + padAlertTaskNum(base.getMonth() + 1) + '-' + padAlertTaskNum(base.getDate()) +
@@ -11142,7 +11256,7 @@ function openAlertTaskFollowModal(taskType) {
   var modal = document.getElementById('alertTaskFollowModal');
   if (!modal || !taskType) return;
   _alertTaskFollowType = taskType;
-  _alertTaskFollowPeriod = _alertTaskModulePeriod || 'today';
+  _alertTaskFollowPeriod = _alertTaskModulePeriod || 'week';
   var typeEl = document.getElementById('alertTaskFollowType');
   if (typeEl) typeEl.textContent = taskType;
   var labelEl = modal.querySelector('.alert-task-follow-period-label');
@@ -11212,15 +11326,16 @@ function applyAlertTaskCardPeriod(card, factor) {
   captureAlertTaskCardBaseline(card);
   var total = Math.max(0, Math.round((parseInt(card.dataset.alertBaseTotal, 10) || 0) * factor));
   var done = Math.min(total, Math.max(0, Math.round((parseInt(card.dataset.alertBaseDone, 10) || 0) * factor)));
-  var overdue = Math.max(0, Math.round((parseInt(card.dataset.alertBaseOverdue, 10) || 0) * factor));
-  var added = Math.max(0, Math.round((parseInt(card.dataset.alertBaseNew, 10) || 0) * factor));
+  var added = Math.max(0, parseInt(card.dataset.alertBaseNew, 10) || 0);
+  var pending = Math.max(0, total - done);
+  var overdue = Math.max(0, pending - added);
   var rate = total ? Math.round(done / total * 100) : 0;
   var strongEl = card.querySelector('.alert-task-card-progress strong');
   if (strongEl) strongEl.innerHTML = done + '<em> / ' + total + '</em>';
   var bar = card.querySelector('.alert-task-bar-fill');
   if (bar) {
     bar.style.width = Math.min(100, rate) + '%';
-    bar.className = 'alert-task-bar-fill' + (rate >= 85 ? '' : rate >= 60 ? ' mid' : ' low');
+    bar.className = 'alert-task-bar-fill';
   }
   var rateEl = card.querySelector('.alert-task-rate');
   if (rateEl) rateEl.textContent = rate + '%';
@@ -11233,8 +11348,6 @@ function applyAlertTaskCardPeriod(card, factor) {
   }
   var overdueWrap = card.querySelector('.alert-task-card-meta span:first-child');
   if (overdueWrap) overdueWrap.classList.toggle('meta-overdue', overdue > 0);
-  var tone = overdue > 0 && rate < 70 ? 'urgent' : rate >= 85 ? 'ok' : 'mid';
-  card.className = 'alert-task-card alert-task-card--' + tone;
 }
 
 function refreshAlertTaskSummaryFromCards(root) {
@@ -11254,15 +11367,13 @@ function refreshAlertTaskSummaryFromCards(root) {
   var pending = Math.max(0, assigned - done);
   var rate = assigned ? Math.round(done / assigned * 100) : 0;
   var chips = root.querySelectorAll('.alert-task-summary .alert-task-chip strong');
-  if (chips.length < 7) return;
-  if (!root.dataset.alertBaseTodayRate) root.dataset.alertBaseTodayRate = chips[4].textContent.trim();
+  if (chips.length < 8) return;
   chips[0].textContent = String(assigned);
   chips[1].textContent = String(done);
   chips[2].textContent = String(pending);
   chips[3].textContent = rate + '%';
-  chips[4].textContent = root.dataset.alertBaseTodayRate;
-  chips[5].textContent = String(added);
-  chips[6].textContent = String(overdue);
+  chips[4].textContent = String(added);
+  chips[7].textContent = String(overdue);
 }
 
 function applyAlertTaskModulePeriod(period) {
@@ -14642,7 +14753,7 @@ function handleAlertTaskCardActivate(card) {
     var counts = getAlertTaskCardProgressCounts(card);
     if (!taskType) return;
     _alertTaskFollowType = taskType;
-    _alertTaskFollowPeriod = _alertTaskModulePeriod || 'today';
+    _alertTaskFollowPeriod = _alertTaskModulePeriod || 'week';
     clearAlertTaskDetailCategory();
     var specialMode = getSpecialAlertTaskDetailMode(taskType);
     if (specialMode) {
@@ -14809,7 +14920,7 @@ function randomizeRankNamesInPanel(panel) {
     }
     nameCell.textContent = name;
   });
-  var heroTop = panel.querySelector('.rev-hero-card--gold .rev-hero-val');
+  var heroTop = panel.querySelector('.rev-hero-card--gold:not(.manager-only) .rev-hero-val');
   if (heroTop) heroTop.textContent = names[0];
 }
 
@@ -19706,6 +19817,7 @@ document.body.dataset.view = 'sales';
 randomizeTempMktCardTypes();
 normalizeTempMktRemainingDays();
 initAlertTaskCardInteractions();
+applyAlertTaskModulePeriod(_alertTaskModulePeriod);
 initTempMktCardInteractions();
 initCommStatsCardInteractions();
 applyCommStatsModulePeriod(_commStatsModulePeriod);
