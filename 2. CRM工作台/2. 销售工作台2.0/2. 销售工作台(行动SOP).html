@@ -1395,9 +1395,9 @@
       margin-bottom:4px;min-height:32px;
     }
     .comm-stats-section .module-head-row h2{flex:0 1 auto;min-width:0;margin:0;white-space:nowrap}
-    .comm-stats-period-chips{
-      display:flex;flex-wrap:wrap;gap:5px;flex:1;min-width:0;margin:0;
-      justify-content:flex-start;align-items:center;
+    .comm-qc-band--channel .comm-stats-period-chips{
+      display:flex;flex-wrap:wrap;gap:5px;flex:0 0 auto;min-width:0;margin:0;
+      justify-content:flex-end;align-items:center;
     }
     .comm-stats-section .rank-date-chip:hover{
       border-color:#67e8f9;color:#0e7490;background:#ecfeff;
@@ -1782,8 +1782,8 @@
       box-shadow:0 1px 4px rgba(15,23,42,.06);
     }
     .comm-stats-summary{
-      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;
-      padding-bottom:12px;border-bottom:1px solid #eef2f7;
+      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;
+      padding-bottom:4px;
     }
     .comm-summary-chip{
       flex:1;min-width:96px;padding:8px 10px;border-radius:8px;
@@ -1823,6 +1823,8 @@
     }
     .comm-qc-band--tel .comm-qc-band-label{color:#2563eb}
     .comm-qc-band--cr .comm-qc-band-label{color:#2563eb}
+    .comm-qc-band--channel .comm-qc-band-label{color:#2563eb}
+    .comm-qc-band--channel{padding:6px 0 10px}
     .comm-qc-band-line{flex:1;height:1px;background:#eef2f7}
     .comm-qc-cards{
       display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:8px;
@@ -1969,6 +1971,23 @@
     }
     .alert-task-section .module-head h2::before{
       background:linear-gradient(180deg,#f59e0b,#ef4444);
+    }
+    .alert-task-section .module-head-row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      margin-bottom:4px;min-height:32px;
+    }
+    .alert-task-section .module-head-row h2{flex:0 1 auto;min-width:0;margin:0;white-space:nowrap}
+    .alert-task-section .alert-task-period-chips{
+      display:flex;flex-wrap:wrap;gap:5px;flex:0 0 auto;min-width:0;margin:0 0 0 auto;
+      justify-content:flex-end;align-items:center;align-self:center;
+    }
+    .alert-task-section .rank-date-chip:hover{
+      border-color:#fdba74;color:#c2410c;background:#fff7ed;
+    }
+    .alert-task-section .rank-date-chip.active{
+      background:linear-gradient(135deg,#f59e0b,#ef4444);
+      border-color:#f59e0b;color:#fff;
+      box-shadow:0 2px 8px rgba(245,158,11,.22);
     }
     .alert-task-summary{
       display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;
@@ -2335,6 +2354,8 @@
     .alert-task-follow-table{
       width:100%;border-collapse:collapse;font-size:12px;
     }
+    .alert-task-follow-table tbody tr{transition:background .15s}
+    .alert-task-follow-table tbody tr:hover td{background:#f0f9ff}
     .alert-task-follow-table th,.alert-task-follow-table td{
       padding:8px 10px;text-align:left;border-bottom:1px solid #eef2f7;
       white-space:nowrap;
@@ -2500,7 +2521,7 @@
       pointer-events:none;
     }
     #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table tbody tr:hover td.col-action{
-      background:linear-gradient(90deg,#dbeafe 0,#dbeafe 8px,#f8fafc 28px);
+      background:#f0f9ff;
     }
     #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-cell-stack{
       display:flex;flex-direction:column;gap:2px;white-space:normal;min-width:132px;
@@ -2514,64 +2535,27 @@
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode .alert-task-detail-table th.col-action{
       text-align:center;
     }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table,
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table{
       min-width:0;width:100%;table-layout:auto;
     }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th,
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td{
-      padding:5px 6px;
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th,
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td{
+      padding:8px 8px;
     }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th{
-      white-space:normal;line-height:1.3;font-size:11px;
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-cell-stack{
+      min-width:0;white-space:nowrap;
     }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-cell-stack{
-      min-width:0;gap:1px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-cell-line{
-      font-size:11px;line-height:1.35;
-    }
-    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .alert-task-detail-cell-stack{
-      min-width:0;
-    }
-    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info{
-      min-width:156px;white-space:normal;
-    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info,
     #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric{
-      min-width:108px;white-space:normal;
+      width:auto;min-width:0;max-width:none;white-space:nowrap;
     }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table{
-      table-layout:fixed;font-size:11px;
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table .col-status{
+      width:1%;min-width:0;white-space:nowrap;
     }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table .col-status{
-      width:7%;min-width:52px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info{
-      width:20%;min-width:148px;max-width:none;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric{
-      width:14%;min-width:72px;max-width:112px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th.col-action,
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td.col-action{
-      width:9%;min-width:84px;padding-left:4px;padding-right:6px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .alert-task-detail-cell-line{
-      font-size:11px;line-height:1.35;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-customer-info .col-sid-line{
-      font-size:10px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-churn-metric .alert-task-detail-cell-line{
-      font-size:10px;line-height:1.32;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table .task-status-tag{
-      padding:1px 6px;font-size:9px;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-status{
-      white-space:nowrap;
-    }
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .col-action-links{
-      font-size:11px;
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table th.col-action,
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="high-risk-churn-recovery"] .alert-task-detail-table td.col-action{
+      width:1%;min-width:0;white-space:nowrap;padding-left:8px;padding-right:8px;
     }
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table{
       min-width:0;width:100%;table-layout:fixed;
@@ -2607,12 +2591,14 @@
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(7),
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(7),
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(8),
-    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(8){
-      width:12%;
-    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(8),
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(9),
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(9){
-      width:10%;overflow:visible;text-overflow:clip;
+      width:11%;
+    }
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table th:nth-child(10),
+    body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table td:nth-child(10){
+      width:9%;overflow:visible;text-overflow:clip;
     }
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-order{
       font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -2620,6 +2606,65 @@
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-amount,
     body[data-view="sales"] #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="withdrawal-clearout"] .alert-task-detail-table .col-time{
       font-variant-numeric:tabular-nums;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table-wrap{
+      overflow-x:hidden;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table{
+      min-width:0;width:100%;table-layout:fixed;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th,
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td{
+      padding:8px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(1),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(1){
+      width:11%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(2),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(2){
+      width:13%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(3),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(3){
+      width:13%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(4),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(4){
+      width:11%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(5),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(5){
+      width:13%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(6),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(6),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(7),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(7){
+      width:13%;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th:nth-child(8),
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td:nth-child(8){
+      width:13%;overflow:visible;text-overflow:clip;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th.col-action,
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td.col-action{
+      position:static;min-width:0;max-width:none;width:13%;
+      padding-left:8px;padding-right:8px;
+      border-left:none;background:#fff;box-shadow:none;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th.col-action{
+      background:#f8fafc;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table th.col-action::before,
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table td.col-action::before{
+      content:none;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .alert-task-detail-table tbody tr:hover td.col-action{
+      background:#f0f9ff;
+    }
+    #alertTaskDetailDrawer.is-cancellation-mode[data-detail-mode="ai-summary-pending"] .col-action-links{
+      font-size:12px;
     }
     .alert-task-detail-cell-line .churn-peak-trade-label{color:#64748b}
     .alert-task-detail-cell-line .churn-peak-trade-value{color:#334155}
@@ -2795,6 +2840,8 @@
     .alert-task-detail-table{
       width:100%;border-collapse:collapse;font-size:12px;min-width:960px;
     }
+    .alert-task-detail-table tbody tr{transition:background .15s}
+    .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
     .alert-task-detail-table th,.alert-task-detail-table td{
       padding:8px 10px;text-align:left;border-bottom:1px solid #eef2f7;vertical-align:top;
     }
@@ -4824,19 +4871,12 @@
             <div class="module-head">
               <div class="module-head-row">
                 <h2>客户触达统计</h2>
-                <div class="rank-date-chips comm-stats-period-chips" role="tablist" aria-label="客户触达统计周期">
-                  <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-comm-stats-period="today" onclick="switchCommStatsPeriod('today', this)">今日</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="yesterday" onclick="switchCommStatsPeriod('yesterday', this)">昨日</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="week" onclick="switchCommStatsPeriod('week', this)">本周</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="month" onclick="switchCommStatsPeriod('month', this)">本月</button>
-                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="lastmonth" onclick="switchCommStatsPeriod('lastmonth', this)">上月</button>
-                </div>
                 <div class="comm-stats-head-actions">
                   <button type="button" class="comm-review-entry-btn manager-only" onclick="openCommReviewDrawer()">WhatsApp审核</button>
                 </div>
               </div>
               <p class="kpi-intro sales-only" id="commStatsIntroSales">按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 总览指标为历史至今累计 · 渠道与质检统计范围：<span id="commStatsIntroSalesPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
-              <p class="kpi-intro manager-only" id="commStatsIntroManager">团队按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 总览指标为历史至今累计 · 渠道与质检统计范围：<span id="commStatsIntroManagerPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
+              <p class="kpi-intro manager-only" id="commStatsIntroManager">按渠道拆分 · Call / WhatsApp / Chatroom · 联系 / 回复 / 回复率，以及电话和Chatroom客户沟通的质检分析结果 · 总览指标为历史至今累计 · 渠道与质检统计范围：<span id="commStatsIntroManagerPeriod">今日</span>（<button type="button" class="goal-metric-help-link" onclick="openCommStatsMetricHelpModal()">查看指标说明</button>）</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -4867,7 +4907,18 @@
                   </div>
                   <div class="comm-summary-chip highlight comm-summary-chip--action" data-comm-chip="reply-rate" data-comm-count="264" role="button" tabindex="0" aria-label="查看客户回复明细">
                     <span>客户回复率</span>
-                    <strong>74%</strong>
+                    <strong>55%</strong>
+                  </div>
+                </div>
+                <div class="comm-qc-band comm-qc-band--channel">
+                  <span class="comm-qc-band-label">渠道沟通明细</span>
+                  <span class="comm-qc-band-line"></span>
+                  <div class="rank-date-chips comm-stats-period-chips" role="tablist" aria-label="客户触达统计周期">
+                    <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-comm-stats-period="today" onclick="switchCommStatsPeriod('today', this)">今日</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="yesterday" onclick="switchCommStatsPeriod('yesterday', this)">昨日</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="week" onclick="switchCommStatsPeriod('week', this)">本周</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="month" onclick="switchCommStatsPeriod('month', this)">本月</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="lastmonth" onclick="switchCommStatsPeriod('lastmonth', this)">上月</button>
                   </div>
                 </div>
                 <div class="comm-stats-grid">
@@ -5068,6 +5119,17 @@
                     <strong>75%</strong>
                   </div>
                 </div>
+                <div class="comm-qc-band comm-qc-band--channel">
+                  <span class="comm-qc-band-label">渠道沟通明细</span>
+                  <span class="comm-qc-band-line"></span>
+                  <div class="rank-date-chips comm-stats-period-chips" role="tablist" aria-label="客户触达统计周期">
+                    <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-comm-stats-period="today" onclick="switchCommStatsPeriod('today', this)">今日</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="yesterday" onclick="switchCommStatsPeriod('yesterday', this)">昨日</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="week" onclick="switchCommStatsPeriod('week', this)">本周</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="month" onclick="switchCommStatsPeriod('month', this)">本月</button>
+                    <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-comm-stats-period="lastmonth" onclick="switchCommStatsPeriod('lastmonth', this)">上月</button>
+                  </div>
+                </div>
                 <div class="comm-stats-grid">
                   <article class="comm-channel comm-channel--tel" data-channel-type="tel">
                     <div class="comm-channel-head">
@@ -5240,7 +5302,16 @@
 
           <section class="block large alert-task-section">
             <div class="module-head">
-              <h2>每日预警任务</h2>
+              <div class="module-head-row">
+                <h2>每日预警任务</h2>
+                <div class="rank-date-chips alert-task-period-chips" role="tablist" aria-label="每日预警任务统计周期">
+                  <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-alert-task-period="today" onclick="switchAlertTaskModulePeriod('today', this)">今日</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="yesterday" onclick="switchAlertTaskModulePeriod('yesterday', this)">昨日</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="week" onclick="switchAlertTaskModulePeriod('week', this)">本周</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="month" onclick="switchAlertTaskModulePeriod('month', this)">本月</button>
+                  <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="lastmonth" onclick="switchAlertTaskModulePeriod('lastmonth', this)">上月</button>
+                </div>
+              </div>
               <p class="kpi-intro sales-only">预警任务与日常任务 · 轻量分类查看完成进度、待处理与超时情况</p>
               <p class="kpi-intro manager-only">团队任务概览 · 预警任务与日常任务分类监控</p>
             </div>
@@ -5249,19 +5320,19 @@
                 <div class="alert-task-summary">
                   <div class="alert-task-chip highlight">
                     <span>下发任务总数</span>
-                    <strong>58</strong>
+                    <strong>54</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>已完成</span>
-                    <strong>45</strong>
+                    <strong>40</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>待处理</span>
-                    <strong>13</strong>
+                    <strong>14</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>完成率</span>
-                    <strong>78%</strong>
+                    <strong>74%</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>今日完成率</span>
@@ -5269,20 +5340,39 @@
                   </div>
                   <div class="alert-task-chip new">
                     <span>今日新增</span>
-                    <strong>13</strong>
+                    <strong>12</strong>
                   </div>
                   <div class="alert-task-chip warn">
                     <span>超时任务</span>
-                    <strong>3</strong>
+                    <strong>4</strong>
                   </div>
                 </div>
                 <div class="alert-task-split">
                   <div class="alert-task-band alert-task-band--warn">
                     <span class="alert-task-band-label">预警任务</span>
                     <span class="alert-task-band-line"></span>
-                    <span class="alert-task-band-count">9 类</span>
+                    <span class="alert-task-band-count">10 类</span>
                   </div>
                   <div class="alert-task-grid">
+                  <article class="alert-task-card alert-task-card--mid">
+                    <div class="alert-task-card-head">
+                      <span class="alert-task-card-name">AI总结待确认</span>
+                    </div>
+                    <div class="alert-task-card-body">
+                      <div class="alert-task-card-progress">
+                        <span>已完成 / 总数</span>
+                        <strong>3<em> / 5</em></strong>
+                      </div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:60%"></div></div>
+                      <span class="alert-task-rate">60%</span>
+                    </div>
+                    <div class="alert-task-card-meta">
+                      <span class="meta-overdue">超时 <strong>1</strong></span>
+                      <span>今日新增 <strong>2</strong></span>
+                      
+                    </div>
+                  </article>
+
                   <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">注销挽回</span>
@@ -5458,7 +5548,7 @@
                   <div class="alert-task-band">
                     <span class="alert-task-band-label">日常任务</span>
                     <span class="alert-task-band-line"></span>
-                    <span class="alert-task-band-count">5 类</span>
+                    <span class="alert-task-band-count">4 类</span>
                   </div>
                   <div class="alert-task-grid">
                   <article class="alert-task-card alert-task-card--mid">
@@ -5537,25 +5627,6 @@
                     </div>
                   </article>
 
-                  <article class="alert-task-card alert-task-card--ok">
-                    <div class="alert-task-card-head">
-                      <span class="alert-task-card-name">今日分配</span>
-                    </div>
-                    <div class="alert-task-card-body">
-                      <div class="alert-task-card-progress">
-                        <span>已完成 / 总数</span>
-                        <strong>8<em> / 9</em></strong>
-                      </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:89%"></div></div>
-                      <span class="alert-task-rate">89%</span>
-                    </div>
-                    <div class="alert-task-card-meta">
-                      <span>超时 <strong>0</strong></span>
-                      <span>今日新增 <strong>3</strong></span>
-                      
-                    </div>
-                  </article>
-
                   </div>
                   </div>
               </div>
@@ -5563,19 +5634,19 @@
                 <div class="alert-task-summary">
                   <div class="alert-task-chip highlight">
                     <span>团队下发任务总数</span>
-                    <strong>464</strong>
+                    <strong>432</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>团队已完成</span>
-                    <strong>356</strong>
+                    <strong>316</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>团队待处理</span>
-                    <strong>108</strong>
+                    <strong>116</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>团队完成率</span>
-                    <strong>77%</strong>
+                    <strong>73%</strong>
                   </div>
                   <div class="alert-task-chip">
                     <span>团队今日完成率</span>
@@ -5583,20 +5654,39 @@
                   </div>
                   <div class="alert-task-chip new">
                     <span>今日新增</span>
-                    <strong>104</strong>
+                    <strong>96</strong>
                   </div>
                   <div class="alert-task-chip warn">
                     <span>团队超时任务</span>
-                    <strong>21</strong>
+                    <strong>22</strong>
                   </div>
                 </div>
                 <div class="alert-task-split">
                   <div class="alert-task-band alert-task-band--warn">
                     <span class="alert-task-band-label">预警任务</span>
                     <span class="alert-task-band-line"></span>
-                    <span class="alert-task-band-count">9 类</span>
+                    <span class="alert-task-band-count">10 类</span>
                   </div>
                   <div class="alert-task-grid">
+                  <article class="alert-task-card alert-task-card--mid">
+                    <div class="alert-task-card-head">
+                      <span class="alert-task-card-name">AI总结待确认</span>
+                    </div>
+                    <div class="alert-task-card-body">
+                      <div class="alert-task-card-progress">
+                        <span>已完成 / 总数</span>
+                        <strong>24<em> / 40</em></strong>
+                      </div>
+                      <div class="alert-task-bar"><div class="alert-task-bar-fill mid" style="width:60%"></div></div>
+                      <span class="alert-task-rate">60%</span>
+                    </div>
+                    <div class="alert-task-card-meta">
+                      <span class="meta-overdue">超时 <strong>3</strong></span>
+                      <span>今日新增 <strong>16</strong></span>
+                      <span>人均 <strong>4.0</strong></span>
+                    </div>
+                  </article>
+
                   <article class="alert-task-card alert-task-card--mid">
                     <div class="alert-task-card-head">
                       <span class="alert-task-card-name">注销挽回</span>
@@ -5772,7 +5862,7 @@
                   <div class="alert-task-band">
                     <span class="alert-task-band-label">日常任务</span>
                     <span class="alert-task-band-line"></span>
-                    <span class="alert-task-band-count">5 类</span>
+                    <span class="alert-task-band-count">4 类</span>
                   </div>
                   <div class="alert-task-grid">
                   <article class="alert-task-card alert-task-card--urgent">
@@ -5848,25 +5938,6 @@
                       <span>超时 <strong>0</strong></span>
                       <span>今日新增 <strong>8</strong></span>
                       <span>人均 <strong>2.0</strong></span>
-                    </div>
-                  </article>
-
-                  <article class="alert-task-card alert-task-card--ok">
-                    <div class="alert-task-card-head">
-                      <span class="alert-task-card-name">今日分配</span>
-                    </div>
-                    <div class="alert-task-card-body">
-                      <div class="alert-task-card-progress">
-                        <span>已完成 / 总数</span>
-                        <strong>64<em> / 72</em></strong>
-                      </div>
-                      <div class="alert-task-bar"><div class="alert-task-bar-fill" style="width:89%"></div></div>
-                      <span class="alert-task-rate">89%</span>
-                    </div>
-                    <div class="alert-task-card-meta">
-                      <span class="meta-overdue">超时 <strong>2</strong></span>
-                      <span>今日新增 <strong>24</strong></span>
-                      <span>人均 <strong>8.0</strong></span>
                     </div>
                   </article>
 
@@ -6561,7 +6632,7 @@
                   <div class="rev-hero-card">
                     <div class="rev-hero-label">团队完成数</div>
                     <div class="rev-hero-val">186 项</div>
-                    <div class="rev-hero-sub">9 类预警任务</div>
+                    <div class="rev-hero-sub">10 类预警任务</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold">
                     <div class="rev-hero-label">完成数 TOP1</div>
@@ -6626,7 +6697,7 @@
                   <div class="rev-hero-card">
                     <div class="rev-hero-label">团队完成数</div>
                     <div class="rev-hero-val">142 项</div>
-                    <div class="rev-hero-sub">5 类日常任务</div>
+                    <div class="rev-hero-sub">4 类日常任务</div>
                   </div>
                   <div class="rev-hero-card rev-hero-card--gold">
                     <div class="rev-hero-label">完成数 TOP1</div>
@@ -7183,7 +7254,7 @@
         <li><span class="metric-name">WA回复</span><span class="metric-desc">历史至今，WhatsApp 渠道客户有回复的数量</span></li>
         <li><span class="metric-name">CR回复</span><span class="metric-desc">历史至今，Chatroom 渠道客户有回复的数量</span></li>
         <li><span class="metric-name">客户联系率</span><span class="metric-desc">客户联系数 / 客户数</span></li>
-        <li><span class="metric-name">客户回复率</span><span class="metric-desc">Call接通、WA回复、CR回复的客户去重后 / 客户联系数</span></li>
+        <li><span class="metric-name">客户回复率</span><span class="metric-desc">Call接通、WA回复、CR回复的客户去重后 / 我的客户数（或团队客户数）</span></li>
       </ul>
       <p class="alert-task-follow-intro">以下为渠道与质检指标定义。</p>
       <ul class="goal-metric-help-list">
@@ -7402,10 +7473,11 @@
     <div class="alert-task-follow-body">
       <p class="alert-task-follow-intro">统计范围：<strong class="alert-task-follow-period-label">今日</strong> · 各销售在当前任务类型下的跟进汇总</p>
       <div class="rank-date-chips" role="tablist" aria-label="时间范围">
-        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" onclick="switchAlertTaskFollowPeriod('today', this)">今日</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchAlertTaskFollowPeriod('week', this)">本周</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchAlertTaskFollowPeriod('month', this)">本月</button>
-        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchAlertTaskFollowPeriod('lastmonth', this)">上月</button>
+        <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-period="today" onclick="switchAlertTaskFollowPeriod('today', this)">今日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="yesterday" onclick="switchAlertTaskFollowPeriod('yesterday', this)">昨日</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="week" onclick="switchAlertTaskFollowPeriod('week', this)">本周</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="month" onclick="switchAlertTaskFollowPeriod('month', this)">本月</button>
+        <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-period="lastmonth" onclick="switchAlertTaskFollowPeriod('lastmonth', this)">上月</button>
       </div>
       <div class="alert-task-follow-table-wrap">
         <table class="alert-task-follow-table">
@@ -9682,6 +9754,14 @@ var ALERT_TASK_FOLLOW_PERIODS = {
 };
 var _alertTaskFollowType = '';
 var _alertTaskFollowPeriod = 'today';
+var _alertTaskModulePeriod = 'today';
+var ALERT_TASK_MODULE_PERIOD_FLOW = {
+  today: 1,
+  yesterday: 0.92,
+  week: 5.2,
+  month: 18,
+  lastmonth: 16.5
+};
 var _alertTaskFollowExpandedGroups = {};
 var ALERT_TASK_FOLLOW_TEAM_LABEL = '团队整体进度';
 var ALERT_TASK_DETAIL_PAGE_SIZE = 10;
@@ -9702,7 +9782,8 @@ var ALERT_TASK_SPECIAL_DETAIL_MODES = {
   '实名认证辅导': 'kyc-coaching',
   '高风险流失挽回': 'high-risk-churn-recovery',
   '卸载挽回': 'uninstall-recovery',
-  '提现预警': 'withdrawal-clearout'
+  '提现预警': 'withdrawal-clearout',
+  'AI总结待确认': 'ai-summary-pending'
 };
 var ALERT_TASK_DETAIL_DEFAULT_COLUMNS = [
   '客户昵称', 'SID', '下发时间', '完成时间', '任务状态', '任务跟进结果说明'
@@ -9813,8 +9894,13 @@ var UNINSTALL_RECOVERY_DETAIL_COLUMNS = [
 ];
 var UNINSTALL_APP_VERSIONS = ['v4.2.1', 'v4.1.0', 'v3.9.5', 'v3.8.2', 'v4.0.3'];
 var WITHDRAWAL_CLEAROUT_DETAIL_COLUMNS = [
-  '任务状态', 'SID', '提现订单号', '提现金额', '充值次数', '充值总额', '推送时间', '任务完成时间', '操作'
+  '任务状态', 'SID', '提现订单号', '提现金额', '充值次数', '充值总额', '推送时间', '最后充值时间', '任务完成时间', '操作'
 ];
+var AI_SUMMARY_PENDING_DETAIL_COLUMNS = [
+  '任务状态', 'SID', '发起时间', '沟通方式', '分析范围', 'AI总结时间', '确认时间', '操作'
+];
+var AI_SUMMARY_COMM_CHANNELS = ['Call', 'WhatsApp', 'Chatroom'];
+var AI_SUMMARY_ANALYSIS_SCOPES = ['本次会话', '当日全部沟通', '近 3 次沟通', '近 7 日沟通'];
 
 var ALERT_TASK_CUSTOMER_NAMES = [
   'Coleman', 'Hayes', 'Griffin', 'Porter', 'Russell', 'Rivera', 'Collins', 'Ward',
@@ -10067,6 +10153,10 @@ function isWithdrawalClearoutDetailMode() {
   return _alertTaskDetailMode === 'withdrawal-clearout';
 }
 
+function isAiSummaryPendingDetailMode() {
+  return _alertTaskDetailMode === 'ai-summary-pending';
+}
+
 function renderAlertTaskDetailThead() {
   var thead = document.getElementById('alertTaskDetailThead');
   if (!thead) return;
@@ -10089,6 +10179,8 @@ function renderAlertTaskDetailThead() {
     cols = UNINSTALL_RECOVERY_DETAIL_COLUMNS;
   } else if (isWithdrawalClearoutDetailMode()) {
     cols = WITHDRAWAL_CLEAROUT_DETAIL_COLUMNS;
+  } else if (isAiSummaryPendingDetailMode()) {
+    cols = AI_SUMMARY_PENDING_DETAIL_COLUMNS;
   }
   thead.innerHTML = cols.map(function (col) {
     var isAction = col === '操作' || col === 'Actions';
@@ -10145,8 +10237,14 @@ function renderAlertTaskSpecialActionHtml(row) {
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">录入</a>' +
+    '</span>';
+}
+
+function renderAiSummaryPendingActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
-    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-summary" data-sid="' + row.sid + '" data-nick="' + row.nick + '">提交AI总结</a>' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">录入</a>' +
     '</span>';
 }
 
@@ -10155,8 +10253,6 @@ function renderHighRiskChurnRecoveryActionHtml(row) {
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">录入</a>' +
-    ' · ' +
-    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-summary" data-sid="' + row.sid + '" data-nick="' + row.nick + '">提交AI总结</a>' +
     ' · ' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="churn-analysis" data-sid="' + row.sid + '" data-nick="' + row.nick + '">流失分析</a>' +
     '</span>';
@@ -10517,6 +10613,7 @@ function buildWithdrawalClearoutDetailRows(salesName, taskCount) {
       depositCount: depositCount,
       totalDeposit: '$' + totalDepositVal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
       pushTime: buildAlertTaskDateTime(s, -2),
+      lastDepositTime: buildAlertTaskDateTime(s, -18 - (s % 72)),
       taskCompleteTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
     });
   }
@@ -10532,8 +10629,47 @@ function renderWithdrawalClearoutDetailRowHtml(row) {
     '<td class="col-num">' + row.depositCount + '</td>' +
     '<td class="col-amount">' + row.totalDeposit + '</td>' +
     '<td class="col-time" title="' + row.pushTime + '">' + formatAlertTaskDetailDateTime(row.pushTime) + '</td>' +
+    '<td class="col-time" title="' + row.lastDepositTime + '">' + formatAlertTaskDetailDateTime(row.lastDepositTime) + '</td>' +
     '<td class="col-time" title="' + row.taskCompleteTime + '">' + formatAlertTaskDetailDateTime(row.taskCompleteTime) + '</td>' +
     '<td class="col-action">' + renderAlertTaskSpecialActionHtml(row) + '</td>' +
+    '</tr>';
+}
+
+function buildAiSummaryPendingDetailRows(salesName, taskCount) {
+  taskCount = Math.max(0, taskCount || 0);
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|ai-pending');
+  var rows = [];
+  for (var i = 0; i < taskCount; i++) {
+    var s = seed + i * 241;
+    var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
+    var sid = buildAlertTaskSid(s);
+    var isDone = (s % 5) < 3;
+    var startTime = buildAlertTaskDateTime(s, -4);
+    var summaryTime = buildAlertTaskDateTime(s, 0);
+    rows.push({
+      nick: nick,
+      sid: sid,
+      isDone: isDone,
+      startTime: startTime,
+      channel: AI_SUMMARY_COMM_CHANNELS[s % AI_SUMMARY_COMM_CHANNELS.length],
+      analysisScope: AI_SUMMARY_ANALYSIS_SCOPES[s % AI_SUMMARY_ANALYSIS_SCOPES.length],
+      summaryTime: summaryTime,
+      confirmTime: isDone ? buildAlertTaskDateTime(s, 2) : '—'
+    });
+  }
+  return rows;
+}
+
+function renderAiSummaryPendingDetailRowHtml(row) {
+  return '<tr>' +
+    '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
+    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-time" title="' + row.startTime + '">' + formatAlertTaskDetailDateTime(row.startTime) + '</td>' +
+    '<td class="col-channel">' + row.channel + '</td>' +
+    '<td class="col-scope">' + row.analysisScope + '</td>' +
+    '<td class="col-time" title="' + row.summaryTime + '">' + formatAlertTaskDetailDateTime(row.summaryTime) + '</td>' +
+    '<td class="col-time" title="' + row.confirmTime + '">' + formatAlertTaskDetailDateTime(row.confirmTime) + '</td>' +
+    '<td class="col-action">' + renderAiSummaryPendingActionHtml(row) + '</td>' +
     '</tr>';
 }
 
@@ -10571,8 +10707,8 @@ function buildHighRiskChurnRecoveryDetailRows(salesName, taskCount) {
 function buildChurnCustomerInfoStackHtml(row, peakLabel) {
   peakLabel = peakLabel || '峰值交易时间段:';
   return buildAlertTaskDetailCellStack([
-    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
     '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
+    '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
     '<span class="churn-peak-trade-line"><span class="churn-peak-trade-label">' + peakLabel + '</span> <span class="churn-peak-trade-value">' + row.peakTradeTimeSlot + '</span></span>'
   ]);
 }
@@ -10607,7 +10743,7 @@ function handleAlertTaskDetailAction(action, sid, nick) {
     return;
   }
   if (action === 'log') {
-    alert('打开录入\nSID：' + sid + '\n客户：' + nick + '\n（原型占位，可对接跟进录入）');
+    openCommFollowEntryModal({ sid: sid, name: nick });
     return;
   }
   if (action === 'ai-summary') {
@@ -10697,6 +10833,7 @@ function getAlertTaskDetailRowRenderer() {
   if (isHighRiskChurnRecoveryDetailMode()) return renderHighRiskChurnRecoveryDetailRowHtml;
   if (isUninstallRecoveryDetailMode()) return renderUninstallRecoveryDetailRowHtml;
   if (isWithdrawalClearoutDetailMode()) return renderWithdrawalClearoutDetailRowHtml;
+  if (isAiSummaryPendingDetailMode()) return renderAiSummaryPendingDetailRowHtml;
   return renderAlertTaskDetailRowHtml;
 }
 
@@ -10711,6 +10848,7 @@ function buildSpecialAlertTaskDetailRows(salesName, taskCount) {
   if (isHighRiskChurnRecoveryDetailMode()) return buildHighRiskChurnRecoveryDetailRows(salesName, taskCount);
   if (isUninstallRecoveryDetailMode()) return buildUninstallRecoveryDetailRows(salesName, taskCount);
   if (isWithdrawalClearoutDetailMode()) return buildWithdrawalClearoutDetailRows(salesName, taskCount);
+  if (isAiSummaryPendingDetailMode()) return buildAiSummaryPendingDetailRows(salesName, taskCount);
   return [];
 }
 
@@ -11004,13 +11142,13 @@ function openAlertTaskFollowModal(taskType) {
   var modal = document.getElementById('alertTaskFollowModal');
   if (!modal || !taskType) return;
   _alertTaskFollowType = taskType;
-  _alertTaskFollowPeriod = 'today';
+  _alertTaskFollowPeriod = _alertTaskModulePeriod || 'today';
   var typeEl = document.getElementById('alertTaskFollowType');
   if (typeEl) typeEl.textContent = taskType;
   var labelEl = modal.querySelector('.alert-task-follow-period-label');
-  if (labelEl) labelEl.textContent = ALERT_TASK_FOLLOW_PERIODS.today;
-  modal.querySelectorAll('.rank-date-chip').forEach(function (chip, idx) {
-    var active = idx === 0;
+  if (labelEl) labelEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
+  modal.querySelectorAll('.rank-date-chip').forEach(function (chip) {
+    var active = chip.getAttribute('data-period') === _alertTaskFollowPeriod;
     chip.classList.toggle('active', active);
     chip.setAttribute('aria-selected', active ? 'true' : 'false');
   });
@@ -11045,6 +11183,96 @@ function switchAlertTaskFollowPeriod(period, btn) {
   var labelEl = modal.querySelector('.alert-task-follow-period-label');
   if (labelEl) labelEl.textContent = ALERT_TASK_FOLLOW_PERIODS[period] || period;
   renderAlertTaskFollowTable();
+}
+
+function switchAlertTaskModulePeriod(period, btn) {
+  if (!ALERT_TASK_MODULE_PERIOD_FLOW.hasOwnProperty(period)) return;
+  _alertTaskModulePeriod = period;
+  document.querySelectorAll('.alert-task-section .alert-task-period-chips .rank-date-chip').forEach(function (chip) {
+    var on = chip.getAttribute('data-alert-task-period') === period;
+    chip.classList.toggle('active', on);
+    chip.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  applyAlertTaskModulePeriod(period);
+}
+
+function captureAlertTaskCardBaseline(card) {
+  if (card.dataset.alertBaseCaptured === '1') return;
+  var counts = getAlertTaskCardProgressCounts(card);
+  var metaStrong = card.querySelectorAll('.alert-task-card-meta strong');
+  card.dataset.alertBaseDone = String(counts.completed || 0);
+  card.dataset.alertBaseTotal = String(counts.assigned || 0);
+  card.dataset.alertBaseOverdue = metaStrong[0] ? String(parseInt(metaStrong[0].textContent, 10) || 0) : '0';
+  card.dataset.alertBaseNew = metaStrong[1] ? String(parseInt(metaStrong[1].textContent, 10) || 0) : '0';
+  if (metaStrong[2]) card.dataset.alertBasePer = metaStrong[2].textContent.trim();
+  card.dataset.alertBaseCaptured = '1';
+}
+
+function applyAlertTaskCardPeriod(card, factor) {
+  captureAlertTaskCardBaseline(card);
+  var total = Math.max(0, Math.round((parseInt(card.dataset.alertBaseTotal, 10) || 0) * factor));
+  var done = Math.min(total, Math.max(0, Math.round((parseInt(card.dataset.alertBaseDone, 10) || 0) * factor)));
+  var overdue = Math.max(0, Math.round((parseInt(card.dataset.alertBaseOverdue, 10) || 0) * factor));
+  var added = Math.max(0, Math.round((parseInt(card.dataset.alertBaseNew, 10) || 0) * factor));
+  var rate = total ? Math.round(done / total * 100) : 0;
+  var strongEl = card.querySelector('.alert-task-card-progress strong');
+  if (strongEl) strongEl.innerHTML = done + '<em> / ' + total + '</em>';
+  var bar = card.querySelector('.alert-task-bar-fill');
+  if (bar) {
+    bar.style.width = Math.min(100, rate) + '%';
+    bar.className = 'alert-task-bar-fill' + (rate >= 85 ? '' : rate >= 60 ? ' mid' : ' low');
+  }
+  var rateEl = card.querySelector('.alert-task-rate');
+  if (rateEl) rateEl.textContent = rate + '%';
+  var metaStrong = card.querySelectorAll('.alert-task-card-meta strong');
+  if (metaStrong[0]) metaStrong[0].textContent = String(overdue);
+  if (metaStrong[1]) metaStrong[1].textContent = String(added);
+  if (metaStrong[2] && card.dataset.alertBasePer) {
+    var per = parseFloat(card.dataset.alertBasePer);
+    if (!isNaN(per)) metaStrong[2].textContent = (Math.round(per * factor * 10) / 10).toFixed(1);
+  }
+  var overdueWrap = card.querySelector('.alert-task-card-meta span:first-child');
+  if (overdueWrap) overdueWrap.classList.toggle('meta-overdue', overdue > 0);
+  var tone = overdue > 0 && rate < 70 ? 'urgent' : rate >= 85 ? 'ok' : 'mid';
+  card.className = 'alert-task-card alert-task-card--' + tone;
+}
+
+function refreshAlertTaskSummaryFromCards(root) {
+  if (!root) return;
+  var assigned = 0;
+  var done = 0;
+  var overdue = 0;
+  var added = 0;
+  root.querySelectorAll('.alert-task-card').forEach(function (card) {
+    var counts = getAlertTaskCardProgressCounts(card);
+    assigned += counts.assigned || 0;
+    done += counts.completed || 0;
+    var metaStrong = card.querySelectorAll('.alert-task-card-meta strong');
+    if (metaStrong[0]) overdue += parseInt(metaStrong[0].textContent, 10) || 0;
+    if (metaStrong[1]) added += parseInt(metaStrong[1].textContent, 10) || 0;
+  });
+  var pending = Math.max(0, assigned - done);
+  var rate = assigned ? Math.round(done / assigned * 100) : 0;
+  var chips = root.querySelectorAll('.alert-task-summary .alert-task-chip strong');
+  if (chips.length < 7) return;
+  if (!root.dataset.alertBaseTodayRate) root.dataset.alertBaseTodayRate = chips[4].textContent.trim();
+  chips[0].textContent = String(assigned);
+  chips[1].textContent = String(done);
+  chips[2].textContent = String(pending);
+  chips[3].textContent = rate + '%';
+  chips[4].textContent = root.dataset.alertBaseTodayRate;
+  chips[5].textContent = String(added);
+  chips[6].textContent = String(overdue);
+}
+
+function applyAlertTaskModulePeriod(period) {
+  var factor = ALERT_TASK_MODULE_PERIOD_FLOW[period] || 1;
+  document.querySelectorAll('.alert-task-section .alert-task-card').forEach(function (card) {
+    applyAlertTaskCardPeriod(card, factor);
+  });
+  document.querySelectorAll('.alert-task-section .sales-only, .alert-task-section .manager-only').forEach(function (root) {
+    refreshAlertTaskSummaryFromCards(root);
+  });
 }
 
 function initAlertTaskCardInteractions() {
@@ -11325,7 +11553,7 @@ function fillCommStatsSummary(root, values, uniqueReplyOpt) {
     values[3],
     values[4],
     formatCommStatsPct(contacts, customers),
-    formatCommStatsPct(uniqueReply, contacts)
+    formatCommStatsPct(uniqueReply, customers)
   ];
   var chips = root.querySelectorAll('.comm-stats-summary .comm-summary-chip');
   chips.forEach(function (chip, idx) {
@@ -11597,7 +11825,7 @@ function buildCommStatsSummaryFollowRowForName(name, period) {
       crReplied: a.crReplied,
       uniqueReply: a.uniqueReply,
       reachRate: a.assigned ? Math.round(a.contacted / a.assigned * 100) : 0,
-      replyRate: a.contacted ? Math.round(a.uniqueReply / a.contacted * 100) : 0
+      replyRate: a.assigned ? Math.round(a.uniqueReply / a.assigned * 100) : 0
     };
   }
   var s = alertTaskFollowSeed('comm-summary|' + name);
@@ -11607,6 +11835,7 @@ function buildCommStatsSummaryFollowRowForName(name, period) {
   var waReplied = Math.min(contacted, Math.round(contacted * (32 + (s % 16)) / 100));
   var crReplied = Math.min(contacted, Math.round(contacted * (18 + (s % 15)) / 100));
   var uniqueReply = uniqueCommReplyCount(telConnected, waReplied, crReplied, contacted);
+  uniqueReply = Math.min(contacted, uniqueReply, Math.round(assigned * (52 + (s % 17)) / 100));
   return {
     name: name,
     assigned: assigned,
@@ -11616,7 +11845,7 @@ function buildCommStatsSummaryFollowRowForName(name, period) {
     crReplied: crReplied,
     uniqueReply: uniqueReply,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
-    replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
+    replyRate: assigned ? Math.round(uniqueReply / assigned * 100) : 0
   };
 }
 
@@ -11702,7 +11931,7 @@ function aggregateCommStatsSummaryRows(rows) {
     crReplied: crReplied,
     uniqueReply: uniqueReply,
     reachRate: assigned ? Math.round(contacted / assigned * 100) : 0,
-    replyRate: contacted ? Math.round(uniqueReply / contacted * 100) : 0
+    replyRate: assigned ? Math.round(uniqueReply / assigned * 100) : 0
   };
 }
 
@@ -14413,7 +14642,7 @@ function handleAlertTaskCardActivate(card) {
     var counts = getAlertTaskCardProgressCounts(card);
     if (!taskType) return;
     _alertTaskFollowType = taskType;
-    _alertTaskFollowPeriod = 'today';
+    _alertTaskFollowPeriod = _alertTaskModulePeriod || 'today';
     clearAlertTaskDetailCategory();
     var specialMode = getSpecialAlertTaskDetailMode(taskType);
     if (specialMode) {
@@ -18410,6 +18639,7 @@ function applyManagerGoalSalesFilter(value) {
   if (reachCard) {
     reachCard.setAttribute('data-reach-connected', data.reach.connected);
     reachCard.setAttribute('data-reach-contacts', data.reach.contacts);
+    reachCard.setAttribute('data-reach-customers', data.summary.customers);
     reachCard.querySelector('h3').textContent = data.labels.reachTitle;
     var reachMetrics = reachCard.querySelectorAll('.cust-reach-metrics .metric-item strong');
     if (reachMetrics.length >= 4) {
@@ -18536,11 +18766,11 @@ function initTradeLotsCards() {
 
 function initCustReachCards() {
   document.querySelectorAll('.goal-card--reach').forEach(function (card) {
-    var connected = Number(card.getAttribute('data-reach-connected')) || 0;
     var contacts = Number(card.getAttribute('data-reach-contacts')) || 0;
+    var customers = Number(card.getAttribute('data-reach-customers')) || 0;
     var progress = card.querySelector('.cust-reach-progress-overall');
     if (!progress) return;
-    var pct = contacts > 0 ? (connected / contacts) * 100 : 0;
+    var pct = customers > 0 ? (contacts / customers) * 100 : 0;
     var barPct = Math.min(pct, 100);
     var fill = progress.querySelector('.cust-reach-bar-fill');
     if (fill) {
@@ -18549,7 +18779,7 @@ function initCustReachCards() {
     }
     var amountEl = progress.querySelector('.cust-reach-progress-amount');
     if (amountEl) {
-      amountEl.innerHTML = connected.toLocaleString('en-US') + '<em> / ' + contacts.toLocaleString('en-US') + '</em>';
+      amountEl.innerHTML = contacts.toLocaleString('en-US') + '<em> / ' + customers.toLocaleString('en-US') + '</em>';
     }
     var pctEl = progress.querySelector('.cust-reach-pct');
     if (pctEl) pctEl.textContent = '沟通覆盖率 ' + Math.round(pct) + '%';
@@ -18749,7 +18979,9 @@ function collectGcaSourceMetrics(instance) {
   var reachCard = root.querySelector('.goal-card--reach');
   var reachConnected = reachCard ? Number(reachCard.getAttribute('data-reach-connected')) : 0;
   var reachContacts = reachCard ? Number(reachCard.getAttribute('data-reach-contacts')) : 0;
-  var reachCoverage = reachContacts > 0 ? (reachConnected / reachContacts) * 100 : 0;
+  var reachCustomers = reachCard ? Number(reachCard.getAttribute('data-reach-customers')) : 0;
+  if (!reachCustomers) reachCustomers = reachTarget;
+  var reachCoverage = reachCustomers > 0 ? (reachContacts / reachCustomers) * 100 : 0;
 
   var tradeRow = root.querySelector('.trade-lots-second-row');
   var tradeMonth = tradeRow ? Number(tradeRow.getAttribute('data-trade-lots-month')) : 0;
@@ -18763,6 +18995,7 @@ function collectGcaSourceMetrics(instance) {
     reach: {
       connected: reachConnected,
       contacts: reachContacts,
+      customers: reachCustomers,
       coverage: reachCoverage,
       contactsTarget: reachTarget
     },
@@ -18974,22 +19207,22 @@ function renderGcaSprintSection(metrics, instance) {
       buildGcaTierGap(netPct, netProj, metrics.net.target, true, 'net'), '');
 
   var reachContactsProj = gcaProjectMonthValue(metrics.reach.contacts, day, days);
-  var reachConnectedProj = gcaProjectMonthValue(metrics.reach.connected, day, days);
-  var reachCovProj = reachContactsProj > 0 ? (reachConnectedProj / reachContactsProj) * 100 : 0;
+  var reachCustomers = metrics.reach.customers || metrics.reach.contactsTarget || 0;
+  var reachCovProj = reachCustomers > 0 ? (reachContactsProj / reachCustomers) * 100 : 0;
   var reachCovTarget = 80;
   var covGapPt = Math.max(0, Math.round((reachCovTarget - reachCovProj) * 10) / 10);
-  var needConnectedFor80 = Math.ceil(reachContactsProj * (reachCovTarget / 100));
-  var connectedGap = Math.max(0, needConnectedFor80 - Math.round(reachConnectedProj));
+  var needContactsFor80 = Math.ceil(reachCustomers * (reachCovTarget / 100));
+  var contactsGap = Math.max(0, needContactsFor80 - Math.round(reachContactsProj));
   var reachSprintGapHtml;
   if (covGapPt <= 0) {
     reachSprintGapHtml =
-      '预计月底沟通覆盖率为 <strong>' + Math.round(reachCovProj) + '%</strong>（预计接通/回复 <strong>' +
-      Math.round(reachConnectedProj).toLocaleString('en-US') + '</strong> 人 ÷ 联系 <strong>' +
-      Math.round(reachContactsProj).toLocaleString('en-US') + '</strong> 人），已达到 <strong>80%</strong> 冲刺目标。';
+      '预计月底沟通覆盖率为 <strong>' + Math.round(reachCovProj) + '%</strong>（预计联系 <strong>' +
+      Math.round(reachContactsProj).toLocaleString('en-US') + '</strong> 人 ÷ 客户 <strong>' +
+      Math.round(reachCustomers).toLocaleString('en-US') + '</strong> 人），已达到 <strong>80%</strong> 冲刺目标。';
   } else {
     reachSprintGapHtml =
       '冲刺 <strong>80%</strong> 目标覆盖率还差 <strong>' + covGapPt + '%</strong>；预计需再增加约 <strong>' +
-      connectedGap.toLocaleString('en-US') + '</strong> 人接通或回复。';
+      contactsGap.toLocaleString('en-US') + '</strong> 人联系。';
   }
   var tradeProj = gcaProjectMonthValue(metrics.trade.month, day, days);
   var tradeRow = document.querySelector(instance.sprintTradeScope);
