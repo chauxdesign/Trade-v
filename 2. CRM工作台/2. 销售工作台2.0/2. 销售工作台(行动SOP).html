@@ -4869,7 +4869,7 @@
       </div>
       <div class="tab-row">
         <div class="tab-group">
-          <div class="tab active">工作台 <span>×</span></div>
+          <div class="tab active">工作台 2.0 <span>×</span></div>
         </div>
         <div class="view-switch">
           <span class="view-switch-hint sales-only">当前为<strong>销售视角</strong>：聚焦本人每日 KPI、SOP 执行与客户跟进。</span>
@@ -5340,8 +5340,8 @@
                   <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-alert-task-period="quarter" onclick="switchAlertTaskModulePeriod('quarter', this)">本季度</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only">预警任务与日常任务 · 轻量分类查看完成进度、待处理与超时情况</p>
-              <p class="kpi-intro manager-only">团队任务概览 · 预警任务与日常任务分类监控</p>
+              <p class="kpi-intro sales-only">按预警 / 日常分类查看个人任务：下发、完成与超时24h。今日新增、今日完成、今日完成率始终为当日数据，其余指标随上方时间条件变化。（<button type="button" class="goal-metric-help-link" onclick="openAlertTaskMetricHelpModal()">查看指标说明</button>）</p>
+              <p class="kpi-intro manager-only">团队任务概览 · 预警任务与日常任务分类监控。今日新增、今日完成、今日完成率始终为当日数据，其余指标随上方时间条件变化。（<button type="button" class="goal-metric-help-link" onclick="openAlertTaskMetricHelpModal()">查看指标说明</button>）</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -7257,6 +7257,36 @@
         <li><span class="metric-name">质检总数</span><span class="metric-desc">当前统计周期内完成质检的沟通记录数</span></li>
         <li><span class="metric-name">总体评分</span><span class="metric-desc">所有质检记录的平均评分</span></li>
         <li><span class="metric-name">低 / 中 / 高风险</span><span class="metric-desc">质检合规分级结果对应的记录数</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="alertTaskMetricHelpModal" class="alert-task-follow-modal comm-stats-metric-help-modal" hidden aria-hidden="true">
+  <div class="alert-task-follow-backdrop" onclick="closeAlertTaskMetricHelpModal()"></div>
+  <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="alertTaskMetricHelpTitle">
+    <div class="alert-task-follow-head">
+      <h3 id="alertTaskMetricHelpTitle">指标说明</h3>
+      <button type="button" class="alert-task-follow-close" onclick="closeAlertTaskMetricHelpModal()" aria-label="关闭">×</button>
+    </div>
+    <div class="alert-task-follow-body">
+      <p class="alert-task-follow-intro">以下为每日预警任务总览指标定义，适用于销售/管理视角。今日新增、今日完成、今日完成率始终为当日数据，其余指标随标题所选统计周期变化。</p>
+      <ul class="goal-metric-help-list">
+        <li><span class="metric-name">任务下发总数</span><span class="metric-desc">所选统计周期内下发的任务条数合计（管理视角为团队合计）</span></li>
+        <li><span class="metric-name">已完成</span><span class="metric-desc">所选统计周期内已完成的任务条数</span></li>
+        <li><span class="metric-name">待完成</span><span class="metric-desc">任务下发总数 − 已完成</span></li>
+        <li><span class="metric-name">完成率</span><span class="metric-desc">已完成 / 任务下发总数</span></li>
+        <li><span class="metric-name">今日新增</span><span class="metric-desc">当日新下发的任务条数，不随上方时间条件变化</span></li>
+        <li><span class="metric-name">今日完成</span><span class="metric-desc">当日完成的任务条数，不随上方时间条件变化</span></li>
+        <li><span class="metric-name">今日完成率</span><span class="metric-desc">今日完成 / 今日新增，不随上方时间条件变化</span></li>
+        <li><span class="metric-name">超时24h</span><span class="metric-desc">下发超过 24 小时仍未完成的任务条数；当日新增不计入超时</span></li>
+      </ul>
+      <p class="alert-task-follow-intro">以下为任务卡片指标定义。</p>
+      <ul class="goal-metric-help-list">
+        <li><span class="metric-name">已完成 / 总数</span><span class="metric-desc">该任务类型在所选统计周期内的已完成条数 / 下发条数</span></li>
+        <li><span class="metric-name">超时</span><span class="metric-desc">该任务类型中下发超过 24 小时仍未完成的条数；有超时任务时「超时」与数字标红</span></li>
+        <li><span class="metric-name">今日新增</span><span class="metric-desc">该任务类型当日新下发的条数，不随上方时间条件变化</span></li>
+        <li><span class="metric-name">人均</span><span class="metric-desc">管理视角：该任务类型已完成条数 / 团队人数</span></li>
       </ul>
     </div>
   </div>
@@ -11637,6 +11667,22 @@ function closeCommStatsMetricHelpModal() {
   document.body.style.overflow = '';
 }
 
+function openAlertTaskMetricHelpModal() {
+  var modal = document.getElementById('alertTaskMetricHelpModal');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAlertTaskMetricHelpModal() {
+  var modal = document.getElementById('alertTaskMetricHelpModal');
+  if (!modal || modal.hidden) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
 function formatCommStatsPct(num, den) {
   if (!den) return '0%';
   return Math.round(num / den * 100) + '%';
@@ -14781,6 +14827,7 @@ function switchView(view, btn) {
   closeCommQcFollowModal();
   closeCommStatsFollowModal();
   closeCommStatsMetricHelpModal();
+  closeAlertTaskMetricHelpModal();
   closeCommStatsDetailDrawer();
   closeAlertTaskDetailDrawer();
   document.body.dataset.view = view;
@@ -17584,6 +17631,11 @@ document.addEventListener('keydown', function (e) {
     var commStatsMetricHelpModal = document.getElementById('commStatsMetricHelpModal');
     if (commStatsMetricHelpModal && !commStatsMetricHelpModal.hidden) {
       closeCommStatsMetricHelpModal();
+      return;
+    }
+    var alertTaskMetricHelpModal = document.getElementById('alertTaskMetricHelpModal');
+    if (alertTaskMetricHelpModal && !alertTaskMetricHelpModal.hidden) {
+      closeAlertTaskMetricHelpModal();
       return;
     }
     var breakthroughDrawer = document.getElementById('breakthroughStarDrawer');
