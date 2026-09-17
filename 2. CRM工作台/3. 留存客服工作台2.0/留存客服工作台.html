@@ -5870,33 +5870,41 @@
             <div class="module-body">
               <div class="perf-estimate">
                 <div class="perf-item">
+                  <span class="perf-icon" aria-hidden="true">🆕</span>
+                  <div class="perf-body">
+                    <div class="perf-label">新客7日有效复充</div>
+                    <div class="perf-desc">近 7 日新客有效复充人数</div>
+                    <div class="perf-value">410 人</div>
+                  </div>
+                </div>
+                <div class="perf-item">
                   <span class="perf-icon" aria-hidden="true">💰</span>
                   <div class="perf-body">
-                    <div class="perf-label">团队净入金总额</div>
-                    <div class="perf-desc">本月累计团队净入金</div>
-                    <div class="perf-value">$547,328</div>
+                    <div class="perf-label">新客次均充值金额</div>
+                    <div class="perf-desc">近 7 日新客人均单次充值金额</div>
+                    <div class="perf-value">$92</div>
+                  </div>
+                </div>
+                <div class="perf-item">
+                  <span class="perf-icon" aria-hidden="true">🔁</span>
+                  <div class="perf-body">
+                    <div class="perf-label">老客4周有效复充</div>
+                    <div class="perf-desc">首充 4 周内客户有效复充人数</div>
+                    <div class="perf-value">2,103 人</div>
                   </div>
                 </div>
                 <div class="perf-item">
                   <span class="perf-icon" aria-hidden="true">👥</span>
                   <div class="perf-body">
-                    <div class="perf-label">团队交易客户数</div>
-                    <div class="perf-desc">本月累计团队实盘交易开仓客户数</div>
-                    <div class="perf-value">419 人</div>
-                  </div>
-                </div>
-                <div class="perf-item">
-                  <span class="perf-icon" aria-hidden="true">💵</span>
-                  <div class="perf-body">
-                    <div class="perf-label">团队手续费总额</div>
-                    <div class="perf-desc">本月累计团队手续费</div>
-                    <div class="perf-value">$124.4K</div>
+                    <div class="perf-label">老客第4周登录率 / 交易率</div>
+                    <div class="perf-desc">近 4 周老客第 4 周登录率 / 交易率</div>
+                    <div class="perf-value">42% / 18%</div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--bonus">
                   <span class="perf-icon" aria-hidden="true">📈</span>
                   <div class="perf-body">
-                    <div class="perf-label">团队本月绩效 / 预估绩效</div>
+                    <div class="perf-label">本月绩效 / 预估绩效</div>
                     <div class="perf-desc">本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）</div>
                     <div class="perf-value">$37,050 / $55,575</div>
                     <div class="perf-split" hidden></div>
@@ -5907,38 +5915,41 @@
             </div>
           </div>
 
-          <div class="module perf-rank-panel" id="manager-goal-perf-rank-panel">
+          <div class="module perf-rank-panel cs-rank-panel" id="manager-goal-perf-rank-panel" data-cs-rank-period="week" data-cs-rank-tab="commission" data-cs-rank-mode="top3">
             <div class="module-head">
-              <h2>客服绩效排行榜</h2>
-              <p class="kpi-intro rank-period-intro">统计维度：<strong>本月客服累计绩效提成</strong></p>
+              <h2>客服排行榜</h2>
+              <p class="kpi-intro rank-period-intro">统计范围：<strong class="rank-date-label">本周</strong> · <strong class="cs-rank-metric-label">绩效提成</strong></p>
             </div>
             <div class="module-body">
+              <div class="rank-date-chips" role="tablist" aria-label="时间维度">
+                <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" onclick="switchRankDate('week', this)">本周</button>
+                <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchRankDate('lastweek', this)">上周</button>
+                <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchRankDate('month', this)">本月</button>
+                <button type="button" class="rank-date-chip" role="tab" aria-selected="false" onclick="switchRankDate('lastmonth', this)">上月</button>
+              </div>
+              <div class="rank-tabs" role="tablist" aria-label="排行榜指标">
+                <button type="button" class="rank-tab active" role="tab" aria-selected="true" onclick="switchCsRankTab('commission', this)">绩效提成</button>
+                <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCsRankTab('d7', this)">7日有效复充</button>
+                <button type="button" class="rank-tab" role="tab" aria-selected="false" onclick="switchCsRankTab('veteran', this)">老客有效复充</button>
+              </div>
               <table class="customer-rank-table">
-                <thead><tr><th class="rank-no">#</th><th>客服</th><th style="text-align:right">本月累计绩效提成</th></tr></thead>
-                <tbody>
-                  <tr data-cs-name="Coulson"><td class="rank-no">1</td><td class="rank-name">Coulson</td><td class="rank-val">$4,280</td></tr>
-                  <tr data-cs-name="May"><td class="rank-no">2</td><td class="rank-name">May</td><td class="rank-val">$3,860</td></tr>
-                  <tr data-cs-name="Daisy"><td class="rank-no">3</td><td class="rank-name">Daisy</td><td class="rank-val">$3,520</td></tr>
-                  <tr data-cs-name="Fitz"><td class="rank-no">4</td><td class="rank-name">Fitz</td><td class="rank-val">$3,180</td></tr>
-                  <tr data-cs-name="Simmons"><td class="rank-no">5</td><td class="rank-name">Simmons</td><td class="rank-val">$2,940</td></tr>
-                  <tr data-cs-name="Mack"><td class="rank-no">6</td><td class="rank-name">Mack</td><td class="rank-val">$2,680</td></tr>
-                  <tr data-cs-name="Fury"><td class="rank-no">7</td><td class="rank-name">Fury</td><td class="rank-val">$2,420</td></tr>
-                </tbody>
+                <thead><tr><th class="rank-no">#</th><th>客服</th><th style="text-align:right" class="cs-rank-col">绩效提成</th></tr></thead>
+                <tbody></tbody>
               </table>
               <div class="rank-self is-top3-summary">
                 <div class="rank-self-line rank-self-line--main">
                   <span class="rank-self-label">团队 TOP1</span>
                   <span class="rank-self-name">Coulson · 第 1 名</span>
-                  <span class="rank-self-val">所选团队的 TOP3 客服绩效总值：$11,660</span>
+                  <span class="rank-self-val">所选团队的 TOP3 客服绩效提成总值：$5,960</span>
                 </div>
                 <div class="rank-self-line rank-self-line--sub">
-                  <span class="rank-self-gap">所占比团队总额百分比为：50.6%</span>
+                  <span class="rank-self-gap">所占比团队总额百分比为：30.6%</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="module customer-rank-panel">
+          <div class="module customer-rank-panel" hidden>
             <div class="module-head">
               <h2 id="manager-goal-customer-rank-title">团队客户排行榜</h2>
               <p class="kpi-intro rank-period-intro">统计范围：<strong class="rank-date-label">昨日</strong></p>
@@ -6027,7 +6038,7 @@
             </div>
           </div>
 
-          <div class="module revenue-rank-panel">
+          <div class="module revenue-rank-panel" hidden>
             <div class="module-head">
               <h2>客服创收排行榜</h2>
               <p class="kpi-intro rank-period-intro"><strong class="rank-date-label">昨日</strong>团队创收榜单 · 入金 / 手续费 / 交易</p>
@@ -16998,6 +17009,7 @@ function switchRankDate(period, btn) {
 
 var CS_SERVICE_RANK_SELF = 'May';
 var CS_SERVICE_RANK_LIMIT = 15;
+var CS_SERVICE_RANK_LIMIT_MANAGER = 12;
 var CS_SERVICE_RANK_METRICS = {
   commission: { label: '绩效提成', unit: 'usd' },
   d7: { label: '7日有效复充', unit: 'people' },
@@ -17005,24 +17017,25 @@ var CS_SERVICE_RANK_METRICS = {
 };
 var CS_SERVICE_RANK_DATA = {
   week: {
-    commission: { Coulson: 2180, May: 1960, Daisy: 1820, Fitz: 1680, Simmons: 1540, Mack: 1420, Fury: 1280, Hunter: 1160, Ward: 1040, Bobbi: 980, Skye: 860, Melinda: 740, Trip: 680, Antoine: 620, 'Yo-Yo': 560 },
-    d7: { Daisy: 42, Coulson: 38, Fitz: 36, May: 35, Simmons: 32, Mack: 29, Hunter: 27, Fury: 25, Ward: 22, Bobbi: 20, Skye: 18, Melinda: 15, Trip: 13, Antoine: 11, 'Yo-Yo': 9 },
-    veteran: { Coulson: 186, Daisy: 172, May: 168, Fitz: 154, Simmons: 142, Mack: 131, Fury: 118, Hunter: 109, Ward: 98, Bobbi: 86, Skye: 74, Melinda: 61, Trip: 54, Antoine: 47, 'Yo-Yo': 40 }
+    commission: { Coulson: 2180, May: 1960, Daisy: 1820, Fitz: 1680, Simmons: 1540, Mack: 1420, Fury: 1280, Hunter: 1160, Ward: 1040, Bobbi: 980, Skye: 860, Melinda: 740, Trip: 680, Antoine: 620, 'Yo-Yo': 560, Deke: 500, Jemma: 450 },
+    d7: { Daisy: 42, Coulson: 38, Fitz: 36, May: 35, Simmons: 32, Mack: 29, Hunter: 27, Fury: 25, Ward: 22, Bobbi: 20, Skye: 18, Melinda: 15, Trip: 13, Antoine: 11, 'Yo-Yo': 9, Deke: 8, Jemma: 7 },
+    veteran: { Coulson: 186, Daisy: 172, May: 168, Fitz: 154, Simmons: 142, Mack: 131, Fury: 118, Hunter: 109, Ward: 98, Bobbi: 86, Skye: 74, Melinda: 61, Trip: 54, Antoine: 47, 'Yo-Yo': 40, Deke: 35, Jemma: 31 }
   },
   lastweek: {
-    commission: { Coulson: 2040, May: 1880, Daisy: 1760, Fitz: 1610, Simmons: 1490, Mack: 1370, Fury: 1220, Hunter: 1110, Ward: 990, Bobbi: 920, Skye: 810, Melinda: 700, Trip: 640, Antoine: 580, 'Yo-Yo': 520 },
-    d7: { Coulson: 40, Daisy: 39, Fitz: 33, May: 31, Simmons: 30, Mack: 28, Hunter: 26, Fury: 24, Ward: 21, Bobbi: 19, Skye: 16, Melinda: 14, Trip: 12, Antoine: 10, 'Yo-Yo': 8 },
-    veteran: { Coulson: 178, Daisy: 170, May: 165, Fitz: 148, Simmons: 136, Mack: 124, Fury: 112, Hunter: 104, Ward: 92, Bobbi: 80, Skye: 68, Melinda: 55, Trip: 49, Antoine: 42, 'Yo-Yo': 36 }
+    commission: { Coulson: 2040, May: 1880, Daisy: 1760, Fitz: 1610, Simmons: 1490, Mack: 1370, Fury: 1220, Hunter: 1110, Ward: 990, Bobbi: 920, Skye: 810, Melinda: 700, Trip: 640, Antoine: 580, 'Yo-Yo': 520, Deke: 470, Jemma: 420 },
+    d7: { Coulson: 40, Daisy: 39, Fitz: 33, May: 31, Simmons: 30, Mack: 28, Hunter: 26, Fury: 24, Ward: 21, Bobbi: 19, Skye: 16, Melinda: 14, Trip: 12, Antoine: 10, 'Yo-Yo': 8, Deke: 7, Jemma: 6 },
+    veteran: { Coulson: 178, Daisy: 170, May: 165, Fitz: 148, Simmons: 136, Mack: 124, Fury: 112, Hunter: 104, Ward: 92, Bobbi: 80, Skye: 68, Melinda: 55, Trip: 49, Antoine: 42, 'Yo-Yo': 36, Deke: 32, Jemma: 28 }
   },
   month: {
-    commission: { Coulson: 4280, May: 3860, Daisy: 3520, Fitz: 3180, Simmons: 2940, Mack: 2680, Fury: 2420, Hunter: 2180, Ward: 1960, Bobbi: 1780, Skye: 1540, Melinda: 1320, Trip: 1180, Antoine: 1060, 'Yo-Yo': 940 },
-    d7: { Daisy: 168, Coulson: 152, Fitz: 144, May: 140, Simmons: 128, Mack: 116, Hunter: 108, Fury: 100, Ward: 88, Bobbi: 80, Skye: 72, Melinda: 60, Trip: 52, Antoine: 44, 'Yo-Yo': 36 },
-    veteran: { Coulson: 742, Daisy: 688, Fitz: 616, May: 598, Simmons: 568, Mack: 524, Fury: 472, Hunter: 436, Ward: 392, Bobbi: 344, Skye: 296, Melinda: 244, Trip: 216, Antoine: 188, 'Yo-Yo': 160 }
+    // 本月绩效提成与 MANAGER_GOAL_CS_META.reward 同源，保证排行榜与绩效预估一致
+    commission: { Coulson: 4280, May: 3860, Daisy: 3520, Fitz: 3180, Simmons: 2940, Mack: 2680, Fury: 2420, Hunter: 2180, Ward: 1960, Bobbi: 1760, Skye: 1580, Melinda: 1420, Trip: 1280, Antoine: 1150, 'Yo-Yo': 1040, Deke: 940, Jemma: 860 },
+    d7: { Daisy: 168, Coulson: 152, Fitz: 144, May: 140, Simmons: 128, Mack: 116, Hunter: 108, Fury: 100, Ward: 88, Bobbi: 80, Skye: 72, Melinda: 60, Trip: 52, Antoine: 44, 'Yo-Yo': 36, Deke: 31, Jemma: 27 },
+    veteran: { Coulson: 742, Daisy: 688, Fitz: 616, May: 598, Simmons: 568, Mack: 524, Fury: 472, Hunter: 436, Ward: 392, Bobbi: 344, Skye: 296, Melinda: 244, Trip: 216, Antoine: 188, 'Yo-Yo': 160, Deke: 138, Jemma: 120 }
   },
   lastmonth: {
-    commission: { Coulson: 4120, Daisy: 3740, May: 3610, Fitz: 3050, Simmons: 2810, Mack: 2560, Fury: 2310, Hunter: 2090, Ward: 1870, Bobbi: 1690, Skye: 1460, Melinda: 1240, Trip: 1110, Antoine: 990, 'Yo-Yo': 880 },
-    d7: { Coulson: 156, Daisy: 149, May: 132, Fitz: 128, Simmons: 121, Mack: 109, Hunter: 101, Fury: 94, Ward: 82, Bobbi: 74, Skye: 66, Melinda: 54, Trip: 46, Antoine: 39, 'Yo-Yo': 32 },
-    veteran: { Coulson: 718, May: 642, Daisy: 664, Fitz: 590, Simmons: 546, Mack: 502, Fury: 448, Hunter: 412, Ward: 368, Bobbi: 322, Skye: 274, Melinda: 228, Trip: 202, Antoine: 176, 'Yo-Yo': 148 }
+    commission: { Coulson: 4120, Daisy: 3740, May: 3610, Fitz: 3050, Simmons: 2810, Mack: 2560, Fury: 2310, Hunter: 2090, Ward: 1870, Bobbi: 1690, Skye: 1460, Melinda: 1240, Trip: 1110, Antoine: 990, 'Yo-Yo': 880, Deke: 790, Jemma: 720 },
+    d7: { Coulson: 156, Daisy: 149, May: 132, Fitz: 128, Simmons: 121, Mack: 109, Hunter: 101, Fury: 94, Ward: 82, Bobbi: 74, Skye: 66, Melinda: 54, Trip: 46, Antoine: 39, 'Yo-Yo': 32, Deke: 28, Jemma: 24 },
+    veteran: { Coulson: 718, May: 642, Daisy: 664, Fitz: 590, Simmons: 546, Mack: 502, Fury: 448, Hunter: 412, Ward: 368, Bobbi: 322, Skye: 274, Melinda: 228, Trip: 202, Antoine: 176, 'Yo-Yo': 148, Deke: 128, Jemma: 112 }
   }
 };
 
@@ -17031,14 +17044,32 @@ function formatCsServiceRankValue(unit, value) {
   return Math.round(Math.max(0, value)).toLocaleString('en-US') + ' 人';
 }
 
-function getCsServiceRankList(period, tabId) {
+/** members 为空表示全员；客服管理视角选中某个客服组时只保留组内成员 */
+function getCsServiceRankList(period, tabId, members) {
   var pack = CS_SERVICE_RANK_DATA[period] || CS_SERVICE_RANK_DATA.week;
   var map = (pack && pack[tabId]) || pack.commission;
-  return Object.keys(map).map(function (name) {
+  var scoped = members && members.length;
+  return Object.keys(map).filter(function (name) {
+    return !scoped || members.indexOf(name) !== -1;
+  }).map(function (name) {
     return { name: name, value: map[name] };
   }).sort(function (a, b) {
     return b.value - a.value;
   });
+}
+
+function sumCsServiceRankValues(list) {
+  return list.reduce(function (sum, row) { return sum + row.value; }, 0);
+}
+
+/** 团队 / 客服组范围展示 TOP3 汇总，替代个人视角的「我的排名」 */
+function buildCsServiceRankTop3Summary(list, metric) {
+  var top3Total = sumCsServiceRankValues(list.slice(0, 3));
+  var scopeTotal = sumCsServiceRankValues(list);
+  return {
+    val: '所选团队的 TOP3 客服' + metric.label + '总值：' + formatCsServiceRankValue(metric.unit, top3Total),
+    gap: '所占比团队总额百分比为：' + (scopeTotal > 0 ? (top3Total / scopeTotal * 100).toFixed(1) : '0.0') + '%'
+  };
 }
 
 function buildCsServiceRankGap(rank, list, unit) {
@@ -17054,36 +17085,62 @@ function buildCsServiceRankGap(rank, list, unit) {
   return parts.join(' · ') || '暂无对比对象';
 }
 
+/**
+ * 客服排行榜在两种视角共用：
+ * 留存客服视角固定高亮本人；客服管理视角按所选范围高亮当前客服（data-cs-rank-mode="cs"）
+ * 或展示 TOP3 汇总（data-cs-rank-mode="top3"）。
+ */
 function renderCsServiceRank(root) {
   var panel = root || document.getElementById('cs-service-rank-panel');
   if (!panel) return;
   var period = panel.dataset.csRankPeriod || 'week';
   var tabId = panel.dataset.csRankTab || 'commission';
+  var mode = panel.dataset.csRankMode || '';
   var metric = CS_SERVICE_RANK_METRICS[tabId] || CS_SERVICE_RANK_METRICS.commission;
-  var list = getCsServiceRankList(period, tabId);
+  var members = (panel.dataset.csRankMembers || '').split(',').filter(Boolean);
+  var isTop3 = mode === 'top3';
+  var selfName = isTop3 ? '' : (panel.dataset.csRankSelf || CS_SERVICE_RANK_SELF);
+  var selfRowClass = mode === 'cs' ? 'is-active-cs' : 'rank-me';
+  var list = getCsServiceRankList(period, tabId, members);
+  var rankLimit = panel.id === 'manager-goal-perf-rank-panel' ? CS_SERVICE_RANK_LIMIT_MANAGER : CS_SERVICE_RANK_LIMIT;
   var tbody = panel.querySelector('table tbody');
   var colEl = panel.querySelector('.cs-rank-col');
   var metricLabel = panel.querySelector('.cs-rank-metric-label');
   if (colEl) colEl.textContent = metric.label;
   if (metricLabel) metricLabel.textContent = metric.label;
   if (tbody) {
-    tbody.innerHTML = list.slice(0, CS_SERVICE_RANK_LIMIT).map(function (row, idx) {
+    tbody.innerHTML = list.slice(0, rankLimit).map(function (row, idx) {
       var rank = idx + 1;
-      var meClass = row.name === CS_SERVICE_RANK_SELF ? ' class="rank-me"' : '';
+      var meClass = row.name === selfName ? ' class="' + selfRowClass + '"' : '';
       return '<tr' + meClass + '><td class="rank-no">' + rank + '</td><td class="rank-name">' + row.name +
         '</td><td class="rank-val">' + formatCsServiceRankValue(metric.unit, row.value) + '</td></tr>';
     }).join('');
   }
+  var self = panel.querySelector('.rank-self');
+  if (!self) return;
+  var labelEl = self.querySelector('.rank-self-label');
+  var nameEl = self.querySelector('.rank-self-name');
+  var valEl = self.querySelector('.rank-self-val');
+  var gapEl = self.querySelector('.rank-self-gap');
+  self.classList.toggle('is-top3-summary', isTop3);
+  if (isTop3) {
+    var summary = buildCsServiceRankTop3Summary(list, metric);
+    if (valEl) valEl.textContent = summary.val;
+    if (gapEl) gapEl.textContent = summary.gap;
+    return;
+  }
   var selfIdx = -1;
   list.forEach(function (row, idx) {
-    if (row.name === CS_SERVICE_RANK_SELF) selfIdx = idx;
+    if (row.name === selfName) selfIdx = idx;
   });
   var selfRank = selfIdx + 1;
   var selfRow = selfIdx >= 0 ? list[selfIdx] : null;
-  var nameEl = panel.querySelector('.rank-self-name');
-  var valEl = panel.querySelector('.rank-self-val');
-  var gapEl = panel.querySelector('.rank-self-gap');
-  if (nameEl) nameEl.textContent = CS_SERVICE_RANK_SELF + ' · 第 ' + (selfRank || '-') + ' 名';
+  if (labelEl) labelEl.textContent = mode === 'cs' ? '当前客服排名' : '我的排名';
+  if (nameEl) {
+    var nameText = selfName + ' · 第 ' + (selfRank || '-') + ' 名';
+    if (mode === 'cs') nameEl.innerHTML = '<span class="manager-goal-perf-cs-name">' + selfName + '</span> · 第 ' + (selfRank || '-') + ' 名';
+    else nameEl.textContent = nameText;
+  }
   if (valEl) valEl.textContent = selfRow ? formatCsServiceRankValue(metric.unit, selfRow.value) : '--';
   if (gapEl) gapEl.textContent = selfRow ? buildCsServiceRankGap(selfRank, list, metric.unit) : '暂无对比对象';
 }
@@ -20128,14 +20185,9 @@ function buildManagerGoalGroupSidebar(groupKey) {
   var groupData = aggregateManagerGoalCsData(members, groupKey, group.label);
   var scale = getManagerGoalScopeShare(members);
   return {
-    perfTitle: MANAGER_GOAL_TEAM_SIDEBAR.perfTitle,
-    perfFootnote: MANAGER_GOAL_TEAM_SIDEBAR.perfFootnote,
-    perfItems: [
-      { label: '本组净入金总额', desc: '本月累计本组净入金', value: formatNetDepositUsd(groupData.netDeposit.month) },
-      { label: '本组交易客户数', desc: '本月累计本组实盘交易开仓客户数', value: groupData.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
-      { label: '本组手续费总额', desc: '本月累计本组手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee', members)) },
-      { label: '本组本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(sumManagerGoalTeamReward(members)) }
-    ],
+    perfTitle: '本组绩效预估',
+    perfFootnote: '基于本组 KPI、积压任务与历史经营数据预估。',
+    perfItems: buildGoalPerfEstimateItems(groupData, sumManagerGoalTeamReward(members)),
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + group.label + '</strong> 名下客户',
     customerRank: buildManagerGoalCustRankBlocks(scale, '本组的'),
     revenueIntro: '<strong class="rank-date-label">昨日</strong><strong>' + group.label + '</strong>创收榜单 · 入金 / 手续费 / 交易',
@@ -20671,31 +20723,54 @@ function buildManagerGoalCustRankBlocks(scale, ownerLabel) {
   };
 }
 
-/** 团队绩效预估：净入金 / 交易客户数取 KPI 汇总，手续费与绩效取客服明细汇总 */
-var MANAGER_GOAL_TEAM_SIDEBAR = (function () {
+/**
+ * 绩效预估维度与留存客服视角保持一致：新客 7 日复充 / 次均充值 / 老客 4 周复充 / 老客第 4 周登录与交易 / 本月绩效，
+ * 数值按所选范围（团队 / 客服组 / 单个客服）的客户结构推算。
+ */
+function buildGoalPerfEstimateItems(data, reward, splitHtml) {
+  var summary = data.summary || {};
+  var cohorts = goalCustomerCohorts(summary, true);
+  var week = buildWeekTargetMetrics(cohorts.new7d);
+  var veteran = buildVeteranTargetMetrics(cohorts.firstDeposit4w);
+  var veteranValid = Math.round(veteran.redeposit * GOAL_VALID_REDEPOSIT_RATIO);
+  // 新客次均充值：按新客占比拆出新客贡献的本月净入金，再除以新客有效复充人数
+  var newShare = summary.customers > 0 ? cohorts.new7d / summary.customers : 0;
+  var newNetDeposit = ((data.netDeposit && data.netDeposit.month) || 0) * newShare;
+  var avgDeposit = week.validRedeposit > 0 ? Math.round(newNetDeposit / week.validRedeposit) : 0;
+  var w4LoginRate = veteran.customers4w > 0 ? Math.round(veteran.w4Login / veteran.customers4w * 100) : 0;
+  return [
+    { label: '新客7日有效复充', desc: '近 7 日新客有效复充人数', value: week.validRedeposit.toLocaleString('en-US') + ' 人' },
+    { label: '新客次均充值金额', desc: '近 7 日新客人均单次充值金额', value: '$' + avgDeposit.toLocaleString('en-US') },
+    { label: '老客4周有效复充', desc: '首充 4 周内客户有效复充人数', value: veteranValid.toLocaleString('en-US') + ' 人' },
+    { label: '老客第4周登录率 / 交易率', desc: '近 4 周老客第 4 周登录率 / 交易率', value: w4LoginRate + '% / ' + veteran.w4TradeRate + '%' },
+    {
+      label: '本月绩效 / 预估绩效',
+      desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）',
+      value: formatPerfRewardWithRelative(reward),
+      split: splitHtml || ''
+    }
+  ];
+}
+
+/** 团队侧边栏按需构建：客户结构常量在脚本后段初始化，且需跟随时间条件重算 */
+function getManagerGoalTeamSidebar() {
   var team = MANAGER_GOAL_TEAM_DATA;
   return {
     perfTitle: '团队绩效预估',
     perfFootnote: '基于团队 KPI、积压任务与历史经营数据预估。',
-    perfItems: [
-      { label: '团队净入金总额', desc: '本月累计团队净入金', value: formatNetDepositUsd(team.netDeposit.month) },
-      { label: '团队交易客户数', desc: '本月累计团队实盘交易开仓客户数', value: team.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
-      { label: '团队手续费总额', desc: '本月累计团队手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee')) },
-      { label: '团队本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(sumManagerGoalTeamReward()) }
-    ],
+    perfItems: buildGoalPerfEstimateItems(team, sumManagerGoalTeamReward()),
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong>',
     customerRank: buildManagerGoalCustRankBlocks(1, '所选团队的'),
     revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 入金 / 手续费 / 交易',
     revenueRank: buildManagerGoalScopeRevenueRank(null, '团队')
   };
-})();
+}
 
 function buildManagerGoalCsSidebar(csName) {
   var meta = MANAGER_GOAL_CS_META[csName];
   var goal = MANAGER_GOAL_CS_DATA[csName];
   if (!meta || !goal) return null;
   var scale = getManagerGoalScopeShare([csName]);
-  var netMonth = goal.netDeposit.month;
   var teamRevenue = buildManagerGoalScopeRevenueRank(null, '团队');
   var mineDeposit = buildManagerGoalCsRevenueSelf('deposit', csName);
   var mineFee = buildManagerGoalCsRevenueSelf('fee', csName);
@@ -20703,13 +20778,7 @@ function buildManagerGoalCsSidebar(csName) {
   return {
     perfTitle: csName + ' · 绩效预估',
     perfFootnote: '基于 ' + csName + ' 本月累计 KPI 完成进度与历史转化模型动态预估，仅供参考。',
-    perfItems: [
-      { label: '净入金总额', desc: '本月累计净入金', value: formatNetDepositUsd(netMonth) },
-      { label: '交易客户数', desc: '本月累计实盘交易开仓客户数', value: goal.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
-      { label: '手续费总额', desc: '本月累计手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee', [csName])) },
-      { label: '本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(meta.reward), split: isManagerGoalGroupLeader(csName) ? formatLeaderPerfSplit(meta) : '' },
-      { label: '昨日风险提醒', desc: '可能流失高价值客户', value: goal.summary.highRisk + ' 人' }
-    ],
+    perfItems: buildGoalPerfEstimateItems(goal, meta.reward, isManagerGoalGroupLeader(csName) ? formatLeaderPerfSplit(meta) : ''),
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + csName + '</strong> 名下客户',
     customerRank: buildManagerGoalCustRankBlocks(scale, csName + ' 的'),
     revenueIntro: '<strong class="rank-date-label">昨日</strong>团队创收榜单 · 高亮 <strong>' + csName + '</strong>',
@@ -20741,15 +20810,15 @@ function buildManagerGoalCsSidebar(csName) {
 
 function getManagerGoalDisplayData(filter) {
   if (!filter || filter === 'all') {
-    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { sidebar: MANAGER_GOAL_TEAM_SIDEBAR });
+    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { sidebar: getManagerGoalTeamSidebar() });
   }
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
-    return Object.assign({}, buildManagerGoalGroupData(groupKey), { sidebar: buildManagerGoalGroupSidebar(groupKey) || MANAGER_GOAL_TEAM_SIDEBAR });
+    return Object.assign({}, buildManagerGoalGroupData(groupKey), { sidebar: buildManagerGoalGroupSidebar(groupKey) || getManagerGoalTeamSidebar() });
   }
   var base = MANAGER_GOAL_CS_DATA[filter] || MANAGER_GOAL_TEAM_DATA;
   var sidebar = buildManagerGoalCsSidebar(filter);
-  return Object.assign({}, base, { sidebar: sidebar || MANAGER_GOAL_TEAM_SIDEBAR });
+  return Object.assign({}, base, { sidebar: sidebar || getManagerGoalTeamSidebar() });
 }
 
 function renderManagerGoalCustRankTable(tbody, rows) {
@@ -20925,20 +20994,6 @@ function getManagerGoalScopeShare(members) {
   return total > 0 ? sumManagerGoalMetaMetric('deposit', members) / total : 0;
 }
 
-function buildManagerGoalPerfTop3Self(members) {
-  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice()).sort(function (a, b) {
-    return MANAGER_GOAL_CS_META[a].rank - MANAGER_GOAL_CS_META[b].rank;
-  });
-  var top3 = list.slice(0, 3);
-  var top3Total = sumManagerGoalTeamReward(top3);
-  var scopeTotal = sumManagerGoalTeamReward(list);
-  return {
-    mode: 'top3',
-    val: '所选团队的 TOP3 客服绩效总值：$' + top3Total.toLocaleString('en-US'),
-    gap: '所占比团队总额百分比为：' + formatManagerGoalPctOf(top3Total, scopeTotal)
-  };
-}
-
 function buildManagerGoalCsTop3Self(members, kind) {
   var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice());
   list.sort(function (a, b) {
@@ -21048,65 +21103,14 @@ function formatPerfRewardWithRelative(reward) {
   return '$' + amount.toLocaleString('en-US') + ' / $' + relative.toLocaleString('en-US');
 }
 
+/** 客服排行榜与留存客服视角共用同一组维度，仅按所选范围切换名单与底部汇总口径 */
 function applyManagerGoalPerfRankPanel(panel, data) {
   if (!panel) return;
-  var memberSet = null;
-  if (data.isGroup && data.groupMembers) {
-    memberSet = {};
-    data.groupMembers.forEach(function (name) { memberSet[name] = true; });
-  }
-  var perfRows = panel.querySelectorAll('tbody tr[data-cs-name]');
-  var visibleIndex = 0;
-  perfRows.forEach(function (row) {
-    var name = row.getAttribute('data-cs-name');
-    var inScope = !memberSet || memberSet[name];
-    if (!inScope) {
-      row.style.display = 'none';
-      row.classList.remove('is-active-cs');
-      return;
-    }
-    row.style.display = visibleIndex < MANAGER_GOAL_RANK_LIMIT ? '' : 'none';
-    visibleIndex++;
-    row.classList.toggle('is-active-cs', !data.isTeam && row.getAttribute('data-cs-name') === data.csName);
-  });
-  var self = panel.querySelector('.rank-self');
-  if (!self) return;
-  var labelEl = self.querySelector('.rank-self-label');
-  var nameEl = self.querySelector('.rank-self-name');
-  var valEl = self.querySelector('.rank-self-val');
-  var gapEl = self.querySelector('.rank-self-gap');
-  if (data.isGroup && data.groupMembers && data.groupMembers.length) {
-    var groupSummary = buildManagerGoalPerfTop3Self(data.groupMembers);
-    self.classList.add('is-top3-summary');
-    if (valEl) valEl.textContent = groupSummary.val;
-    if (gapEl) gapEl.textContent = groupSummary.gap;
-    return;
-  }
-  if (data.isTeam) {
-    var teamSummary = buildManagerGoalPerfTop3Self(null);
-    self.classList.add('is-top3-summary');
-    if (valEl) valEl.textContent = teamSummary.val;
-    if (gapEl) gapEl.textContent = teamSummary.gap;
-    return;
-  }
-  self.classList.remove('is-top3-summary');
-  var meta = MANAGER_GOAL_CS_META[data.csName];
-  if (!meta) return;
-  var reward = parseManagerGoalRewardUsd(meta.reward);
-  var topReward = parseManagerGoalRewardUsd(MANAGER_GOAL_CS_META.Coulson.reward);
-  labelEl.textContent = '当前客服排名';
-  nameEl.innerHTML = '<span class="manager-goal-perf-cs-name">' + data.csName + '</span> · 第 ' + meta.rank + ' 名';
-  valEl.textContent = meta.reward;
-  if (!gapEl) return;
-  if (meta.rank === 1) {
-    gapEl.textContent = '领先第 2 名 $' + (topReward - parseManagerGoalRewardUsd(MANAGER_GOAL_CS_META.May.reward)).toLocaleString('en-US');
-  } else if (meta.rank >= MANAGER_GOAL_PERF_RANK_ORDER.length) {
-    gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US');
-  } else {
-    var nextName = MANAGER_GOAL_PERF_RANK_ORDER[meta.rank];
-    var nextReward = parseManagerGoalRewardUsd(MANAGER_GOAL_CS_META[nextName].reward);
-    gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US') + ' · 领先第 ' + (meta.rank + 1) + ' 名 $' + (reward - nextReward).toLocaleString('en-US');
-  }
+  var isScopeSummary = data.isTeam || data.isGroup;
+  panel.dataset.csRankMembers = (data.isGroup && data.groupMembers) ? data.groupMembers.join(',') : '';
+  panel.dataset.csRankMode = isScopeSummary ? 'top3' : 'cs';
+  panel.dataset.csRankSelf = isScopeSummary ? '' : (data.csName || '');
+  renderCsServiceRank(panel);
 }
 
 function renderManagerGoalModuleTitle(el, teamTitle, personalTitle, csName, isTeam) {
@@ -21391,7 +21395,10 @@ function switchGoalTimeBasis(value) {
 /** 客户数三分口径：7日内客户 / 首充4周内客户 / 首充4周以上客户，三者之和等于客户总数 */
 var GOAL_FIRST_DEPOSIT_4W_RATIO = 0.28;
 var GOAL_VETERAN_REDEPOSIT_RATIO = 0.3;
-function goalCustomerCohorts(summary) {
+/** 复充人数中计入绩效的有效复充占比，新客 7 日与老客 4 周共用 */
+var GOAL_VALID_REDEPOSIT_RATIO = 0.68;
+/** ignorePeriod：绩效预估等「本月口径」指标不跟随总览的时间条件缩放 */
+function goalCustomerCohorts(summary, ignorePeriod) {
   var s = summary || {};
   var total = Math.max(0, s.customers || 0);
   var new7d = Math.min(total, Math.max(0, s.new7d || 0));
@@ -21404,7 +21411,7 @@ function goalCustomerCohorts(summary) {
     firstDeposit4w = Math.max(0, firstDeposit4w - shift);
     veteran4wPlus = Math.max(0, total - new7d - firstDeposit4w);
   }
-  var f = goalPeriodFlow();
+  var f = ignorePeriod ? 1 : goalPeriodFlow();
   if (f !== 1) {
     new7d = Math.max(0, Math.round(new7d * f));
     firstDeposit4w = Math.max(0, Math.round(firstDeposit4w * f));
@@ -21431,7 +21438,7 @@ function buildWeekTargetMetrics(new7d) {
   var contacts = Math.round(n * 0.75);
   var replies = Math.round(n * 0.66);
   var redeposit = Math.round(n * 0.39);
-  var validRedeposit = Math.round(redeposit * 0.68);
+  var validRedeposit = Math.round(redeposit * GOAL_VALID_REDEPOSIT_RATIO);
   var cum100 = Math.round(n * 0.14);
   var cum200 = Math.round(n * 0.07);
   var redepositTargetCount = Math.round(n * 0.4);
@@ -22783,7 +22790,7 @@ initCommFollowEntryForm();
 initCommReviewDrawer();
 initGoalQHelpTooltips();
 initCustomerRankPanelInteractions();
-renderCsServiceRank();
+document.querySelectorAll('.cs-rank-panel').forEach(function (panel) { renderCsServiceRank(panel); });
 initNetDepositCards();
 initCustActiveCards();
 initCustReachCards();
