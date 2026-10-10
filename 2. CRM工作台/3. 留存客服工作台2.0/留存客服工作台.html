@@ -3463,6 +3463,18 @@
     #panel-chance .breakthrough-star-section{
       display:none !important;
     }
+    #panel-chance .chance-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+    }
+    #panel-chance .chance-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-chance .chance-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-chance .chance-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-chance .chance-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
     .lead-clue-detail-panel .module-head h2::before{
       background:linear-gradient(180deg,#f59e0b,#ea580c);
     }
@@ -4207,7 +4219,7 @@
     .customer-pool-card{
       position:relative;border:1px solid #e8ecf1;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;cursor:pointer;text-align:left;
-      display:flex;flex-direction:column;min-width:0;width:100%;
+      display:flex;flex-direction:column;min-width:0;width:100%;height:110px;min-height:110px;max-height:110px;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .customer-pool-card:hover{
@@ -4219,16 +4231,19 @@
     .customer-pool-card--hot{border-color:#c4b5fd}
     .customer-pool-card-head{
       display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #f3e8ff;
+      box-sizing:border-box;height:30px;min-height:30px;max-height:30px;
+      padding:0 10px;border-bottom:1px solid #f3e8ff;
       background:linear-gradient(135deg,#f5f3ff,#fff);
     }
     .customer-pool-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
       text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
-    .customer-pool-card-body{padding:8px 10px 6px}
+    .customer-pool-card-body{
+      flex:1;display:flex;align-items:center;padding:8px 10px;
+    }
     .customer-pool-card-stats{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;width:100%;
     }
     .customer-pool-stat{
       display:flex;flex-direction:column;align-items:center;gap:2px;
@@ -4426,7 +4441,7 @@
     .lead-corral-card{
       position:relative;border:1px solid #e8ecf1;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;cursor:pointer;text-align:left;
-      display:flex;flex-direction:column;min-width:0;width:100%;
+      display:flex;flex-direction:column;min-width:0;width:100%;height:105px;min-height:105px;max-height:105px;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
     }
     .lead-corral-card:hover{
@@ -4440,7 +4455,8 @@
     .lead-corral-card--warn{border-color:#fde68a;background:#fffef5}
     .lead-corral-card-head{
       position:relative;display:flex;align-items:center;justify-content:center;
-      padding:8px 26px;border-bottom:1px solid #dbeafe;
+      box-sizing:border-box;height:30px;min-height:30px;max-height:30px;
+      padding:0 26px;border-bottom:1px solid #dbeafe;
       background:linear-gradient(135deg,#eff6ff,#fff);
     }
     .lead-corral-card-name{
@@ -4496,9 +4512,11 @@
       border:1px solid #dc2626;background:#dc2626;color:#fff;
     }
     .comm-follow-form-btn--danger:hover{background:#b91c1c;border-color:#b91c1c}
-    .lead-corral-card-body{padding:8px 10px 6px}
+    .lead-corral-card-body{
+      flex:1;display:flex;align-items:center;justify-content:center;padding:8px 10px;
+    }
     .lead-corral-card-stats{
-      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-bottom:6px;
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;width:100%;
     }
     .lead-corral-stat{
       display:flex;flex-direction:column;align-items:center;gap:2px;
@@ -4507,7 +4525,7 @@
     .lead-corral-stat + .lead-corral-stat{border-left:1px solid #dbeafe}
     .lead-corral-stat-label{font-size:9px;color:#64748b;line-height:1.2}
     .lead-corral-stat-val{
-      font-size:13px;font-weight:800;color:#0f172a;
+      font-size:14px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
     .lead-corral-stat--hot .lead-corral-stat-val{color:#2563eb}
@@ -4729,7 +4747,7 @@
     }
     .growth-split{
       display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,340px);
-      gap:12px;align-items:stretch;width:100%;
+      gap:12px;align-items:start;width:100%;
     }
     .growth-left-col,.growth-right-col{
       display:flex;flex-direction:column;min-width:0;min-height:100%;
@@ -4766,16 +4784,29 @@
       border-color:#e11d48;color:#fff;
       box-shadow:0 2px 8px rgba(225,29,72,.2);
     }
+    #panel-growth .growth-right-col{min-height:0;height:auto}
+    #panel-growth .growth-right-stack{flex:none;min-height:0;height:auto}
+    #panel-growth .rp-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+    }
+    #panel-growth .rp-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-growth .rp-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-growth .rp-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-growth .rp-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
     #panel-growth .rp-rank-panel{
-      height:100%;display:flex;flex-direction:column;
+      height:auto;display:flex;flex-direction:column;
     }
     #panel-growth .rp-rank-panel .module-head h2::before{
       background:linear-gradient(180deg,#be123c,#f43f5e);
     }
-    #panel-growth .rp-rank-panel .module-body{flex:1}
+    #panel-growth .rp-rank-panel .module-body{flex:none}
     #panel-growth .rp-kpi-grid{
       display:flex;flex-wrap:nowrap;gap:8px;
-      padding-bottom:12px;border-bottom:1px solid #eef2f7;
     }
     #panel-growth .rp-kpi{
       flex:1;min-width:0;padding:8px;border-radius:8px;
@@ -4815,8 +4846,84 @@
     #panel-growth .rp-kpi-note{
       margin:8px 0 0;font-size:10px;color:#94a3b8;line-height:1.5;
     }
+    #panel-growth .rp-cat{
+      margin-top:14px;padding-top:14px;border-top:1px solid #eef2f7;
+    }
+    #panel-growth .rp-cat-head{
+      display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px;
+    }
+    #panel-growth .rp-cat-head h3{
+      margin:0;font-size:13px;font-weight:800;color:#0f172a;white-space:nowrap;
+    }
+    #panel-growth .rp-cat-head span{font-size:11px;color:#64748b;line-height:1.4}
+    #panel-growth .rp-cat-grid{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+    }
+    #panel-growth .rp-cat-card{
+      display:flex;flex-direction:column;gap:8px;min-width:0;
+      padding:10px 10px 8px;border-radius:10px;border:1px solid #dbeafe;
+      border-top:3px solid #60a5fa;
+      background:#fff;text-align:left;cursor:pointer;font-family:inherit;
+      transition:background .15s,box-shadow .15s,border-color .15s;
+    }
+    #panel-growth .rp-cat-card:hover{background:#f8fbff;border-color:#bfdbfe}
+    #panel-growth .rp-cat-card.active,
+    #panel-growth .rp-cat-card.active:hover{
+      background:linear-gradient(180deg,#fff1f2 0%,#fff 72%);
+      border-color:#e11d48;
+      box-shadow:0 0 0 1px #e11d48,0 4px 12px rgba(225,29,72,.16);
+    }
+    #panel-growth .rp-cat-card:focus-visible{
+      outline:2px solid #2563eb;outline-offset:2px;
+    }
+    #panel-growth .rp-cat-top{
+      display:flex;align-items:flex-start;justify-content:space-between;gap:6px;
+    }
+    #panel-growth .rp-cat-name{
+      font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
+    }
+    #panel-growth .rp-cat-share{
+      flex-shrink:0;font-size:10px;font-weight:800;line-height:1.45;
+      color:#2563eb;background:#eff6ff;
+      border-radius:999px;padding:0 6px;font-variant-numeric:tabular-nums;white-space:nowrap;
+    }
+    #panel-growth .rp-cat-hero{display:flex;align-items:baseline;gap:6px}
+    #panel-growth .rp-cat-hero strong{
+      font-size:20px;font-weight:800;color:#0f172a;line-height:1;
+      font-variant-numeric:tabular-nums;
+    }
+    #panel-growth .rp-cat-hero em{
+      font-style:normal;font-size:10px;font-weight:700;color:#94a3b8;
+    }
+    #panel-growth .rp-cat-rate{display:flex;align-items:center;gap:8px}
+    #panel-growth .rp-cat-bar{
+      flex:1;height:4px;border-radius:999px;background:#f1f5f9;overflow:hidden;
+    }
+    #panel-growth .rp-cat-bar i{
+      display:block;height:100%;border-radius:inherit;background:var(--cat-color,#e11d48);
+    }
+    #panel-growth .rp-cat-rate-text{
+      flex-shrink:0;font-size:10px;font-weight:700;color:#64748b;
+      font-variant-numeric:tabular-nums;white-space:nowrap;
+    }
+    #panel-growth .rp-cat-stats{display:flex;flex-direction:column;margin:2px 0 0}
+    #panel-growth .rp-cat-stat-row{padding-top:8px}
+    #panel-growth .rp-cat-stat-row + .rp-cat-stat-row{
+      margin-top:8px;padding-top:8px;border-top:1px solid #e8edf3;
+    }
+    #panel-growth .rp-cat-stat-cells{
+      display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 8px;margin:0;
+    }
+    #panel-growth .rp-cat-stat-cells div{min-width:0}
+    #panel-growth .rp-cat-stat-cells span{
+      display:block;font-size:10px;font-weight:600;color:#94a3b8;line-height:1.3;white-space:nowrap;
+    }
+    #panel-growth .rp-cat-stat-cells strong{
+      display:block;margin-top:1px;font-size:13px;font-weight:800;color:#0f172a;line-height:1.2;
+      font-variant-numeric:tabular-nums;white-space:nowrap;
+    }
     #panel-growth .rp-trend{
-      margin-top:12px;padding-top:0;border-top:none;
+      margin-top:14px;padding-top:14px;border-top:1px solid #eef2f7;
     }
     #panel-growth .rp-trend-head{
       display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px;
@@ -8713,6 +8820,28 @@
 
           <div class="chance-right-col">
           <div class="chance-right-stack">
+          <aside class="module chance-scope-panel manager-only" id="chance-scope-panel">
+            <div class="module-head">
+              <h2>切换客服管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="chanceScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onChanceScopeLevel1Change()">
+                  <option value="all" selected>团队所有人</option>
+                  <option value="A">TW客服A组</option>
+                  <option value="B">TW客服B组</option>
+                  <option value="C">TW客服C组</option>
+                  <option value="DA">DANA客服A组</option>
+                  <option value="DB">DANA客服B组</option>
+                  <option value="DC">DANA客服C组</option>
+                </select>
+                <select id="chanceScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onChanceScopeLevel2Change()">
+                  <option value="__all__" selected>全员汇总</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint" id="chanceScopeHint">当前客服管理视角：<strong>团队所有人</strong></p>
+            </div>
+          </aside>
           <aside class="block large breakthrough-star-section" id="breakthrough-star-section">
             <div class="module-head">
               <h2>客户突破之星</h2>
@@ -8905,7 +9034,7 @@
                 <section class="module rp-overview-panel" id="rp-overview-panel">
                   <div class="module-head">
                     <div class="module-head-row">
-                      <h2>红包运营分析</h2>
+                      <h2 id="rp-overview-title">红包运营分析</h2>
                       <div class="rank-date-chips rp-period-chips" id="rp-period-chips" role="tablist" aria-label="时间维度">
                         <button type="button" class="rank-date-chip active" role="tab" aria-selected="true" data-rp-period="month" onclick="switchRpPeriod('month', this)">本月</button>
                         <button type="button" class="rank-date-chip" role="tab" aria-selected="false" data-rp-period="lastmonth" onclick="switchRpPeriod('lastmonth', this)">上月</button>
@@ -8948,6 +9077,13 @@
                       </div>
                     </div>
                     <p class="rp-kpi-note" id="rp-kpi-note">人数为所选周期内去重客户。平均使用时长按使用数加权。</p>
+                    <div class="rp-cat" id="rp-cat">
+                      <div class="rp-cat-head">
+                        <h3>红包分类明细</h3>
+                        <span>跟随所选时间范围，点击卡片查看该分类近 6 个月趋势</span>
+                      </div>
+                      <div class="rp-cat-grid" id="rp-cat-grid" role="group" aria-label="红包分类明细"></div>
+                    </div>
                     <div class="rp-trend">
                       <div class="rp-trend-head">
                         <h3>近 6 个月指标趋势</h3>
@@ -8974,10 +9110,32 @@
             </div>
             <div class="growth-right-col">
               <div class="growth-right-stack">
+                <aside class="module rp-scope-panel manager-only" id="rp-scope-panel">
+                  <div class="module-head">
+                    <h2>切换客服管理视角</h2>
+                  </div>
+                  <div class="module-body">
+                    <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                      <select id="rpScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onRpScopeLevel1Change()">
+                        <option value="all" selected>团队所有人</option>
+                        <option value="A">TW客服A组</option>
+                        <option value="B">TW客服B组</option>
+                        <option value="C">TW客服C组</option>
+                        <option value="DA">DANA客服A组</option>
+                        <option value="DB">DANA客服B组</option>
+                        <option value="DC">DANA客服C组</option>
+                      </select>
+                      <select id="rpScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onRpScopeLevel2Change()">
+                        <option value="__all__" selected>全员汇总</option>
+                      </select>
+                    </div>
+                    <p class="manager-goal-scope-hint" id="rpScopeHint">当前客服管理视角：<strong>团队所有人</strong></p>
+                  </div>
+                </aside>
                 <aside class="module rp-rank-panel" id="rp-rank-panel">
                   <div class="module-head">
-                    <h2>红包发放排行</h2>
-                    <p class="kpi-intro">留存客服近 6 个月发放总排行 · 当前：<strong id="rp-rank-dim-label">发放数</strong></p>
+                    <h2>红包排行榜</h2>
+                    <p class="kpi-intro"><span id="rp-rank-scope-text">留存客服近 6 个月发放总排行</span> · 当前：<strong id="rp-rank-dim-label">发放数</strong></p>
                   </div>
                   <div class="module-body">
                     <div class="rank-tabs" role="tablist" aria-label="排行维度">
@@ -16211,6 +16369,11 @@ function renderCommStatsFollowTable() {
 }
 
 function renderCommStatsDetailActionHtml(row) {
+  var view = document.body.dataset.view || 'cs';
+  var owner = _commStatsDetailCsName || '';
+  if (view === 'manager' && owner !== COMM_STATS_CURRENT_CS) {
+    return '<span class="col-action-links">—</span>';
+  }
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link comm-stats-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.name + '">私聊</a>' +
     ' · ' +
@@ -18684,7 +18847,8 @@ function rpPeriodSpec() {
 
 function renderRpKpis() {
   var spec = rpPeriodSpec();
-  var rows = spec.indexes.map(function (index) { return RP_MONTHLY[index]; });
+  var monthly = rpScopedMonthly();
+  var rows = spec.indexes.map(function (index) { return monthly[index]; });
   function sum(key) {
     return rows.reduce(function (total, row) { return total + row[key]; }, 0);
   }
@@ -18693,7 +18857,9 @@ function renderRpKpis() {
   var amount = sum('amount');
   var used = sum('used');
   var usedPeople = sum('usedPeople');
-  var hourWeight = rows.reduce(function (total, row) { return total + row.avgHours * row.used; }, 0);
+  var hourWeight = rows.reduce(function (total, row) {
+    return total + (row.hourTenths != null ? row.hourTenths / 10 : row.avgHours * row.used);
+  }, 0);
   function setText(id, text) {
     var el = document.getElementById(id);
     if (el) el.textContent = text;
@@ -18703,12 +18869,17 @@ function renderRpKpis() {
   setText('rp-kpi-amount', '$' + rpFormatInt(amount));
   setText('rp-kpi-used', rpFormatInt(used));
   setText('rp-kpi-used-people', rpFormatInt(usedPeople));
-  setText('rp-kpi-use-rate', (used / issued * 100).toFixed(1) + '%');
-  setText('rp-kpi-cust-rate', (usedPeople / recv * 100).toFixed(1) + '%');
+  setText('rp-kpi-use-rate', (issued ? used / issued * 100 : 0).toFixed(1) + '%');
+  setText('rp-kpi-cust-rate', (recv ? usedPeople / recv * 100 : 0).toFixed(1) + '%');
   setText('rp-kpi-unused', rpFormatInt(sum('unused')));
-  setText('rp-kpi-hours', (hourWeight / used).toFixed(1));
+  setText('rp-kpi-hours', (used ? hourWeight / used : 0).toFixed(1));
+  syncRpOverviewTitle();
   var intro = document.getElementById('rp-period-intro');
-  if (intro) intro.textContent = '统计范围：' + spec.range + '。下方趋势固定为近 6 个月，每次选择一个红包维度。';
+  if (intro) {
+    var scopeText = ' · ' + ((document.body.dataset.view || 'cs') === 'manager' ? rpScopeLabel() : RP_RANK_ME);
+    intro.textContent = '统计范围：' + spec.range + scopeText + '。分类卡片跟随所选周期，近 6 个月趋势每次查看一个红包分类。';
+  }
+  renderRpCatCards();
   var note = document.getElementById('rp-kpi-note');
   if (note) {
     note.textContent = spec.single
@@ -18767,11 +18938,11 @@ function rpBuildAxis(group) {
 
 var _rpDim = 'lots';
 var RP_DIMS = [
-  { key: 'lots', label: '交易手数红包' },
-  { key: 'fee', label: '手续费红包' },
-  { key: 'deposit', label: '充值红包' },
-  { key: 'loss', label: '亏损返现红包' },
-  { key: 'withdraw', label: '提现红包' }
+  { key: 'lots', label: '交易手数红包', color: '#e11d48', soft: '#fff1f2' },
+  { key: 'fee', label: '手续费红包', color: '#d97706', soft: '#fffbeb' },
+  { key: 'deposit', label: '充值红包', color: '#0891b2', soft: '#ecfeff' },
+  { key: 'loss', label: '亏损返现红包', color: '#7c3aed', soft: '#f5f3ff' },
+  { key: 'withdraw', label: '提现红包', color: '#059669', soft: '#ecfdf5' }
 ];
 var RP_DIM_ROWS = {
   lots: [
@@ -18815,6 +18986,436 @@ var RP_DIM_ROWS = {
     { issued: 300, recvPeople: 135, used: 208, usedPeople: 97, amount: 4090, usedAmount: 2249 }
   ]
 };
+var RP_PERSON_WEIGHT = {
+  Coulson: 14, May: 12, Daisy: 11, Fitz: 10, Simmons: 9, Mack: 8,
+  Hunter: 7, Fury: 7, Ward: 6, Bobbi: 6, Skye: 5, Melinda: 5,
+  Trip: 4, Antoine: 4, 'Yo-Yo': 3, Deke: 3, Jemma: 3
+};
+var RP_PERSON_DIM = {};
+var RP_PERSON_MONTH = {};
+var _rpScopeLevel1 = 'all';
+var _rpScopeLevel2 = '__all__';
+var _rpBuildSalt = 1;
+
+function rpAllNames() {
+  var names = [];
+  if (typeof MANAGER_GOAL_CS_GROUPS === 'undefined') return names;
+  Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+    MANAGER_GOAL_CS_GROUPS[key].members.forEach(function (name) {
+      if (names.indexOf(name) < 0) names.push(name);
+    });
+  });
+  return names;
+}
+
+function rpSplitExact(total, weights) {
+  var n = weights.length;
+  var base = [];
+  var frac = [];
+  var sumW = 0;
+  var assigned = 0;
+  var i;
+  for (i = 0; i < n; i++) sumW += weights[i];
+  if (!n || !sumW || total <= 0) {
+    for (i = 0; i < n; i++) base.push(0);
+    return base;
+  }
+  for (i = 0; i < n; i++) {
+    var exact = total * weights[i] / sumW;
+    var flo = Math.floor(exact + 1e-9);
+    base.push(flo);
+    frac.push({ i: i, f: exact - flo });
+    assigned += flo;
+  }
+  frac.sort(function (a, b) { return b.f - a.f || a.i - b.i; });
+  var rem = total - assigned;
+  for (i = 0; i < rem; i++) base[frac[i].i] += 1;
+  return base;
+}
+
+function rpSplitCapped(total, weights, caps) {
+  var n = weights.length;
+  var assigned = [];
+  var i;
+  for (i = 0; i < n; i++) assigned.push(0);
+  var remain = total;
+  var guard = 0;
+  while (remain > 0 && guard < 40) {
+    guard += 1;
+    var openIdx = [];
+    var openW = [];
+    for (i = 0; i < n; i++) {
+      if (assigned[i] < caps[i]) {
+        openIdx.push(i);
+        openW.push(Math.max(weights[i], 1));
+      }
+    }
+    if (!openIdx.length) break;
+    var piece = rpSplitExact(remain, openW);
+    var stuck = 0;
+    for (var j = 0; j < openIdx.length; j++) {
+      var idx = openIdx[j];
+      var room = caps[idx] - assigned[idx];
+      var give = piece[j] > room ? room : piece[j];
+      assigned[idx] += give;
+      stuck += piece[j] - give;
+    }
+    if (stuck === remain) break;
+    remain = stuck;
+  }
+  return assigned;
+}
+
+function rpWeights(names, monthIndex, salt) {
+  return names.map(function (name) {
+    var base = RP_PERSON_WEIGHT[name] || 4;
+    var wobble = (name.length * 3 + monthIndex * 5 + salt * 11 + _rpBuildSalt * 17) % 5;
+    return base + wobble;
+  });
+}
+
+function rpSumMin(used, recv) {
+  var total = 0;
+  for (var i = 0; i < used.length; i++) total += Math.min(used[i], recv[i]);
+  return total;
+}
+
+function rpRepairOverlap(used, recv, issued, need) {
+  var guard = 0;
+  while (rpSumMin(used, recv) < need && guard < 20000) {
+    guard += 1;
+    var src = -1;
+    var dst = -1;
+    var i;
+    for (i = 0; i < used.length; i++) {
+      if (used[i] > recv[i]) src = i;
+      if (recv[i] > used[i] && used[i] < issued[i]) dst = i;
+    }
+    if (src >= 0 && dst >= 0) {
+      used[src] -= 1;
+      used[dst] += 1;
+      continue;
+    }
+    src = -1;
+    dst = -1;
+    for (i = 0; i < recv.length; i++) {
+      if (recv[i] > used[i]) src = i;
+      if (used[i] > recv[i] && recv[i] < issued[i]) dst = i;
+    }
+    if (src >= 0 && dst >= 0) {
+      recv[src] -= 1;
+      recv[dst] += 1;
+      continue;
+    }
+    break;
+  }
+  return rpSumMin(used, recv) >= need;
+}
+
+function rpFillLedger() {
+  var names = rpAllNames();
+  var dimKeys = Object.keys(RP_DIM_ROWS);
+  RP_PERSON_DIM = {};
+  RP_PERSON_MONTH = {};
+  names.forEach(function (name) {
+    RP_PERSON_DIM[name] = {};
+    dimKeys.forEach(function (dimKey) { RP_PERSON_DIM[name][dimKey] = []; });
+    RP_PERSON_MONTH[name] = [];
+  });
+  RP_MONTHLY.forEach(function (month, m) {
+    var monthIssued = [];
+    var monthRecv = [];
+    var monthUsed = [];
+    var monthUsedPeople = [];
+    var monthAmount = [];
+    names.forEach(function () {
+      monthIssued.push(0);
+      monthRecv.push(0);
+      monthUsed.push(0);
+      monthUsedPeople.push(0);
+      monthAmount.push(0);
+    });
+    dimKeys.forEach(function (dimKey, dimIndex) {
+      var src = RP_DIM_ROWS[dimKey][m];
+      var weights = rpWeights(names, m, dimIndex + 1);
+      var issued = rpSplitExact(src.issued, weights);
+      var recv = rpSplitCapped(src.recvPeople, weights, issued.slice());
+      var used = rpSplitCapped(src.used, weights, issued.slice());
+      rpRepairOverlap(used, recv, issued, src.usedPeople);
+      var upCaps = used.map(function (value, idx) { return Math.min(value, recv[idx]); });
+      var usedPeople = rpSplitCapped(src.usedPeople, weights, upCaps);
+      var amount = rpSplitExact(src.amount, weights);
+      var usedAmount = rpSplitCapped(src.usedAmount, weights, amount.slice());
+      names.forEach(function (name, i) {
+        RP_PERSON_DIM[name][dimKey][m] = {
+          issued: issued[i],
+          recvPeople: recv[i],
+          used: used[i],
+          usedPeople: usedPeople[i],
+          amount: amount[i],
+          usedAmount: usedAmount[i]
+        };
+        monthIssued[i] += issued[i];
+        monthRecv[i] += recv[i];
+        monthUsed[i] += used[i];
+        monthUsedPeople[i] += usedPeople[i];
+        monthAmount[i] += amount[i];
+      });
+    });
+    var usedTotal = monthUsed.reduce(function (sum, value) { return sum + value; }, 0);
+    var hourTotal = Math.round(month.avgHours * usedTotal * 10);
+    var hourCaps = monthUsed.map(function (value) { return value > 0 ? value * 5000 : 0; });
+    var hourTenths = rpSplitCapped(hourTotal, rpWeights(names, m, 9), hourCaps);
+    var slack = monthIssued.map(function (value, idx) { return value - monthUsed[idx]; });
+    var expired = rpSplitCapped(month.expired, rpWeights(names, m, 13), slack.slice());
+    names.forEach(function (name, i) {
+      RP_PERSON_MONTH[name][m] = {
+        issued: monthIssued[i],
+        recvPeople: monthRecv[i],
+        used: monthUsed[i],
+        usedPeople: monthUsedPeople[i],
+        amount: monthAmount[i],
+        unused: slack[i] - expired[i],
+        expired: expired[i],
+        hourTenths: hourTenths[i]
+      };
+    });
+  });
+}
+
+function rpAddCells(target, row, keys) {
+  keys.forEach(function (key) { target[key] += row[key] || 0; });
+}
+
+function rpAuditLedger() {
+  var names = rpAllNames();
+  var dimKeys = Object.keys(RP_DIM_ROWS);
+  var errors = [];
+  var dimFields = ['issued', 'recvPeople', 'used', 'usedPeople', 'amount', 'usedAmount'];
+  var monthFields = ['issued', 'recvPeople', 'used', 'usedPeople', 'amount', 'unused', 'expired'];
+  function sumNamed(list, pick) {
+    var total = 0;
+    list.forEach(function (name) { total += pick(name); });
+    return total;
+  }
+  RP_MONTHLY.forEach(function (month, m) {
+    dimKeys.forEach(function (dimKey) {
+      var src = RP_DIM_ROWS[dimKey][m];
+      dimFields.forEach(function (key) {
+        var got = sumNamed(names, function (name) { return RP_PERSON_DIM[name][dimKey][m][key]; });
+        if (got !== src[key]) errors.push(dimKey + ' ' + m + ' ' + key + ' ' + got + '!=' + src[key]);
+      });
+      names.forEach(function (name) {
+        var row = RP_PERSON_DIM[name][dimKey][m];
+        if (row.used > row.issued || row.recvPeople > row.issued || row.usedPeople > row.used || row.usedPeople > row.recvPeople || row.usedAmount > row.amount) {
+          errors.push(name + ' ' + dimKey + ' ' + m + ' constraint');
+        }
+      });
+    });
+    monthFields.forEach(function (key) {
+      var got = sumNamed(names, function (name) { return RP_PERSON_MONTH[name][m][key]; });
+      if (got !== month[key]) errors.push('month ' + m + ' ' + key + ' ' + got + '!=' + month[key]);
+    });
+    var hourGot = sumNamed(names, function (name) { return RP_PERSON_MONTH[name][m].hourTenths; });
+    var hourNeed = Math.round(month.avgHours * month.used * 10);
+    if (hourGot !== hourNeed) errors.push('month ' + m + ' hours ' + hourGot + '!=' + hourNeed);
+    names.forEach(function (name) {
+      var row = RP_PERSON_MONTH[name][m];
+      if (row.used + row.unused + row.expired !== row.issued) errors.push(name + ' month ' + m + ' balance');
+      if (!row.used && row.hourTenths) errors.push(name + ' month ' + m + ' hours without used');
+    });
+    Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (groupKey) {
+      var members = MANAGER_GOAL_CS_GROUPS[groupKey].members;
+      dimKeys.forEach(function (dimKey) {
+        dimFields.forEach(function (key) {
+          var groupSum = sumNamed(members, function (name) { return RP_PERSON_DIM[name][dimKey][m][key]; });
+          var peopleSum = 0;
+          members.forEach(function (name) { peopleSum += RP_PERSON_DIM[name][dimKey][m][key]; });
+          if (groupSum !== peopleSum) errors.push('group identity ' + groupKey);
+        });
+      });
+    });
+  });
+  var groupGrand = { issued: 0, recvPeople: 0, used: 0, usedPeople: 0, amount: 0 };
+  Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (groupKey) {
+    MANAGER_GOAL_CS_GROUPS[groupKey].members.forEach(function (name) {
+      RP_PERSON_MONTH[name].forEach(function (row) {
+        groupGrand.issued += row.issued;
+        groupGrand.recvPeople += row.recvPeople;
+        groupGrand.used += row.used;
+        groupGrand.usedPeople += row.usedPeople;
+        groupGrand.amount += row.amount;
+      });
+    });
+  });
+  var allGrand = { issued: 0, recvPeople: 0, used: 0, usedPeople: 0, amount: 0 };
+  RP_MONTHLY.forEach(function (row) {
+    allGrand.issued += row.issued;
+    allGrand.recvPeople += row.recvPeople;
+    allGrand.used += row.used;
+    allGrand.usedPeople += row.usedPeople;
+    allGrand.amount += row.amount;
+  });
+  Object.keys(allGrand).forEach(function (key) {
+    if (groupGrand[key] !== allGrand[key]) errors.push('all groups ' + key + ' ' + groupGrand[key] + '!=' + allGrand[key]);
+  });
+  return errors;
+}
+
+function rpBuildPersonLedger() {
+  var salts = [1, 3, 5, 7, 9, 11];
+  var errors = [];
+  for (var i = 0; i < salts.length; i++) {
+    _rpBuildSalt = salts[i];
+    rpFillLedger();
+    errors = rpAuditLedger();
+    if (!errors.length) return;
+  }
+  if (window.console && console.error) console.error('红包模拟数据未对齐', errors.slice(0, 12));
+}
+
+function rpActiveNames() {
+  var view = document.body.dataset.view || 'cs';
+  if (view !== 'manager') return [RP_RANK_ME];
+  if (_rpScopeLevel1 === 'all') {
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return rpAllNames();
+    return [_rpScopeLevel2];
+  }
+  var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
+  if (!group) return rpAllNames();
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return group.members.slice();
+  return [_rpScopeLevel2];
+}
+
+function rpScopeLabel() {
+  if (_rpScopeLevel1 === 'all') {
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
+    return _rpScopeLevel2;
+  }
+  var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
+  var label = group ? group.label : '当前组';
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 组内所有人';
+  return label + ' · ' + _rpScopeLevel2;
+}
+
+function rpScopeTitleName() {
+  if (_rpScopeLevel1 === 'all') {
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
+    return _rpScopeLevel2;
+  }
+  var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return group ? group.label : '当前组';
+  return _rpScopeLevel2;
+}
+
+function syncRpOverviewTitle() {
+  var title = document.getElementById('rp-overview-title');
+  if (!title) return;
+  var manager = (document.body.dataset.view || 'cs') === 'manager';
+  title.textContent = manager ? rpScopeTitleName() + '·红包运营分析' : '红包运营分析';
+}
+
+function rpScopedDimRows(dimKey) {
+  var names = rpActiveNames();
+  var count = RP_MONTHLY.length;
+  var rows = [];
+  for (var m = 0; m < count; m++) {
+    var row = { issued: 0, recvPeople: 0, used: 0, usedPeople: 0, amount: 0, usedAmount: 0 };
+    names.forEach(function (name) {
+      var cell = RP_PERSON_DIM[name] && RP_PERSON_DIM[name][dimKey] && RP_PERSON_DIM[name][dimKey][m];
+      if (!cell) return;
+      row.issued += cell.issued;
+      row.recvPeople += cell.recvPeople;
+      row.used += cell.used;
+      row.usedPeople += cell.usedPeople;
+      row.amount += cell.amount;
+      row.usedAmount += cell.usedAmount;
+    });
+    rows.push(row);
+  }
+  return rows;
+}
+
+function rpScopedMonthly() {
+  if (!rpAllNames().length || !RP_PERSON_MONTH[rpAllNames()[0]]) return RP_MONTHLY;
+  var names = rpActiveNames();
+  return RP_MONTHLY.map(function (src, m) {
+    var row = { issued: 0, recvPeople: 0, amount: 0, used: 0, usedPeople: 0, unused: 0, expired: 0, hourTenths: 0, avgHours: src.avgHours };
+    names.forEach(function (name) {
+      var cell = RP_PERSON_MONTH[name][m];
+      row.issued += cell.issued;
+      row.recvPeople += cell.recvPeople;
+      row.amount += cell.amount;
+      row.used += cell.used;
+      row.usedPeople += cell.usedPeople;
+      row.unused += cell.unused;
+      row.expired += cell.expired;
+      row.hourTenths += cell.hourTenths;
+    });
+    row.avgHours = row.used ? row.hourTenths / row.used / 10 : 0;
+    return row;
+  });
+}
+
+function rpPersonSixMonth(name, tab) {
+  var key = tab === 'people' ? 'recvPeople' : tab === 'usedPeople' ? 'usedPeople' : tab === 'amount' ? 'amount' : 'issued';
+  return (RP_PERSON_MONTH[name] || []).reduce(function (sum, row) { return sum + row[key]; }, 0);
+}
+
+function rpRebuildScopeLevel2(level1, keepValue) {
+  var select = document.getElementById('rpScopeLevel2');
+  if (!select) return;
+  var options = [];
+  if (level1 === 'all') {
+    options.push({ value: '__all__', label: '全员汇总' });
+    rpAllNames().forEach(function (name) { options.push({ value: name, label: name }); });
+  } else {
+    var group = MANAGER_GOAL_CS_GROUPS[level1];
+    if (!group) return;
+    options.push({ value: '__group__', label: '组内所有人' });
+    group.members.forEach(function (name) { options.push({ value: name, label: name }); });
+  }
+  select.textContent = '';
+  options.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+  var fallback = level1 === 'all' ? '__all__' : '__group__';
+  select.value = keepValue && select.querySelector('option[value="' + keepValue + '"]') ? keepValue : fallback;
+}
+
+function rpSyncScopeHint() {
+  var hint = document.getElementById('rpScopeHint');
+  if (!hint) return;
+  var label = rpScopeLabel();
+  hint.innerHTML = '当前客服管理视角：<strong>' + label + '</strong>';
+  hint.classList.toggle('is-cs-mode', _rpScopeLevel1 !== 'all' || (_rpScopeLevel2 && _rpScopeLevel2 !== '__all__'));
+}
+
+function applyRpScope() {
+  rpSyncScopeHint();
+  renderRpKpis();
+  renderRpTrendChart();
+}
+
+function onRpScopeLevel1Change() {
+  var level1Select = document.getElementById('rpScopeLevel1');
+  _rpScopeLevel1 = level1Select ? level1Select.value : 'all';
+  rpRebuildScopeLevel2(_rpScopeLevel1);
+  var level2Select = document.getElementById('rpScopeLevel2');
+  _rpScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyRpScope();
+}
+
+function onRpScopeLevel2Change() {
+  var level1Select = document.getElementById('rpScopeLevel1');
+  var level2Select = document.getElementById('rpScopeLevel2');
+  _rpScopeLevel1 = level1Select ? level1Select.value : 'all';
+  _rpScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyRpScope();
+}
 var RP_DIM_METRIC_DEFS = [
   { key: 'issued', label: '发放总数', group: 'count', color: '#e11d48', chipBg: '#fff1f2' },
   { key: 'recvPeople', label: '发放人数', group: 'people', color: '#0891b2', chipBg: '#ecfeff' },
@@ -18827,7 +19428,7 @@ var RP_DIM_METRIC_DEFS = [
 ];
 
 function rpDimMetrics(dimKey) {
-  var rows = RP_DIM_ROWS[dimKey] || RP_DIM_ROWS.lots;
+  var rows = rpScopedDimRows(dimKey);
   function col(key) { return rows.map(function (row) { return row[key]; }); }
   var issued = col('issued');
   var recv = col('recvPeople');
@@ -18838,9 +19439,9 @@ function rpDimMetrics(dimKey) {
     issued: issued,
     recvPeople: recv,
     used: used,
-    useRate: used.map(function (v, i) { return rpRound1(v / issued[i] * 100); }),
+    useRate: used.map(function (v, i) { return issued[i] ? rpRound1(v / issued[i] * 100) : 0; }),
     usedPeople: usedPeople,
-    custRate: usedPeople.map(function (v, i) { return rpRound1(v / recv[i] * 100); }),
+    custRate: usedPeople.map(function (v, i) { return recv[i] ? rpRound1(v / recv[i] * 100) : 0; }),
     amount: amount,
     usedAmount: col('usedAmount')
   };
@@ -18867,6 +19468,133 @@ function switchRpDim(dimKey) {
     });
   }
   renderRpTrendChart();
+  syncRpCatActive();
+}
+
+function rpDimPeriodStats(dimKey) {
+  var spec = rpPeriodSpec();
+  var source = rpScopedDimRows(dimKey);
+  var rows = spec.indexes.map(function (index) { return source[index]; }).filter(Boolean);
+  function sum(key) {
+    return rows.reduce(function (total, row) { return total + (row[key] || 0); }, 0);
+  }
+  var issued = sum('issued');
+  var recv = sum('recvPeople');
+  var used = sum('used');
+  var usedPeople = sum('usedPeople');
+  return {
+    issued: issued,
+    recvPeople: recv,
+    used: used,
+    usedPeople: usedPeople,
+    amount: sum('amount'),
+    usedAmount: sum('usedAmount'),
+    useRate: issued ? used / issued * 100 : 0,
+    custRate: recv ? usedPeople / recv * 100 : 0
+  };
+}
+
+function syncRpCatActive() {
+  document.querySelectorAll('#rp-cat-grid .rp-cat-card').forEach(function (card) {
+    var on = card.getAttribute('data-rp-cat') === _rpDim;
+    card.classList.toggle('active', on);
+    card.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+}
+
+function renderRpCatCards() {
+  var root = document.getElementById('rp-cat-grid');
+  if (!root || typeof RP_DIMS === 'undefined') return;
+  var stats = RP_DIMS.map(function (dim) {
+    return { dim: dim, stat: rpDimPeriodStats(dim.key) };
+  });
+  var totalIssued = stats.reduce(function (total, item) { return total + item.stat.issued; }, 0);
+  root.textContent = '';
+  stats.forEach(function (item) {
+    var dim = item.dim;
+    var stat = item.stat;
+    var share = totalIssued ? stat.issued / totalIssued * 100 : 0;
+    var card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'rp-cat-card';
+    card.setAttribute('data-rp-cat', dim.key);
+    card.style.setProperty('--cat-color', dim.color);
+    card.style.setProperty('--cat-soft', dim.soft);
+    card.addEventListener('click', function () { switchRpDim(dim.key); });
+
+    var top = document.createElement('div');
+    top.className = 'rp-cat-top';
+    var name = document.createElement('span');
+    name.className = 'rp-cat-name';
+    name.textContent = dim.label;
+    var shareEl = document.createElement('span');
+    shareEl.className = 'rp-cat-share';
+    shareEl.title = '占所选周期红包发放总数';
+    shareEl.textContent = '占比 ' + share.toFixed(1) + '%';
+    top.appendChild(name);
+    top.appendChild(shareEl);
+
+    var hero = document.createElement('div');
+    hero.className = 'rp-cat-hero';
+    var heroVal = document.createElement('strong');
+    heroVal.textContent = rpFormatInt(stat.issued);
+    var heroLabel = document.createElement('em');
+    heroLabel.textContent = '发放数';
+    hero.appendChild(heroVal);
+    hero.appendChild(heroLabel);
+
+    var rate = document.createElement('div');
+    rate.className = 'rp-cat-rate';
+    var bar = document.createElement('span');
+    bar.className = 'rp-cat-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    var barFill = document.createElement('i');
+    barFill.style.width = Math.max(0, Math.min(100, stat.useRate)).toFixed(1) + '%';
+    bar.appendChild(barFill);
+    var rateText = document.createElement('span');
+    rateText.className = 'rp-cat-rate-text';
+    rateText.textContent = '使用率 ' + stat.useRate.toFixed(1) + '%';
+    rate.appendChild(bar);
+    rate.appendChild(rateText);
+
+    function rpCatStatRow(cells) {
+      var row = document.createElement('div');
+      row.className = 'rp-cat-stat-row';
+      var grid = document.createElement('div');
+      grid.className = 'rp-cat-stat-cells';
+      cells.forEach(function (pair) {
+        var cell = document.createElement('div');
+        var name = document.createElement('span');
+        var value = document.createElement('strong');
+        name.textContent = pair[0];
+        value.textContent = pair[1];
+        cell.appendChild(name);
+        cell.appendChild(value);
+        grid.appendChild(cell);
+      });
+      row.appendChild(grid);
+      return row;
+    }
+    var statsBox = document.createElement('div');
+    statsBox.className = 'rp-cat-stats';
+    statsBox.appendChild(rpCatStatRow([
+      ['使用数', rpFormatInt(stat.used)],
+      ['使用人数', rpFormatInt(stat.usedPeople)],
+      ['客户使用率', stat.custRate.toFixed(1) + '%']
+    ]));
+    statsBox.appendChild(rpCatStatRow([
+      ['发放金额', '$' + rpFormatInt(stat.amount)],
+      ['使用数', rpFormatInt(stat.used)],
+      ['使用金额', '$' + rpFormatInt(stat.usedAmount)]
+    ]));
+
+    card.appendChild(top);
+    card.appendChild(hero);
+    card.appendChild(rate);
+    card.appendChild(statsBox);
+    root.appendChild(card);
+  });
+  syncRpCatActive();
 }
 
 function rpIndexedMax(metrics) {
@@ -19062,12 +19790,18 @@ function renderRpRank() {
   var col = document.getElementById('rp-rank-col');
   var dim = document.getElementById('rp-rank-dim-label');
   var tbody = document.getElementById('rp-rank-tbody');
+  var scopeText = document.getElementById('rp-rank-scope-text');
   if (col) col.textContent = spec.label;
   if (dim) dim.textContent = spec.label;
   if (!tbody) return;
   var view = document.body.dataset.view || 'cs';
+  var rows = rpAllNames().map(function (name) {
+    return { name: name, value: rpPersonSixMonth(name, _rpRankTab) };
+  }).sort(function (a, b) { return b.value - a.value || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0); });
+  rows = rows.slice(0, 15);
+  if (scopeText) scopeText.textContent = '留存客服近 6 个月发放总排行';
   tbody.innerHTML = '';
-  spec.rows.forEach(function (row, i) {
+  rows.forEach(function (row, i) {
     var tr = document.createElement('tr');
     if (view !== 'manager' && row.name === RP_RANK_ME) tr.className = 'rank-me';
     var tdNo = document.createElement('td');
@@ -19089,15 +19823,15 @@ function renderRpRank() {
   var valEl = document.getElementById('rp-rank-self-val');
   var gapEl = document.getElementById('rp-rank-self-gap');
   if (view === 'manager') {
-    var total = spec.rows.reduce(function (sum, row) { return sum + row.value; }, 0);
-    if (labelEl) labelEl.textContent = '团队合计';
-    if (nameEl) nameEl.textContent = spec.rows.length + ' 位留存客服';
+    var total = rows.reduce(function (sum, row) { return sum + row.value; }, 0);
+    if (labelEl) labelEl.textContent = '前 ' + rows.length + ' 名合计';
+    if (nameEl) nameEl.textContent = rows.length + ' 位留存客服';
     if (valEl) valEl.textContent = spec.format(total);
-    if (gapEl) gapEl.textContent = '与左侧总览同一统计周期：近 6 个月';
+    if (gapEl) gapEl.textContent = '近 6 个月整体排行，展示前 ' + rows.length + ' 名';
     return;
   }
   var idx = -1;
-  spec.rows.forEach(function (row, i) { if (row.name === RP_RANK_ME) idx = i; });
+  rows.forEach(function (row, i) { if (row.name === RP_RANK_ME) idx = i; });
   if (labelEl) labelEl.textContent = '我的排名';
   if (idx < 0) {
     if (nameEl) nameEl.textContent = RP_RANK_ME;
@@ -19105,16 +19839,16 @@ function renderRpRank() {
     if (gapEl) gapEl.textContent = '未进入当前榜单';
     return;
   }
-  var mine = spec.rows[idx];
+  var mine = rows[idx];
   if (nameEl) nameEl.textContent = mine.name + ' · 第 ' + (idx + 1) + ' 名';
   if (valEl) valEl.textContent = spec.format(mine.value);
   var bits = [];
   if (idx === 0) {
     bits.push('当前第 1 名');
-    if (spec.rows[1]) bits.push('领先第 2 名 ' + spec.format(mine.value - spec.rows[1].value));
+    if (rows[1]) bits.push('领先第 2 名 ' + spec.format(mine.value - rows[1].value));
   } else {
-    bits.push('距第 ' + idx + ' 名差 ' + spec.format(spec.rows[idx - 1].value - mine.value));
-    if (spec.rows[idx + 1]) bits.push('领先第 ' + (idx + 2) + ' 名 ' + spec.format(mine.value - spec.rows[idx + 1].value));
+    bits.push('距第 ' + idx + ' 名差 ' + spec.format(rows[idx - 1].value - mine.value));
+    if (rows[idx + 1]) bits.push('领先第 ' + (idx + 2) + ' 名 ' + spec.format(mine.value - rows[idx + 1].value));
   }
   if (gapEl) gapEl.textContent = bits.join(' · ');
 }
@@ -19134,6 +19868,9 @@ function switchRpRankTab(tab) {
 }
 
 function initRpOps() {
+  rpBuildPersonLedger();
+  rpRebuildScopeLevel2('all', '__all__');
+  rpSyncScopeHint();
   renderRpKpis();
   renderRpMetricPicks();
   renderRpRank();
@@ -19179,6 +19916,8 @@ function switchView(view, btn) {
   syncBreakthroughStarSummary();
   initChanceAiReminds();
   renderGrowthCharts();
+  renderRpKpis();
+  renderRpTrendChart();
   renderRpRank();
   requestAnimationFrame(function () {
     if (view === 'manager') {
@@ -21709,9 +22448,9 @@ var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
 };
 
 function getLeadClueBandDrawerEntries(bandType) {
-  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  var band = chanceFindBand(bandType);
   if (!band) return [];
-  var allCustomers = band.customers.concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
+  var allCustomers = band._scopedAll || band.customers.concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
   return allCustomers.map(function (c, index) {
     var meta = leadClueCustomerMeta(c, bandType, index);
     return {
@@ -22451,7 +23190,7 @@ function renderLeadCluePool() {
   var root = document.getElementById('lead-clue-pool-root');
   if (!root) return;
   root.innerHTML = '';
-  leadCluePoolBands.forEach(function (band) {
+  chanceVisibleClueBands().forEach(function (band) {
     var section = document.createElement('div');
     section.className = 'lead-clue-band lead-clue-band--' + band.type;
     var tagsHtml = band.tags.map(function (tag) {
@@ -22481,17 +23220,22 @@ function renderLeadCluePool() {
 }
 
 function selectDefaultLeadClueCustomer() {
-  var band = leadCluePoolBands[0];
-  if (!band || !band.customers.length) return;
+  var bands = chanceVisibleClueBands();
   var root = document.getElementById('lead-clue-pool-root');
   var btn = root && root.querySelector('.lead-clue-customer-card');
-  openLeadClueCustomer(band.type, 0, btn, false);
+  var i;
+  for (i = 0; i < bands.length; i++) {
+    if (bands[i].customers.length) {
+      openLeadClueCustomer(bands[i].type, 0, btn, false);
+      return;
+    }
+  }
 }
 
 var _leadClueDetailCtx = null;
 
 function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
-  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  var band = chanceFindBand(bandType);
   if (!band || !band.customers[index]) return;
   var c = band.customers[index];
   var panel = document.getElementById('panel-chance');
@@ -22533,8 +23277,12 @@ function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
   if (pinOnSelect !== false) pinLeadClueDetailFollowOnSelect();
 }
 
-/* 客户情况预览吸顶动效开关 */
+/* 客户情况预览吸顶动效开关。管理视角不跟随点击定位。 */
 var LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED = true;
+
+function chanceDetailPinEnabled() {
+  return (document.body.dataset.view || 'cs') !== 'manager';
+}
 
 function getLeadClueDetailFollowTop() {
   var tabs = document.querySelector('.wb-tabs');
@@ -22552,6 +23300,10 @@ function isLeadClueCareModuleLeavingViewport() {
 }
 
 function pinLeadClueDetailFollowOnSelect() {
+  if (!chanceDetailPinEnabled()) {
+    releaseLeadClueDetailFollow();
+    return;
+  }
   if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
@@ -22567,7 +23319,7 @@ function syncLeadClueDetailStickyState() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED) {
+  if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED || !chanceDetailPinEnabled()) {
     if (panel.classList.contains('is-scroll-follow')) releaseLeadClueDetailFollow();
     return;
   }
@@ -22588,6 +23340,10 @@ function pinLeadClueDetailFollow() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   var placeholder = document.getElementById('lead-clue-detail-placeholder');
+  if (!chanceDetailPinEnabled()) {
+    releaseLeadClueDetailFollow();
+    return;
+  }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
   if (panel.classList.contains('is-scroll-follow')) {
     syncLeadClueDetailFollowLayout();
@@ -22667,6 +23423,10 @@ function isCorralDetailStickyAnchorLeavingViewport() {
 }
 
 function pinCorralDetailFollowOnSelect(anchorEl) {
+  if (!chanceDetailPinEnabled()) {
+    releaseCorralDetailFollow();
+    return;
+  }
   if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
@@ -22684,7 +23444,7 @@ function syncCorralDetailStickyState() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED) {
+  if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED || !chanceDetailPinEnabled()) {
     if (panel.classList.contains('is-scroll-follow')) releaseCorralDetailFollow();
     return;
   }
@@ -22706,6 +23466,10 @@ function pinCorralDetailFollow() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   var placeholder = document.getElementById('corral-detail-placeholder');
+  if (!chanceDetailPinEnabled()) {
+    releaseCorralDetailFollow();
+    return;
+  }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
   if (panel.classList.contains('is-scroll-follow')) {
     syncCorralDetailFollowLayout();
@@ -22795,7 +23559,358 @@ function initChanceAiReminds() {
   syncCustomerPoolAiRemind(poolId);
 }
 
+var CHANCE_CORRAL_TOTALS = {
+  'high-value': 688,
+  'churn-risk': 416,
+  'new-register': 304,
+  'kyc-pending': 232,
+  'campaign-silent': 360,
+  'hnw-potential': 248,
+  'cross-oil': 512,
+  'custom-mine': 288
+};
+var CHANCE_POOL_TOTALS = {
+  'v4-sprint': { primary: 144, secondary: 48 },
+  'campaign-deposit': { primary: 176, secondary: 72 },
+  'vip-maintain': { primary: 96, secondary: 40 },
+  'silent-wake': { primary: 120, secondary: 32 }
+};
+var CHANCE_CLUE_PREVIEW = { risk: 4, value: 8, stable: 8 };
+var CHANCE_CLUE_PREFIX = { risk: '最紧急', value: '优先', stable: '维护' };
+var CHANCE_PERSON = null;
+var _chanceScopeLevel1 = 'all';
+var _chanceScopeLevel2 = '__all__';
+var _chanceVisibleBands = null;
+var _chanceBuildSalt = 0;
+
+function chanceWeights(names) {
+  return names.map(function (name) {
+    var base = RP_PERSON_WEIGHT[name] || 4;
+    var wobble = _chanceBuildSalt ? ((name.length * 3 + _chanceBuildSalt * 11) % 5) : 0;
+    return base + wobble;
+  });
+}
+
+function chanceRepairCapped(parts, caps, total) {
+  var sum = 0;
+  var i;
+  for (i = 0; i < parts.length; i++) sum += parts[i];
+  var guard = 0;
+  while (sum < total && guard < 20000) {
+    guard += 1;
+    var moved = false;
+    for (i = 0; i < parts.length && sum < total; i++) {
+      if (parts[i] < caps[i]) {
+        parts[i] += 1;
+        sum += 1;
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  guard = 0;
+  while (sum > total && guard < 20000) {
+    guard += 1;
+    var cut = false;
+    for (i = parts.length - 1; i >= 0 && sum > total; i--) {
+      if (parts[i] > 0) {
+        parts[i] -= 1;
+        sum -= 1;
+        cut = true;
+      }
+    }
+    if (!cut) break;
+  }
+  return sum === total;
+}
+
+function chanceFullClueList(bandType) {
+  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  return (band ? band.customers.slice() : []).concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
+}
+
+function chanceAuditLedger() {
+  if (!CHANCE_PERSON) return false;
+  var names = rpAllNames();
+  var errors = [];
+  var seen = {};
+  var covered = 0;
+  Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+    MANAGER_GOAL_CS_GROUPS[key].members.forEach(function (name) {
+      if (seen[name]) errors.push('overlap ' + name);
+      seen[name] = 1;
+      covered += 1;
+    });
+  });
+  if (covered !== names.length) errors.push('coverage ' + covered + '/' + names.length);
+  function add(reader, total, label) {
+    var all = 0;
+    var groupAll = 0;
+    names.forEach(function (name) { all += reader(CHANCE_PERSON[name]); });
+    if (all !== total) errors.push(label + ' people ' + all + ' != ' + total);
+    Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+      var groupSum = 0;
+      MANAGER_GOAL_CS_GROUPS[key].members.forEach(function (name) {
+        groupSum += reader(CHANCE_PERSON[name]);
+      });
+      groupAll += groupSum;
+    });
+    if (groupAll !== total) errors.push(label + ' groups ' + groupAll + ' != ' + total);
+  }
+  Object.keys(CHANCE_CORRAL_TOTALS).forEach(function (id) {
+    add(function (row) { return row.corrals[id]; }, CHANCE_CORRAL_TOTALS[id], 'corral ' + id);
+  });
+  Object.keys(CHANCE_POOL_TOTALS).forEach(function (id) {
+    var spec = CHANCE_POOL_TOTALS[id];
+    add(function (row) { return row.pools[id].primary; }, spec.primary, 'pool ' + id + ' primary');
+    add(function (row) { return row.pools[id].secondary; }, spec.secondary, 'pool ' + id + ' secondary');
+    names.forEach(function (name) {
+      var cell = CHANCE_PERSON[name].pools[id];
+      if (cell.secondary > cell.primary) errors.push('pool cap ' + id + ' ' + name);
+    });
+  });
+  ['risk', 'value', 'stable'].forEach(function (bandType) {
+    var original = chanceFullClueList(bandType);
+    var rebuilt = [];
+    var groupCount = 0;
+    names.forEach(function (name) {
+      rebuilt = rebuilt.concat(CHANCE_PERSON[name].clues[bandType] || []);
+    });
+    if (rebuilt.length !== original.length) errors.push('clue len ' + bandType);
+    else {
+      for (var i = 0; i < original.length; i++) {
+        if (!rebuilt[i] || rebuilt[i].name !== original[i].name || rebuilt[i].funds !== original[i].funds) {
+          errors.push('clue order ' + bandType + ' ' + i);
+          break;
+        }
+      }
+    }
+    Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+      MANAGER_GOAL_CS_GROUPS[key].members.forEach(function (name) {
+        groupCount += (CHANCE_PERSON[name].clues[bandType] || []).length;
+      });
+    });
+    if (groupCount !== original.length) errors.push('clue groups ' + bandType + ' ' + groupCount);
+  });
+  if (errors.length) {
+    console.error('chance ledger audit', errors);
+    return false;
+  }
+  return true;
+}
+
+function chanceBuildOnce() {
+  var names = rpAllNames();
+  if (!names.length) return false;
+  var weights = chanceWeights(names);
+  var person = {};
+  names.forEach(function (name) {
+    person[name] = { corrals: {}, pools: {}, clues: {} };
+  });
+  Object.keys(CHANCE_CORRAL_TOTALS).forEach(function (id) {
+    var parts = rpSplitExact(CHANCE_CORRAL_TOTALS[id], weights);
+    names.forEach(function (name, i) { person[name].corrals[id] = parts[i]; });
+  });
+  var poolOk = true;
+  Object.keys(CHANCE_POOL_TOTALS).forEach(function (id) {
+    var spec = CHANCE_POOL_TOTALS[id];
+    var primary = rpSplitExact(spec.primary, weights);
+    var secondary = rpSplitCapped(spec.secondary, weights, primary.slice());
+    if (!chanceRepairCapped(secondary, primary, spec.secondary)) poolOk = false;
+    names.forEach(function (name, i) {
+      if (secondary[i] > primary[i]) poolOk = false;
+      person[name].pools[id] = { primary: primary[i], secondary: secondary[i] };
+    });
+  });
+  ['risk', 'value', 'stable'].forEach(function (bandType) {
+    var list = chanceFullClueList(bandType);
+    var counts = rpSplitExact(list.length, weights);
+    var cursor = 0;
+    names.forEach(function (name, i) {
+      var n = counts[i];
+      person[name].clues[bandType] = list.slice(cursor, cursor + n);
+      cursor += n;
+    });
+  });
+  CHANCE_PERSON = person;
+  return poolOk && chanceAuditLedger();
+}
+
+function chanceEnsureLedger() {
+  if (CHANCE_PERSON && chanceAuditLedger()) return;
+  var salts = [0, 1, 3, 5, 7, 9, 11];
+  var i;
+  for (i = 0; i < salts.length; i++) {
+    _chanceBuildSalt = salts[i];
+    if (chanceBuildOnce()) return;
+  }
+}
+
+function chanceActiveNames() {
+  if (_chanceScopeLevel1 === 'all') {
+    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return rpAllNames();
+    return [_chanceScopeLevel2];
+  }
+  var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
+  if (!group) return rpAllNames();
+  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return group.members.slice();
+  return [_chanceScopeLevel2];
+}
+
+function chanceScopeLabel() {
+  if (_chanceScopeLevel1 === 'all') {
+    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return '团队所有人';
+    return _chanceScopeLevel2;
+  }
+  var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
+  var label = group ? group.label : '当前组';
+  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return label + ' · 组内所有人';
+  return label + ' · ' + _chanceScopeLevel2;
+}
+
+function chanceInvalidateClueBands() {
+  _chanceVisibleBands = null;
+}
+
+function chanceVisibleClueBands() {
+  if ((document.body.dataset.view || 'cs') !== 'manager') return leadCluePoolBands;
+  if (_chanceVisibleBands) return _chanceVisibleBands;
+  chanceEnsureLedger();
+  var names = chanceActiveNames();
+  _chanceVisibleBands = leadCluePoolBands.map(function (band) {
+    var all = [];
+    names.forEach(function (name) {
+      var list = CHANCE_PERSON[name] && CHANCE_PERSON[name].clues[band.type];
+      if (list) all = all.concat(list);
+    });
+    var limit = CHANCE_CLUE_PREVIEW[band.type] || 8;
+    var prefix = CHANCE_CLUE_PREFIX[band.type] || '';
+    return {
+      type: band.type,
+      title: band.title,
+      desc: band.desc,
+      tags: band.tags,
+      countLabel: prefix + ' ' + all.length,
+      customers: all.slice(0, limit),
+      _scopedAll: all
+    };
+  });
+  return _chanceVisibleBands;
+}
+
+function chanceFindBand(bandType) {
+  var bands = chanceVisibleClueBands();
+  if (!bandType) return bands[0];
+  return bands.filter(function (b) { return b.type === bandType; })[0];
+}
+
+function chanceSum(names, reader) {
+  var total = 0;
+  names.forEach(function (name) {
+    if (CHANCE_PERSON[name]) total += reader(CHANCE_PERSON[name]);
+  });
+  return total;
+}
+
+function chancePaintManagerCards() {
+  var panel = document.getElementById('panel-chance');
+  if (!panel || !CHANCE_PERSON) return;
+  var names = chanceActiveNames();
+  panel.querySelectorAll('.manager-only .lead-corral-card').forEach(function (card) {
+    var id = card.getAttribute('data-corral-id');
+    var val = card.querySelector('.lead-corral-stat-val');
+    if (val && CHANCE_CORRAL_TOTALS[id] != null) {
+      val.textContent = String(chanceSum(names, function (row) { return row.corrals[id] || 0; }));
+    }
+  });
+  panel.querySelectorAll('.manager-only .customer-pool-card').forEach(function (card) {
+    var id = card.getAttribute('data-pool-id');
+    var vals = card.querySelectorAll('.customer-pool-stat-val');
+    if (!CHANCE_POOL_TOTALS[id]) return;
+    if (vals[0]) vals[0].textContent = String(chanceSum(names, function (row) { return row.pools[id].primary; }));
+    if (vals[1]) vals[1].textContent = String(chanceSum(names, function (row) { return row.pools[id].secondary; }));
+  });
+  panel.querySelectorAll('.manager-only .corral-hot-item').forEach(function (item) {
+    var id = item.getAttribute('data-corral-id');
+    var span = item.querySelector('span');
+    if (span && CHANCE_CORRAL_TOTALS[id] != null) {
+      span.textContent = chanceSum(names, function (row) { return row.corrals[id] || 0; }) + ' 人';
+    }
+  });
+}
+
+function chanceSyncScopeHint() {
+  var hint = document.getElementById('chanceScopeHint');
+  if (!hint) return;
+  hint.innerHTML = '当前客服管理视角：<strong>' + chanceScopeLabel() + '</strong>';
+  hint.classList.toggle('is-cs-mode', _chanceScopeLevel1 !== 'all' || (_chanceScopeLevel2 && _chanceScopeLevel2 !== '__all__'));
+}
+
+function chanceRebuildScopeLevel2(level1, keepValue) {
+  var select = document.getElementById('chanceScopeLevel2');
+  if (!select) return;
+  var options = [];
+  if (level1 === 'all') {
+    options.push({ value: '__all__', label: '全员汇总' });
+    rpAllNames().forEach(function (name) { options.push({ value: name, label: name }); });
+  } else {
+    var group = MANAGER_GOAL_CS_GROUPS[level1];
+    if (!group) return;
+    options.push({ value: '__group__', label: '组内所有人' });
+    group.members.forEach(function (name) { options.push({ value: name, label: name }); });
+  }
+  select.textContent = '';
+  options.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+  var fallback = level1 === 'all' ? '__all__' : '__group__';
+  select.value = keepValue && select.querySelector('option[value="' + keepValue + '"]') ? keepValue : fallback;
+}
+
+function chanceSyncScopeControls() {
+  var level1 = document.getElementById('chanceScopeLevel1');
+  if (level1) level1.value = _chanceScopeLevel1;
+  chanceRebuildScopeLevel2(_chanceScopeLevel1, _chanceScopeLevel2);
+  var level2 = document.getElementById('chanceScopeLevel2');
+  if (level2) _chanceScopeLevel2 = level2.value;
+  chanceSyncScopeHint();
+}
+
+function applyChanceScope() {
+  chanceInvalidateClueBands();
+  chanceSyncScopeHint();
+  chancePaintManagerCards();
+  renderLeadCluePool();
+  var panel = document.getElementById('panel-chance');
+  if (!panel || (document.body.dataset.view || 'cs') !== 'manager') return;
+  var active = panel.querySelector('.manager-only .customer-pool-card.active')
+    || panel.querySelector('.manager-only .lead-corral-card.active');
+  if (active) openLeadCorral(active.getAttribute('data-pool-id') || active.getAttribute('data-corral-id'), active, false);
+}
+
+function onChanceScopeLevel1Change() {
+  var level1Select = document.getElementById('chanceScopeLevel1');
+  _chanceScopeLevel1 = level1Select ? level1Select.value : 'all';
+  chanceRebuildScopeLevel2(_chanceScopeLevel1);
+  var level2Select = document.getElementById('chanceScopeLevel2');
+  _chanceScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyChanceScope();
+}
+
+function onChanceScopeLevel2Change() {
+  var level2Select = document.getElementById('chanceScopeLevel2');
+  _chanceScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyChanceScope();
+}
+
 function initLeadCorralPanel() {
+  chanceEnsureLedger();
+  chanceSyncScopeControls();
+  chanceInvalidateClueBands();
+  chancePaintManagerCards();
   ensureLeadClueDetailAreaObserver();
   renderLeadCluePool();
   syncBreakthroughStarSummary();
@@ -22817,6 +23932,10 @@ function initLeadCorralPanel() {
 var _switchViewOrig = switchView;
 switchView = function (view, btn) {
   _switchViewOrig(view, btn);
+  if (view === 'manager') {
+    releaseLeadClueDetailFollow();
+    releaseCorralDetailFollow();
+  }
   initLeadCorralPanel();
 };
 
