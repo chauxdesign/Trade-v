@@ -75,16 +75,6 @@
     .top-left{display:flex;align-items:center;gap:12px}
     .hamburger{font-size:18px;color:#374151}
     .top-actions{display:flex;gap:12px;align-items:center}
-    .lang-select{
-      border:none;background:transparent;
-      font-size:12px;color:var(--muted);cursor:pointer;
-      padding:0 14px 0 0;font-family:inherit;
-      appearance:none;-webkit-appearance:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%2364748b' d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
-      background-repeat:no-repeat;background-position:right center;
-    }
-    .lang-select:hover{color:#374151}
-    .lang-select:focus{outline:none;color:#374151}
     .tab-row{height:44px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;border-top:1px solid #f0f0f0;background:#fafafa}
     .tab-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
     .tab{padding:4px 12px;font-size:12px;border:1px solid var(--wire);background:#fff;border-radius:4px}
@@ -1617,6 +1607,15 @@
     #alertTaskDetailFilters .my-follow-filter-reset{
       flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
     }
+    #alertTaskDetailFilters .my-follow-filter-query{
+      flex:0 0 auto;height:30px;padding:0 12px;white-space:nowrap;
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #alertTaskDetailFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
+    }
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
     #commReviewDrawer .alert-task-detail-panel{width:80%;max-width:80%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
@@ -1830,6 +1829,24 @@
     .comm-follow-upload:hover{
       border-color:#93c5fd;background:#f8fbff;
     }
+    #commFollowEntryModal.is-readonly .comm-follow-input,
+    #commFollowEntryModal.is-readonly .comm-follow-select,
+    #commFollowEntryModal.is-readonly .comm-follow-textarea{
+      background:#f8fafc;color:#334155;cursor:default;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-textarea{resize:none}
+    #commFollowEntryModal.is-readonly .comm-follow-result-option span,
+    #commFollowEntryModal.is-readonly .comm-follow-purpose-chip span,
+    #commFollowEntryModal.is-readonly .comm-follow-inline-option span,
+    #commFollowEntryModal.is-readonly .comm-follow-check,
+    #commFollowEntryModal.is-readonly .comm-follow-upload{
+      cursor:default;pointer-events:none;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-upload{
+      background:#f8fafc;border-color:#e2e8f0;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-form-btn--primary,
+    #commFollowEntryModal.is-readonly .comm-follow-field--task{display:none}
     .comm-follow-upload-icon{
       width:36px;height:36px;border-radius:10px;
       display:grid;place-items:center;font-size:18px;line-height:1;
@@ -3467,6 +3484,11 @@
       background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
       box-shadow:var(--card-shadow);padding:0;overflow:hidden;
     }
+    .chance-scope-placeholder{display:none;flex-shrink:0}
+    #panel-chance .chance-scope-panel.is-scroll-follow{
+      position:fixed;z-index:19;
+      box-shadow:0 12px 32px rgba(79,70,229,.14);
+    }
     #panel-chance .chance-scope-panel .module-head{padding:12px 14px 8px}
     #panel-chance .chance-scope-panel .module-head h2{font-size:14px;margin:0}
     #panel-chance .chance-scope-panel .module-head h2::before{
@@ -3480,7 +3502,7 @@
     }
     .lead-clue-detail-placeholder{display:none;flex-shrink:0}
     .lead-clue-detail-panel.is-scroll-follow{
-      position:fixed;z-index:19;
+      position:fixed;z-index:17;
       overflow-y:auto;
       box-shadow:0 12px 32px rgba(234,88,12,.14);
       transition:box-shadow .32s ease;
@@ -5681,10 +5703,7 @@
         <div class="top-actions">
           <span>🔍</span>
           <span>默认模式 ▾</span>
-          <select class="lang-select" id="langSelect" aria-label="语言" onchange="switchLanguage(this)">
-            <option value="zh" selected>简体</option>
-            <option value="en">English</option>
-          </select>
+          <span>简体</span>
           <span>GMT+08:00 ▾</span>
           <span>◐ Steve Jobs ▾</span>
           <span>⛶</span>
@@ -8820,6 +8839,7 @@
 
           <div class="chance-right-col">
           <div class="chance-right-stack">
+          <div class="chance-scope-placeholder manager-only" id="chance-scope-placeholder" aria-hidden="true"></div>
           <aside class="module chance-scope-panel manager-only" id="chance-scope-panel">
             <div class="module-head">
               <h2>切换客服管理视角</h2>
@@ -9968,13 +9988,14 @@
           <div class="my-follow-drawer-filters" id="alertTaskDetailFilters" hidden>
             <label class="my-follow-filter-field">
               <span class="my-follow-filter-label">任务状态</span>
-              <select class="my-follow-filter-select" id="alertTaskDetailFilterStatus" onchange="applyAlertTaskDetailFilters()">
+              <select class="my-follow-filter-select" id="alertTaskDetailFilterStatus">
                 <option value="">全部</option>
                 <option value="done">已完成</option>
                 <option value="pending">待完成</option>
               </select>
             </label>
             <button type="button" class="my-follow-filter-reset" onclick="resetAlertTaskDetailFilters()">重置筛选</button>
+            <button type="button" class="my-follow-filter-query" onclick="applyAlertTaskDetailFilters()">查询</button>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -10629,11 +10650,11 @@
           <div class="comm-follow-control">
             <div class="comm-follow-upload" role="button" tabindex="0" aria-label="上传沟通图片">
               <span class="comm-follow-upload-icon" aria-hidden="true">☁</span>
-              <span>将图片粘贴此处进行上传</span>
+              <span class="comm-follow-upload-text">将图片粘贴此处进行上传</span>
             </div>
           </div>
         </div>
-        <div class="comm-follow-field">
+        <div class="comm-follow-field comm-follow-field--task">
           <span class="comm-follow-label">任务：</span>
           <div class="comm-follow-control">
             <div class="comm-follow-panel-box">
@@ -10641,7 +10662,7 @@
             </div>
           </div>
         </div>
-        <div class="comm-follow-field">
+        <div class="comm-follow-field comm-follow-field--task">
           <span class="comm-follow-label">完成任务：</span>
           <div class="comm-follow-control">
             <div class="comm-follow-panel-box comm-follow-panel-box--wrap">
@@ -13041,6 +13062,8 @@ var _alertTaskDetailAllRows = [];
 var _alertTaskDetailPage = 1;
 var _alertTaskDetailCategory = null;
 var _alertTaskDetailMode = 'default';
+var _alertTaskDetailListScope = 'completed';
+var _alertTaskDetailManagerReview = false;
 var CANCELLATION_RETENTION_TASK_TYPES = ['注销挽回'];
 var DEPOSIT_GUIDANCE_TASK_TYPES = ['入金引导'];
 var ALERT_TASK_SPECIAL_DETAIL_MODES = {
@@ -13480,19 +13503,21 @@ function toggleAlertTaskFollowGroup(groupKey) {
   renderAlertTaskFollowTable();
 }
 
-function renderAlertTaskFollowCompletedCell(row, csName, linkable) {
-  if (linkable && csName && row.completed > 0) {
-    return '<td class="col-num"><a href="#" class="col-completed-link" data-cs="' + csName + '" data-assigned="' + row.assigned + '" data-completed="' + row.completed + '">' + row.completed + '</a></td>';
+function renderAlertTaskFollowCountCell(count, csName, metric, assigned, completed, linkable) {
+  count = parseInt(count, 10) || 0;
+  if (linkable && csName && count > 0) {
+    var title = metric === 'assigned' ? '查看下发任务明细' : '查看完成任务明细';
+    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-cs="' + csName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '">' + count + '</a></td>';
   }
-  if (!row.completed) {
+  if (!count) {
     return '<td class="col-num"><span class="col-completed-zero">0</span></td>';
   }
-  return '<td class="col-num">' + row.completed + '</td>';
+  return '<td class="col-num">' + count + '</td>';
 }
 
 function renderAlertTaskFollowDataCells(row, csName, linkable) {
-  return '<td class="col-num">' + (row.assigned || 0) + '</td>' +
-    renderAlertTaskFollowCompletedCell(row, csName, linkable) +
+  return renderAlertTaskFollowCountCell(row.assigned, csName, 'assigned', row.assigned, row.completed, linkable) +
+    renderAlertTaskFollowCountCell(row.completed, csName, 'completed', row.assigned, row.completed, linkable) +
     '<td class="col-num col-overdue"><strong>' + (row.overdue || 0) + '</strong></td>' +
     '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
 }
@@ -13708,6 +13733,9 @@ function renderAlertTaskDetailThead() {
   } else if (isTodayAssignDetailMode()) {
     cols = TODAY_ASSIGN_DETAIL_COLUMNS;
   }
+  if (!isSpecialAlertTaskDetailMode() && _alertTaskDetailManagerReview) {
+    cols = cols.concat(['操作']);
+  }
   thead.innerHTML = cols.map(function (col) {
     var isAction = col === '操作' || col === 'Actions';
     return '<th' + (isAction ? ' class="col-action"' : '') + '>' + col + '</th>';
@@ -13758,7 +13786,14 @@ function buildCancellationRetentionDetailRows(csName, taskCount) {
   return rows;
 }
 
+function renderAlertTaskViewCommActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="view-comm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">沟通详情</a>' +
+    '</span>';
+}
+
 function renderAlertTaskSpecialActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -13767,6 +13802,7 @@ function renderAlertTaskSpecialActionHtml(row) {
 }
 
 function renderAiSummaryPendingActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -13775,6 +13811,7 @@ function renderAiSummaryPendingActionHtml(row) {
 }
 
 function renderHighRiskChurnRecoveryActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -14506,26 +14543,45 @@ function handleAlertTaskDetailAction(action, sid, nick) {
   }
   if (action === 'churn-analysis') {
     openMyFollowChurnRisk(sid, nick, 'risk');
+    return;
+  }
+  if (action === 'view-comm') {
+    openCommFollowEntryModal({ sid: sid, name: nick }, { readonly: true });
   }
 }
 
-function buildAlertTaskDetailRows(csName, completedCount) {
-  completedCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, Math.max(0, completedCount || 0));
-  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + csName + '|detail');
+function buildAlertTaskDetailRows(csName, rowCount, options) {
+  options = options || {};
+  var scope = options.scope === 'assigned' ? 'assigned' : 'completed';
+  var completedTarget = rowCount;
+  if (scope === 'assigned') {
+    rowCount = Math.max(0, rowCount || 0);
+    completedTarget = Math.max(0, Math.min(rowCount, parseInt(options.completedCount, 10) || 0));
+  } else if (options.exactCount) {
+    rowCount = Math.max(0, rowCount || 0);
+    completedTarget = rowCount;
+  } else {
+    rowCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, Math.max(0, rowCount || 0));
+    completedTarget = rowCount;
+  }
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + csName + (scope === 'assigned' ? '|assigned' : '|detail'));
+  var pendingTarget = rowCount - completedTarget;
   var rows = [];
-  for (var i = 0; i < completedCount; i++) {
+  for (var i = 0; i < rowCount; i++) {
     var s = seed + i * 131;
+    var isDone = i >= pendingTarget;
     var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
     var assignTime = buildAlertTaskDateTime(s, 0);
-    var completeTime = buildAlertTaskDateTime(s, 1 + (s % 4));
+    var completeTime = isDone ? buildAlertTaskDateTime(s, 1 + (s % 4)) : '—';
     rows.push({
       nick: nick,
       sid: sid,
       assignTime: assignTime,
       completeTime: completeTime,
-      statusHtml: buildAlertTaskStatusHtml(true),
-      noteHtml: buildAlertTaskFollowNoteHtml(s + i * 7)
+      isDone: isDone,
+      statusHtml: buildAlertTaskStatusHtml(isDone),
+      noteHtml: isDone ? buildAlertTaskFollowNoteHtml(s + i * 7) : '—'
     });
   }
   return rows;
@@ -14545,6 +14601,7 @@ function renderAlertTaskDetailRowHtml(row) {
     '<td class="col-time">' + row.completeTime + '</td>' +
     '<td class="col-status">' + row.statusHtml + '</td>' +
     '<td class="col-note">' + row.noteHtml + '</td>' +
+    (_alertTaskDetailManagerReview ? '<td class="col-action">' + renderAlertTaskViewCommActionHtml(row) + '</td>' : '') +
     '</tr>';
 }
 
@@ -14596,8 +14653,27 @@ function getAlertTaskDetailRowRenderer() {
   return renderAlertTaskDetailRowHtml;
 }
 
-function buildSpecialAlertTaskDetailRows(csName, taskCount) {
-  taskCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, taskCount || 0);
+function alignAlertTaskDetailCompletion(rows, completedCount) {
+  var total = rows.length;
+  var doneCount = Math.max(0, Math.min(total, parseInt(completedCount, 10) || 0));
+  var pendingCount = total - doneCount;
+  rows.forEach(function (row, i) {
+    var done = i >= pendingCount;
+    var doneTime = done ? buildAlertTaskDateTime(i + 17, 2) : '—';
+    row.isDone = done;
+    row.statusHtml = buildAlertTaskStatusHtml(done);
+    if (Object.prototype.hasOwnProperty.call(row, 'taskCompleteTime')) row.taskCompleteTime = doneTime;
+    if (Object.prototype.hasOwnProperty.call(row, 'completeTime')) row.completeTime = doneTime;
+    if (Object.prototype.hasOwnProperty.call(row, 'confirmTime')) row.confirmTime = doneTime;
+  });
+  return rows;
+}
+
+function buildSpecialAlertTaskDetailRows(csName, taskCount, options) {
+  options = options || {};
+  taskCount = options.exactCount
+    ? Math.max(0, taskCount || 0)
+    : Math.max(ALERT_TASK_DETAIL_MIN_ROWS, taskCount || 0);
   if (isCancellationRetentionDetailMode()) return buildCancellationRetentionDetailRows(csName, taskCount);
   if (isDepositGuidanceDetailMode()) return buildDepositGuidanceDetailRows(csName, taskCount);
   if (isMarginCallCareDetailMode()) return buildMarginCallCareDetailRows(csName, taskCount);
@@ -14650,14 +14726,18 @@ function filterAlertTaskDetailRows(rows, filters) {
   });
 }
 
+function isAlertTaskDetailStatusFilterEnabled() {
+  return isSpecialAlertTaskDetailMode() || _alertTaskDetailListScope === 'assigned';
+}
+
 function updateAlertTaskDetailFilterVisibility() {
   var filtersEl = document.getElementById('alertTaskDetailFilters');
-  if (filtersEl) filtersEl.hidden = !isSpecialAlertTaskDetailMode();
+  if (filtersEl) filtersEl.hidden = !isAlertTaskDetailStatusFilterEnabled();
 }
 
 function updateAlertTaskDetailFilteredCount() {
   var countEl = document.getElementById('alertTaskDetailCount');
-  if (!countEl || !isSpecialAlertTaskDetailMode()) return;
+  if (!countEl || !isAlertTaskDetailStatusFilterEnabled()) return;
   countEl.textContent = String(_alertTaskDetailRows.length);
 }
 
@@ -14667,7 +14747,7 @@ function clearAlertTaskDetailFilterInputs() {
 }
 
 function applyAlertTaskDetailFilters() {
-  if (!isSpecialAlertTaskDetailMode()) return;
+  if (!isAlertTaskDetailStatusFilterEnabled()) return;
   _alertTaskDetailRows = filterAlertTaskDetailRows(_alertTaskDetailAllRows, getAlertTaskDetailFilterValues());
   _alertTaskDetailPage = 1;
   updateAlertTaskDetailFilteredCount();
@@ -14681,12 +14761,33 @@ function resetAlertTaskDetailFilters() {
 
 function renderAlertTaskDetailTable(csName, assignedCount, completedCount) {
   if (isSpecialAlertTaskDetailMode()) {
-    _alertTaskDetailAllRows = buildSpecialAlertTaskDetailRows(csName, assignedCount);
+    var specialCount = _alertTaskDetailManagerReview && _alertTaskDetailListScope === 'completed'
+      ? completedCount
+      : assignedCount;
+    _alertTaskDetailAllRows = buildSpecialAlertTaskDetailRows(csName, specialCount, {
+      exactCount: _alertTaskDetailManagerReview
+    });
+    if (_alertTaskDetailManagerReview) {
+      alignAlertTaskDetailCompletion(
+        _alertTaskDetailAllRows,
+        _alertTaskDetailListScope === 'completed' ? specialCount : completedCount
+      );
+    }
+    clearAlertTaskDetailFilterInputs();
+    _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
+  } else if (_alertTaskDetailListScope === 'assigned') {
+    _alertTaskDetailAllRows = buildAlertTaskDetailRows(csName, assignedCount, {
+      scope: 'assigned',
+      completedCount: completedCount,
+      exactCount: _alertTaskDetailManagerReview
+    });
     clearAlertTaskDetailFilterInputs();
     _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   } else {
-    _alertTaskDetailAllRows = [];
-    _alertTaskDetailRows = buildAlertTaskDetailRows(csName, completedCount);
+    _alertTaskDetailAllRows = buildAlertTaskDetailRows(csName, completedCount, {
+      exactCount: _alertTaskDetailManagerReview
+    });
+    _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   }
   _alertTaskDetailPage = 1;
   renderAlertTaskDetailThead();
@@ -14839,12 +14940,21 @@ function renderAlertTaskDetailCategoryTag() {
   wrap.hidden = false;
 }
 
-function openAlertTaskDetailDrawer(csName, assignedCount, completedCount) {
+function openAlertTaskDetailDrawer(csName, assignedCount, completedCount, listScope, options) {
+  options = options || {};
   completedCount = Math.max(0, completedCount || 0);
   assignedCount = Math.max(0, assignedCount || completedCount);
+  var nextScope = listScope === 'assigned' ? 'assigned' : 'completed';
   if (!csName) return;
-  if (!isSpecialAlertTaskDetailMode() && !completedCount) return;
-  if (isSpecialAlertTaskDetailMode() && !assignedCount) return;
+  if (isSpecialAlertTaskDetailMode()) {
+    if (!assignedCount) return;
+  } else if (nextScope === 'assigned') {
+    if (!assignedCount) return;
+  } else if (!completedCount) {
+    return;
+  }
+  _alertTaskDetailListScope = nextScope;
+  _alertTaskDetailManagerReview = options.managerReview === true;
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
   var csEl = document.getElementById('alertTaskDetailCs');
@@ -14853,7 +14963,11 @@ function openAlertTaskDetailDrawer(csName, assignedCount, completedCount) {
   var countEl = document.getElementById('alertTaskDetailCount');
   var countSuffixEl = document.getElementById('alertTaskDetailCountSuffix');
   var updatedEl = document.getElementById('alertTaskDetailUpdatedAt');
-  var displayCount = isSpecialAlertTaskDetailMode() ? assignedCount : completedCount;
+  var showAssignedList = _alertTaskDetailListScope === 'assigned' &&
+    (_alertTaskDetailManagerReview || !isSpecialAlertTaskDetailMode());
+  var displayCount = _alertTaskDetailManagerReview
+    ? (showAssignedList ? assignedCount : completedCount)
+    : (isSpecialAlertTaskDetailMode() || showAssignedList ? assignedCount : completedCount);
   drawer.classList.toggle('is-cancellation-mode', isSpecialAlertTaskDetailMode());
   if (isSpecialAlertTaskDetailMode()) {
     drawer.setAttribute('data-detail-mode', _alertTaskDetailMode);
@@ -14864,7 +14978,11 @@ function openAlertTaskDetailDrawer(csName, assignedCount, completedCount) {
   if (typeEl) typeEl.textContent = _alertTaskFollowType;
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
   if (countEl) countEl.textContent = String(displayCount);
-  if (countSuffixEl) countSuffixEl.textContent = isSpecialAlertTaskDetailMode() ? '条任务' : '条已完成';
+  if (countSuffixEl) {
+    countSuffixEl.textContent = _alertTaskDetailManagerReview
+      ? (showAssignedList ? '条下发任务' : '条已完成')
+      : (isSpecialAlertTaskDetailMode() ? '条任务' : (showAssignedList ? '条下发任务' : '条已完成'));
+  }
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   renderAlertTaskDetailCategoryTag();
   renderAlertTaskDetailTable(csName, assignedCount, completedCount);
@@ -14888,6 +15006,8 @@ function closeAlertTaskDetailDrawer() {
   _alertTaskDetailAllRows = [];
   _alertTaskDetailPage = 1;
   _alertTaskDetailMode = 'default';
+  _alertTaskDetailListScope = 'completed';
+  _alertTaskDetailManagerReview = false;
   clearAlertTaskDetailFilterInputs();
   updateAlertTaskDetailFilterVisibility();
   clearAlertTaskDetailCategory();
@@ -15131,11 +15251,13 @@ function initAlertTaskCardInteractions() {
       if (!link) return;
       e.preventDefault();
       e.stopPropagation();
-      _alertTaskDetailMode = 'default';
+      _alertTaskDetailMode = getSpecialAlertTaskDetailMode(_alertTaskFollowType) || 'default';
       openAlertTaskDetailDrawer(
         link.getAttribute('data-cs'),
         parseInt(link.getAttribute('data-assigned'), 10) || 0,
-        parseInt(link.getAttribute('data-completed'), 10) || 0
+        parseInt(link.getAttribute('data-completed'), 10) || 0,
+        link.getAttribute('data-metric') === 'assigned' ? 'assigned' : 'completed',
+        { managerReview: true }
       );
     });
   }
@@ -17798,12 +17920,131 @@ function resetCommFollowEntryCustomer() {
   hideCommFollowCustomerSuggest();
 }
 
-function openCommFollowEntryModal(customer) {
+function findAlertTaskDetailRowBySid(sid) {
+  var rows = _alertTaskDetailRows || [];
+  var target = String(sid || '');
+  for (var i = 0; i < rows.length; i++) {
+    if (String(rows[i].sid) === target) return rows[i];
+  }
+  return null;
+}
+
+function buildExistingCommFollowRecord(sid, nick) {
+  var row = findAlertTaskDetailRowBySid(sid);
+  var seed = alertTaskFollowSeed((_alertTaskFollowType || '') + '|' + (sid || '') + '|' + (nick || '') + '|comm-view');
+  var contactLabel = ALERT_TASK_CONTACT_RESULTS[seed % ALERT_TASK_CONTACT_RESULTS.length];
+  var purposeLabels = pickAlertTaskCommPurposes(seed + 11).split('、');
+  var outcomeLabel = ALERT_TASK_COMM_OUTCOMES[seed % ALERT_TASK_COMM_OUTCOMES.length];
+  var content = ALERT_TASK_COMM_CONTENTS[seed % ALERT_TASK_COMM_CONTENTS.length];
+  if (row && row.lastContactNote) content = row.lastContactNote;
+  else if (row && row.record) content = row.record;
+  var purposeMap = {
+    '充值': 'deposit', '提现': 'withdraw', '活动': 'activity', '交易': 'trade',
+    '账户': 'account', '实名': 'kyc', '软件': 'software', '行情': 'market',
+    '投诉': 'complaint', '私人': 'private'
+  };
+  var contactMap = {
+    '电话接通': 'phone-connected', '电话未接通': 'phone-missed',
+    'WhatsApp回复': 'wa-replied', 'WA未回复': 'wa-no-reply',
+    'ChatRoom回复': 'cr-replied', 'CR未回复': 'cr-no-reply'
+  };
+  var completeMap = {
+    '穿仓关怀': 'margin-blowout',
+    '提现引导': 'withdraw-guide',
+    '注销挽回': 'cancellation-retention',
+    '强平用户': 'forced-liquidation'
+  };
+  var isDone = row ? !!row.isDone : true;
+  return {
+    contactValue: contactMap[contactLabel] || '',
+    purposeValues: purposeLabels.map(function (label) { return purposeMap[label]; }).filter(Boolean),
+    commResult: outcomeLabel === '没达成目标' ? 'not-achieved' : 'achieved',
+    note: ['important', 'follow-up', 'risk', 'opportunity'][seed % 4],
+    content: content,
+    taskFollow: !isDone,
+    completeTask: isDone ? (completeMap[_alertTaskFollowType] || '') : '',
+    imageName: seed % 2 === 0 ? '沟通截图.jpg' : ''
+  };
+}
+
+function fillCommFollowEntryRecord(record) {
+  var form = document.getElementById('commFollowEntryForm');
+  if (!form || !record) return;
+  if (record.contactValue) {
+    var contact = form.querySelector('input[value="' + record.contactValue + '"]');
+    if (contact) contact.checked = true;
+  }
+  (record.purposeValues || []).forEach(function (value) {
+    var purpose = form.querySelector('input[name="purpose"][value="' + value + '"]');
+    if (purpose) purpose.checked = true;
+  });
+  if (record.commResult) {
+    var result = form.querySelector('input[name="commResult"][value="' + record.commResult + '"]');
+    if (result) result.checked = true;
+  }
+  var note = document.getElementById('commFollowEntryNote');
+  if (note) note.value = record.note || '';
+  var content = document.getElementById('commFollowEntryContent');
+  var count = document.getElementById('commFollowEntryCount');
+  if (content) content.value = record.content || '';
+  if (count && content) count.textContent = String(content.value.length);
+  var follow = form.querySelector('input[name="taskFollow"]');
+  if (follow) follow.checked = !!record.taskFollow;
+  if (record.completeTask) {
+    var task = form.querySelector('input[name="completeTask"][value="' + record.completeTask + '"]');
+    if (task) task.checked = true;
+  }
+  var uploadText = form.querySelector('.comm-follow-upload-text');
+  var uploadIcon = form.querySelector('.comm-follow-upload-icon');
+  if (uploadText) uploadText.textContent = record.imageName || '将图片粘贴此处进行上传';
+  if (uploadIcon) uploadIcon.hidden = !!record.imageName;
+}
+
+function setCommFollowEntryReadonly(locked) {
+  var modal = document.getElementById('commFollowEntryModal');
+  var form = document.getElementById('commFollowEntryForm');
+  if (!modal || !form) return;
+  modal.classList.toggle('is-readonly', !!locked);
+  form.querySelectorAll('input, select, textarea').forEach(function (el) {
+    el.disabled = !!locked;
+    if (el.tagName === 'TEXTAREA' || el.type === 'text') el.readOnly = !!locked;
+  });
+  var upload = form.querySelector('.comm-follow-upload');
+  if (upload) {
+    if (locked) upload.removeAttribute('tabindex');
+    else upload.setAttribute('tabindex', '0');
+    upload.setAttribute('aria-disabled', locked ? 'true' : 'false');
+  }
+  var title = document.getElementById('commFollowEntryTitle');
+  if (title) title.textContent = locked ? '查看沟通记录' : '跟进客户服务记录';
+  var cancelBtn = form.querySelector('.comm-follow-form-btn--ghost');
+  if (cancelBtn) cancelBtn.textContent = locked ? '关闭' : '取消';
+}
+
+function resetCommFollowEntryForm() {
+  setCommFollowEntryReadonly(false);
+  var form = document.getElementById('commFollowEntryForm');
+  if (form) form.reset();
+  resetCommFollowEntryCustomer();
+  var count = document.getElementById('commFollowEntryCount');
+  if (count) count.textContent = '0';
+  var uploadText = form ? form.querySelector('.comm-follow-upload-text') : null;
+  var uploadIcon = form ? form.querySelector('.comm-follow-upload-icon') : null;
+  if (uploadText) uploadText.textContent = '将图片粘贴此处进行上传';
+  if (uploadIcon) uploadIcon.hidden = false;
+}
+
+function openCommFollowEntryModal(customer, options) {
+  options = options || {};
   var modal = document.getElementById('commFollowEntryModal');
   if (!modal) return;
-  resetCommFollowEntryCustomer();
+  resetCommFollowEntryForm();
   if (customer && customer.sid && customer.name) {
     selectCommFollowCustomer(customer);
+  }
+  if (options.readonly) {
+    fillCommFollowEntryRecord(buildExistingCommFollowRecord(customer && customer.sid, customer && customer.name));
+    setCommFollowEntryReadonly(true);
   }
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
@@ -17815,7 +18056,9 @@ function closeCommFollowEntryModal() {
   if (!modal || modal.hidden) return;
   modal.hidden = true;
   modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  setCommFollowEntryReadonly(false);
+  var followModal = document.getElementById('alertTaskFollowModal');
+  if (!followModal || followModal.hidden) document.body.style.overflow = '';
 }
 
 function hasCommFollowContactResultSelected() {
@@ -17828,6 +18071,8 @@ function hasCommFollowContactResultSelected() {
 
 function submitCommFollowEntryForm(event) {
   if (event) event.preventDefault();
+  var modal = document.getElementById('commFollowEntryModal');
+  if (modal && modal.classList.contains('is-readonly')) return;
   if (!hasCommFollowContactResultSelected()) {
     alert('请至少选择一项联系结果');
     return;
@@ -19578,7 +19823,7 @@ function renderRpCatCards() {
     var statsBox = document.createElement('div');
     statsBox.className = 'rp-cat-stats';
     statsBox.appendChild(rpCatStatRow([
-      ['使用数', rpFormatInt(stat.used)],
+      ['发放人数', rpFormatInt(stat.recvPeople)],
       ['使用人数', rpFormatInt(stat.usedPeople)],
       ['客户使用率', stat.custRate.toFixed(1) + '%']
     ]));
@@ -21443,10 +21688,7 @@ function openLeadCorral(corralId, btn, pinOnSelect) {
 
   if (isPool) syncCustomerPoolAiRemind(corralId);
   else syncLeadCorralAiRemind(corralId);
-  if (pinOnSelect !== false) {
-    var anchor = btn.closest('.lead-corral-section, .customer-pool-section');
-    pinCorralDetailFollowOnSelect(anchor);
-  }
+  if (pinOnSelect !== false) pinCorralDetailFollowOnSelect(btn);
 }
 
 var _corralCreateNextId = 254;
@@ -23277,26 +23519,161 @@ function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
   if (pinOnSelect !== false) pinLeadClueDetailFollowOnSelect();
 }
 
-/* 客户情况预览吸顶动效开关。管理视角不跟随点击定位。 */
+/* 点击卡片后右侧吸顶；该卡片离开屏幕中心区域后取消。 */
 var LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED = true;
+var _leadCluePinCard = null;
+var _leadCluePinSawCenter = false;
+var _corralPinSawCenter = false;
+var _chancePinIgnoreLayout = false;
+var _chancePinScrollBound = false;
 
 function chanceDetailPinEnabled() {
-  return (document.body.dataset.view || 'cs') !== 'manager';
+  return true;
+}
+
+function syncChanceScopeSticky() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (!scope || !placeholder || !scope.classList.contains('is-scroll-follow')) return;
+  var tabs = document.querySelector('.wb-tabs');
+  var top = tabs ? Math.round(tabs.getBoundingClientRect().bottom + 8) : 12;
+  var rect = placeholder.getBoundingClientRect();
+  scope.style.top = top + 'px';
+  scope.style.left = rect.left + 'px';
+  scope.style.width = rect.width + 'px';
+}
+
+function pinChanceScopeFollow() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (!scope || !placeholder || window.getComputedStyle(scope).display === 'none') return;
+  if (!scope.classList.contains('is-scroll-follow')) {
+    var rect = scope.getBoundingClientRect();
+    placeholder.style.height = rect.height + 'px';
+    placeholder.style.display = 'block';
+    scope.classList.add('is-scroll-follow');
+  }
+  syncChanceScopeSticky();
+}
+
+function releaseChanceScopeFollow() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (scope) {
+    scope.classList.remove('is-scroll-follow');
+    scope.style.top = '';
+    scope.style.left = '';
+    scope.style.width = '';
+  }
+  if (placeholder) {
+    placeholder.style.display = 'none';
+    placeholder.style.height = '';
+  }
+}
+
+function releaseChanceScopeFollowIfIdle() {
+  var corral = document.getElementById('corral-detail-panel');
+  var clue = document.getElementById('lead-clue-detail-panel');
+  var corralOn = corral && corral.classList.contains('is-scroll-follow');
+  var clueOn = clue && clue.classList.contains('is-scroll-follow');
+  if (!corralOn && !clueOn) releaseChanceScopeFollow();
+}
+
+function getChanceScopePinHeight() {
+  var scope = document.getElementById('chance-scope-panel');
+  if (!scope || !scope.classList.contains('is-scroll-follow')) return 0;
+  if (window.getComputedStyle(scope).display === 'none') return 0;
+  var height = scope.offsetHeight;
+  if (!height) return 0;
+  return height + 8;
 }
 
 function getLeadClueDetailFollowTop() {
+  syncChanceScopeSticky();
   var tabs = document.querySelector('.wb-tabs');
-  if (!tabs) return 12;
-  return Math.round(tabs.getBoundingClientRect().bottom + 8);
+  var base = tabs ? Math.round(tabs.getBoundingClientRect().bottom + 8) : 12;
+  return base + getChanceScopePinHeight();
 }
 
-/** 客户智能推荐模块顶部快移出可视区（Tab 栏下方）时取消吸顶 */
-function isLeadClueCareModuleLeavingViewport() {
-  var cluePool = document.querySelector('#panel-chance .lead-clue-pool-section');
-  if (!cluePool) return false;
-  var followTop = getLeadClueDetailFollowTop();
-  var clueRect = cluePool.getBoundingClientRect();
-  return clueRect.top <= followTop + 1;
+function getChanceVisibleRect() {
+  var root = document.querySelector('.scroll-wrap');
+  if (!root) return { top: 0, bottom: window.innerHeight || 0 };
+  var rect = root.getBoundingClientRect();
+  return { top: rect.top, bottom: rect.bottom };
+}
+
+function getChanceScreenCenterBand() {
+  var view = getChanceVisibleRect();
+  var height = Math.max(view.bottom - view.top, 1);
+  return {
+    top: view.top + height * 0.25,
+    bottom: view.top + height * 0.75
+  };
+}
+
+function isCardInScreenCenter(card) {
+  if (!card || !card.getBoundingClientRect) return false;
+  var rect = card.getBoundingClientRect();
+  if (rect.width <= 0 && rect.height <= 0) return false;
+  var band = getChanceScreenCenterBand();
+  return rect.bottom > band.top && rect.top < band.bottom;
+}
+
+function isCardOutsideVisible(card) {
+  if (!card || !card.getBoundingClientRect) return true;
+  var rect = card.getBoundingClientRect();
+  var view = getChanceVisibleRect();
+  return rect.bottom <= view.top + 1 || rect.top >= view.bottom - 1;
+}
+
+function chancePinnedCardLeftCenter(kind, card) {
+  if (!card || !card.isConnected) return true;
+  if (_chancePinIgnoreLayout) return false;
+  if (isCardInScreenCenter(card)) {
+    if (kind === 'corral') _corralPinSawCenter = true;
+    else _leadCluePinSawCenter = true;
+    return false;
+  }
+  var saw = kind === 'corral' ? _corralPinSawCenter : _leadCluePinSawCenter;
+  if (saw) return true;
+  return isCardOutsideVisible(card);
+}
+
+function noteChancePinLayout() {
+  _chancePinIgnoreLayout = true;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      _chancePinIgnoreLayout = false;
+    });
+  });
+}
+
+function bindChancePinScroll() {
+  if (_chancePinScrollBound) return;
+  var root = document.querySelector('.scroll-wrap');
+  if (!root) return;
+  _chancePinScrollBound = true;
+  syncChanceScopeSticky();
+  root.addEventListener('scroll', function () {
+    syncChanceScopeSticky();
+    syncLeadClueDetailStickyState();
+    syncCorralDetailStickyState();
+  }, { passive: true });
+  window.addEventListener('resize', syncChanceScopeSticky);
+}
+
+function rememberLeadCluePinCard() {
+  _leadCluePinCard = document.querySelector('#panel-chance .lead-clue-customer-card.active');
+  _leadCluePinSawCenter = isCardInScreenCenter(_leadCluePinCard);
+  noteChancePinLayout();
+  bindChancePinScroll();
+}
+
+function rememberCorralPinCard(card) {
+  _corralDetailStickyAnchor = card || null;
+  _corralPinSawCenter = isCardInScreenCenter(card);
+  noteChancePinLayout();
+  bindChancePinScroll();
 }
 
 function pinLeadClueDetailFollowOnSelect() {
@@ -23304,10 +23681,13 @@ function pinLeadClueDetailFollowOnSelect() {
     releaseLeadClueDetailFollow();
     return;
   }
+  releaseCorralDetailFollow();
   if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
+  rememberLeadCluePinCard();
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncLeadClueDetailFollowLayout();
     return;
@@ -23323,13 +23703,15 @@ function syncLeadClueDetailStickyState() {
     if (panel.classList.contains('is-scroll-follow')) releaseLeadClueDetailFollow();
     return;
   }
-  var activeCard = document.querySelector('#panel-chance .lead-clue-customer-card.active');
+  var activeCard = _leadCluePinCard && _leadCluePinCard.isConnected
+    ? _leadCluePinCard
+    : document.querySelector('#panel-chance .lead-clue-customer-card.active');
   if (!activeCard) {
     if (panel.classList.contains('is-scroll-follow')) releaseLeadClueDetailFollow();
     return;
   }
   if (!panel.classList.contains('is-scroll-follow')) return;
-  if (isLeadClueCareModuleLeavingViewport()) {
+  if (chancePinnedCardLeftCenter('clue', activeCard)) {
     releaseLeadClueDetailFollow();
   } else {
     syncLeadClueDetailFollowLayout();
@@ -23345,6 +23727,7 @@ function pinLeadClueDetailFollow() {
     return;
   }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncLeadClueDetailFollowLayout();
     return;
@@ -23374,6 +23757,8 @@ function syncLeadClueDetailFollowLayout() {
 }
 
 function releaseLeadClueDetailFollow() {
+  _leadCluePinCard = null;
+  _leadCluePinSawCenter = false;
   var panel = document.getElementById('lead-clue-detail-panel');
   var placeholder = document.getElementById('lead-clue-detail-placeholder');
   if (panel) {
@@ -23387,11 +23772,14 @@ function releaseLeadClueDetailFollow() {
     placeholder.style.display = 'none';
     placeholder.style.height = '';
   }
+  releaseChanceScopeFollowIfIdle();
 }
 
 var _leadClueDetailAreaObs = null;
 
 function ensureLeadClueDetailAreaObserver() {
+  bindChancePinScroll();
+  syncChanceScopeSticky();
   if (_leadClueDetailAreaObs) return;
   var cluePool = document.querySelector('#panel-chance .lead-clue-pool-section');
   var scrollRoot = document.querySelector('.scroll-wrap');
@@ -23410,29 +23798,25 @@ function ensureLeadClueDetailAreaObserver() {
   if (poolSection) _leadClueDetailAreaObs.observe(poolSection);
 }
 
-/* 筛选结果预览吸顶动效开关 */
+/* 筛选结果预览吸顶：跟随被点击的围场或快捷定位卡片 */
 var CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED = true;
 var _corralDetailStickyAnchor = null;
 
-function isCorralDetailStickyAnchorLeavingViewport() {
-  var anchor = _corralDetailStickyAnchor
-    || document.querySelector('#panel-chance .lead-corral-section');
-  if (!anchor) return false;
-  var followTop = getLeadClueDetailFollowTop();
-  return anchor.getBoundingClientRect().top <= followTop + 1;
-}
-
-function pinCorralDetailFollowOnSelect(anchorEl) {
+function pinCorralDetailFollowOnSelect(cardEl) {
   if (!chanceDetailPinEnabled()) {
     releaseCorralDetailFollow();
     return;
   }
+  releaseLeadClueDetailFollow();
   if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  _corralDetailStickyAnchor = anchorEl
-    || document.querySelector('#panel-chance .lead-corral-section');
+  var card = cardEl && cardEl.classList && (cardEl.classList.contains('lead-corral-card') || cardEl.classList.contains('customer-pool-card'))
+    ? cardEl
+    : document.querySelector('#panel-chance .lead-corral-card.active, #panel-chance .customer-pool-card.active');
+  rememberCorralPinCard(card);
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncCorralDetailFollowLayout();
     return;
@@ -23448,14 +23832,15 @@ function syncCorralDetailStickyState() {
     if (panel.classList.contains('is-scroll-follow')) releaseCorralDetailFollow();
     return;
   }
-  var activeCorral = document.querySelector('#panel-chance .lead-corral-card.active');
-  var activePool = document.querySelector('#panel-chance .customer-pool-card.active');
-  if (!activeCorral && !activePool) {
+  var card = _corralDetailStickyAnchor && _corralDetailStickyAnchor.isConnected
+    ? _corralDetailStickyAnchor
+    : document.querySelector('#panel-chance .lead-corral-card.active, #panel-chance .customer-pool-card.active');
+  if (!card) {
     if (panel.classList.contains('is-scroll-follow')) releaseCorralDetailFollow();
     return;
   }
   if (!panel.classList.contains('is-scroll-follow')) return;
-  if (isCorralDetailStickyAnchorLeavingViewport()) {
+  if (chancePinnedCardLeftCenter('corral', card)) {
     releaseCorralDetailFollow();
   } else {
     syncCorralDetailFollowLayout();
@@ -23471,6 +23856,7 @@ function pinCorralDetailFollow() {
     return;
   }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncCorralDetailFollowLayout();
     return;
@@ -23501,6 +23887,7 @@ function syncCorralDetailFollowLayout() {
 
 function releaseCorralDetailFollow() {
   _corralDetailStickyAnchor = null;
+  _corralPinSawCenter = false;
   var panel = document.getElementById('corral-detail-panel');
   var placeholder = document.getElementById('corral-detail-placeholder');
   if (panel) {
@@ -23514,6 +23901,7 @@ function releaseCorralDetailFollow() {
     placeholder.style.display = 'none';
     placeholder.style.height = '';
   }
+  releaseChanceScopeFollowIfIdle();
 }
 
 function enterLeadClueCustomerDetail() {
@@ -23932,10 +24320,8 @@ function initLeadCorralPanel() {
 var _switchViewOrig = switchView;
 switchView = function (view, btn) {
   _switchViewOrig(view, btn);
-  if (view === 'manager') {
-    releaseLeadClueDetailFollow();
-    releaseCorralDetailFollow();
-  }
+  releaseLeadClueDetailFollow();
+  releaseCorralDetailFollow();
   initLeadCorralPanel();
 };
 
@@ -26952,11 +27338,6 @@ function initNetDepositCards() {
     syncCorralDetailStickyState();
   }, { passive: true });
 })();
-
-function switchLanguage(sel) {
-  if (sel.value === 'en') window.location.href = '2. CRM工作台/2. 销售工作台2.0/工作台KPI英文版.html';
-  else sel.value = 'zh';
-}
 
 function initGoalQHelpTooltips() {
   var tipEl = document.getElementById('goal-q-tooltip');
