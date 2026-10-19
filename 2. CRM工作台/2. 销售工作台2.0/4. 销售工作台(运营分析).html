@@ -17249,6 +17249,7 @@ function initRpOps() {
   renderRpKpis();
   renderRpMetricPicks();
   renderRpRank();
+  requestAnimationFrame(function () { switchRpDim('lots'); });
   if (!window._rpResizeBound) {
     window.addEventListener('resize', function () {
       if (_rpChart) _rpChart.resize();
