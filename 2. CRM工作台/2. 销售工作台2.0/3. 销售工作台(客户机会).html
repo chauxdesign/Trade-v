@@ -2794,12 +2794,29 @@
     #panel-chance .breakthrough-star-section{
       display:none !important;
     }
+    #panel-chance .chance-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+    }
+    .chance-scope-placeholder{display:none;flex-shrink:0}
+    #panel-chance .chance-scope-panel.is-scroll-follow{
+      position:fixed;z-index:19;
+      box-shadow:0 12px 32px rgba(79,70,229,.14);
+    }
+    #panel-chance .chance-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-chance .chance-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-chance .chance-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-chance .chance-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
     .lead-clue-detail-panel .module-head h2::before{
       background:linear-gradient(180deg,#f59e0b,#ea580c);
     }
     .lead-clue-detail-placeholder{display:none;flex-shrink:0}
     .lead-clue-detail-panel.is-scroll-follow{
-      position:fixed;z-index:19;
+      position:fixed;z-index:17;
       overflow-y:auto;
       box-shadow:0 12px 32px rgba(234,88,12,.14);
       transition:box-shadow .32s ease;
@@ -2832,6 +2849,142 @@
     }
     .lead-corral-add-btn::before{
       content:"+";font-size:14px;font-weight:800;line-height:1;
+    }
+    #corralCreateModal{z-index:1400}
+    .corral-create-modal .alert-task-follow-dialog{
+      width:min(940px,100%);max-height:min(88vh,760px);
+    }
+    .corral-create-modal .alert-task-follow-head h3{
+      display:flex;align-items:center;gap:8px;
+    }
+    .corral-create-modal .alert-task-follow-head h3::before{
+      content:"";width:4px;height:16px;border-radius:4px;flex-shrink:0;
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
+    }
+    .corral-create-section{
+      border:1px solid #e8ecf1;border-radius:10px;overflow:hidden;
+      background:#fff;margin-bottom:12px;
+    }
+    .corral-create-section-head{
+      display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;
+      padding:9px 12px;border-bottom:1px solid #f1f5f9;
+      background:linear-gradient(135deg,#eff6ff,#fff);
+      font-size:12px;font-weight:800;color:#0f172a;line-height:1.4;
+    }
+    .corral-create-section-head::before{
+      content:"";width:3px;height:13px;border-radius:3px;flex-shrink:0;
+      background:linear-gradient(180deg,#3b82f6,#2563eb);
+    }
+    .corral-create-hint{font-size:11px;font-weight:600;color:#dc2626;line-height:1.4}
+    .corral-create-filters{
+      display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+    .corral-create-filter{
+      display:flex;flex-direction:column;min-width:0;
+      padding:10px 12px 12px;border-bottom:1px dashed #e8ecf1;
+      transition:background .15s ease;
+    }
+    .corral-create-filter:nth-last-child(-n+2){border-bottom:none}
+    .corral-create-filter.is-on{background:#f8fbff}
+    .corral-create-filter-head{
+      display:flex;align-items:center;gap:8px;min-width:0;cursor:pointer;
+      width:fit-content;max-width:100%;
+    }
+    .corral-create-filter-head input[type="checkbox"]{
+      flex-shrink:0;width:14px;height:14px;margin:0;accent-color:#2563eb;cursor:pointer;
+    }
+    .corral-create-filter-name{
+      font-size:12px;font-weight:600;color:#334155;
+      line-height:1.4;user-select:none;
+    }
+    .corral-create-filter.is-on .corral-create-filter-name{color:#1d4ed8;font-weight:700}
+    .corral-create-filter-ctrl{
+      display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;
+      margin-top:8px;min-height:30px;
+    }
+    .corral-create-filter:not(.is-on) .corral-create-filter-ctrl{visibility:hidden}
+    .corral-create-req{
+      flex-shrink:0;color:#dc2626;font-size:11px;font-weight:700;line-height:1;
+    }
+    .corral-create-ctrl-select{
+      height:30px;padding:0 8px;border:1px solid #e8ecf1;border-radius:8px;
+      background:#fff;color:#0f172a;font-size:11px;font-family:inherit;
+      box-sizing:border-box;cursor:pointer;
+      transition:border-color .15s ease,box-shadow .15s ease;
+    }
+    .corral-create-ctrl-select:not(.has-value){color:#94a3b8}
+    .corral-create-ctrl-select--preset{width:124px}
+    .corral-create-ctrl-select--val{width:96px}
+    .corral-create-ctrl-select:focus{
+      outline:none;border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .corral-create-subgroup{
+      display:none;align-items:center;flex-wrap:wrap;gap:6px 8px;min-width:0;
+    }
+    .corral-create-subgroup.is-show{display:flex}
+    .corral-create-stepper{
+      display:inline-flex;align-items:center;height:30px;overflow:hidden;
+      border:1px solid #e8ecf1;border-radius:8px;background:#fff;
+    }
+    .corral-create-stepper button{
+      width:24px;height:28px;border:none;background:#f8fafc;
+      color:#64748b;font-size:13px;line-height:1;cursor:pointer;font-family:inherit;
+      transition:background .15s ease,color .15s ease;
+    }
+    .corral-create-stepper button:hover{background:#eff6ff;color:#2563eb}
+    .corral-create-stepper input{
+      width:46px;height:28px;border:none;
+      border-left:1px solid #eef2f7;border-right:1px solid #eef2f7;
+      text-align:center;font-size:11px;font-family:inherit;color:#0f172a;
+      -moz-appearance:textfield;
+    }
+    .corral-create-stepper input::-webkit-outer-spin-button,
+    .corral-create-stepper input::-webkit-inner-spin-button{
+      -webkit-appearance:none;margin:0;
+    }
+    .corral-create-stepper input:focus{outline:none;background:#f8fbff}
+    .corral-create-daterange{
+      display:inline-flex;align-items:center;gap:4px;height:30px;padding:0 8px;
+      border:1px solid #e8ecf1;border-radius:8px;background:#fff;
+      transition:border-color .15s ease,box-shadow .15s ease;
+    }
+    .corral-create-daterange:focus-within{
+      border-color:#93c5fd;box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+    .corral-create-daterange input{
+      width:100px;border:none;background:transparent;
+      font-size:11px;font-family:inherit;color:#0f172a;
+    }
+    .corral-create-daterange input:focus{outline:none}
+    .corral-create-daterange-sep{color:#94a3b8;font-size:11px;flex-shrink:0}
+    .corral-create-filter .comm-follow-inline-options{gap:6px}
+    .corral-create-filter .comm-follow-inline-option span{padding:5px 11px;font-size:11px}
+    .corral-create-extra{
+      display:flex;align-items:center;gap:10px;padding:12px;
+    }
+    .corral-create-extra-field{
+      display:flex;align-items:center;gap:6px;flex:1;min-width:0;
+    }
+    .corral-create-extra-field .corral-create-req{
+      flex-shrink:0;margin-top:0;
+    }
+    .corral-create-extra .comm-follow-input,
+    .corral-create-extra .comm-follow-select{
+      flex:1;min-width:0;width:100%;height:32px;font-size:12px;
+    }
+    .corral-create-extra .comm-follow-select:not(.has-value){color:#94a3b8}
+    .corral-create-error{
+      display:none;margin:0 0 10px;padding:8px 12px;border-radius:8px;
+      background:#fef2f2;border:1px solid #fecaca;color:#dc2626;
+      font-size:11px;font-weight:600;line-height:1.5;
+    }
+    .corral-create-error.is-show{display:block}
+    @media(max-width:720px){
+      .corral-create-filters{grid-template-columns:1fr}
+      .corral-create-filter:nth-last-child(-n+2){border-bottom:1px dashed #e8ecf1}
+      .corral-create-filter:last-child{border-bottom:none}
+      .corral-create-extra{flex-wrap:wrap}
+      .corral-create-extra-field{flex:1 1 calc(50% - 10px)}
     }
     .lead-corral-section .module-head h2::before{
       background:linear-gradient(180deg,#3b82f6,#2563eb);
@@ -2881,16 +3034,33 @@
       margin-top:10px;padding-top:10px;border-top:1px dashed #e2e8f0;
     }
     #myFollowDrawerFilters{
-      display:flex;align-items:flex-end;gap:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:nowrap;
     }
     #myFollowDrawerFilters .my-follow-drawer-filters-grid{
-      flex:1;min-width:0;
+      display:flex;align-items:center;justify-content:flex-start;gap:10px;flex:1;min-width:0;flex-wrap:nowrap;
     }
-    #myFollowDrawerFilters .my-follow-filter-field--action{
-      flex-shrink:0;
+    #myFollowDrawerFilters .my-follow-filter-field{
+      flex:0 0 auto;width:180px;max-width:100%;margin:0;flex-direction:row;gap:0;
     }
-    #myFollowDrawerFilters .my-follow-filter-reset{
-      height:30px;padding:0 10px;white-space:nowrap;
+    #myFollowDrawerFilters .my-follow-filter-field--keyword{width:220px}
+    #myFollowDrawerFilters .my-follow-filter-label{display:none}
+    #myFollowDrawerFilters .my-follow-filter-actions{
+      display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0;margin-left:auto;
+    }
+    #myFollowDrawerFilters .my-follow-filter-reset,
+    #myFollowDrawerFilters .my-follow-filter-query{
+      flex-shrink:0;height:30px;padding:0 12px;white-space:nowrap;
+    }
+    #myFollowDrawerFilters .my-follow-filter-query{
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #myFollowDrawerFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
+    }
+    #myFollowDrawerFilters .my-follow-filter-select:has(option[value=""]:checked){
+      color:#94a3b8;
     }
     .my-follow-filter-reset{
       padding:5px 10px;border:1px solid #e2e8f0;border-radius:6px;
@@ -2906,12 +3076,47 @@
     .my-follow-drawer-empty{
       padding:48px 16px;text-align:center;color:#94a3b8;font-size:13px;line-height:1.6;
     }
+    #myFollowDrawer .alert-task-detail-panel{width:70%;max-width:70%}
+    #myFollowDrawer .alert-task-detail-table{min-width:0;width:100%;table-layout:fixed}
+    #myFollowDrawer .alert-task-detail-table tbody tr{transition:background .15s}
+    #myFollowDrawer .alert-task-detail-table tbody tr:hover td{background:#f0f9ff}
+    #myFollowDrawer .alert-task-detail-table th,
+    #myFollowDrawer .alert-task-detail-table td{
+      padding:8px 6px;vertical-align:middle;
+    }
+    #myFollowDrawer .alert-task-detail-table th{white-space:nowrap}
+    #myFollowDrawer .alert-task-detail-table th:first-child,
+    #myFollowDrawer .alert-task-detail-table td:first-child{padding-left:10px}
+    #myFollowDrawer .alert-task-detail-table th:last-child,
+    #myFollowDrawer .alert-task-detail-table td:last-child{padding-right:10px}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(1),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(1){width:14%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(2),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(2){width:6%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(3),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(3){width:13%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(4),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(4){width:9%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(5),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(5){width:13%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(6),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(6){width:16%}
+    #myFollowDrawer .alert-task-detail-table th:nth-child(7),
+    #myFollowDrawer .alert-task-detail-table td:nth-child(7){width:18%}
+    #myFollowDrawer .my-follow-cell-stack{display:flex;flex-direction:column;gap:2px;min-width:0}
+    #myFollowDrawer .my-follow-cell-line{
+      white-space:nowrap;line-height:1.35;overflow:hidden;text-overflow:ellipsis;
+    }
+    #myFollowDrawer .col-num{font-variant-numeric:tabular-nums;font-weight:700;color:#0f172a}
+    #myFollowDrawer .col-phone{font-variant-numeric:tabular-nums}
+    #myFollowDrawer .col-time{font-variant-numeric:tabular-nums}
+    #myFollowDrawer .col-action{width:12.8%;white-space:nowrap}
     #myFollowDrawerPager{margin-top:14px;padding-top:12px;border-top:1px solid #eef2f7}
     @media (max-width:900px){
       .my-follow-drawer-filters-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
     .my-follow-drawer-card{
-      position:relative;border:1px solid #e2e8f0;border-radius:8px;
+      position:relative;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;
@@ -3038,7 +3243,7 @@
       display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;
     }
     .breakthrough-star-drawer-card{
-      border:1px solid #fde68a;border-radius:8px;background:#fff;
+      border:1px solid #fde68a;border-radius:8px;overflow:hidden;background:#fff;
       display:flex;flex-direction:column;min-width:0;width:100%;
       transition:border-color .15s,box-shadow .15s;
     }
@@ -3116,7 +3321,7 @@
       display:flex;flex-direction:column;gap:8px;
     }
     .breakthrough-star-card{
-      position:relative;border:1px solid #fde68a;border-radius:8px;
+      position:relative;border:1px solid #fde68a;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;cursor:pointer;
@@ -3207,7 +3412,7 @@
       align-items:stretch;
     }
     .lead-clue-customer-card{
-      position:relative;border:1px solid #e8ecf1;border-radius:8px;
+      position:relative;border:1px solid #e8ecf1;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;cursor:pointer;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
@@ -3348,7 +3553,7 @@
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
     }
     .customer-pool-card{
-      position:relative;border:1px solid #e8ecf1;border-radius:8px;
+      position:relative;border:1px solid #e8ecf1;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;cursor:pointer;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
@@ -3407,6 +3612,11 @@
     @keyframes corralDetailPinIn{
       from{opacity:.9;box-shadow:0 6px 20px rgba(37,99,235,.1)}
       to{opacity:1;box-shadow:0 12px 32px rgba(37,99,235,.14)}
+    }
+    .chance-ai-remind,
+    .growth-ai-remind,
+    .customer-target-ai{
+      display:none !important;
     }
     .chance-ai-remind{
       margin-top:12px;padding:10px 12px;border-radius:10px;
@@ -3516,7 +3726,7 @@
       display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
     }
     .lead-corral-card{
-      position:relative;border:1px solid #e8ecf1;border-radius:8px;
+      position:relative;border:1px solid #e8ecf1;border-radius:8px;overflow:hidden;
       background:#fff;padding:0;cursor:pointer;text-align:left;
       display:flex;flex-direction:column;min-width:0;width:100%;
       font:inherit;color:inherit;transition:border-color .15s,box-shadow .15s;
@@ -3527,17 +3737,67 @@
     .lead-corral-card.active{
       border-color:#2563eb;box-shadow:0 0 0 2px rgba(37,99,235,.2);
     }
+    .lead-corral-card:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
     .lead-corral-card--hot{border-color:#bfdbfe}
     .lead-corral-card--warn{border-color:#fde68a;background:#fffef5}
     .lead-corral-card-head{
-      display:flex;align-items:center;justify-content:center;
-      padding:8px 10px;border-bottom:1px solid #dbeafe;
+      position:relative;display:flex;align-items:center;justify-content:center;
+      padding:8px 26px;border-bottom:1px solid #dbeafe;
       background:linear-gradient(135deg,#eff6ff,#fff);
     }
     .lead-corral-card-name{
       width:100%;font-size:12px;font-weight:800;color:#0f172a;line-height:1.35;
       text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
+    /* 围场卡片右上角「···」更多操作 */
+    .lead-corral-card-more{
+      position:absolute;top:50%;right:5px;transform:translateY(-50%);
+      width:20px;height:20px;padding:0;border:none;border-radius:5px;
+      background:transparent;color:#94a3b8;font:inherit;font-size:13px;font-weight:800;
+      line-height:1;letter-spacing:.5px;cursor:pointer;
+      display:inline-flex;align-items:center;justify-content:center;
+      transition:background .15s,color .15s;
+    }
+    .lead-corral-card-more:hover,
+    .lead-corral-card-more.is-open{background:#dbeafe;color:#1d4ed8}
+    .lead-corral-card-more:focus-visible{outline:2px solid #2563eb;outline-offset:1px}
+    .lead-corral-card-menu{
+      position:fixed;z-index:1300;min-width:108px;padding:4px;
+      background:#fff;border:1px solid #e2e8f0;border-radius:8px;
+      box-shadow:0 10px 28px rgba(15,23,42,.14);
+      animation:leadCorralMenuIn .14s ease;
+    }
+    .lead-corral-card-menu[hidden]{display:none}
+    @keyframes leadCorralMenuIn{
+      from{opacity:0;transform:translateY(-4px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    .lead-corral-card-menu-item{
+      display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;
+      border:none;border-radius:6px;background:transparent;
+      font:inherit;font-size:12px;font-weight:600;color:#0f172a;text-align:left;cursor:pointer;
+      transition:background .12s;
+    }
+    .lead-corral-card-menu-item:hover,
+    .lead-corral-card-menu-item:focus-visible{background:#f1f5f9;outline:none}
+    .lead-corral-card-menu-item-icon{
+      width:14px;text-align:center;font-size:12px;color:#64748b;flex-shrink:0;
+    }
+    .lead-corral-card-menu-item--danger{color:#dc2626}
+    .lead-corral-card-menu-item--danger .lead-corral-card-menu-item-icon{color:#dc2626}
+    .lead-corral-card-menu-item--danger:hover,
+    .lead-corral-card-menu-item--danger:focus-visible{background:#fef2f2}
+    /* 删除围场确认弹窗 */
+    .corral-delete-modal .alert-task-follow-dialog{width:min(400px,100%)}
+    .corral-delete-text{
+      margin:2px 0 6px;font-size:13px;font-weight:600;color:#0f172a;line-height:1.5;
+    }
+    .corral-delete-text strong{color:#1d4ed8}
+    .corral-delete-sub{margin:0 0 6px;font-size:12px;color:#64748b;line-height:1.5}
+    .comm-follow-form-btn--danger{
+      border:1px solid #dc2626;background:#dc2626;color:#fff;
+    }
+    .comm-follow-form-btn--danger:hover{background:#b91c1c;border-color:#b91c1c}
     .lead-corral-card-body{padding:8px 10px 6px}
     .lead-corral-card-stats{
       display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-bottom:6px;
@@ -3749,7 +4009,7 @@
       box-shadow:0 2px 8px rgba(37,99,235,.25);
     }
     .corral-enter-btn:hover{filter:brightness(1.05)}
-    .corral-hot-list{margin-top:10px}
+    .corral-hot-list{display:none;margin-top:10px}
     .corral-hot-item{
       display:flex;align-items:center;justify-content:space-between;gap:8px;
       width:100%;padding:8px 10px;border-radius:8px;border:1px solid #eef2f7;
@@ -4458,8 +4718,9 @@
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="goals" href="2. CRM工作台/2. 销售工作台2.0/1. 销售工作台(我的目标).html">我的目标</a>
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="sop" href="2. CRM工作台/2. 销售工作台2.0/2. 销售工作台(行动SOP).html">行动 SOP</a>
           <a class="wb-tab active" role="tab" aria-selected="true" data-panel="chance" href="2. CRM工作台/2. 销售工作台2.0/3. 销售工作台(客户机会).html">客户机会</a>
-          <a class="wb-tab" role="tab" aria-selected="false" data-panel="growth" href="2. CRM工作台/2. 销售工作台2.0/4. 销售工作台(提升分析).html">提升分析</a>
+          <a class="wb-tab" role="tab" aria-selected="false" data-panel="growth" href="2. CRM工作台/2. 销售工作台2.0/4. 销售工作台(运营分析).html">运营分析</a>
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="enable" href="2. CRM工作台/2. 销售工作台2.0/5. 销售工作台(展业赋能).html">展业赋能</a>
+          <a class="wb-tab" role="tab" aria-selected="false" aria-hidden="true" data-panel="improve" href="2. CRM工作台/2. 销售工作台2.0/6. 销售工作台(提升分析).html" hidden style="display:none">提升分析</a>
         </nav>
         <div class="wb-panels">
 <div class="wb-panel active" id="panel-chance" role="tabpanel">
@@ -4475,92 +4736,92 @@
                   <button type="button" class="lead-clue-my-follow-btn" onclick="openMyFollowDrawer()">我的关注</button>
                 </div>
               </div>
-              <p class="kpi-intro sales-only">按多条件组合保存线索合集 · 点击进入客户筛选结果</p>
-              <p class="kpi-intro manager-only">团队客户线索围场 · 多条件组合筛选，支持下钻至销售个人结果</p>
+              <p class="kpi-intro sales-only">把常用筛选条件存成围场。点击卡片查看匹配客户，右上角可编辑或删除。</p>
+              <p class="kpi-intro manager-only">查看团队各围场的匹配客户。点击卡片查看筛选条件和客户名单。</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
                 <div class="lead-corral-cards" role="list">
-                  <button type="button" class="lead-corral-card lead-corral-card--hot" role="listitem" data-corral-id="high-value" data-lead-id="245" data-conds="VIP等级 ≥ V3|最后联系时间 > 7天|充值次数 ≥ 1|是否绑定手机：已绑定|分配时间 ≤ 30天" onclick="openLeadCorral('high-value', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高价值未联系</span></div>
+                  <div class="lead-corral-card lead-corral-card--hot" role="listitem" tabindex="0" data-corral-id="high-value" data-lead-id="245" data-conds="VIP等级 ≥ V3|最后联系时间 > 7天|充值次数 ≥ 1|是否绑定手机：已绑定|分配时间 ≤ 30天" onclick="openLeadCorral('high-value', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高价值未联系</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat lead-corral-stat--hot"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">86</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">8</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：245</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card lead-corral-card--warn" role="listitem" data-corral-id="churn-risk" data-lead-id="246" data-conds="最后联系时间 > 30天|充值次数 ≥ 1|分配时间 ≤ 90天|VIP等级 ≥ V1|首次充值时间 ≤ 180天" onclick="openLeadCorral('churn-risk', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">流失风险预警</span></div>
+                  </div>
+                  <div class="lead-corral-card lead-corral-card--warn" role="listitem" tabindex="0" data-corral-id="churn-risk" data-lead-id="246" data-conds="最后联系时间 > 30天|充值次数 ≥ 1|分配时间 ≤ 90天|VIP等级 ≥ V1|首次充值时间 ≤ 180天" onclick="openLeadCorral('churn-risk', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">流失风险预警</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">52</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">5</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：246</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="new-register" data-lead-id="247" data-conds="注册时间 ≤ 3天|首次充值时间：无|充值次数 = 0|是否绑定手机：未绑定|实名来源：线上注册" onclick="openLeadCorral('new-register', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">新注册待转化</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="new-register" data-lead-id="247" data-conds="注册时间 ≤ 3天|首次充值时间：无|充值次数 = 0|是否绑定手机：未绑定|实名来源：线上注册" onclick="openLeadCorral('new-register', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">新注册待转化</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">38</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">12</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：247</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="kyc-pending" data-lead-id="248" data-conds="首次充值时间 ≤ 14天|实名来源：审核中|注册时间 ≤ 30天|是否绑定手机：已绑定|充值次数 = 1" onclick="openLeadCorral('kyc-pending', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">入金待完成 KYC</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="kyc-pending" data-lead-id="248" data-conds="首次充值时间 ≤ 14天|实名来源：审核中|注册时间 ≤ 30天|是否绑定手机：已绑定|充值次数 = 1" onclick="openLeadCorral('kyc-pending', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">入金待完成 KYC</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">29</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">3</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：248</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="campaign-silent" data-lead-id="249" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|分配时间 ≤ 60天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openLeadCorral('campaign-silent', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">活动沉默唤醒</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="campaign-silent" data-lead-id="249" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|分配时间 ≤ 60天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openLeadCorral('campaign-silent', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">活动沉默唤醒</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">45</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">2</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：249</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card lead-corral-card--hot" role="listitem" data-corral-id="hnw-potential" data-lead-id="250" data-conds="VIP等级 = V4|首次充值时间 ≤ 90天|充值次数 ≥ 3|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openLeadCorral('hnw-potential', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高净值潜客</span></div>
+                  </div>
+                  <div class="lead-corral-card lead-corral-card--hot" role="listitem" tabindex="0" data-corral-id="hnw-potential" data-lead-id="250" data-conds="VIP等级 = V4|首次充值时间 ≤ 90天|充值次数 ≥ 3|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openLeadCorral('hnw-potential', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高净值潜客</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat lead-corral-stat--hot"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">31</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">1</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：250</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="cross-oil" data-lead-id="251" data-conds="注册时间 ≤ 365天|充值次数 ≥ 2|VIP等级 ≥ V2|分配时间 ≤ 90天|最后联系时间 ≤ 14天" onclick="openLeadCorral('cross-oil', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">成长型客户分层</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="cross-oil" data-lead-id="251" data-conds="注册时间 ≤ 365天|充值次数 ≥ 2|VIP等级 ≥ V2|分配时间 ≤ 90天|最后联系时间 ≤ 14天" onclick="openLeadCorral('cross-oil', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">成长型客户分层</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">64</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">4</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：251</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="custom-mine" data-lead-id="253" data-conds="注册时间 ≤ 90天|分配时间 ≤ 30天|VIP等级 ≥ V1|实名来源：线下认证|最后联系时间 > 14天" onclick="openLeadCorral('custom-mine', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">次新分配待联系</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="custom-mine" data-lead-id="253" data-conds="注册时间 ≤ 90天|分配时间 ≤ 30天|VIP等级 ≥ V1|实名来源：线下认证|最后联系时间 > 14天" onclick="openLeadCorral('custom-mine', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">次新分配待联系</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">36</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">0</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：253</span></div>
-                  </button>
+                  </div>
                 </div>
                 <div class="chance-ai-remind chance-ai-remind--corral" id="lead-corral-ai-remind" role="note">
                   <div class="chance-ai-remind-head">
@@ -4576,86 +4837,86 @@
               </div>
               <div class="manager-only">
                 <div class="lead-corral-cards" role="list">
-                  <button type="button" class="lead-corral-card lead-corral-card--hot" role="listitem" data-corral-id="high-value" data-lead-id="245" data-conds="VIP等级 ≥ V3|最后联系时间 > 7天|充值次数 ≥ 1|是否绑定手机：已绑定|分配时间 ≤ 30天" onclick="openLeadCorral('high-value', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高价值未联系</span></div>
+                  <div class="lead-corral-card lead-corral-card--hot" role="listitem" tabindex="0" data-corral-id="high-value" data-lead-id="245" data-conds="VIP等级 ≥ V3|最后联系时间 > 7天|充值次数 ≥ 1|是否绑定手机：已绑定|分配时间 ≤ 30天" onclick="openLeadCorral('high-value', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高价值未联系</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat lead-corral-stat--hot"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">688</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">64</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：245</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card lead-corral-card--warn" role="listitem" data-corral-id="churn-risk" data-lead-id="246" data-conds="最后联系时间 > 30天|充值次数 ≥ 1|分配时间 ≤ 90天|VIP等级 ≥ V1|首次充值时间 ≤ 180天" onclick="openLeadCorral('churn-risk', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">流失风险预警</span></div>
+                  </div>
+                  <div class="lead-corral-card lead-corral-card--warn" role="listitem" tabindex="0" data-corral-id="churn-risk" data-lead-id="246" data-conds="最后联系时间 > 30天|充值次数 ≥ 1|分配时间 ≤ 90天|VIP等级 ≥ V1|首次充值时间 ≤ 180天" onclick="openLeadCorral('churn-risk', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">流失风险预警</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">416</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">40</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：246</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="new-register" data-lead-id="247" data-conds="注册时间 ≤ 3天|首次充值时间：无|充值次数 = 0|是否绑定手机：未绑定|实名来源：线上注册" onclick="openLeadCorral('new-register', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">新注册待转化</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="new-register" data-lead-id="247" data-conds="注册时间 ≤ 3天|首次充值时间：无|充值次数 = 0|是否绑定手机：未绑定|实名来源：线上注册" onclick="openLeadCorral('new-register', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">新注册待转化</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">304</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">96</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：247</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="kyc-pending" data-lead-id="248" data-conds="首次充值时间 ≤ 14天|实名来源：审核中|注册时间 ≤ 30天|是否绑定手机：已绑定|充值次数 = 1" onclick="openLeadCorral('kyc-pending', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">入金待完成 KYC</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="kyc-pending" data-lead-id="248" data-conds="首次充值时间 ≤ 14天|实名来源：审核中|注册时间 ≤ 30天|是否绑定手机：已绑定|充值次数 = 1" onclick="openLeadCorral('kyc-pending', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">入金待完成 KYC</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">232</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">24</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：248</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="campaign-silent" data-lead-id="249" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|分配时间 ≤ 60天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openLeadCorral('campaign-silent', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">活动沉默唤醒</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="campaign-silent" data-lead-id="249" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|分配时间 ≤ 60天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openLeadCorral('campaign-silent', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">活动沉默唤醒</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">360</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">16</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：249</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card lead-corral-card--hot" role="listitem" data-corral-id="hnw-potential" data-lead-id="250" data-conds="VIP等级 = V4|首次充值时间 ≤ 90天|充值次数 ≥ 3|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openLeadCorral('hnw-potential', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高净值潜客</span></div>
+                  </div>
+                  <div class="lead-corral-card lead-corral-card--hot" role="listitem" tabindex="0" data-corral-id="hnw-potential" data-lead-id="250" data-conds="VIP等级 = V4|首次充值时间 ≤ 90天|充值次数 ≥ 3|最后联系时间 ≤ 7天|是否绑定手机：已绑定" onclick="openLeadCorral('hnw-potential', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">高净值潜客</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat lead-corral-stat--hot"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">248</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">8</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：250</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="cross-oil" data-lead-id="251" data-conds="注册时间 ≤ 365天|充值次数 ≥ 2|VIP等级 ≥ V2|分配时间 ≤ 90天|最后联系时间 ≤ 14天" onclick="openLeadCorral('cross-oil', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">成长型客户分层</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="cross-oil" data-lead-id="251" data-conds="注册时间 ≤ 365天|充值次数 ≥ 2|VIP等级 ≥ V2|分配时间 ≤ 90天|最后联系时间 ≤ 14天" onclick="openLeadCorral('cross-oil', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">成长型客户分层</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">512</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">32</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：251</span></div>
-                  </button>
-                  <button type="button" class="lead-corral-card" role="listitem" data-corral-id="custom-mine" data-lead-id="253" data-conds="注册时间 ≤ 90天|分配时间 ≤ 30天|VIP等级 ≥ V1|实名来源：线下认证|最后联系时间 > 14天" onclick="openLeadCorral('custom-mine', this)">
-                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">次新分配待联系</span></div>
+                  </div>
+                  <div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="custom-mine" data-lead-id="253" data-conds="注册时间 ≤ 90天|分配时间 ≤ 30天|VIP等级 ≥ V1|实名来源：线下认证|最后联系时间 > 14天" onclick="openLeadCorral('custom-mine', this)" onkeydown="leadCorralCardKeydown(event, this)">
+                    <div class="lead-corral-card-head"><span class="lead-corral-card-name">次新分配待联系</span><button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false" onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button></div>
                     <div class="lead-corral-card-body">
                       <div class="lead-corral-card-stats">
                         <div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">288</span></div>
-                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">今日新增</span><span class="lead-corral-stat-val">0</span></div>
+                        <div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">5</span></div>
                       </div>
                     </div>
                     <div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：253</span></div>
-                  </button>
+                  </div>
                 </div>
                 <div class="chance-ai-remind chance-ai-remind--corral" id="lead-corral-ai-remind-mgr" role="note">
                   <div class="chance-ai-remind-head">
@@ -4676,8 +4937,8 @@
           <section class="block large customer-pool-section">
             <div class="module-head">
               <h2>客户快捷定位</h2>
-              <p class="kpi-intro sales-only">特殊分层条件组合 · 目标客群池集中跟进与冲刺运营</p>
-              <p class="kpi-intro manager-only">团队特殊分层客群池 · 多条件组合锁定高潜冲刺客户</p>
+              <p class="kpi-intro sales-only">按固定客群快速找到要跟进的人：V4冲刺、过去4周首充、大V维护、短留客户。</p>
+              <p class="kpi-intro manager-only">查看团队四类重点客群的人数：V4冲刺、过去4周首充、大V维护、短留客户。</p>
             </div>
             <div class="module-body">
               <div class="sales-only">
@@ -4686,18 +4947,18 @@
                     <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">18</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">6</span></div>
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">客户数</span><span class="customer-pool-stat-val">18</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺手数&lt;10</span><span class="customer-pool-stat-val">6</span></div>
                       </div>
                     </div>
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
                   </button>
                   <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">过去4周首充</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">22</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">9</span></div>
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">客户数</span><span class="customer-pool-stat-val">22</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">复充数</span><span class="customer-pool-stat-val">9</span></div>
                       </div>
                     </div>
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
@@ -4713,7 +4974,7 @@
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
                   </button>
                   <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">短留客户</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
                         <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">15</span></div>
@@ -4741,18 +5002,18 @@
                     <div class="customer-pool-card-head"><span class="customer-pool-card-name">V4冲刺</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">144</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺达标</span><span class="customer-pool-stat-val">48</span></div>
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">客户数</span><span class="customer-pool-stat-val">144</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">冲刺手数&lt;10</span><span class="customer-pool-stat-val">48</span></div>
                       </div>
                     </div>
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:30</strong></span></div>
                   </button>
                   <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="campaign-deposit" data-conds="分配时间 ≤ 30天|充值次数 ≥ 1|最后联系时间 > 14天|注册时间 ≤ 180天|VIP等级 ≥ V2" onclick="openCustomerPool('campaign-deposit', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">活动入金</span></div>
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">过去4周首充</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
-                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">176</span></div>
-                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">活动达标</span><span class="customer-pool-stat-val">72</span></div>
+                        <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">客户数</span><span class="customer-pool-stat-val">176</span></div>
+                        <div class="customer-pool-stat"><span class="customer-pool-stat-label">复充数</span><span class="customer-pool-stat-val">72</span></div>
                       </div>
                     </div>
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:15</strong></span></div>
@@ -4768,7 +5029,7 @@
                     <div class="customer-pool-card-foot"><span class="customer-pool-card-time">更新时间：<strong>27-05-2026 09:00</strong></span></div>
                   </button>
                   <button type="button" class="customer-pool-card customer-pool-card--hot" role="listitem" data-pool-id="silent-wake" data-conds="最后联系时间 > 14天|充值次数 ≥ 1|活动参与 ≤ 60天|VIP等级 ≥ V1" onclick="openCustomerPool('silent-wake', this)">
-                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">沉默唤醒</span></div>
+                    <div class="customer-pool-card-head"><span class="customer-pool-card-name">短留客户</span></div>
                     <div class="customer-pool-card-body">
                       <div class="customer-pool-card-stats">
                         <div class="customer-pool-stat customer-pool-stat--hot"><span class="customer-pool-stat-label">池内客户</span><span class="customer-pool-stat-val">120</span></div>
@@ -4796,8 +5057,8 @@
           <section class="block large lead-clue-pool-section">
             <div class="module-head">
               <h2>客户智能推荐</h2>
-              <p class="kpi-intro sales-only">按客户状态小分类 · 优先展示需立即跟进的高风险与可提升的高价值客户</p>
-              <p class="kpi-intro manager-only">团队客户智能推荐 · 高风险召回与高价值提升客户一览</p>
+              <p class="kpi-intro sales-only">按跟进优先级分组：高风险需马上联系，高价值和稳定型用于提升与维护。点击客户查看详情。</p>
+              <p class="kpi-intro manager-only">按高风险、高价值、稳定型查看团队客户。点击客户查看该客户情况。</p>
             </div>
             <div class="module-body" id="lead-clue-pool-root"></div>
           </section>
@@ -4807,11 +5068,34 @@
 
           <div class="chance-right-col">
           <div class="chance-right-stack">
+          <div class="chance-scope-placeholder manager-only" id="chance-scope-placeholder" aria-hidden="true"></div>
+          <aside class="module chance-scope-panel manager-only" id="chance-scope-panel">
+            <div class="module-head">
+              <h2>切换销售管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="chanceScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onChanceScopeLevel1Change()">
+                  <option value="all" selected>团队所有人</option>
+                  <option value="A">TW销售A组</option>
+                  <option value="B">TW销售B组</option>
+                  <option value="C">TW销售C组</option>
+                  <option value="DA">DANA销售A组</option>
+                  <option value="DB">DANA销售B组</option>
+                  <option value="DC">DANA销售C组</option>
+                </select>
+                <select id="chanceScopeLevel2" class="manager-goal-scope-select" aria-label="选择销售人员" onchange="onChanceScopeLevel2Change()">
+                  <option value="__all__" selected>全员汇总</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint" id="chanceScopeHint">当前销售管理视角：<strong>团队所有人</strong></p>
+            </div>
+          </aside>
           <aside class="block large breakthrough-star-section" id="breakthrough-star-section">
             <div class="module-head">
               <h2>客户突破之星</h2>
-              <p class="kpi-intro sales-only">本月 V3 升级至 V4 客户 · 每位突破奖励 $100</p>
-              <p class="kpi-intro manager-only">团队本月 V3→V4 突破客户 · 单人奖励 $100，汇总奖励总额</p>
+              <p class="kpi-intro sales-only">本月从 V3 升到 V4 的客户，每人奖励 $100。展开可查看每位突破客户。</p>
+              <p class="kpi-intro manager-only">团队本月从 V3 升到 V4 的客户，每人奖励 $100，并汇总奖励总额。</p>
             </div>
             <div class="module-body">
               <div class="sales-only breakthrough-star-scope">
@@ -4886,7 +5170,7 @@
           <aside class="block large corral-detail-panel" id="corral-detail-panel">
             <div class="module-head">
               <h2>筛选结果预览</h2>
-              <p class="kpi-intro" id="corral-detail-intro">已选客户池：V4冲刺 · 特殊分层条件组合（AND）</p>
+              <p class="kpi-intro" id="corral-detail-intro">正在查看「V4冲刺」，下列客户同时满足全部筛选条件。</p>
             </div>
             <div class="module-body">
               <div class="corral-detail-empty" id="corral-detail-empty" style="display:none">
@@ -4904,8 +5188,8 @@
                   <span class="corral-detail-cond">是否绑定手机：已绑定</span>
                 </div>
                 <div class="corral-detail-metrics">
-                  <div class="corral-detail-metric"><span id="corral-metric-label-1">池内客户</span><strong id="corral-detail-count">18</strong></div>
-                  <div class="corral-detail-metric"><span id="corral-metric-label-2">冲刺达标</span><strong id="corral-detail-new">6</strong></div>
+                  <div class="corral-detail-metric"><span id="corral-metric-label-1">客户数</span><strong id="corral-detail-count">18</strong></div>
+                  <div class="corral-detail-metric"><span id="corral-metric-label-2">冲刺手数&lt;10</span><strong id="corral-detail-new">6</strong></div>
                   <div class="corral-detail-metric corral-detail-metric--pending" id="corral-detail-metric-pending" style="display:none"><span id="corral-metric-label-3">待跟进</span><strong id="corral-detail-pending">24</strong></div>
                 </div>
                 <table class="corral-preview-table">
@@ -4944,7 +5228,7 @@
           <aside class="block large lead-clue-detail-panel" id="lead-clue-detail-panel">
             <div class="module-head">
               <h2>客户情况预览</h2>
-              <p class="kpi-intro" id="lead-clue-detail-intro">已选客户：Coleman · 来自「高风险客户」</p>
+              <p class="kpi-intro" id="lead-clue-detail-intro">正在查看 Coleman，来自「高风险客户」。</p>
             </div>
             <div class="module-body">
               <div class="lead-clue-detail-empty" id="lead-clue-detail-empty">
@@ -4993,6 +5277,91 @@
         </div>
         </div>
         </div><!-- .wb-panels -->
+      </div>
+    </div>
+
+    <div id="corralCreateModal" class="alert-task-follow-modal corral-create-modal" hidden aria-hidden="true">
+      <div class="alert-task-follow-backdrop" onclick="closeLeadCorralCreate()"></div>
+      <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="corralCreateTitle">
+        <div class="alert-task-follow-head">
+          <h3 id="corralCreateTitle">线索围场</h3>
+          <button type="button" class="alert-task-follow-close" onclick="closeLeadCorralCreate()" aria-label="关闭">×</button>
+        </div>
+        <div class="alert-task-follow-body">
+          <section class="corral-create-section">
+            <div class="corral-create-section-head">
+              筛选条件
+              <span class="corral-create-hint">请至少勾选一个筛选条件；最大时间范围不能超过3年</span>
+            </div>
+            <div class="corral-create-filters" id="corralCreateFilters"></div>
+          </section>
+          <section class="corral-create-section">
+            <div class="corral-create-section-head">其他设置</div>
+            <div class="corral-create-extra">
+              <label class="corral-create-extra-field">
+                <span class="corral-create-req" aria-hidden="true">*</span>
+                <input type="text" class="comm-follow-input" id="corralCreateName" placeholder="线索名称" maxlength="30" autocomplete="off">
+              </label>
+              <label class="corral-create-extra-field">
+                <select class="comm-follow-select" id="corralCreateCols" onchange="markCorralCreateSelect(this)">
+                  <option value="">列表展示字段</option>
+                  <option value="nick,sid,vip,asset">昵称 / SID / VIP / 资产</option>
+                  <option value="nick,sid,contact,assign">昵称 / SID / 联系时间 / 分配时间</option>
+                  <option value="nick,sid,vip,deposit">昵称 / SID / VIP / 充值次数</option>
+                </select>
+              </label>
+              <label class="corral-create-extra-field">
+                <select class="comm-follow-select" id="corralCreateSortField" onchange="markCorralCreateSelect(this)">
+                  <option value="">列表排序字段</option>
+                  <option value="reg">注册时间</option>
+                  <option value="contact">最后联系时间</option>
+                  <option value="assign">最后分配时间</option>
+                  <option value="asset">资产</option>
+                  <option value="vip">VIP等级</option>
+                </select>
+              </label>
+              <label class="corral-create-extra-field">
+                <select class="comm-follow-select" id="corralCreateSortDir" onchange="markCorralCreateSelect(this)">
+                  <option value="">排序方式</option>
+                  <option value="desc">降序</option>
+                  <option value="asc">升序</option>
+                </select>
+              </label>
+            </div>
+          </section>
+          <div class="corral-create-error" id="corralCreateError" role="alert"></div>
+          <div class="comm-follow-form-actions">
+            <button type="button" class="comm-follow-form-btn comm-follow-form-btn--ghost" onclick="closeLeadCorralCreate()">取消</button>
+            <button type="button" class="comm-follow-form-btn comm-follow-form-btn--primary" id="corralCreateSubmit" onclick="submitLeadCorralCreate()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="leadCorralCardMenu" class="lead-corral-card-menu" role="menu" aria-label="围场操作" hidden>
+      <button type="button" class="lead-corral-card-menu-item" role="menuitem" onclick="leadCorralMenuAction('edit')">
+        <span class="lead-corral-card-menu-item-icon" aria-hidden="true">✎</span>编辑
+      </button>
+      <button type="button" class="lead-corral-card-menu-item lead-corral-card-menu-item--danger" role="menuitem" onclick="leadCorralMenuAction('delete')">
+        <span class="lead-corral-card-menu-item-icon" aria-hidden="true">✕</span>删除
+      </button>
+    </div>
+
+    <div id="corralDeleteModal" class="alert-task-follow-modal corral-delete-modal" hidden aria-hidden="true">
+      <div class="alert-task-follow-backdrop" onclick="closeLeadCorralDelete()"></div>
+      <div class="alert-task-follow-dialog" role="dialog" aria-modal="true" aria-labelledby="corralDeleteTitle">
+        <div class="alert-task-follow-head">
+          <h3 id="corralDeleteTitle">删除线索围场</h3>
+          <button type="button" class="alert-task-follow-close" onclick="closeLeadCorralDelete()" aria-label="关闭">×</button>
+        </div>
+        <div class="alert-task-follow-body">
+          <p class="corral-delete-text">确定删除围场「<strong id="corralDeleteName"></strong>」吗？</p>
+          <p class="corral-delete-sub">删除后该围场的筛选条件将不再保留，围场内客户数据不受影响；此操作不可撤销。</p>
+          <div class="comm-follow-form-actions">
+            <button type="button" class="comm-follow-form-btn comm-follow-form-btn--ghost" onclick="closeLeadCorralDelete()">取消</button>
+            <button type="button" class="comm-follow-form-btn comm-follow-form-btn--danger" id="corralDeleteConfirm" onclick="confirmLeadCorralDelete()">删除</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -5064,7 +5433,7 @@
           <div>
             <h3 id="myFollowDrawerTitle">我的关注</h3>
             <p class="alert-task-detail-sub">
-              共 <strong id="myFollowDrawerCount">0</strong> 位已关注客户 · 点击昵称或 SID 进入客户详情
+              共 <strong id="myFollowDrawerCount">0</strong> 条 · 点击 SID 或昵称进入客户详情
             </p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeMyFollowDrawer()" aria-label="关闭">×</button>
@@ -5072,18 +5441,12 @@
         <div class="alert-task-detail-body">
           <div class="my-follow-drawer-filters" id="myFollowDrawerFilters">
             <div class="my-follow-drawer-filters-grid">
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">昵称</span>
-                <input type="text" class="my-follow-filter-input" id="myFollowFilterNick" placeholder="输入昵称关键词" oninput="applyMyFollowFilters()">
+              <label class="my-follow-filter-field my-follow-filter-field--keyword">
+                <input type="text" class="my-follow-filter-input" id="myFollowFilterKeyword" placeholder="客户昵称或 SID" aria-label="客户昵称或 SID" onkeydown="if(event.key==='Enter'){event.preventDefault();applyMyFollowFilters();}">
               </label>
               <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">SID</span>
-                <input type="text" class="my-follow-filter-input" id="myFollowFilterSid" placeholder="输入 SID" oninput="applyMyFollowFilters()">
-              </label>
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">VIP等级</span>
-                <select class="my-follow-filter-select" id="myFollowFilterLevel" onchange="applyMyFollowFilters()">
-                  <option value="">全部</option>
+                <select class="my-follow-filter-select" id="myFollowFilterLevel" aria-label="等级">
+                  <option value="">等级</option>
                   <option value="V4">V4</option>
                   <option value="V3">V3</option>
                   <option value="V2">V2</option>
@@ -5091,23 +5454,30 @@
                   <option value="V0">V0</option>
                 </select>
               </label>
-              <label class="my-follow-filter-field">
-                <span class="my-follow-filter-label">客户风险分类</span>
-                <select class="my-follow-filter-select" id="myFollowFilterBand" onchange="applyMyFollowFilters()">
-                  <option value="">全部</option>
-                  <option value="risk">高风险</option>
-                  <option value="value">高价值</option>
-                  <option value="stable">稳定型</option>
-                </select>
-              </label>
             </div>
-            <div class="my-follow-filter-field my-follow-filter-field--action">
-              <span class="my-follow-filter-label" aria-hidden="true">&nbsp;</span>
-              <button type="button" class="my-follow-filter-reset" onclick="resetMyFollowFilters()">重置筛选</button>
+            <div class="my-follow-filter-actions">
+              <button type="button" class="my-follow-filter-reset" onclick="resetMyFollowFilters()">重置</button>
+              <button type="button" class="my-follow-filter-query" onclick="applyMyFollowFilters()">查询</button>
             </div>
           </div>
           <div class="my-follow-drawer-cards-wrap">
-            <div class="my-follow-drawer-cards" id="myFollowDrawerCards" role="list"></div>
+            <div class="alert-task-detail-table-wrap my-follow-drawer-table-wrap" id="myFollowDrawerTableWrap" hidden>
+              <table class="alert-task-detail-table my-follow-drawer-table">
+                <thead>
+                  <tr>
+                    <th>客户SID/昵称</th>
+                    <th>等级</th>
+                    <th>联系方式</th>
+                    <th>总交易手数</th>
+                    <th>账户余额/总充值</th>
+                    <th>最后交易/提现</th>
+                    <th>最后登录</th>
+                    <th class="col-action">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="myFollowDrawerCards"></tbody>
+              </table>
+            </div>
             <div class="my-follow-drawer-empty" id="myFollowDrawerEmpty" hidden>暂无关注客户<br>可在客户智能推荐中关注重点客户</div>
           </div>
           <div class="alert-task-detail-pager" id="myFollowDrawerPager" hidden>
@@ -11400,8 +11770,9 @@ function switchPanel(panelId, btn) {
     goals: '1. 销售工作台(我的目标).html',
     sop: '2. 销售工作台(行动SOP).html',
     chance: '3. 销售工作台(客户机会).html',
-    growth: '4. 销售工作台(提升分析).html',
-    enable: '5. 销售工作台(展业赋能).html'
+    growth: '4. 销售工作台(运营分析).html',
+    enable: '5. 销售工作台(展业赋能).html',
+    improve: '6. 销售工作台(提升分析).html'
   };
   var file = map[panelId];
   if (file) window.location.href = '2. CRM工作台/2. 销售工作台2.0/' + file;
@@ -12032,17 +12403,17 @@ var customerPoolAiReminds = {
   },
   'campaign-deposit': {
     sales: {
-      title: '活动入金 · AI 行动建议',
+      title: '过去4周首充 · AI 行动建议',
       tips: [
         '48 小时规则：11 人「入金后未交易」须在 48 小时内催开仓',
         '活动复盘：向客户说明活动规则与持仓要求，避免违规',
-        '22 人池：今日联系活动入金 7 日内客户 8 人',
+        '22 人池：今日联系过去4周首充中 7 日内客户 8 人',
         '达标 9 人：确认是否满足活动条件，引导持续交易',
         '记录：标注「已开仓 / 仅入金 / 活动失效」'
       ]
     },
     manager: {
-      title: '团队活动入金 · AI 行动建议',
+      title: '团队过去4周首充 · AI 行动建议',
       tips: [
         'ROI 复盘：本周新增 72 人，统计入金→交易转化率',
         '176 人池：按活动批次分组跟进，避免话术混乱',
@@ -12076,7 +12447,7 @@ var customerPoolAiReminds = {
   },
   'silent-wake': {
     sales: {
-      title: '沉默唤醒 · AI 行动建议',
+      title: '短留客户 · AI 行动建议',
       tips: [
         '优先唤醒：15 人中「14 日未登录 + 历史有充值」先联系 6 人',
         '礼包策略：限时返佣 + 账户安全检查 + 新品体验三选一',
@@ -12086,7 +12457,7 @@ var customerPoolAiReminds = {
       ]
     },
     manager: {
-      title: '团队沉默唤醒 · AI 行动建议',
+      title: '团队短留客户 · AI 行动建议',
       tips: [
         '复制话术：已唤醒 32 人成功案例整理为标准脚本',
         '120 人池：本周唤醒率目标 30%，每日组内通报',
@@ -12235,7 +12606,7 @@ function resetLeadClueCustomerPreview() {
     clueView.classList.remove('lead-clue-detail-active--risk', 'lead-clue-detail-active--value', 'lead-clue-detail-active--stable');
   }
   var introEl = document.getElementById('lead-clue-detail-intro');
-  if (introEl) introEl.textContent = '点击左侧 客户智能推荐 中的客户卡片查看详情';
+  if (introEl) introEl.textContent = '请先在「客户智能推荐」中点选一位客户。';
 }
 
 var breakthroughStarRewardPerCustomer = 100;
@@ -12687,8 +13058,8 @@ function openLeadCorral(corralId, btn, pinOnSelect) {
   if (titleEl) titleEl.textContent = name;
   if (introEl) {
     introEl.textContent = isPool
-      ? '已选客户池：' + name + ' · 特殊分层条件组合（AND）'
-      : '已选围场：' + name + ' · 满足以下全部筛选条件（AND）';
+      ? '正在查看「' + name + '」，下列客户同时满足全部筛选条件。'
+      : '正在查看围场「' + name + '」，下列客户同时满足全部筛选条件。';
   }
   if (condsWrap) {
     condsWrap.innerHTML = '';
@@ -12735,18 +13106,650 @@ function openLeadCorral(corralId, btn, pinOnSelect) {
 
   if (isPool) syncCustomerPoolAiRemind(corralId);
   else syncLeadCorralAiRemind(corralId);
-  if (pinOnSelect !== false) {
-    var anchor = btn.closest('.lead-corral-section, .customer-pool-section');
-    pinCorralDetailFollowOnSelect(anchor);
+  if (pinOnSelect !== false) pinCorralDetailFollowOnSelect(btn);
+}
+
+var _corralCreateNextId = 254;
+var _corralCreatePrevOverflow = '';
+
+var CORRAL_CREATE_TIME_PRESETS = [
+  { value: 'today', label: '今天' },
+  { value: 'week', label: '本周' },
+  { value: 'month', label: '本月' },
+  { value: 'days', label: '自定义天数范围' },
+  { value: 'range', label: '自定义时间范围' }
+];
+
+var CORRAL_CREATE_FILTER_DEFS = [
+  { key: 'reg', name: '注册于', type: 'time' },
+  { key: 'assign', name: '最后分配时间', type: 'time' },
+  { key: 'contact', name: '最后联系时间', type: 'time' },
+  { key: 'firstDeposit', name: '首次充值时间', type: 'time' },
+  { key: 'lastDeposit', name: '最后充值时间', type: 'time' },
+  { key: 'lastActive', name: '最后活跃时间（登录）', type: 'time' },
+  { key: 'depositCount', name: '充值次数', type: 'count', options: ['0', '1', '2', '3', '5', '10', '20'] },
+  { key: 'vip', name: 'VIP等级', type: 'select', options: ['V0', 'V1', 'V2', 'V3', 'V4'] },
+  { key: 'source', name: '实名来源', type: 'select', options: ['ANZ', '线上注册', '线下认证', '审核中'] },
+  { key: 'phone', name: '是否绑定手机号', type: 'bool' }
+];
+
+function corralCreateOptionsHtml(options) {
+  return options.map(function (opt) {
+    return '<option value="' + opt + '">' + opt + '</option>';
+  }).join('');
+}
+
+function corralCreateRadioHtml(key, role, value) {
+  return '<label class="comm-follow-inline-option">' +
+    '<input type="radio" name="corral-' + role + '-' + key + '" data-role="' + role + '" value="' + value + '"' +
+    ' onchange="hideCorralCreateError()"><span>' + value + '</span></label>';
+}
+
+function corralCreateFilterCtrlHtml(def) {
+  if (def.type === 'time') {
+    return '<span class="corral-create-req" aria-hidden="true">*</span>' +
+      '<select class="corral-create-ctrl-select corral-create-ctrl-select--preset has-value" data-role="preset"' +
+      ' aria-label="' + def.name + '时间范围" onchange="onCorralCreateTimePreset(this)">' +
+      CORRAL_CREATE_TIME_PRESETS.map(function (p) {
+        return '<option value="' + p.value + '"' + (p.value === 'range' ? ' selected' : '') + '>' + p.label + '</option>';
+      }).join('') +
+      '</select>' +
+      '<span class="corral-create-subgroup corral-create-subgroup--days">' +
+        '<span class="corral-create-req" aria-hidden="true">*</span>' +
+        '<span class="corral-create-stepper">' +
+          '<button type="button" onclick="stepCorralCreateDays(this,-1)" aria-label="减少天数">−</button>' +
+          '<input type="number" min="1" max="1095" step="1" value="1" data-role="days"' +
+          ' aria-label="天数" oninput="hideCorralCreateError()">' +
+          '<button type="button" onclick="stepCorralCreateDays(this,1)" aria-label="增加天数">+</button>' +
+        '</span>' +
+        '<span class="corral-create-req" aria-hidden="true">*</span>' +
+        '<span class="comm-follow-inline-options" role="radiogroup" aria-label="' + def.name + '天数方向">' +
+          corralCreateRadioHtml(def.key, 'dir', '前') +
+          corralCreateRadioHtml(def.key, 'dir', '内') +
+        '</span>' +
+      '</span>' +
+      '<span class="corral-create-subgroup corral-create-subgroup--range">' +
+        '<span class="corral-create-req" aria-hidden="true">*</span>' +
+        '<span class="corral-create-daterange">' +
+          '<input type="date" data-role="from" aria-label="开始日期" onchange="hideCorralCreateError()">' +
+          '<span class="corral-create-daterange-sep">-</span>' +
+          '<input type="date" data-role="to" aria-label="结束日期" onchange="hideCorralCreateError()">' +
+        '</span>' +
+      '</span>';
   }
+  if (def.type === 'bool') {
+    return '<span class="corral-create-req" aria-hidden="true">*</span>' +
+      '<span class="comm-follow-inline-options" role="radiogroup" aria-label="' + def.name + '">' +
+      corralCreateRadioHtml(def.key, 'bool', '是') +
+      corralCreateRadioHtml(def.key, 'bool', '否') +
+      '</span>';
+  }
+  return '<span class="corral-create-req" aria-hidden="true">*</span>' +
+    '<select class="corral-create-ctrl-select corral-create-ctrl-select--val" data-role="val"' +
+    ' aria-label="' + def.name + '" onchange="markCorralCreateSelect(this);hideCorralCreateError()">' +
+    '<option value="">' + def.name + '</option>' + corralCreateOptionsHtml(def.options || []) +
+    '</select>';
+}
+
+function renderCorralCreateFilters() {
+  var wrap = document.getElementById('corralCreateFilters');
+  if (!wrap) return;
+  wrap.innerHTML = CORRAL_CREATE_FILTER_DEFS.map(function (def) {
+    return '<div class="corral-create-filter" data-key="' + def.key + '" data-type="' + def.type + '">' +
+      '<label class="corral-create-filter-head">' +
+        '<input type="checkbox" onchange="toggleCorralCreateFilter(this)">' +
+        '<span class="corral-create-filter-name">' + def.name + '</span>' +
+      '</label>' +
+      '<div class="corral-create-filter-ctrl">' + corralCreateFilterCtrlHtml(def) + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function onCorralCreateTimePreset(sel) {
+  var row = sel && sel.closest('.corral-create-filter');
+  if (!row) return;
+  var days = row.querySelector('.corral-create-subgroup--days');
+  var range = row.querySelector('.corral-create-subgroup--range');
+  if (days) days.classList.toggle('is-show', sel.value === 'days');
+  if (range) range.classList.toggle('is-show', sel.value === 'range');
+  markCorralCreateSelect(sel);
+  hideCorralCreateError();
+}
+
+function stepCorralCreateDays(btn, delta) {
+  var input = btn && btn.closest('.corral-create-stepper').querySelector('[data-role="days"]');
+  if (!input) return;
+  var next = (parseInt(input.value, 10) || 0) + delta;
+  if (next < 1) next = 1;
+  if (next > 1095) next = 1095;
+  input.value = next;
+  hideCorralCreateError();
+}
+
+var _corralEditId = '';
+
+function setLeadCorralFormMode(mode) {
+  _corralEditId = mode === 'edit' ? _corralEditId : '';
+  var title = document.getElementById('corralCreateTitle');
+  var submit = document.getElementById('corralCreateSubmit');
+  if (title) title.textContent = mode === 'edit' ? '编辑线索围场' : '新增线索围场';
+  if (submit) submit.textContent = mode === 'edit' ? '保存' : '提交';
 }
 
 function addLeadCorral() {
+  var modal = document.getElementById('corralCreateModal');
+  if (!modal) return;
+  closeLeadCorralCardMenu();
+  _corralEditId = '';
+  setLeadCorralFormMode('create');
+  resetLeadCorralCreateForm();
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) {
+    _corralCreatePrevOverflow = scrollWrap.style.overflow;
+    scrollWrap.style.overflow = 'hidden';
+  }
+  var nameInput = document.getElementById('corralCreateName');
+  requestAnimationFrame(function () {
+    if (nameInput) nameInput.focus();
+  });
+}
+
+function closeLeadCorralCreate() {
+  var modal = document.getElementById('corralCreateModal');
+  if (!modal) return;
+  _corralEditId = '';
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = _corralCreatePrevOverflow || '';
+}
+
+function resetLeadCorralCreateForm() {
+  var err = document.getElementById('corralCreateError');
+  if (err) { err.textContent = ''; err.classList.remove('is-show'); }
+  var nameInput = document.getElementById('corralCreateName');
+  if (nameInput) nameInput.value = '';
+  ['corralCreateCols', 'corralCreateSortField', 'corralCreateSortDir'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.selectedIndex = 0;
+    markCorralCreateSelect(el);
+  });
+  renderCorralCreateFilters();
+}
+
+function toggleCorralCreateFilter(cb) {
+  var row = cb && cb.closest('.corral-create-filter');
+  if (!row) return;
+  row.classList.toggle('is-on', cb.checked);
+  if (cb.checked && row.getAttribute('data-type') === 'time') {
+    var preset = row.querySelector('[data-role="preset"]');
+    if (preset) {
+      preset.value = 'range';
+      onCorralCreateTimePreset(preset);
+      return;
+    }
+  }
+  hideCorralCreateError();
+}
+
+function markCorralCreateSelect(sel) {
+  if (!sel) return;
+  sel.classList.toggle('has-value', !!sel.value);
+}
+
+function hideCorralCreateError() {
+  var err = document.getElementById('corralCreateError');
+  if (err) { err.textContent = ''; err.classList.remove('is-show'); }
+}
+
+function showCorralCreateError(msg) {
+  var err = document.getElementById('corralCreateError');
+  if (!err) return;
+  err.textContent = msg;
+  err.classList.add('is-show');
+}
+
+function corralCreateDaysBetween(from, to) {
+  var a = new Date(from + 'T00:00:00');
+  var b = new Date(to + 'T00:00:00');
+  return Math.abs((b - a) / 86400000);
+}
+
+function corralCreateTimePresetLabel(value) {
+  var hit = CORRAL_CREATE_TIME_PRESETS.filter(function (p) { return p.value === value; })[0];
+  return hit ? hit.label : value;
+}
+
+function collectCorralCreateConds() {
+  var conds = [];
+  var error = '';
+  document.querySelectorAll('#corralCreateFilters .corral-create-filter').forEach(function (row) {
+    if (error) return;
+    var cb = row.querySelector('.corral-create-filter-head input[type="checkbox"]');
+    if (!cb || !cb.checked) return;
+    var name = (row.querySelector('.corral-create-filter-name') || {}).textContent || '';
+    var type = row.getAttribute('data-type');
+    if (type === 'time') {
+      var preset = (row.querySelector('[data-role="preset"]') || {}).value || '';
+      if (!preset) { error = '请为「' + name + '」选择时间范围'; return; }
+      if (preset === 'days') {
+        var days = parseInt((row.querySelector('[data-role="days"]') || {}).value, 10);
+        if (!days || days < 1) { error = '请为「' + name + '」填写天数'; return; }
+        if (days > 1095) { error = '最大时间范围不能超过3年'; return; }
+        var dir = row.querySelector('[data-role="dir"]:checked');
+        if (!dir) { error = '请为「' + name + '」选择「前」或「内」'; return; }
+        conds.push(name + '：' + days + '天' + dir.value);
+        return;
+      }
+      if (preset === 'range') {
+        var from = (row.querySelector('[data-role="from"]') || {}).value;
+        var to = (row.querySelector('[data-role="to"]') || {}).value;
+        if (!from || !to) { error = '请为「' + name + '」填写完整的开始与结束日期'; return; }
+        if (from > to) { error = '「' + name + '」的开始日期不能晚于结束日期'; return; }
+        if (corralCreateDaysBetween(from, to) > 365 * 3) {
+          error = '最大时间范围不能超过3年';
+          return;
+        }
+        conds.push(name + '：' + from + ' ~ ' + to);
+        return;
+      }
+      conds.push(name + '：' + corralCreateTimePresetLabel(preset));
+      return;
+    }
+    if (type === 'bool') {
+      var picked = row.querySelector('[data-role="bool"]:checked');
+      if (!picked) { error = '请为「' + name + '」选择「是」或「否」'; return; }
+      conds.push(name + '：' + picked.value);
+      return;
+    }
+    var val = (row.querySelector('[data-role="val"]') || {}).value || '';
+    if (!val) { error = '请为「' + name + '」选择条件值'; return; }
+    conds.push(type === 'count' ? name + ' = ' + val : name + '：' + val);
+  });
+  return { conds: conds, error: error };
+}
+
+function escapeCorralCreateHtml(str) {
+  return String(str).replace(/[&<>"']/g, function (ch) {
+    return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+  });
+}
+
+function leadCorralCardMoreHtml() {
+  return '<button type="button" class="lead-corral-card-more" aria-label="更多操作" aria-haspopup="menu" aria-expanded="false"' +
+    ' onclick="openLeadCorralCardMenu(event, this)" onkeydown="event.stopPropagation()">···</button>';
+}
+
+function buildLeadCorralCardHtml(id, leadId, name, conds, matchCount, extra) {
+  var safeName = escapeCorralCreateHtml(name);
+  var safeConds = escapeCorralCreateHtml(conds.join('|'));
+  extra = extra || {};
+  return '<div class="lead-corral-card" role="listitem" tabindex="0" data-corral-id="' + id +
+    '" data-lead-id="' + leadId + '" data-conds="' + safeConds +
+    '" data-cols="' + escapeCorralCreateHtml(extra.cols || '') +
+    '" data-sort-field="' + escapeCorralCreateHtml(extra.sortField || '') +
+    '" data-sort-dir="' + escapeCorralCreateHtml(extra.sortDir || '') +
+    '" onclick="openLeadCorral(\'' + id + '\', this)" onkeydown="leadCorralCardKeydown(event, this)">' +
+    '<div class="lead-corral-card-head"><span class="lead-corral-card-name">' + safeName + '</span>' + leadCorralCardMoreHtml() + '</div>' +
+    '<div class="lead-corral-card-body"><div class="lead-corral-card-stats">' +
+    '<div class="lead-corral-stat"><span class="lead-corral-stat-label">匹配客户</span><span class="lead-corral-stat-val">' + matchCount + '</span></div>' +
+    '<div class="lead-corral-stat"><span class="lead-corral-stat-label">条件数</span><span class="lead-corral-stat-val">' + conds.length + '</span></div>' +
+    '</div></div>' +
+    '<div class="lead-corral-card-foot"><span class="lead-corral-card-id">ID：' + leadId + '</span></div>' +
+    '</div>';
+}
+
+function readCorralCreateExtra() {
+  var get = function (id) { var el = document.getElementById(id); return el ? el.value : ''; };
+  return { cols: get('corralCreateCols'), sortField: get('corralCreateSortField'), sortDir: get('corralCreateSortDir') };
+}
+
+function submitLeadCorralCreate() {
+  var nameEl = document.getElementById('corralCreateName');
+  var name = nameEl ? nameEl.value.trim() : '';
+  if (!name) {
+    showCorralCreateError('请填写线索名称');
+    if (nameEl) nameEl.focus();
+    return;
+  }
+  var collected = collectCorralCreateConds();
+  if (collected.error) {
+    showCorralCreateError(collected.error);
+    return;
+  }
+  if (!collected.conds.length) {
+    showCorralCreateError('请至少勾选一个筛选条件');
+    return;
+  }
+  var extra = readCorralCreateExtra();
   var view = document.body.dataset.view || 'sales';
-  var hint = view === 'manager'
-    ? '创建团队围场 · 配置多条件筛选规则并共享给销售成员'
-    : '创建个人围场 · 配置注册时间、VIP等级、充值次数等筛选条件';
-  alert('新增围场\n' + hint + '\n（原型占位，可对接围场编辑弹窗）');
+  var scope = view === 'manager' ? '.manager-only' : '.sales-only';
+
+  if (_corralEditId) {
+    var editId = _corralEditId;
+    saveLeadCorralEdit(editId, name, collected.conds, extra);
+    closeLeadCorralCreate();
+    var edited = document.querySelector('#panel-chance ' + scope + ' .lead-corral-card[data-corral-id="' + editId + '"]');
+    if (edited) openLeadCorral(editId, edited, false);
+    return;
+  }
+
+  var leadId = _corralCreateNextId++;
+  var corralId = 'custom-' + leadId;
+  var salesCount = 12 + (leadId % 20);
+  var mgrCount = salesCount * 8;
+  var lists = document.querySelectorAll('#panel-chance .lead-corral-cards');
+  lists.forEach(function (list) {
+    var isMgr = !!(list.closest('.manager-only'));
+    list.insertAdjacentHTML('beforeend', buildLeadCorralCardHtml(
+      corralId, leadId, name, collected.conds,
+      isMgr ? mgrCount : salesCount,
+      extra
+    ));
+  });
+  closeLeadCorralCreate();
+  var card = document.querySelector('#panel-chance ' + scope + ' .lead-corral-card[data-corral-id="' + corralId + '"]');
+  if (card) openLeadCorral(corralId, card);
+}
+
+/* ===== 围场卡片「···」更多操作：编辑 / 删除 ===== */
+var _corralMenuCard = null;
+
+function leadCorralCardKeydown(evt, card) {
+  if (!evt || !card) return;
+  if (evt.target !== card) return;
+  if (evt.key === 'Enter' || evt.key === ' ') {
+    evt.preventDefault();
+    openLeadCorral(card.getAttribute('data-corral-id'), card);
+  }
+}
+
+function findLeadCorralCards(corralId) {
+  return Array.prototype.slice.call(
+    document.querySelectorAll('#panel-chance .lead-corral-card[data-corral-id="' + corralId + '"]')
+  );
+}
+
+function openLeadCorralCardMenu(evt, moreBtn) {
+  if (evt) { evt.preventDefault(); evt.stopPropagation(); }
+  var card = moreBtn && moreBtn.closest('.lead-corral-card');
+  var menu = document.getElementById('leadCorralCardMenu');
+  if (!card || !menu) return;
+  if (_corralMenuCard === card && !menu.hidden) {
+    closeLeadCorralCardMenu();
+    return;
+  }
+  closeLeadCorralCardMenu();
+  _corralMenuCard = card;
+  moreBtn.classList.add('is-open');
+  moreBtn.setAttribute('aria-expanded', 'true');
+  menu.hidden = false;
+  var rect = moreBtn.getBoundingClientRect();
+  var mw = menu.offsetWidth || 112;
+  var mh = menu.offsetHeight || 76;
+  var left = rect.right - mw;
+  var top = rect.bottom + 4;
+  if (left < 8) left = 8;
+  if (left + mw > window.innerWidth - 8) left = window.innerWidth - 8 - mw;
+  if (top + mh > window.innerHeight - 8) top = rect.top - mh - 4;
+  menu.style.left = Math.round(left) + 'px';
+  menu.style.top = Math.round(top) + 'px';
+  var first = menu.querySelector('.lead-corral-card-menu-item');
+  if (first) first.focus({ preventScroll: true });
+}
+
+function closeLeadCorralCardMenu() {
+  var menu = document.getElementById('leadCorralCardMenu');
+  if (menu && !menu.hidden) menu.hidden = true;
+  if (_corralMenuCard) {
+    var btn = _corralMenuCard.querySelector('.lead-corral-card-more');
+    if (btn) { btn.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); }
+  }
+  _corralMenuCard = null;
+}
+
+function leadCorralMenuAction(action) {
+  var card = _corralMenuCard;
+  closeLeadCorralCardMenu();
+  if (!card) return;
+  if (action === 'edit') editLeadCorral(card);
+  else if (action === 'delete') openLeadCorralDelete(card);
+}
+
+document.addEventListener('click', function (e) {
+  var menu = document.getElementById('leadCorralCardMenu');
+  if (!menu || menu.hidden) return;
+  if (menu.contains(e.target)) return;
+  if (e.target.closest && e.target.closest('.lead-corral-card-more')) return;
+  closeLeadCorralCardMenu();
+});
+document.addEventListener('keydown', function (e) {
+  if (e.key !== 'Escape') return;
+  var menu = document.getElementById('leadCorralCardMenu');
+  if (menu && !menu.hidden) {
+    var card = _corralMenuCard;
+    closeLeadCorralCardMenu();
+    var btn = card && card.querySelector('.lead-corral-card-more');
+    if (btn) btn.focus();
+    return;
+  }
+  var del = document.getElementById('corralDeleteModal');
+  if (del && !del.hidden) closeLeadCorralDelete();
+});
+window.addEventListener('resize', closeLeadCorralCardMenu);
+window.addEventListener('scroll', closeLeadCorralCardMenu, true);
+
+/* --- 编辑 --- */
+var CORRAL_FILTER_NAME_ALIASES = {
+  '注册时间': 'reg', '注册于': 'reg',
+  '分配时间': 'assign', '最后分配时间': 'assign',
+  '最后联系时间': 'contact',
+  '首次充值时间': 'firstDeposit',
+  '最后充值时间': 'lastDeposit',
+  '最后活跃时间': 'lastActive', '最后活跃时间（登录）': 'lastActive',
+  '充值次数': 'depositCount',
+  'VIP等级': 'vip',
+  '实名来源': 'source',
+  '是否绑定手机': 'phone', '是否绑定手机号': 'phone'
+};
+
+function parseLeadCorralCond(text) {
+  var m = String(text || '').match(/^(.+?)\s*(：|:|=|≥|≤|>|<)\s*(.+)$/);
+  if (!m) return null;
+  var label = m[1].trim();
+  var key = CORRAL_FILTER_NAME_ALIASES[label];
+  if (!key) return null;
+  return { key: key, op: m[2], value: m[3].trim() };
+}
+
+function prefillLeadCorralFilterRow(row, def, cond) {
+  var cb = row.querySelector('.corral-create-filter-head input[type="checkbox"]');
+  if (!cb) return false;
+  var value = cond.value;
+  if (def.type === 'time') {
+    var preset = row.querySelector('[data-role="preset"]');
+    if (!preset) return false;
+    var presetHit = CORRAL_CREATE_TIME_PRESETS.filter(function (p) { return p.label === value; })[0];
+    var daysMatch = value.match(/^(\d+)\s*天\s*(前|内)?$/);
+    var rangeMatch = value.match(/^(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})$/);
+    if (presetHit && presetHit.value !== 'days' && presetHit.value !== 'range') {
+      cb.checked = true; row.classList.add('is-on');
+      preset.value = presetHit.value; onCorralCreateTimePreset(preset);
+      return true;
+    }
+    if (daysMatch) {
+      cb.checked = true; row.classList.add('is-on');
+      preset.value = 'days'; onCorralCreateTimePreset(preset);
+      var daysInput = row.querySelector('[data-role="days"]');
+      if (daysInput) daysInput.value = Math.min(1095, Math.max(1, parseInt(daysMatch[1], 10)));
+      var dir = daysMatch[2] || ((cond.op === '≤' || cond.op === '<') ? '内' : '前');
+      var radio = row.querySelector('[data-role="dir"][value="' + dir + '"]');
+      if (radio) radio.checked = true;
+      return true;
+    }
+    if (rangeMatch) {
+      cb.checked = true; row.classList.add('is-on');
+      preset.value = 'range'; onCorralCreateTimePreset(preset);
+      var from = row.querySelector('[data-role="from"]');
+      var to = row.querySelector('[data-role="to"]');
+      if (from) from.value = rangeMatch[1];
+      if (to) to.value = rangeMatch[2];
+      return true;
+    }
+    return false;
+  }
+  if (def.type === 'bool') {
+    var yes = /^(是|已绑定|已)/.test(value);
+    var no = /^(否|未绑定|未)/.test(value);
+    if (!yes && !no) return false;
+    cb.checked = true; row.classList.add('is-on');
+    var boolRadio = row.querySelector('[data-role="bool"][value="' + (yes ? '是' : '否') + '"]');
+    if (boolRadio) boolRadio.checked = true;
+    return true;
+  }
+  var sel = row.querySelector('[data-role="val"]');
+  if (!sel) return false;
+  var opt = Array.prototype.filter.call(sel.options, function (o) { return o.value === value; })[0];
+  if (!opt) return false;
+  cb.checked = true; row.classList.add('is-on');
+  sel.value = value; markCorralCreateSelect(sel);
+  return true;
+}
+
+function prefillLeadCorralForm(card) {
+  var nameEl = card.querySelector('.lead-corral-card-name');
+  var nameInput = document.getElementById('corralCreateName');
+  if (nameInput) nameInput.value = nameEl ? nameEl.textContent.trim() : '';
+  [['corralCreateCols', 'data-cols'], ['corralCreateSortField', 'data-sort-field'], ['corralCreateSortDir', 'data-sort-dir']]
+    .forEach(function (pair) {
+      var el = document.getElementById(pair[0]);
+      if (!el) return;
+      var v = card.getAttribute(pair[1]) || '';
+      el.value = v;
+      if (el.value !== v) el.selectedIndex = 0;
+      markCorralCreateSelect(el);
+    });
+  var corralId = card.getAttribute('data-corral-id');
+  var conds = leadCorralConditions[corralId];
+  if (!conds || !conds.length) {
+    var raw = card.getAttribute('data-conds') || '';
+    conds = raw ? raw.split('|') : [];
+  }
+  var skipped = 0;
+  conds.forEach(function (text) {
+    var cond = parseLeadCorralCond(text);
+    if (!cond) { skipped++; return; }
+    var def = CORRAL_CREATE_FILTER_DEFS.filter(function (d) { return d.key === cond.key; })[0];
+    var row = document.querySelector('#corralCreateFilters .corral-create-filter[data-key="' + cond.key + '"]');
+    if (!def || !row) { skipped++; return; }
+    if (!prefillLeadCorralFilterRow(row, def, cond)) skipped++;
+  });
+  if (skipped) {
+    showCorralCreateError('有 ' + skipped + ' 条历史条件无法自动回填，请按需重新勾选');
+  }
+}
+
+function editLeadCorral(card) {
+  var modal = document.getElementById('corralCreateModal');
+  if (!modal || !card) return;
+  _corralEditId = card.getAttribute('data-corral-id') || '';
+  if (!_corralEditId) return;
+  resetLeadCorralCreateForm();
+  setLeadCorralFormMode('edit');
+  prefillLeadCorralForm(card);
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) {
+    _corralCreatePrevOverflow = scrollWrap.style.overflow;
+    scrollWrap.style.overflow = 'hidden';
+  }
+  var nameInput = document.getElementById('corralCreateName');
+  requestAnimationFrame(function () {
+    if (nameInput) { nameInput.focus(); nameInput.select(); }
+  });
+}
+
+function saveLeadCorralEdit(corralId, name, conds, extra) {
+  findLeadCorralCards(corralId).forEach(function (card) {
+    var nameEl = card.querySelector('.lead-corral-card-name');
+    if (nameEl) nameEl.textContent = name;
+    card.setAttribute('data-conds', conds.join('|'));
+    var condVal = card.querySelectorAll('.lead-corral-stat-val')[1];
+    if (condVal) condVal.textContent = String(conds.length);
+    card.setAttribute('data-cols', extra.cols || '');
+    card.setAttribute('data-sort-field', extra.sortField || '');
+    card.setAttribute('data-sort-dir', extra.sortDir || '');
+  });
+  leadCorralConditions[corralId] = conds.slice();
+  document.querySelectorAll('#panel-chance .corral-hot-item[data-corral-id="' + corralId + '"] strong').forEach(function (el) {
+    el.textContent = name;
+  });
+}
+
+/* --- 删除 --- */
+var _corralDeleteId = '';
+var _corralDeletePrevOverflow = '';
+
+function openLeadCorralDelete(card) {
+  var modal = document.getElementById('corralDeleteModal');
+  if (!modal || !card) return;
+  _corralDeleteId = card.getAttribute('data-corral-id') || '';
+  var nameEl = card.querySelector('.lead-corral-card-name');
+  var nameTarget = document.getElementById('corralDeleteName');
+  if (nameTarget) nameTarget.textContent = nameEl ? nameEl.textContent.trim() : '';
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) {
+    _corralDeletePrevOverflow = scrollWrap.style.overflow;
+    scrollWrap.style.overflow = 'hidden';
+  }
+  var confirmBtn = document.getElementById('corralDeleteConfirm');
+  requestAnimationFrame(function () { if (confirmBtn) confirmBtn.focus(); });
+}
+
+function closeLeadCorralDelete() {
+  var modal = document.getElementById('corralDeleteModal');
+  if (!modal) return;
+  modal.hidden = true;
+  modal.setAttribute('aria-hidden', 'true');
+  _corralDeleteId = '';
+  var scrollWrap = document.querySelector('.scroll-wrap');
+  if (scrollWrap) scrollWrap.style.overflow = _corralDeletePrevOverflow || '';
+}
+
+function resetCorralDetailPanelEmpty() {
+  var empty = document.getElementById('corral-detail-empty');
+  var active = document.getElementById('corral-detail-active');
+  var intro = document.getElementById('corral-detail-intro');
+  if (empty) empty.style.display = '';
+  if (active) active.classList.remove('is-visible');
+  if (intro) intro.textContent = '请先在左侧选择一个围场或快捷定位，查看对应客户。';
+}
+
+function confirmLeadCorralDelete() {
+  var corralId = _corralDeleteId;
+  if (!corralId) { closeLeadCorralDelete(); return; }
+  var cards = findLeadCorralCards(corralId);
+  var wasActive = cards.some(function (c) { return c.classList.contains('active'); });
+  cards.forEach(function (c) { c.parentNode && c.parentNode.removeChild(c); });
+  document.querySelectorAll('#panel-chance .corral-hot-item[data-corral-id="' + corralId + '"]').forEach(function (el) {
+    el.parentNode && el.parentNode.removeChild(el);
+  });
+  delete leadCorralConditions[corralId];
+  closeLeadCorralDelete();
+  if (wasActive) {
+    syncCorralHotActive('');
+    var view = document.body.dataset.view || 'sales';
+    var scope = view === 'manager' ? '.manager-only' : '.sales-only';
+    var next = document.querySelector('#panel-chance ' + scope + ' .lead-corral-cards .lead-corral-card');
+    if (next) openLeadCorral(next.getAttribute('data-corral-id'), next, false);
+    else resetCorralDetailPanelEmpty();
+  }
 }
 
 function enterLeadCorralList() {
@@ -12995,21 +13998,21 @@ var MY_FOLLOW_BAND_LABELS = {
 
 /** 我的关注抽屉：独立模拟 15 位客户（不关联客户智能推荐池） */
 var MY_FOLLOW_CUSTOMERS = [
-  { id: 'mf-01', name: 'Stone', sid: '20886152001', level: 'V4', bandType: 'value', tags: ['高交易', '高Lots', '高存款'], action: '推荐高Lots专享', funds: '净值 $860K · 月交易 420 Lots' },
-  { id: 'mf-02', name: 'Coleman', sid: '20886152002', level: 'V3', bandType: 'risk', tags: ['流失风险', '不活跃', '停止交易'], action: '立即致电召回', funds: '净值 $42K · 45日无交易' },
-  { id: 'mf-03', name: 'Foster', sid: '20886152003', level: 'V4', bandType: 'value', tags: ['高存款', '高交易'], action: '邀请净存款提升计划', funds: '净值 $625K · 可用 $580K' },
-  { id: 'mf-04', name: 'Anderson', sid: '20886152004', level: 'V3', bandType: 'stable', tags: ['活跃稳定'], action: '月度关怀问候', funds: '净值 $128K · 交易稳定' },
-  { id: 'mf-05', name: 'Hayes', sid: '20886152005', level: 'V2', bandType: 'risk', tags: ['不活跃', '余额偏低'], action: '发送激活礼包', funds: '净值 $28K · 余额偏低' },
-  { id: 'mf-06', name: 'Bryant', sid: '20886152006', level: 'V3', bandType: 'value', tags: ['高Lots', '高频充值'], action: '推送原油加仓方案', funds: '净值 $483K · 周交易活跃' },
-  { id: 'mf-07', name: 'Mitchell', sid: '20886152007', level: 'V3', bandType: 'stable', tags: ['关系维护', '长期价值'], action: '发送权益续期提醒', funds: '净值 $96K · 净存款持平' },
-  { id: 'mf-08', name: 'Griffin', sid: '20886152008', level: 'V2', bandType: 'risk', tags: ['未联系', '未回复'], action: '今日内首次触达', funds: '净值 $19K · 未回复 3 次' },
-  { id: 'mf-09', name: 'Alexander', sid: '20886152009', level: 'V3', bandType: 'value', tags: ['高频充值', '充值低交易'], action: '引导充值后开仓', funds: '净值 $357K · 近7日充值 3 次' },
-  { id: 'mf-10', name: 'Parker', sid: '20886152010', level: 'V2', bandType: 'stable', tags: ['长期价值', '活跃稳定'], action: '季度满意度调研', funds: '净值 $82K · 持续正流入' },
-  { id: 'mf-11', name: 'Porter', sid: '20886152011', level: 'V1', bandType: 'risk', tags: ['停止交易', '60日无交易'], action: '安排交易回访', funds: '净值 $8K · 已停止交易 60日' },
-  { id: 'mf-12', name: 'Hughes', sid: '20886152012', level: 'V2', bandType: 'stable', tags: ['活跃稳定', '高交易'], action: '新品体验邀请', funds: '净值 $71K · 本周已交易' },
-  { id: 'mf-13', name: 'Russell', sid: '20886152013', level: 'V1', bandType: 'risk', tags: ['流失风险', '连续净流出'], action: '提交挽留方案', funds: '净值 $3K · 连续净流出' },
-  { id: 'mf-14', name: 'Walsh', sid: '20886152014', level: 'V4', bandType: 'value', tags: ['高交易', '突破升级'], action: '跟进 V4 权益使用', funds: '净值 $142K · 升级后活跃' },
-  { id: 'mf-15', name: 'Bennett', sid: '20886152015', level: 'V3', bandType: 'stable', tags: ['活跃稳定', '高存款'], action: '推送续费优惠', funds: '净值 $105K · 净存款正流入' }
+  { id: 'mf-01', name: 'Stone', sid: '20886152001', level: 'V4', bandType: 'value', tags: ['高交易', '高Lots', '高存款'], action: '推荐高Lots专享', funds: '净值 $860K · 月交易 420 Lots', contacts: ['0912 861 2001', '0938 200 1188'], tradeLots: '12,480', balance: '$860,420', depositTotal: '$1,240,000', lastTrade: '2026-09-17 21:14', lastWithdraw: '2026-08-29 10:06', lastLogin: '2026-09-18 09:22' },
+  { id: 'mf-02', name: 'Coleman', sid: '20886152002', level: 'V3', bandType: 'risk', tags: ['流失风险', '不活跃', '停止交易'], action: '立即致电召回', funds: '净值 $42K · 45日无交易', contacts: ['0933 520 0188'], tradeLots: '860', balance: '$42,180', depositTotal: '$96,500', lastTrade: '2026-08-04 11:28', lastWithdraw: '2026-08-06 16:40', lastLogin: '2026-09-02 19:08' },
+  { id: 'mf-03', name: 'Foster', sid: '20886152003', level: 'V4', bandType: 'value', tags: ['高存款', '高交易'], action: '邀请净存款提升计划', funds: '净值 $625K · 可用 $580K', contacts: ['0988 625 8003'], tradeLots: '9,240', balance: '$625,800', depositTotal: '$880,000', lastTrade: '2026-09-18 08:51', lastWithdraw: '2026-09-01 13:22', lastLogin: '2026-09-18 10:05' },
+  { id: 'mf-04', name: 'Anderson', sid: '20886152004', level: 'V3', bandType: 'stable', tags: ['活跃稳定'], action: '月度关怀问候', funds: '净值 $128K · 交易稳定', contacts: ['0918 128 3604'], tradeLots: '2,160', balance: '$128,360', depositTotal: '$210,000', lastTrade: '2026-09-16 15:03', lastWithdraw: '2026-07-22 09:18', lastLogin: '2026-09-17 22:41' },
+  { id: 'mf-05', name: 'Hayes', sid: '20886152005', level: 'V2', bandType: 'risk', tags: ['不活跃', '余额偏低'], action: '发送激活礼包', funds: '净值 $28K · 余额偏低', contacts: ['0952 280 5005'], tradeLots: '320', balance: '$28,050', depositTotal: '$45,200', lastTrade: '2026-07-19 20:12', lastWithdraw: '2026-07-21 11:07', lastLogin: '2026-08-28 18:33' },
+  { id: 'mf-06', name: 'Bryant', sid: '20886152006', level: 'V3', bandType: 'value', tags: ['高Lots', '高频充值'], action: '推送原油加仓方案', funds: '净值 $483K · 周交易活跃', contacts: ['0977 483 9206', '0916 483 2299'], tradeLots: '6,880', balance: '$483,920', depositTotal: '$720,000', lastTrade: '2026-09-18 01:26', lastWithdraw: '2026-09-10 14:55', lastLogin: '2026-09-18 01:29' },
+  { id: 'mf-07', name: 'Mitchell', sid: '20886152007', level: 'V3', bandType: 'stable', tags: ['关系维护', '长期价值'], action: '发送权益续期提醒', funds: '净值 $96K · 净存款持平', contacts: ['0920 961 4007'], tradeLots: '1,540', balance: '$96,140', depositTotal: '$158,000', lastTrade: '2026-09-14 10:47', lastWithdraw: '—', lastLogin: '2026-09-16 08:12' },
+  { id: 'mf-08', name: 'Griffin', sid: '20886152008', level: 'V2', bandType: 'risk', tags: ['未联系', '未回复'], action: '今日内首次触达', funds: '净值 $19K · 未回复 3 次', contacts: ['0916 196 8008'], tradeLots: '186', balance: '$19,680', depositTotal: '$32,000', lastTrade: '2026-06-30 09:05', lastWithdraw: '2026-07-02 17:21', lastLogin: '2026-08-11 12:44' },
+  { id: 'mf-09', name: 'Alexander', sid: '20886152009', level: 'V3', bandType: 'value', tags: ['高频充值', '充值低交易'], action: '引导充值后开仓', funds: '净值 $357K · 近7日充值 3 次', contacts: ['0938 357 4009'], tradeLots: '980', balance: '$357,400', depositTotal: '$510,000', lastTrade: '2026-09-12 16:38', lastWithdraw: '2026-08-18 10:02', lastLogin: '2026-09-18 07:56' },
+  { id: 'mf-10', name: 'Parker', sid: '20886152010', level: 'V2', bandType: 'stable', tags: ['长期价值', '活跃稳定'], action: '季度满意度调研', funds: '净值 $82K · 持续正流入', contacts: ['0966 827 7010'], tradeLots: '1,280', balance: '$82,770', depositTotal: '$126,500', lastTrade: '2026-09-15 19:20', lastWithdraw: '2026-06-09 15:49', lastLogin: '2026-09-17 11:03' },
+  { id: 'mf-11', name: 'Porter', sid: '20886152011', level: 'V1', bandType: 'risk', tags: ['停止交易', '60日无交易'], action: '安排交易回访', funds: '净值 $8K · 已停止交易 60日', contacts: ['0911 082 4011', '0988 082 7741'], tradeLots: '64', balance: '$8,240', depositTotal: '$18,600', lastTrade: '2026-07-18 13:11', lastWithdraw: '2026-07-20 09:33', lastLogin: '2026-08-01 20:17' },
+  { id: 'mf-12', name: 'Hughes', sid: '20886152012', level: 'V2', bandType: 'stable', tags: ['活跃稳定', '高交易'], action: '新品体验邀请', funds: '净值 $71K · 本周已交易', contacts: ['0955 715 6012'], tradeLots: '1,760', balance: '$71,560', depositTotal: '$99,800', lastTrade: '2026-09-17 14:08', lastWithdraw: '2026-08-03 16:27', lastLogin: '2026-09-17 21:55' },
+  { id: 'mf-13', name: 'Russell', sid: '20886152013', level: 'V1', bandType: 'risk', tags: ['流失风险', '连续净流出'], action: '提交挽留方案', funds: '净值 $3K · 连续净流出', contacts: ['0928 031 2013'], tradeLots: '42', balance: '$3,120', depositTotal: '$22,400', lastTrade: '2026-06-12 08:46', lastWithdraw: '2026-09-05 11:19', lastLogin: '2026-09-06 18:02' },
+  { id: 'mf-14', name: 'Walsh', sid: '20886152014', level: 'V4', bandType: 'value', tags: ['高交易', '突破升级'], action: '跟进 V4 权益使用', funds: '净值 $142K · 升级后活跃', contacts: ['0972 142 9314'], tradeLots: '3,420', balance: '$142,930', depositTotal: '$268,000', lastTrade: '2026-09-18 06:41', lastWithdraw: '2026-08-25 12:14', lastLogin: '2026-09-18 06:44' },
+  { id: 'mf-15', name: 'Bennett', sid: '20886152015', level: 'V3', bandType: 'stable', tags: ['活跃稳定', '高存款'], action: '推送续费优惠', funds: '净值 $105K · 净存款正流入', contacts: ['0946 105 2815'], tradeLots: '2,080', balance: '$105,280', depositTotal: '$176,000', lastTrade: '2026-09-13 22:09', lastWithdraw: '2026-07-30 10:51', lastLogin: '2026-09-16 19:37' }
 ];
 
 customerRankFollowedNames = MY_FOLLOW_CUSTOMERS.map(function (c) { return c.name; });
@@ -13033,12 +14036,16 @@ var leadCluePoolBands = [
     title: '高价值客户',
     desc: '客户有较高价值，但没有立即流失风险，可以通过跟进提升交易量和净存款。',
     tags: ['高交易', '高Lots', '高存款', '高频充值', '充值低交易'],
-    countLabel: '优先 4',
+    countLabel: '优先 8',
     customers: [
       { name: 'Stone', tags: ['高交易', '高Lots', '高存款', '高频充值'], action: '推荐高Lots专享', funds: '净值 $860K · 月交易 420 Lots' },
       { name: 'Foster', tags: ['高存款', '高交易', '充值低交易'], action: '邀请净存款提升计划', funds: '净值 $625K · 可用 $580K' },
       { name: 'Bryant', tags: ['高Lots', '高交易', '高频充值', '高存款', '充值低交易'], action: '推送原油加仓方案', funds: '净值 $483K · 周交易活跃' },
-      { name: 'Alexander', tags: ['高频充值', '充值低交易', '高存款'], action: '引导充值后开仓', funds: '净值 $357K · 近7日充值 3 次' }
+      { name: 'Alexander', tags: ['高频充值', '充值低交易', '高存款'], action: '引导充值后开仓', funds: '净值 $357K · 近7日充值 3 次' },
+      { name: 'Walsh', tags: ['高交易', '高存款'], action: 'VIP权益跟进', funds: '净值 $520K · 月交易活跃' },
+      { name: 'Bennett', tags: ['高Lots', '高频充值'], action: '推送原油加仓方案', funds: '净值 $410K · 周交易活跃' },
+      { name: 'Russell', tags: ['高存款', '充值低交易'], action: '引导充值后开仓', funds: '净值 $298K · 近7日充值 2 次' },
+      { name: 'Porter', tags: ['高交易', '高存款'], action: '邀请净存款提升计划', funds: '净值 $275K · 可用 $240K' }
     ]
   },
   {
@@ -13046,12 +14053,16 @@ var leadCluePoolBands = [
     title: '稳定型客户',
     desc: '客户目前活跃或价值稳定，属于维护型客户，重点是维持关系和长期价值，不需要紧急跟进。',
     tags: [],
-    countLabel: '维护 4',
+    countLabel: '维护 8',
     customers: [
       { name: 'Anderson', tags: ['活跃稳定'], action: '月度关怀问候', funds: '净值 $128K · 交易稳定' },
       { name: 'Mitchell', tags: ['关系维护', '长期价值'], action: '发送权益续期提醒', funds: '净值 $96K · 净存款持平' },
       { name: 'Parker', tags: ['长期价值', '活跃稳定', '高存款'], action: '季度满意度调研', funds: '净值 $82K · 持续正流入' },
-      { name: 'Hughes', tags: ['活跃稳定', '高交易'], action: '新品体验邀请', funds: '净值 $71K · 本周已交易' }
+      { name: 'Hughes', tags: ['活跃稳定', '高交易'], action: '新品体验邀请', funds: '净值 $71K · 本周已交易' },
+      { name: 'Walsh', tags: ['活跃稳定', '长期价值'], action: '月度关怀问候', funds: '净值 $118K · 交易稳定' },
+      { name: 'Bennett', tags: ['关系维护', '高存款'], action: '推送续费优惠', funds: '净值 $105K · 净存款正流入' },
+      { name: 'Russell', tags: ['活跃稳定'], action: '季度满意度调研', funds: '净值 $92K · 持续正流入' },
+      { name: 'Porter', tags: ['长期价值', '活跃稳定'], action: '发送权益续期提醒', funds: '净值 $88K · 净存款持平' }
     ]
   }
 ];
@@ -13077,10 +14088,6 @@ var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
     { name: 'Simmons', tags: ['不活跃', '未联系'], action: '安排交易回访', funds: '净值 $5K · 45日无交易' }
   ],
   value: [
-    { name: 'Walsh', tags: ['高交易', '高存款'], action: 'VIP权益跟进', funds: '净值 $520K · 月交易活跃' },
-    { name: 'Bennett', tags: ['高Lots', '高频充值'], action: '推送原油加仓方案', funds: '净值 $410K · 周交易活跃' },
-    { name: 'Russell', tags: ['高存款', '充值低交易'], action: '引导充值后开仓', funds: '净值 $298K · 近7日充值 2 次' },
-    { name: 'Porter', tags: ['高交易', '高存款'], action: '邀请净存款提升计划', funds: '净值 $275K · 可用 $240K' },
     { name: 'Griffin', tags: ['高频充值', '高Lots'], action: '推荐高Lots专享', funds: '净值 $245K · 月交易 180 Lots' },
     { name: 'Hayes', tags: ['高存款', '高交易'], action: '深度交易计划沟通', funds: '净值 $198K · 交易活跃' },
     { name: 'Rivera', tags: ['高交易', '充值低交易'], action: '引导首笔开仓', funds: '净值 $165K · 充值待转化' },
@@ -13090,10 +14097,6 @@ var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
     { name: 'Morgan', tags: ['高交易', '高Lots'], action: '新品体验邀请', funds: '净值 $98K · 本周已交易' }
   ],
   stable: [
-    { name: 'Walsh', tags: ['活跃稳定', '长期价值'], action: '月度关怀问候', funds: '净值 $118K · 交易稳定' },
-    { name: 'Bennett', tags: ['关系维护', '高存款'], action: '推送续费优惠', funds: '净值 $105K · 净存款正流入' },
-    { name: 'Russell', tags: ['活跃稳定'], action: '季度满意度调研', funds: '净值 $92K · 持续正流入' },
-    { name: 'Porter', tags: ['长期价值', '活跃稳定'], action: '发送权益续期提醒', funds: '净值 $88K · 净存款持平' },
     { name: 'Griffin', tags: ['活跃稳定', '高交易'], action: '新品体验邀请', funds: '净值 $76K · 本周已交易' },
     { name: 'Hayes', tags: ['关系维护'], action: '节日关怀问候', funds: '净值 $68K · 交易稳定' },
     { name: 'Rivera', tags: ['长期价值'], action: '权益使用回访', funds: '净值 $61K · 持续正流入' },
@@ -13105,9 +14108,9 @@ var LEAD_CLUE_BAND_DRAWER_EXTRAS = {
 };
 
 function getLeadClueBandDrawerEntries(bandType) {
-  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  var band = chanceFindBand(bandType);
   if (!band) return [];
-  var allCustomers = band.customers.concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
+  var allCustomers = band._scopedAll || band.customers.concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
   return allCustomers.map(function (c, index) {
     var meta = leadClueCustomerMeta(c, bandType, index);
     return {
@@ -13536,31 +14539,35 @@ function getMyFollowDrawerEntries() {
       bandLabel: MY_FOLLOW_BAND_LABELS[c.bandType] || c.bandType,
       tags: c.tags || [],
       action: c.action,
-      funds: c.funds
+      funds: c.funds,
+      contacts: Array.isArray(c.contacts) ? c.contacts : (c.contact ? [c.contact] : []),
+      tradeLots: c.tradeLots || '—',
+      balance: c.balance || '—',
+      depositTotal: c.depositTotal || '—',
+      lastTrade: c.lastTrade || '—',
+      lastWithdraw: c.lastWithdraw || '—',
+      lastLogin: c.lastLogin || '—'
     };
   });
 }
 
 function getMyFollowFilterValues() {
-  var nickEl = document.getElementById('myFollowFilterNick');
-  var sidEl = document.getElementById('myFollowFilterSid');
+  var keywordEl = document.getElementById('myFollowFilterKeyword');
   var levelEl = document.getElementById('myFollowFilterLevel');
-  var bandEl = document.getElementById('myFollowFilterBand');
   return {
-    nick: nickEl ? nickEl.value.trim().toLowerCase() : '',
-    sid: sidEl ? sidEl.value.trim() : '',
-    level: levelEl ? levelEl.value : '',
-    bandType: bandEl ? bandEl.value : ''
+    keyword: keywordEl ? keywordEl.value.trim().toLowerCase() : '',
+    level: levelEl ? levelEl.value : ''
   };
 }
 
 function filterMyFollowEntries(entries, filters) {
   return entries.filter(function (entry) {
-    var name = entry.name || '';
-    if (filters.nick && name.toLowerCase().indexOf(filters.nick) === -1) return false;
-    if (filters.sid && String(entry.sid).indexOf(filters.sid) === -1) return false;
+    if (filters.keyword) {
+      var nick = (entry.name || '').toLowerCase();
+      var sid = String(entry.sid || '').toLowerCase();
+      if (nick.indexOf(filters.keyword) === -1 && sid.indexOf(filters.keyword) === -1) return false;
+    }
     if (filters.level && entry.level !== filters.level) return false;
-    if (filters.bandType && entry.bandType !== filters.bandType) return false;
     return true;
   });
 }
@@ -13587,7 +14594,7 @@ function renderMyFollowDrawerPagination() {
   pager.hidden = false;
   var start = (_myFollowPage - 1) * MY_FOLLOW_PAGE_SIZE + 1;
   var end = Math.min(_myFollowPage * MY_FOLLOW_PAGE_SIZE, total);
-  infoEl.innerHTML = '共 <strong>' + total + '</strong> 位 · 每页 <strong>' + MY_FOLLOW_PAGE_SIZE + '</strong> 张 · 当前 <strong>' + start + '–' + end + '</strong> · 第 <strong>' + _myFollowPage + '</strong> / ' + totalPages + ' 页';
+  infoEl.innerHTML = '共 <strong>' + total + '</strong> 位 · 每页 <strong>' + MY_FOLLOW_PAGE_SIZE + '</strong> 条 · 当前 <strong>' + start + '–' + end + '</strong> · 第 <strong>' + _myFollowPage + '</strong> / ' + totalPages + ' 页';
   if (totalPages <= 1) {
     actionsEl.innerHTML = '';
     return;
@@ -13613,11 +14620,13 @@ function goMyFollowPage(page) {
 function renderMyFollowDrawerCardsPage() {
   var cardsEl = document.getElementById('myFollowDrawerCards');
   var emptyEl = document.getElementById('myFollowDrawerEmpty');
+  var tableWrap = document.getElementById('myFollowDrawerTableWrap');
   if (!cardsEl) return;
   var startIdx = (_myFollowPage - 1) * MY_FOLLOW_PAGE_SIZE;
   var pageEntries = _myFollowFilteredEntries.slice(startIdx, startIdx + MY_FOLLOW_PAGE_SIZE);
   if (!pageEntries.length) {
     cardsEl.innerHTML = '';
+    if (tableWrap) tableWrap.hidden = true;
     if (emptyEl) {
       emptyEl.hidden = false;
       emptyEl.innerHTML = getMyFollowDrawerEntries().length
@@ -13626,7 +14635,8 @@ function renderMyFollowDrawerCardsPage() {
     }
   } else {
     if (emptyEl) emptyEl.hidden = true;
-    cardsEl.innerHTML = pageEntries.map(renderMyFollowDrawerCard).join('');
+    if (tableWrap) tableWrap.hidden = false;
+    cardsEl.innerHTML = pageEntries.map(renderMyFollowDrawerRow).join('');
   }
   renderMyFollowDrawerPagination();
 }
@@ -13641,19 +14651,15 @@ function applyMyFollowFilters() {
   var filters = getMyFollowFilterValues();
   _myFollowFilteredEntries = filterMyFollowEntries(allEntries, filters);
   _myFollowPage = 1;
-  updateMyFollowFilterSummary(allEntries.length);
+  updateMyFollowFilterSummary(_myFollowFilteredEntries.length);
   renderMyFollowDrawerCardsPage();
 }
 
 function resetMyFollowFilters() {
-  var nickEl = document.getElementById('myFollowFilterNick');
-  var sidEl = document.getElementById('myFollowFilterSid');
+  var keywordEl = document.getElementById('myFollowFilterKeyword');
   var levelEl = document.getElementById('myFollowFilterLevel');
-  var bandEl = document.getElementById('myFollowFilterBand');
-  if (nickEl) nickEl.value = '';
-  if (sidEl) sidEl.value = '';
+  if (keywordEl) keywordEl.value = '';
   if (levelEl) levelEl.value = '';
-  if (bandEl) bandEl.value = '';
   applyMyFollowFilters();
 }
 
@@ -13684,6 +14690,43 @@ function openMyFollowTradeAnalysis(sid, nick) {
     '\n客户昵称：' + nick +
     '\n（原型占位，可对接贸易分析页）'
   );
+}
+
+function renderMyFollowStackHtml(lines) {
+  return '<div class="my-follow-cell-stack">' +
+    lines.map(function (line) {
+      return '<div class="my-follow-cell-line">' + line + '</div>';
+    }).join('') +
+    '</div>';
+}
+
+function renderMyFollowDrawerRow(entry) {
+  var contacts = entry.contacts && entry.contacts.length ? entry.contacts : ['—'];
+  return '<tr>' +
+    '<td class="col-customer">' + renderMyFollowStackHtml([
+      '<a href="#" class="col-sid-link" data-sid="' + entry.sid + '" data-nick="' + entry.name + '">' + entry.sid + '</a>',
+      '<button type="button" class="col-nick-link" data-sid="' + entry.sid + '" data-nick="' + entry.name + '">' + entry.name + '</button>'
+    ]) + '</td>' +
+    '<td>' + (entry.level || '—') + '</td>' +
+    '<td class="col-phone">' + renderMyFollowStackHtml(contacts.map(function (phone) {
+      return phone || '—';
+    })) + '</td>' +
+    '<td class="col-num">' + (entry.tradeLots || '—') + '</td>' +
+    '<td>' + renderMyFollowStackHtml([
+      '<span class="col-num">' + (entry.balance || '—') + '</span>',
+      '<span class="col-num">' + (entry.depositTotal || '—') + '</span>'
+    ]) + '</td>' +
+    '<td class="col-time">' + renderMyFollowStackHtml([
+      entry.lastTrade || '—',
+      entry.lastWithdraw || '—'
+    ]) + '</td>' +
+    '<td class="col-time">' + (entry.lastLogin || '—') + '</td>' +
+    '<td class="col-action"><span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link comm-stats-detail-action-link" data-action="chat" data-sid="' + entry.sid + '" data-nick="' + entry.name + '">私聊</a>' +
+    ' · ' +
+    '<a href="#" class="comm-review-action-link comm-stats-detail-action-link" data-action="trade" data-sid="' + entry.sid + '" data-nick="' + entry.name + '">贸易分析</a>' +
+    '</span></td>' +
+    '</tr>';
 }
 
 function renderMyFollowDrawerCard(entry) {
@@ -13724,6 +14767,7 @@ function renderMyFollowDrawerContent() {
 function openMyFollowDrawer() {
   var drawer = document.getElementById('myFollowDrawer');
   if (!drawer) return;
+  bindMyFollowDrawerTableEvents();
   resetMyFollowFilters();
   drawer.hidden = false;
   drawer.setAttribute('aria-hidden', 'false');
@@ -13731,6 +14775,33 @@ function openMyFollowDrawer() {
   if (scrollWrap) scrollWrap.style.overflow = 'hidden';
   requestAnimationFrame(function () {
     drawer.classList.add('is-open');
+  });
+}
+
+function bindMyFollowDrawerTableEvents() {
+  var tbody = document.getElementById('myFollowDrawerCards');
+  if (!tbody || tbody.dataset.bound) return;
+  tbody.dataset.bound = '1';
+  tbody.addEventListener('click', function (e) {
+    var actionLink = e.target.closest('.comm-stats-detail-action-link');
+    if (actionLink) {
+      e.preventDefault();
+      e.stopPropagation();
+      var action = actionLink.getAttribute('data-action');
+      var sid = actionLink.getAttribute('data-sid');
+      var nick = actionLink.getAttribute('data-nick');
+      if (action === 'trade') {
+        openMyFollowTradeAnalysis(sid, nick);
+        return;
+      }
+      handleAlertTaskDetailAction(action, sid, nick);
+      return;
+    }
+    var link = e.target.closest('.col-sid-link, .col-nick-link');
+    if (!link) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openMyFollowCustomerDetail(link.getAttribute('data-sid'), link.getAttribute('data-nick'));
   });
 }
 
@@ -13752,7 +14823,7 @@ function renderLeadCluePool() {
   var root = document.getElementById('lead-clue-pool-root');
   if (!root) return;
   root.innerHTML = '';
-  leadCluePoolBands.forEach(function (band) {
+  chanceVisibleClueBands().forEach(function (band) {
     var section = document.createElement('div');
     section.className = 'lead-clue-band lead-clue-band--' + band.type;
     var tagsHtml = band.tags.map(function (tag) {
@@ -13782,17 +14853,22 @@ function renderLeadCluePool() {
 }
 
 function selectDefaultLeadClueCustomer() {
-  var band = leadCluePoolBands[0];
-  if (!band || !band.customers.length) return;
+  var bands = chanceVisibleClueBands();
   var root = document.getElementById('lead-clue-pool-root');
   var btn = root && root.querySelector('.lead-clue-customer-card');
-  openLeadClueCustomer(band.type, 0, btn, false);
+  var i;
+  for (i = 0; i < bands.length; i++) {
+    if (bands[i].customers.length) {
+      openLeadClueCustomer(bands[i].type, 0, btn, false);
+      return;
+    }
+  }
 }
 
 var _leadClueDetailCtx = null;
 
 function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
-  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  var band = chanceFindBand(bandType);
   if (!band || !band.customers[index]) return;
   var c = band.customers[index];
   var panel = document.getElementById('panel-chance');
@@ -13816,7 +14892,7 @@ function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
   var contactEl = document.getElementById('lead-clue-detail-contact');
   var assignEl = document.getElementById('lead-clue-detail-assign');
 
-  if (introEl) introEl.textContent = '已选客户：' + c.name + ' · 来自「' + band.title + '」';
+  if (introEl) introEl.textContent = '正在查看 ' + c.name + '，来自「' + band.title + '」。';
   if (avatarEl) avatarEl.textContent = avatar;
   if (nameEl) nameEl.textContent = c.name;
   if (bandEl) bandEl.textContent = band.title;
@@ -13834,29 +14910,175 @@ function openLeadClueCustomer(bandType, index, btn, pinOnSelect) {
   if (pinOnSelect !== false) pinLeadClueDetailFollowOnSelect();
 }
 
-/* 客户情况预览吸顶动效开关 */
+/* 点击卡片后右侧吸顶；该卡片离开屏幕中心区域后取消。 */
 var LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED = true;
+var _leadCluePinCard = null;
+var _leadCluePinSawCenter = false;
+var _corralPinSawCenter = false;
+var _chancePinIgnoreLayout = false;
+var _chancePinScrollBound = false;
 
-function getLeadClueDetailFollowTop() {
-  var tabs = document.querySelector('.wb-tabs');
-  if (!tabs) return 12;
-  return Math.round(tabs.getBoundingClientRect().bottom + 8);
+function chanceDetailPinEnabled() {
+  return true;
 }
 
-/** 客户智能推荐模块顶部快移出可视区（Tab 栏下方）时取消吸顶 */
-function isLeadClueCareModuleLeavingViewport() {
-  var cluePool = document.querySelector('#panel-chance .lead-clue-pool-section');
-  if (!cluePool) return false;
-  var followTop = getLeadClueDetailFollowTop();
-  var clueRect = cluePool.getBoundingClientRect();
-  return clueRect.top <= followTop + 1;
+function syncChanceScopeSticky() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (!scope || !placeholder || !scope.classList.contains('is-scroll-follow')) return;
+  var tabs = document.querySelector('.wb-tabs');
+  var top = tabs ? Math.round(tabs.getBoundingClientRect().bottom + 8) : 12;
+  var rect = placeholder.getBoundingClientRect();
+  scope.style.top = top + 'px';
+  scope.style.left = rect.left + 'px';
+  scope.style.width = rect.width + 'px';
+}
+
+function pinChanceScopeFollow() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (!scope || !placeholder || window.getComputedStyle(scope).display === 'none') return;
+  if (!scope.classList.contains('is-scroll-follow')) {
+    var rect = scope.getBoundingClientRect();
+    placeholder.style.height = rect.height + 'px';
+    placeholder.style.display = 'block';
+    scope.classList.add('is-scroll-follow');
+  }
+  syncChanceScopeSticky();
+}
+
+function releaseChanceScopeFollow() {
+  var scope = document.getElementById('chance-scope-panel');
+  var placeholder = document.getElementById('chance-scope-placeholder');
+  if (scope) {
+    scope.classList.remove('is-scroll-follow');
+    scope.style.top = '';
+    scope.style.left = '';
+    scope.style.width = '';
+  }
+  if (placeholder) {
+    placeholder.style.display = 'none';
+    placeholder.style.height = '';
+  }
+}
+
+function releaseChanceScopeFollowIfIdle() {
+  var corral = document.getElementById('corral-detail-panel');
+  var clue = document.getElementById('lead-clue-detail-panel');
+  var corralOn = corral && corral.classList.contains('is-scroll-follow');
+  var clueOn = clue && clue.classList.contains('is-scroll-follow');
+  if (!corralOn && !clueOn) releaseChanceScopeFollow();
+}
+
+function getChanceScopePinHeight() {
+  var scope = document.getElementById('chance-scope-panel');
+  if (!scope || !scope.classList.contains('is-scroll-follow')) return 0;
+  if (window.getComputedStyle(scope).display === 'none') return 0;
+  var height = scope.offsetHeight;
+  if (!height) return 0;
+  return height + 8;
+}
+
+function getLeadClueDetailFollowTop() {
+  syncChanceScopeSticky();
+  var tabs = document.querySelector('.wb-tabs');
+  var base = tabs ? Math.round(tabs.getBoundingClientRect().bottom + 8) : 12;
+  return base + getChanceScopePinHeight();
+}
+
+function getChanceVisibleRect() {
+  var root = document.querySelector('.scroll-wrap');
+  if (!root) return { top: 0, bottom: window.innerHeight || 0 };
+  var rect = root.getBoundingClientRect();
+  return { top: rect.top, bottom: rect.bottom };
+}
+
+function getChanceScreenCenterBand() {
+  var view = getChanceVisibleRect();
+  var height = Math.max(view.bottom - view.top, 1);
+  return {
+    top: view.top + height * 0.25,
+    bottom: view.top + height * 0.75
+  };
+}
+
+function isCardInScreenCenter(card) {
+  if (!card || !card.getBoundingClientRect) return false;
+  var rect = card.getBoundingClientRect();
+  if (rect.width <= 0 && rect.height <= 0) return false;
+  var band = getChanceScreenCenterBand();
+  return rect.bottom > band.top && rect.top < band.bottom;
+}
+
+function isCardOutsideVisible(card) {
+  if (!card || !card.getBoundingClientRect) return true;
+  var rect = card.getBoundingClientRect();
+  var view = getChanceVisibleRect();
+  return rect.bottom <= view.top + 1 || rect.top >= view.bottom - 1;
+}
+
+function chancePinnedCardLeftCenter(kind, card) {
+  if (!card || !card.isConnected) return true;
+  if (_chancePinIgnoreLayout) return false;
+  if (isCardInScreenCenter(card)) {
+    if (kind === 'corral') _corralPinSawCenter = true;
+    else _leadCluePinSawCenter = true;
+    return false;
+  }
+  var saw = kind === 'corral' ? _corralPinSawCenter : _leadCluePinSawCenter;
+  if (saw) return true;
+  return isCardOutsideVisible(card);
+}
+
+function noteChancePinLayout() {
+  _chancePinIgnoreLayout = true;
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      _chancePinIgnoreLayout = false;
+    });
+  });
+}
+
+function bindChancePinScroll() {
+  if (_chancePinScrollBound) return;
+  var root = document.querySelector('.scroll-wrap');
+  if (!root) return;
+  _chancePinScrollBound = true;
+  syncChanceScopeSticky();
+  root.addEventListener('scroll', function () {
+    syncChanceScopeSticky();
+    syncLeadClueDetailStickyState();
+    syncCorralDetailStickyState();
+  }, { passive: true });
+  window.addEventListener('resize', syncChanceScopeSticky);
+}
+
+function rememberLeadCluePinCard() {
+  _leadCluePinCard = document.querySelector('#panel-chance .lead-clue-customer-card.active');
+  _leadCluePinSawCenter = isCardInScreenCenter(_leadCluePinCard);
+  noteChancePinLayout();
+  bindChancePinScroll();
+}
+
+function rememberCorralPinCard(card) {
+  _corralDetailStickyAnchor = card || null;
+  _corralPinSawCenter = isCardInScreenCenter(card);
+  noteChancePinLayout();
+  bindChancePinScroll();
 }
 
 function pinLeadClueDetailFollowOnSelect() {
+  if (!chanceDetailPinEnabled()) {
+    releaseLeadClueDetailFollow();
+    return;
+  }
+  releaseCorralDetailFollow();
   if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
+  rememberLeadCluePinCard();
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncLeadClueDetailFollowLayout();
     return;
@@ -13868,17 +15090,19 @@ function syncLeadClueDetailStickyState() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED) {
+  if (!LEAD_CLUE_DETAIL_SCROLL_FOLLOW_ENABLED || !chanceDetailPinEnabled()) {
     if (panel.classList.contains('is-scroll-follow')) releaseLeadClueDetailFollow();
     return;
   }
-  var activeCard = document.querySelector('#panel-chance .lead-clue-customer-card.active');
+  var activeCard = _leadCluePinCard && _leadCluePinCard.isConnected
+    ? _leadCluePinCard
+    : document.querySelector('#panel-chance .lead-clue-customer-card.active');
   if (!activeCard) {
     if (panel.classList.contains('is-scroll-follow')) releaseLeadClueDetailFollow();
     return;
   }
   if (!panel.classList.contains('is-scroll-follow')) return;
-  if (isLeadClueCareModuleLeavingViewport()) {
+  if (chancePinnedCardLeftCenter('clue', activeCard)) {
     releaseLeadClueDetailFollow();
   } else {
     syncLeadClueDetailFollowLayout();
@@ -13889,7 +15113,12 @@ function pinLeadClueDetailFollow() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('lead-clue-detail-panel');
   var placeholder = document.getElementById('lead-clue-detail-placeholder');
+  if (!chanceDetailPinEnabled()) {
+    releaseLeadClueDetailFollow();
+    return;
+  }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncLeadClueDetailFollowLayout();
     return;
@@ -13919,6 +15148,8 @@ function syncLeadClueDetailFollowLayout() {
 }
 
 function releaseLeadClueDetailFollow() {
+  _leadCluePinCard = null;
+  _leadCluePinSawCenter = false;
   var panel = document.getElementById('lead-clue-detail-panel');
   var placeholder = document.getElementById('lead-clue-detail-placeholder');
   if (panel) {
@@ -13932,11 +15163,14 @@ function releaseLeadClueDetailFollow() {
     placeholder.style.display = 'none';
     placeholder.style.height = '';
   }
+  releaseChanceScopeFollowIfIdle();
 }
 
 var _leadClueDetailAreaObs = null;
 
 function ensureLeadClueDetailAreaObserver() {
+  bindChancePinScroll();
+  syncChanceScopeSticky();
   if (_leadClueDetailAreaObs) return;
   var cluePool = document.querySelector('#panel-chance .lead-clue-pool-section');
   var scrollRoot = document.querySelector('.scroll-wrap');
@@ -13955,25 +15189,25 @@ function ensureLeadClueDetailAreaObserver() {
   if (poolSection) _leadClueDetailAreaObs.observe(poolSection);
 }
 
-/* 筛选结果预览吸顶动效开关 */
+/* 筛选结果预览吸顶：跟随被点击的围场或快捷定位卡片 */
 var CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED = true;
 var _corralDetailStickyAnchor = null;
 
-function isCorralDetailStickyAnchorLeavingViewport() {
-  var anchor = _corralDetailStickyAnchor
-    || document.querySelector('#panel-chance .lead-corral-section');
-  if (!anchor) return false;
-  var followTop = getLeadClueDetailFollowTop();
-  return anchor.getBoundingClientRect().top <= followTop + 1;
-}
-
-function pinCorralDetailFollowOnSelect(anchorEl) {
+function pinCorralDetailFollowOnSelect(cardEl) {
+  if (!chanceDetailPinEnabled()) {
+    releaseCorralDetailFollow();
+    return;
+  }
+  releaseLeadClueDetailFollow();
   if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED) return;
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  _corralDetailStickyAnchor = anchorEl
-    || document.querySelector('#panel-chance .lead-corral-section');
+  var card = cardEl && cardEl.classList && (cardEl.classList.contains('lead-corral-card') || cardEl.classList.contains('customer-pool-card'))
+    ? cardEl
+    : document.querySelector('#panel-chance .lead-corral-card.active, #panel-chance .customer-pool-card.active');
+  rememberCorralPinCard(card);
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncCorralDetailFollowLayout();
     return;
@@ -13985,18 +15219,19 @@ function syncCorralDetailStickyState() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel) return;
-  if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED) {
+  if (!CORRAL_DETAIL_SCROLL_FOLLOW_ENABLED || !chanceDetailPinEnabled()) {
     if (panel.classList.contains('is-scroll-follow')) releaseCorralDetailFollow();
     return;
   }
-  var activeCorral = document.querySelector('#panel-chance .lead-corral-card.active');
-  var activePool = document.querySelector('#panel-chance .customer-pool-card.active');
-  if (!activeCorral && !activePool) {
+  var card = _corralDetailStickyAnchor && _corralDetailStickyAnchor.isConnected
+    ? _corralDetailStickyAnchor
+    : document.querySelector('#panel-chance .lead-corral-card.active, #panel-chance .customer-pool-card.active');
+  if (!card) {
     if (panel.classList.contains('is-scroll-follow')) releaseCorralDetailFollow();
     return;
   }
   if (!panel.classList.contains('is-scroll-follow')) return;
-  if (isCorralDetailStickyAnchorLeavingViewport()) {
+  if (chancePinnedCardLeftCenter('corral', card)) {
     releaseCorralDetailFollow();
   } else {
     syncCorralDetailFollowLayout();
@@ -14007,7 +15242,12 @@ function pinCorralDetailFollow() {
   var chancePanel = document.getElementById('panel-chance');
   var panel = document.getElementById('corral-detail-panel');
   var placeholder = document.getElementById('corral-detail-placeholder');
+  if (!chanceDetailPinEnabled()) {
+    releaseCorralDetailFollow();
+    return;
+  }
   if (!chancePanel || !chancePanel.classList.contains('active') || !panel || !placeholder) return;
+  pinChanceScopeFollow();
   if (panel.classList.contains('is-scroll-follow')) {
     syncCorralDetailFollowLayout();
     return;
@@ -14038,6 +15278,7 @@ function syncCorralDetailFollowLayout() {
 
 function releaseCorralDetailFollow() {
   _corralDetailStickyAnchor = null;
+  _corralPinSawCenter = false;
   var panel = document.getElementById('corral-detail-panel');
   var placeholder = document.getElementById('corral-detail-placeholder');
   if (panel) {
@@ -14051,6 +15292,7 @@ function releaseCorralDetailFollow() {
     placeholder.style.display = 'none';
     placeholder.style.height = '';
   }
+  releaseChanceScopeFollowIfIdle();
 }
 
 function enterLeadClueCustomerDetail() {
@@ -14096,7 +15338,433 @@ function initChanceAiReminds() {
   syncCustomerPoolAiRemind(poolId);
 }
 
+var RP_PERSON_WEIGHT = {
+  Coulson: 14, May: 12, Daisy: 11, Fitz: 10, Simmons: 9, Mack: 8,
+  Hunter: 7, Fury: 7, Ward: 6, Bobbi: 6, Skye: 5, Melinda: 5,
+  Trip: 4, Antoine: 4, 'Yo-Yo': 3, Deke: 3, Jemma: 3
+};
+
+function rpAllNames() {
+  var names = [];
+  if (typeof MANAGER_GOAL_SALES_GROUPS === 'undefined') return names;
+  Object.keys(MANAGER_GOAL_SALES_GROUPS).forEach(function (key) {
+    MANAGER_GOAL_SALES_GROUPS[key].members.forEach(function (name) {
+      if (names.indexOf(name) < 0) names.push(name);
+    });
+  });
+  return names;
+}
+
+function rpSplitExact(total, weights) {
+  var n = weights.length;
+  var base = [];
+  var frac = [];
+  var sumW = 0;
+  var assigned = 0;
+  var i;
+  for (i = 0; i < n; i++) sumW += weights[i];
+  if (!n || !sumW || total <= 0) {
+    for (i = 0; i < n; i++) base.push(0);
+    return base;
+  }
+  for (i = 0; i < n; i++) {
+    var exact = total * weights[i] / sumW;
+    var flo = Math.floor(exact + 1e-9);
+    base.push(flo);
+    frac.push({ i: i, f: exact - flo });
+    assigned += flo;
+  }
+  frac.sort(function (a, b) { return b.f - a.f || a.i - b.i; });
+  var rem = total - assigned;
+  for (i = 0; i < rem; i++) base[frac[i].i] += 1;
+  return base;
+}
+
+function rpSplitCapped(total, weights, caps) {
+  var n = weights.length;
+  var assigned = [];
+  var i;
+  for (i = 0; i < n; i++) assigned.push(0);
+  var remain = total;
+  var guard = 0;
+  while (remain > 0 && guard < 40) {
+    guard += 1;
+    var openIdx = [];
+    var openW = [];
+    for (i = 0; i < n; i++) {
+      if (assigned[i] < caps[i]) {
+        openIdx.push(i);
+        openW.push(Math.max(weights[i], 1));
+      }
+    }
+    if (!openIdx.length) break;
+    var piece = rpSplitExact(remain, openW);
+    var stuck = 0;
+    for (var j = 0; j < openIdx.length; j++) {
+      var idx = openIdx[j];
+      var room = caps[idx] - assigned[idx];
+      var give = piece[j] > room ? room : piece[j];
+      assigned[idx] += give;
+      stuck += piece[j] - give;
+    }
+    if (stuck === remain) break;
+    remain = stuck;
+  }
+  return assigned;
+}
+
+var CHANCE_CORRAL_TOTALS = {
+  'high-value': 688,
+  'churn-risk': 416,
+  'new-register': 304,
+  'kyc-pending': 232,
+  'campaign-silent': 360,
+  'hnw-potential': 248,
+  'cross-oil': 512,
+  'custom-mine': 288
+};
+var CHANCE_POOL_TOTALS = {
+  'v4-sprint': { primary: 144, secondary: 48 },
+  'campaign-deposit': { primary: 176, secondary: 72 },
+  'vip-maintain': { primary: 96, secondary: 40 },
+  'silent-wake': { primary: 120, secondary: 32 }
+};
+var CHANCE_CLUE_PREVIEW = { risk: 4, value: 8, stable: 8 };
+var CHANCE_CLUE_PREFIX = { risk: '最紧急', value: '优先', stable: '维护' };
+var CHANCE_PERSON = null;
+var _chanceScopeLevel1 = 'all';
+var _chanceScopeLevel2 = '__all__';
+var _chanceVisibleBands = null;
+var _chanceBuildSalt = 0;
+
+function chanceWeights(names) {
+  return names.map(function (name) {
+    var base = RP_PERSON_WEIGHT[name] || 4;
+    var wobble = _chanceBuildSalt ? ((name.length * 3 + _chanceBuildSalt * 11) % 5) : 0;
+    return base + wobble;
+  });
+}
+
+function chanceRepairCapped(parts, caps, total) {
+  var sum = 0;
+  var i;
+  for (i = 0; i < parts.length; i++) sum += parts[i];
+  var guard = 0;
+  while (sum < total && guard < 20000) {
+    guard += 1;
+    var moved = false;
+    for (i = 0; i < parts.length && sum < total; i++) {
+      if (parts[i] < caps[i]) {
+        parts[i] += 1;
+        sum += 1;
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  guard = 0;
+  while (sum > total && guard < 20000) {
+    guard += 1;
+    var cut = false;
+    for (i = parts.length - 1; i >= 0 && sum > total; i--) {
+      if (parts[i] > 0) {
+        parts[i] -= 1;
+        sum -= 1;
+        cut = true;
+      }
+    }
+    if (!cut) break;
+  }
+  return sum === total;
+}
+
+function chanceFullClueList(bandType) {
+  var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
+  return (band ? band.customers.slice() : []).concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
+}
+
+function chanceAuditLedger() {
+  if (!CHANCE_PERSON) return false;
+  var names = rpAllNames();
+  var errors = [];
+  var seen = {};
+  var covered = 0;
+  Object.keys(MANAGER_GOAL_SALES_GROUPS).forEach(function (key) {
+    MANAGER_GOAL_SALES_GROUPS[key].members.forEach(function (name) {
+      if (seen[name]) errors.push('overlap ' + name);
+      seen[name] = 1;
+      covered += 1;
+    });
+  });
+  if (covered !== names.length) errors.push('coverage ' + covered + '/' + names.length);
+  function add(reader, total, label) {
+    var all = 0;
+    var groupAll = 0;
+    names.forEach(function (name) { all += reader(CHANCE_PERSON[name]); });
+    if (all !== total) errors.push(label + ' people ' + all + ' != ' + total);
+    Object.keys(MANAGER_GOAL_SALES_GROUPS).forEach(function (key) {
+      var groupSum = 0;
+      MANAGER_GOAL_SALES_GROUPS[key].members.forEach(function (name) {
+        groupSum += reader(CHANCE_PERSON[name]);
+      });
+      groupAll += groupSum;
+    });
+    if (groupAll !== total) errors.push(label + ' groups ' + groupAll + ' != ' + total);
+  }
+  Object.keys(CHANCE_CORRAL_TOTALS).forEach(function (id) {
+    add(function (row) { return row.corrals[id]; }, CHANCE_CORRAL_TOTALS[id], 'corral ' + id);
+  });
+  Object.keys(CHANCE_POOL_TOTALS).forEach(function (id) {
+    var spec = CHANCE_POOL_TOTALS[id];
+    add(function (row) { return row.pools[id].primary; }, spec.primary, 'pool ' + id + ' primary');
+    add(function (row) { return row.pools[id].secondary; }, spec.secondary, 'pool ' + id + ' secondary');
+    names.forEach(function (name) {
+      var cell = CHANCE_PERSON[name].pools[id];
+      if (cell.secondary > cell.primary) errors.push('pool cap ' + id + ' ' + name);
+    });
+  });
+  ['risk', 'value', 'stable'].forEach(function (bandType) {
+    var original = chanceFullClueList(bandType);
+    var rebuilt = [];
+    var groupCount = 0;
+    names.forEach(function (name) {
+      rebuilt = rebuilt.concat(CHANCE_PERSON[name].clues[bandType] || []);
+    });
+    if (rebuilt.length !== original.length) errors.push('clue len ' + bandType);
+    else {
+      for (var i = 0; i < original.length; i++) {
+        if (!rebuilt[i] || rebuilt[i].name !== original[i].name || rebuilt[i].funds !== original[i].funds) {
+          errors.push('clue order ' + bandType + ' ' + i);
+          break;
+        }
+      }
+    }
+    Object.keys(MANAGER_GOAL_SALES_GROUPS).forEach(function (key) {
+      MANAGER_GOAL_SALES_GROUPS[key].members.forEach(function (name) {
+        groupCount += (CHANCE_PERSON[name].clues[bandType] || []).length;
+      });
+    });
+    if (groupCount !== original.length) errors.push('clue groups ' + bandType + ' ' + groupCount);
+  });
+  if (errors.length) {
+    console.error('chance ledger audit', errors);
+    return false;
+  }
+  return true;
+}
+
+function chanceBuildOnce() {
+  var names = rpAllNames();
+  if (!names.length) return false;
+  var weights = chanceWeights(names);
+  var person = {};
+  names.forEach(function (name) {
+    person[name] = { corrals: {}, pools: {}, clues: {} };
+  });
+  Object.keys(CHANCE_CORRAL_TOTALS).forEach(function (id) {
+    var parts = rpSplitExact(CHANCE_CORRAL_TOTALS[id], weights);
+    names.forEach(function (name, i) { person[name].corrals[id] = parts[i]; });
+  });
+  var poolOk = true;
+  Object.keys(CHANCE_POOL_TOTALS).forEach(function (id) {
+    var spec = CHANCE_POOL_TOTALS[id];
+    var primary = rpSplitExact(spec.primary, weights);
+    var secondary = rpSplitCapped(spec.secondary, weights, primary.slice());
+    if (!chanceRepairCapped(secondary, primary, spec.secondary)) poolOk = false;
+    names.forEach(function (name, i) {
+      if (secondary[i] > primary[i]) poolOk = false;
+      person[name].pools[id] = { primary: primary[i], secondary: secondary[i] };
+    });
+  });
+  ['risk', 'value', 'stable'].forEach(function (bandType) {
+    var list = chanceFullClueList(bandType);
+    var counts = rpSplitExact(list.length, weights);
+    var cursor = 0;
+    names.forEach(function (name, i) {
+      var n = counts[i];
+      person[name].clues[bandType] = list.slice(cursor, cursor + n);
+      cursor += n;
+    });
+  });
+  CHANCE_PERSON = person;
+  return poolOk && chanceAuditLedger();
+}
+
+function chanceEnsureLedger() {
+  if (CHANCE_PERSON && chanceAuditLedger()) return;
+  var salts = [0, 1, 3, 5, 7, 9, 11];
+  var i;
+  for (i = 0; i < salts.length; i++) {
+    _chanceBuildSalt = salts[i];
+    if (chanceBuildOnce()) return;
+  }
+}
+
+function chanceActiveNames() {
+  if (_chanceScopeLevel1 === 'all') {
+    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return rpAllNames();
+    return [_chanceScopeLevel2];
+  }
+  var group = MANAGER_GOAL_SALES_GROUPS[_chanceScopeLevel1];
+  if (!group) return rpAllNames();
+  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return group.members.slice();
+  return [_chanceScopeLevel2];
+}
+
+function chanceScopeLabel() {
+  if (_chanceScopeLevel1 === 'all') {
+    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return '团队所有人';
+    return _chanceScopeLevel2;
+  }
+  var group = MANAGER_GOAL_SALES_GROUPS[_chanceScopeLevel1];
+  var label = group ? group.label : '当前组';
+  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return label + ' · 组内所有人';
+  return label + ' · ' + _chanceScopeLevel2;
+}
+
+function chanceInvalidateClueBands() {
+  _chanceVisibleBands = null;
+}
+
+function chanceVisibleClueBands() {
+  if ((document.body.dataset.view || 'sales') !== 'manager') return leadCluePoolBands;
+  if (_chanceVisibleBands) return _chanceVisibleBands;
+  chanceEnsureLedger();
+  var names = chanceActiveNames();
+  _chanceVisibleBands = leadCluePoolBands.map(function (band) {
+    var all = [];
+    names.forEach(function (name) {
+      var list = CHANCE_PERSON[name] && CHANCE_PERSON[name].clues[band.type];
+      if (list) all = all.concat(list);
+    });
+    var limit = CHANCE_CLUE_PREVIEW[band.type] || 8;
+    var prefix = CHANCE_CLUE_PREFIX[band.type] || '';
+    return {
+      type: band.type,
+      title: band.title,
+      desc: band.desc,
+      tags: band.tags,
+      countLabel: prefix + ' ' + all.length,
+      customers: all.slice(0, limit),
+      _scopedAll: all
+    };
+  });
+  return _chanceVisibleBands;
+}
+
+function chanceFindBand(bandType) {
+  var bands = chanceVisibleClueBands();
+  if (!bandType) return bands[0];
+  return bands.filter(function (b) { return b.type === bandType; })[0];
+}
+
+function chanceSum(names, reader) {
+  var total = 0;
+  names.forEach(function (name) {
+    if (CHANCE_PERSON[name]) total += reader(CHANCE_PERSON[name]);
+  });
+  return total;
+}
+
+function chancePaintManagerCards() {
+  var panel = document.getElementById('panel-chance');
+  if (!panel || !CHANCE_PERSON) return;
+  var names = chanceActiveNames();
+  panel.querySelectorAll('.manager-only .lead-corral-card').forEach(function (card) {
+    var id = card.getAttribute('data-corral-id');
+    var val = card.querySelector('.lead-corral-stat-val');
+    if (val && CHANCE_CORRAL_TOTALS[id] != null) {
+      val.textContent = String(chanceSum(names, function (row) { return row.corrals[id] || 0; }));
+    }
+  });
+  panel.querySelectorAll('.manager-only .customer-pool-card').forEach(function (card) {
+    var id = card.getAttribute('data-pool-id');
+    var vals = card.querySelectorAll('.customer-pool-stat-val');
+    if (!CHANCE_POOL_TOTALS[id]) return;
+    if (vals[0]) vals[0].textContent = String(chanceSum(names, function (row) { return row.pools[id].primary; }));
+    if (vals[1]) vals[1].textContent = String(chanceSum(names, function (row) { return row.pools[id].secondary; }));
+  });
+  panel.querySelectorAll('.manager-only .corral-hot-item').forEach(function (item) {
+    var id = item.getAttribute('data-corral-id');
+    var span = item.querySelector('span');
+    if (span && CHANCE_CORRAL_TOTALS[id] != null) {
+      span.textContent = chanceSum(names, function (row) { return row.corrals[id] || 0; }) + ' 人';
+    }
+  });
+}
+
+function chanceSyncScopeHint() {
+  var hint = document.getElementById('chanceScopeHint');
+  if (!hint) return;
+  hint.innerHTML = '当前销售管理视角：<strong>' + chanceScopeLabel() + '</strong>';
+  hint.classList.toggle('is-sales-mode', _chanceScopeLevel1 !== 'all' || (_chanceScopeLevel2 && _chanceScopeLevel2 !== '__all__'));
+}
+
+function chanceRebuildScopeLevel2(level1, keepValue) {
+  var select = document.getElementById('chanceScopeLevel2');
+  if (!select) return;
+  var options = [];
+  if (level1 === 'all') {
+    options.push({ value: '__all__', label: '全员汇总' });
+    rpAllNames().forEach(function (name) { options.push({ value: name, label: name }); });
+  } else {
+    var group = MANAGER_GOAL_SALES_GROUPS[level1];
+    if (!group) return;
+    options.push({ value: '__group__', label: '组内所有人' });
+    group.members.forEach(function (name) { options.push({ value: name, label: name }); });
+  }
+  select.textContent = '';
+  options.forEach(function (item) {
+    var option = document.createElement('option');
+    option.value = item.value;
+    option.textContent = item.label;
+    select.appendChild(option);
+  });
+  var fallback = level1 === 'all' ? '__all__' : '__group__';
+  select.value = keepValue && select.querySelector('option[value="' + keepValue + '"]') ? keepValue : fallback;
+}
+
+function chanceSyncScopeControls() {
+  var level1 = document.getElementById('chanceScopeLevel1');
+  if (level1) level1.value = _chanceScopeLevel1;
+  chanceRebuildScopeLevel2(_chanceScopeLevel1, _chanceScopeLevel2);
+  var level2 = document.getElementById('chanceScopeLevel2');
+  if (level2) _chanceScopeLevel2 = level2.value;
+  chanceSyncScopeHint();
+}
+
+function applyChanceScope() {
+  chanceInvalidateClueBands();
+  chanceSyncScopeHint();
+  chancePaintManagerCards();
+  renderLeadCluePool();
+  var panel = document.getElementById('panel-chance');
+  if (!panel || (document.body.dataset.view || 'sales') !== 'manager') return;
+  var active = panel.querySelector('.manager-only .customer-pool-card.active')
+    || panel.querySelector('.manager-only .lead-corral-card.active');
+  if (active) openLeadCorral(active.getAttribute('data-pool-id') || active.getAttribute('data-corral-id'), active, false);
+}
+
+function onChanceScopeLevel1Change() {
+  var level1Select = document.getElementById('chanceScopeLevel1');
+  _chanceScopeLevel1 = level1Select ? level1Select.value : 'all';
+  chanceRebuildScopeLevel2(_chanceScopeLevel1);
+  var level2Select = document.getElementById('chanceScopeLevel2');
+  _chanceScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyChanceScope();
+}
+
+function onChanceScopeLevel2Change() {
+  var level2Select = document.getElementById('chanceScopeLevel2');
+  _chanceScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applyChanceScope();
+}
+
 function initLeadCorralPanel() {
+  chanceEnsureLedger();
+  chanceSyncScopeControls();
+  chanceInvalidateClueBands();
+  chancePaintManagerCards();
   ensureLeadClueDetailAreaObserver();
   renderLeadCluePool();
   syncBreakthroughStarSummary();
@@ -14118,6 +15786,8 @@ function initLeadCorralPanel() {
 var _switchViewOrig = switchView;
 switchView = function (view, btn) {
   _switchViewOrig(view, btn);
+  releaseLeadClueDetailFollow();
+  releaseCorralDetailFollow();
   initLeadCorralPanel();
 };
 
@@ -14157,6 +15827,11 @@ document.addEventListener('click', function (e) {
 
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') {
+    var corralCreateModal = document.getElementById('corralCreateModal');
+    if (corralCreateModal && !corralCreateModal.hidden) {
+      closeLeadCorralCreate();
+      return;
+    }
     var breakthroughDrawer = document.getElementById('breakthroughStarDrawer');
     if (breakthroughDrawer && !breakthroughDrawer.hidden && breakthroughDrawer.classList.contains('is-open')) {
       closeBreakthroughStarDrawer();

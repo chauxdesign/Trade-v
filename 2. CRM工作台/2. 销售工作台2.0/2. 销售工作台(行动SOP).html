@@ -1461,6 +1461,15 @@
     #alertTaskDetailFilters .my-follow-filter-reset{
       flex:0 0 auto;height:30px;padding:0 10px;white-space:nowrap;margin-left:auto;
     }
+    #alertTaskDetailFilters .my-follow-filter-query{
+      flex:0 0 auto;height:30px;padding:0 12px;white-space:nowrap;
+      border:1px solid #2563eb;border-radius:6px;
+      background:#2563eb;color:#fff;font-size:11px;font-weight:700;
+      cursor:pointer;font-family:inherit;
+    }
+    #alertTaskDetailFilters .my-follow-filter-query:hover{
+      background:#1d4ed8;border-color:#1d4ed8;
+    }
     #commReviewFilters .my-follow-filter-field--action{flex-shrink:0}
     #commReviewDrawer .alert-task-detail-panel{width:80%;max-width:80%}
     .alert-task-detail-table .col-screenshot{white-space:nowrap}
@@ -1672,6 +1681,24 @@
     .comm-follow-upload:hover{
       border-color:#93c5fd;background:#f8fbff;
     }
+    #commFollowEntryModal.is-readonly .comm-follow-input,
+    #commFollowEntryModal.is-readonly .comm-follow-select,
+    #commFollowEntryModal.is-readonly .comm-follow-textarea{
+      background:#f8fafc;color:#334155;cursor:default;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-textarea{resize:none}
+    #commFollowEntryModal.is-readonly .comm-follow-result-option span,
+    #commFollowEntryModal.is-readonly .comm-follow-purpose-chip span,
+    #commFollowEntryModal.is-readonly .comm-follow-inline-option span,
+    #commFollowEntryModal.is-readonly .comm-follow-check,
+    #commFollowEntryModal.is-readonly .comm-follow-upload{
+      cursor:default;pointer-events:none;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-upload{
+      background:#f8fafc;border-color:#e2e8f0;
+    }
+    #commFollowEntryModal.is-readonly .comm-follow-form-btn--primary,
+    #commFollowEntryModal.is-readonly .comm-follow-field--task{display:none}
     .comm-follow-upload-icon{
       width:36px;height:36px;border-radius:10px;
       display:grid;place-items:center;font-size:18px;line-height:1;
@@ -1990,17 +2017,24 @@
       box-shadow:0 2px 8px rgba(245,158,11,.22);
     }
     .alert-task-summary{
-      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;
+      display:flex;flex-wrap:nowrap;gap:8px;margin-bottom:12px;
     }
     .alert-task-chip{
-      flex:1;min-width:100px;padding:8px 10px;border-radius:8px;
+      flex:1 1 0;min-width:0;padding:8px 10px;border-radius:8px;
       background:#f8fafc;border:1px solid #eef2f7;
-      display:flex;flex-direction:column;gap:2px;
+      display:flex;flex-direction:column;gap:2px;overflow:hidden;
     }
-    .alert-task-chip span{font-size:10px;color:#64748b}
+    .alert-task-chip span{
+      font-size:10px;color:#64748b;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
     .alert-task-chip strong{
       font-size:15px;font-weight:800;color:#0f172a;
-      font-variant-numeric:tabular-nums;
+      font-variant-numeric:tabular-nums;white-space:nowrap;
+    }
+    @media (max-width:1280px){
+      .alert-task-summary{gap:6px}
+      .alert-task-chip{padding:7px 8px}
     }
     .alert-task-chip.highlight{
       background:linear-gradient(135deg,#fffbeb,#fef3c7);
@@ -4887,8 +4921,9 @@
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="goals" href="2. CRM工作台/2. 销售工作台2.0/1. 销售工作台(我的目标).html">我的目标</a>
           <a class="wb-tab active" role="tab" aria-selected="true" data-panel="sop" href="2. CRM工作台/2. 销售工作台2.0/2. 销售工作台(行动SOP).html">行动 SOP</a>
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="chance" href="2. CRM工作台/2. 销售工作台2.0/3. 销售工作台(客户机会).html">客户机会</a>
-          <a class="wb-tab" role="tab" aria-selected="false" data-panel="growth" href="2. CRM工作台/2. 销售工作台2.0/4. 销售工作台(提升分析).html">提升分析</a>
+          <a class="wb-tab" role="tab" aria-selected="false" data-panel="growth" href="2. CRM工作台/2. 销售工作台2.0/4. 销售工作台(运营分析).html">运营分析</a>
           <a class="wb-tab" role="tab" aria-selected="false" data-panel="enable" href="2. CRM工作台/2. 销售工作台2.0/5. 销售工作台(展业赋能).html">展业赋能</a>
+          <a class="wb-tab" role="tab" aria-selected="false" aria-hidden="true" data-panel="improve" href="2. CRM工作台/2. 销售工作台2.0/6. 销售工作台(提升分析).html" hidden style="display:none">提升分析</a>
         </nav>
         <div class="wb-panels">
 <div class="wb-panel active" id="panel-sop" role="tabpanel">
@@ -6664,13 +6699,6 @@
               </div>
 
               <div class="rev-rank-tab-panel active" data-task-panel="risk" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card rev-hero-card--gold manager-only">
-                    <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">20.7 项</div>
-                    <div class="rev-hero-sub">待处理 42 项</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
@@ -6689,7 +6717,7 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>20.7 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
-                  <span class="rev-rank-chip">团队平均占比 <strong>11.1%</strong></span>
+                  <span class="rev-rank-chip">前5名团队占比 <strong>55.4%</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
                   <div class="rev-rank-self-line rev-rank-self-line--main">
@@ -6714,13 +6742,6 @@
               </div>
 
               <div class="rev-rank-tab-panel" data-task-panel="daily" role="tabpanel">
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card rev-hero-card--gold manager-only">
-                    <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">15.8 项</div>
-                    <div class="rev-hero-sub">待处理 13 项</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
@@ -6739,7 +6760,7 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>15.8 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>5 人</strong></span>
-                  <span class="rev-rank-chip">待处理日常 <strong>13 项</strong></span>
+                  <span class="rev-rank-chip">前5名团队占比 <strong>56.3%</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
                   <div class="rev-rank-self-line rev-rank-self-line--main">
@@ -6765,13 +6786,6 @@
 
               <div class="rev-rank-tab-panel gca-pending-wrap" data-task-panel="marketing" role="tabpanel" aria-label="本期暂不开发">
                 <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
-                <div class="rev-rank-hero">
-                  <div class="rev-hero-card rev-hero-card--gold manager-only">
-                    <div class="rev-hero-label">人均完成数</div>
-                    <div class="rev-hero-val">14.7 项</div>
-                    <div class="rev-hero-sub">待处理 28 项</div>
-                  </div>
-                </div>
                 <table class="revenue-rank-table">
                   <thead><tr><th class="rank-no">#</th><th>销售</th><th style="text-align:right">完成数</th><th class="rank-share-cell" style="text-align:right">占比</th></tr></thead>
                   <tbody>
@@ -6844,13 +6858,14 @@
           <div class="my-follow-drawer-filters" id="alertTaskDetailFilters" hidden>
             <label class="my-follow-filter-field">
               <span class="my-follow-filter-label">任务状态</span>
-              <select class="my-follow-filter-select" id="alertTaskDetailFilterStatus" onchange="applyAlertTaskDetailFilters()">
+              <select class="my-follow-filter-select" id="alertTaskDetailFilterStatus">
                 <option value="">全部</option>
                 <option value="done">已完成</option>
                 <option value="pending">待完成</option>
               </select>
             </label>
             <button type="button" class="my-follow-filter-reset" onclick="resetAlertTaskDetailFilters()">重置筛选</button>
+            <button type="button" class="my-follow-filter-query" onclick="applyAlertTaskDetailFilters()">查询</button>
           </div>
           <div class="alert-task-detail-table-wrap">
             <table class="alert-task-detail-table">
@@ -7383,11 +7398,11 @@
           <div class="comm-follow-control">
             <div class="comm-follow-upload" role="button" tabindex="0" aria-label="上传沟通图片">
               <span class="comm-follow-upload-icon" aria-hidden="true">☁</span>
-              <span>将图片粘贴此处进行上传</span>
+              <span class="comm-follow-upload-text">将图片粘贴此处进行上传</span>
             </div>
           </div>
         </div>
-        <div class="comm-follow-field">
+        <div class="comm-follow-field comm-follow-field--task">
           <span class="comm-follow-label">任务：</span>
           <div class="comm-follow-control">
             <div class="comm-follow-panel-box">
@@ -7395,7 +7410,7 @@
             </div>
           </div>
         </div>
-        <div class="comm-follow-field">
+        <div class="comm-follow-field comm-follow-field--task">
           <span class="comm-follow-label">完成任务：</span>
           <div class="comm-follow-control">
             <div class="comm-follow-panel-box comm-follow-panel-box--wrap">
@@ -9793,6 +9808,8 @@ var _alertTaskDetailAllRows = [];
 var _alertTaskDetailPage = 1;
 var _alertTaskDetailCategory = null;
 var _alertTaskDetailMode = 'default';
+var _alertTaskDetailListScope = 'completed';
+var _alertTaskDetailManagerReview = false;
 var CANCELLATION_RETENTION_TASK_TYPES = ['注销挽回'];
 var DEPOSIT_GUIDANCE_TASK_TYPES = ['入金引导'];
 var ALERT_TASK_SPECIAL_DETAIL_MODES = {
@@ -10128,19 +10145,21 @@ function toggleAlertTaskFollowGroup(groupKey) {
   renderAlertTaskFollowTable();
 }
 
-function renderAlertTaskFollowCompletedCell(row, salesName, linkable) {
-  if (linkable && salesName && row.completed > 0) {
-    return '<td class="col-num"><a href="#" class="col-completed-link" data-sales="' + salesName + '" data-assigned="' + row.assigned + '" data-completed="' + row.completed + '">' + row.completed + '</a></td>';
+function renderAlertTaskFollowCountCell(count, salesName, metric, assigned, completed, linkable) {
+  count = parseInt(count, 10) || 0;
+  if (linkable && salesName && count > 0) {
+    var title = metric === 'assigned' ? '查看下发任务明细' : '查看完成任务明细';
+    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-sales="' + salesName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '">' + count + '</a></td>';
   }
-  if (!row.completed) {
+  if (!count) {
     return '<td class="col-num"><span class="col-completed-zero">0</span></td>';
   }
-  return '<td class="col-num">' + row.completed + '</td>';
+  return '<td class="col-num">' + count + '</td>';
 }
 
 function renderAlertTaskFollowDataCells(row, salesName, linkable) {
-  return '<td class="col-num">' + (row.assigned || 0) + '</td>' +
-    renderAlertTaskFollowCompletedCell(row, salesName, linkable) +
+  return renderAlertTaskFollowCountCell(row.assigned, salesName, 'assigned', row.assigned, row.completed, linkable) +
+    renderAlertTaskFollowCountCell(row.completed, salesName, 'completed', row.assigned, row.completed, linkable) +
     '<td class="col-num col-overdue"><strong>' + (row.overdue || 0) + '</strong></td>' +
     '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
 }
@@ -10326,6 +10345,9 @@ function renderAlertTaskDetailThead() {
   } else if (isAiSummaryPendingDetailMode()) {
     cols = AI_SUMMARY_PENDING_DETAIL_COLUMNS;
   }
+  if (!isSpecialAlertTaskDetailMode() && _alertTaskDetailManagerReview) {
+    cols = cols.concat(['操作']);
+  }
   thead.innerHTML = cols.map(function (col) {
     var isAction = col === '操作' || col === 'Actions';
     return '<th' + (isAction ? ' class="col-action"' : '') + '>' + col + '</th>';
@@ -10376,7 +10398,14 @@ function buildCancellationRetentionDetailRows(salesName, taskCount) {
   return rows;
 }
 
+function renderAlertTaskViewCommActionHtml(row) {
+  return '<span class="col-action-links">' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="view-comm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">沟通详情</a>' +
+    '</span>';
+}
+
 function renderAlertTaskSpecialActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -10385,6 +10414,7 @@ function renderAlertTaskSpecialActionHtml(row) {
 }
 
 function renderAiSummaryPendingActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -10393,6 +10423,7 @@ function renderAiSummaryPendingActionHtml(row) {
 }
 
 function renderHighRiskChurnRecoveryActionHtml(row) {
+  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
@@ -10896,26 +10927,45 @@ function handleAlertTaskDetailAction(action, sid, nick) {
   }
   if (action === 'churn-analysis') {
     openMyFollowChurnRisk(sid, nick, 'risk');
+    return;
+  }
+  if (action === 'view-comm') {
+    openCommFollowEntryModal({ sid: sid, name: nick }, { readonly: true });
   }
 }
 
-function buildAlertTaskDetailRows(salesName, completedCount) {
-  completedCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, Math.max(0, completedCount || 0));
-  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + '|detail');
+function buildAlertTaskDetailRows(salesName, rowCount, options) {
+  options = options || {};
+  var scope = options.scope === 'assigned' ? 'assigned' : 'completed';
+  var completedTarget = rowCount;
+  if (scope === 'assigned') {
+    rowCount = Math.max(0, rowCount || 0);
+    completedTarget = Math.max(0, Math.min(rowCount, parseInt(options.completedCount, 10) || 0));
+  } else if (options.exactCount) {
+    rowCount = Math.max(0, rowCount || 0);
+    completedTarget = rowCount;
+  } else {
+    rowCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, Math.max(0, rowCount || 0));
+    completedTarget = rowCount;
+  }
+  var seed = alertTaskFollowSeed(_alertTaskFollowType + '|' + _alertTaskFollowPeriod + '|' + salesName + (scope === 'assigned' ? '|assigned' : '|detail'));
+  var pendingTarget = rowCount - completedTarget;
   var rows = [];
-  for (var i = 0; i < completedCount; i++) {
+  for (var i = 0; i < rowCount; i++) {
     var s = seed + i * 131;
+    var isDone = i >= pendingTarget;
     var nick = ALERT_TASK_CUSTOMER_NAMES[s % ALERT_TASK_CUSTOMER_NAMES.length];
     var sid = buildAlertTaskSid(s);
     var assignTime = buildAlertTaskDateTime(s, 0);
-    var completeTime = buildAlertTaskDateTime(s, 1 + (s % 4));
+    var completeTime = isDone ? buildAlertTaskDateTime(s, 1 + (s % 4)) : '—';
     rows.push({
       nick: nick,
       sid: sid,
       assignTime: assignTime,
       completeTime: completeTime,
-      statusHtml: buildAlertTaskStatusHtml(true),
-      noteHtml: buildAlertTaskFollowNoteHtml(s + i * 7)
+      isDone: isDone,
+      statusHtml: buildAlertTaskStatusHtml(isDone),
+      noteHtml: isDone ? buildAlertTaskFollowNoteHtml(s + i * 7) : '—'
     });
   }
   return rows;
@@ -10935,6 +10985,7 @@ function renderAlertTaskDetailRowHtml(row) {
     '<td class="col-time">' + row.completeTime + '</td>' +
     '<td class="col-status">' + row.statusHtml + '</td>' +
     '<td class="col-note">' + row.noteHtml + '</td>' +
+    (_alertTaskDetailManagerReview ? '<td class="col-action">' + renderAlertTaskViewCommActionHtml(row) + '</td>' : '') +
     '</tr>';
 }
 
@@ -10981,8 +11032,27 @@ function getAlertTaskDetailRowRenderer() {
   return renderAlertTaskDetailRowHtml;
 }
 
-function buildSpecialAlertTaskDetailRows(salesName, taskCount) {
-  taskCount = Math.max(ALERT_TASK_DETAIL_MIN_ROWS, taskCount || 0);
+function alignAlertTaskDetailCompletion(rows, completedCount) {
+  var total = rows.length;
+  var doneCount = Math.max(0, Math.min(total, parseInt(completedCount, 10) || 0));
+  var pendingCount = total - doneCount;
+  rows.forEach(function (row, i) {
+    var done = i >= pendingCount;
+    var doneTime = done ? buildAlertTaskDateTime(i + 17, 2) : '—';
+    row.isDone = done;
+    row.statusHtml = buildAlertTaskStatusHtml(done);
+    if (Object.prototype.hasOwnProperty.call(row, 'taskCompleteTime')) row.taskCompleteTime = doneTime;
+    if (Object.prototype.hasOwnProperty.call(row, 'completeTime')) row.completeTime = doneTime;
+    if (Object.prototype.hasOwnProperty.call(row, 'confirmTime')) row.confirmTime = doneTime;
+  });
+  return rows;
+}
+
+function buildSpecialAlertTaskDetailRows(salesName, taskCount, options) {
+  options = options || {};
+  taskCount = options.exactCount
+    ? Math.max(0, taskCount || 0)
+    : Math.max(ALERT_TASK_DETAIL_MIN_ROWS, taskCount || 0);
   if (isCancellationRetentionDetailMode()) return buildCancellationRetentionDetailRows(salesName, taskCount);
   if (isDepositGuidanceDetailMode()) return buildDepositGuidanceDetailRows(salesName, taskCount);
   if (isMarginCallCareDetailMode()) return buildMarginCallCareDetailRows(salesName, taskCount);
@@ -11030,14 +11100,18 @@ function filterAlertTaskDetailRows(rows, filters) {
   });
 }
 
+function isAlertTaskDetailStatusFilterEnabled() {
+  return isSpecialAlertTaskDetailMode() || _alertTaskDetailListScope === 'assigned';
+}
+
 function updateAlertTaskDetailFilterVisibility() {
   var filtersEl = document.getElementById('alertTaskDetailFilters');
-  if (filtersEl) filtersEl.hidden = !isSpecialAlertTaskDetailMode();
+  if (filtersEl) filtersEl.hidden = !isAlertTaskDetailStatusFilterEnabled();
 }
 
 function updateAlertTaskDetailFilteredCount() {
   var countEl = document.getElementById('alertTaskDetailCount');
-  if (!countEl || !isSpecialAlertTaskDetailMode()) return;
+  if (!countEl || !isAlertTaskDetailStatusFilterEnabled()) return;
   countEl.textContent = String(_alertTaskDetailRows.length);
 }
 
@@ -11047,7 +11121,7 @@ function clearAlertTaskDetailFilterInputs() {
 }
 
 function applyAlertTaskDetailFilters() {
-  if (!isSpecialAlertTaskDetailMode()) return;
+  if (!isAlertTaskDetailStatusFilterEnabled()) return;
   _alertTaskDetailRows = filterAlertTaskDetailRows(_alertTaskDetailAllRows, getAlertTaskDetailFilterValues());
   _alertTaskDetailPage = 1;
   updateAlertTaskDetailFilteredCount();
@@ -11061,12 +11135,33 @@ function resetAlertTaskDetailFilters() {
 
 function renderAlertTaskDetailTable(salesName, assignedCount, completedCount) {
   if (isSpecialAlertTaskDetailMode()) {
-    _alertTaskDetailAllRows = buildSpecialAlertTaskDetailRows(salesName, assignedCount);
+    var specialCount = _alertTaskDetailManagerReview && _alertTaskDetailListScope === 'completed'
+      ? completedCount
+      : assignedCount;
+    _alertTaskDetailAllRows = buildSpecialAlertTaskDetailRows(salesName, specialCount, {
+      exactCount: _alertTaskDetailManagerReview
+    });
+    if (_alertTaskDetailManagerReview) {
+      alignAlertTaskDetailCompletion(
+        _alertTaskDetailAllRows,
+        _alertTaskDetailListScope === 'completed' ? specialCount : completedCount
+      );
+    }
+    clearAlertTaskDetailFilterInputs();
+    _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
+  } else if (_alertTaskDetailListScope === 'assigned') {
+    _alertTaskDetailAllRows = buildAlertTaskDetailRows(salesName, assignedCount, {
+      scope: 'assigned',
+      completedCount: completedCount,
+      exactCount: _alertTaskDetailManagerReview
+    });
     clearAlertTaskDetailFilterInputs();
     _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   } else {
-    _alertTaskDetailAllRows = [];
-    _alertTaskDetailRows = buildAlertTaskDetailRows(salesName, completedCount);
+    _alertTaskDetailAllRows = buildAlertTaskDetailRows(salesName, completedCount, {
+      exactCount: _alertTaskDetailManagerReview
+    });
+    _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   }
   _alertTaskDetailPage = 1;
   renderAlertTaskDetailThead();
@@ -11219,12 +11314,21 @@ function renderAlertTaskDetailCategoryTag() {
   wrap.hidden = false;
 }
 
-function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
+function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount, listScope, options) {
+  options = options || {};
   completedCount = Math.max(0, completedCount || 0);
   assignedCount = Math.max(0, assignedCount || completedCount);
+  var nextScope = listScope === 'assigned' ? 'assigned' : 'completed';
   if (!salesName) return;
-  if (!isSpecialAlertTaskDetailMode() && !completedCount) return;
-  if (isSpecialAlertTaskDetailMode() && !assignedCount) return;
+  if (isSpecialAlertTaskDetailMode()) {
+    if (!assignedCount) return;
+  } else if (nextScope === 'assigned') {
+    if (!assignedCount) return;
+  } else if (!completedCount) {
+    return;
+  }
+  _alertTaskDetailListScope = nextScope;
+  _alertTaskDetailManagerReview = options.managerReview === true;
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
   var salesEl = document.getElementById('alertTaskDetailSales');
@@ -11233,7 +11337,11 @@ function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
   var countEl = document.getElementById('alertTaskDetailCount');
   var countSuffixEl = document.getElementById('alertTaskDetailCountSuffix');
   var updatedEl = document.getElementById('alertTaskDetailUpdatedAt');
-  var displayCount = isSpecialAlertTaskDetailMode() ? assignedCount : completedCount;
+  var showAssignedList = _alertTaskDetailListScope === 'assigned' &&
+    (_alertTaskDetailManagerReview || !isSpecialAlertTaskDetailMode());
+  var displayCount = _alertTaskDetailManagerReview
+    ? (showAssignedList ? assignedCount : completedCount)
+    : (isSpecialAlertTaskDetailMode() || showAssignedList ? assignedCount : completedCount);
   drawer.classList.toggle('is-cancellation-mode', isSpecialAlertTaskDetailMode());
   if (isSpecialAlertTaskDetailMode()) {
     drawer.setAttribute('data-detail-mode', _alertTaskDetailMode);
@@ -11244,7 +11352,11 @@ function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount) {
   if (typeEl) typeEl.textContent = _alertTaskFollowType;
   if (periodEl) periodEl.textContent = ALERT_TASK_FOLLOW_PERIODS[_alertTaskFollowPeriod] || _alertTaskFollowPeriod;
   if (countEl) countEl.textContent = String(displayCount);
-  if (countSuffixEl) countSuffixEl.textContent = isSpecialAlertTaskDetailMode() ? '条任务' : '条已完成';
+  if (countSuffixEl) {
+    countSuffixEl.textContent = _alertTaskDetailManagerReview
+      ? (showAssignedList ? '条下发任务' : '条已完成')
+      : (isSpecialAlertTaskDetailMode() ? '条任务' : (showAssignedList ? '条下发任务' : '条已完成'));
+  }
   if (updatedEl) updatedEl.textContent = formatAlertTaskUpdateTime();
   renderAlertTaskDetailCategoryTag();
   renderAlertTaskDetailTable(salesName, assignedCount, completedCount);
@@ -11268,6 +11380,8 @@ function closeAlertTaskDetailDrawer() {
   _alertTaskDetailAllRows = [];
   _alertTaskDetailPage = 1;
   _alertTaskDetailMode = 'default';
+  _alertTaskDetailListScope = 'completed';
+  _alertTaskDetailManagerReview = false;
   clearAlertTaskDetailFilterInputs();
   updateAlertTaskDetailFilterVisibility();
   clearAlertTaskDetailCategory();
@@ -11438,11 +11552,13 @@ function initAlertTaskCardInteractions() {
       if (!link) return;
       e.preventDefault();
       e.stopPropagation();
-      _alertTaskDetailMode = 'default';
+      _alertTaskDetailMode = getSpecialAlertTaskDetailMode(_alertTaskFollowType) || 'default';
       openAlertTaskDetailDrawer(
         link.getAttribute('data-sales'),
         parseInt(link.getAttribute('data-assigned'), 10) || 0,
-        parseInt(link.getAttribute('data-completed'), 10) || 0
+        parseInt(link.getAttribute('data-completed'), 10) || 0,
+        link.getAttribute('data-metric') === 'assigned' ? 'assigned' : 'completed',
+        { managerReview: true }
       );
     });
   }
@@ -14022,12 +14138,131 @@ function resetCommFollowEntryCustomer() {
   hideCommFollowCustomerSuggest();
 }
 
-function openCommFollowEntryModal(customer) {
+function findAlertTaskDetailRowBySid(sid) {
+  var rows = _alertTaskDetailRows || [];
+  var target = String(sid || '');
+  for (var i = 0; i < rows.length; i++) {
+    if (String(rows[i].sid) === target) return rows[i];
+  }
+  return null;
+}
+
+function buildExistingCommFollowRecord(sid, nick) {
+  var row = findAlertTaskDetailRowBySid(sid);
+  var seed = alertTaskFollowSeed((_alertTaskFollowType || '') + '|' + (sid || '') + '|' + (nick || '') + '|comm-view');
+  var contactLabel = ALERT_TASK_CONTACT_RESULTS[seed % ALERT_TASK_CONTACT_RESULTS.length];
+  var purposeLabels = pickAlertTaskCommPurposes(seed + 11).split('、');
+  var outcomeLabel = ALERT_TASK_COMM_OUTCOMES[seed % ALERT_TASK_COMM_OUTCOMES.length];
+  var content = ALERT_TASK_COMM_CONTENTS[seed % ALERT_TASK_COMM_CONTENTS.length];
+  if (row && row.lastContactNote) content = row.lastContactNote;
+  else if (row && row.record) content = row.record;
+  var purposeMap = {
+    '充值': 'deposit', '提现': 'withdraw', '活动': 'activity', '交易': 'trade',
+    '账户': 'account', '实名': 'kyc', '软件': 'software', '行情': 'market',
+    '投诉': 'complaint', '私人': 'private'
+  };
+  var contactMap = {
+    '电话接通': 'phone-connected', '电话未接通': 'phone-missed',
+    'WhatsApp回复': 'wa-replied', 'WA未回复': 'wa-no-reply',
+    'ChatRoom回复': 'cr-replied', 'CR未回复': 'cr-no-reply'
+  };
+  var completeMap = {
+    '穿仓关怀': 'margin-blowout',
+    '提现引导': 'withdraw-guide',
+    '注销挽回': 'cancellation-retention',
+    '强平用户': 'forced-liquidation'
+  };
+  var isDone = row ? !!row.isDone : true;
+  return {
+    contactValue: contactMap[contactLabel] || '',
+    purposeValues: purposeLabels.map(function (label) { return purposeMap[label]; }).filter(Boolean),
+    commResult: outcomeLabel === '没达成目标' ? 'not-achieved' : 'achieved',
+    note: ['important', 'follow-up', 'risk', 'opportunity'][seed % 4],
+    content: content,
+    taskFollow: !isDone,
+    completeTask: isDone ? (completeMap[_alertTaskFollowType] || '') : '',
+    imageName: seed % 2 === 0 ? '沟通截图.jpg' : ''
+  };
+}
+
+function fillCommFollowEntryRecord(record) {
+  var form = document.getElementById('commFollowEntryForm');
+  if (!form || !record) return;
+  if (record.contactValue) {
+    var contact = form.querySelector('input[value="' + record.contactValue + '"]');
+    if (contact) contact.checked = true;
+  }
+  (record.purposeValues || []).forEach(function (value) {
+    var purpose = form.querySelector('input[name="purpose"][value="' + value + '"]');
+    if (purpose) purpose.checked = true;
+  });
+  if (record.commResult) {
+    var result = form.querySelector('input[name="commResult"][value="' + record.commResult + '"]');
+    if (result) result.checked = true;
+  }
+  var note = document.getElementById('commFollowEntryNote');
+  if (note) note.value = record.note || '';
+  var content = document.getElementById('commFollowEntryContent');
+  var count = document.getElementById('commFollowEntryCount');
+  if (content) content.value = record.content || '';
+  if (count && content) count.textContent = String(content.value.length);
+  var follow = form.querySelector('input[name="taskFollow"]');
+  if (follow) follow.checked = !!record.taskFollow;
+  if (record.completeTask) {
+    var task = form.querySelector('input[name="completeTask"][value="' + record.completeTask + '"]');
+    if (task) task.checked = true;
+  }
+  var uploadText = form.querySelector('.comm-follow-upload-text');
+  var uploadIcon = form.querySelector('.comm-follow-upload-icon');
+  if (uploadText) uploadText.textContent = record.imageName || '将图片粘贴此处进行上传';
+  if (uploadIcon) uploadIcon.hidden = !!record.imageName;
+}
+
+function setCommFollowEntryReadonly(locked) {
+  var modal = document.getElementById('commFollowEntryModal');
+  var form = document.getElementById('commFollowEntryForm');
+  if (!modal || !form) return;
+  modal.classList.toggle('is-readonly', !!locked);
+  form.querySelectorAll('input, select, textarea').forEach(function (el) {
+    el.disabled = !!locked;
+    if (el.tagName === 'TEXTAREA' || el.type === 'text') el.readOnly = !!locked;
+  });
+  var upload = form.querySelector('.comm-follow-upload');
+  if (upload) {
+    if (locked) upload.removeAttribute('tabindex');
+    else upload.setAttribute('tabindex', '0');
+    upload.setAttribute('aria-disabled', locked ? 'true' : 'false');
+  }
+  var title = document.getElementById('commFollowEntryTitle');
+  if (title) title.textContent = locked ? '查看沟通记录' : '跟进客户服务记录';
+  var cancelBtn = form.querySelector('.comm-follow-form-btn--ghost');
+  if (cancelBtn) cancelBtn.textContent = locked ? '关闭' : '取消';
+}
+
+function resetCommFollowEntryForm() {
+  setCommFollowEntryReadonly(false);
+  var form = document.getElementById('commFollowEntryForm');
+  if (form) form.reset();
+  resetCommFollowEntryCustomer();
+  var count = document.getElementById('commFollowEntryCount');
+  if (count) count.textContent = '0';
+  var uploadText = form ? form.querySelector('.comm-follow-upload-text') : null;
+  var uploadIcon = form ? form.querySelector('.comm-follow-upload-icon') : null;
+  if (uploadText) uploadText.textContent = '将图片粘贴此处进行上传';
+  if (uploadIcon) uploadIcon.hidden = false;
+}
+
+function openCommFollowEntryModal(customer, options) {
+  options = options || {};
   var modal = document.getElementById('commFollowEntryModal');
   if (!modal) return;
-  resetCommFollowEntryCustomer();
+  resetCommFollowEntryForm();
   if (customer && customer.sid && customer.name) {
     selectCommFollowCustomer(customer);
+  }
+  if (options.readonly) {
+    fillCommFollowEntryRecord(buildExistingCommFollowRecord(customer && customer.sid, customer && customer.name));
+    setCommFollowEntryReadonly(true);
   }
   modal.hidden = false;
   modal.setAttribute('aria-hidden', 'false');
@@ -14039,7 +14274,9 @@ function closeCommFollowEntryModal() {
   if (!modal || modal.hidden) return;
   modal.hidden = true;
   modal.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
+  setCommFollowEntryReadonly(false);
+  var followModal = document.getElementById('alertTaskFollowModal');
+  if (!followModal || followModal.hidden) document.body.style.overflow = '';
 }
 
 function hasCommFollowContactResultSelected() {
@@ -14052,6 +14289,8 @@ function hasCommFollowContactResultSelected() {
 
 function submitCommFollowEntryForm(event) {
   if (event) event.preventDefault();
+  var modal = document.getElementById('commFollowEntryModal');
+  if (modal && modal.classList.contains('is-readonly')) return;
   if (!hasCommFollowContactResultSelected()) {
     alert('请至少选择一项联系结果');
     return;
@@ -14863,8 +15102,9 @@ function switchPanel(panelId, btn) {
     goals: '1. 销售工作台(我的目标).html',
     sop: '2. 销售工作台(行动SOP).html',
     chance: '3. 销售工作台(客户机会).html',
-    growth: '4. 销售工作台(提升分析).html',
-    enable: '5. 销售工作台(展业赋能).html'
+    growth: '4. 销售工作台(运营分析).html',
+    enable: '5. 销售工作台(展业赋能).html',
+    improve: '6. 销售工作台(提升分析).html'
   };
   var file = map[panelId];
   if (file) window.location.href = '2. CRM工作台/2. 销售工作台2.0/' + file;
