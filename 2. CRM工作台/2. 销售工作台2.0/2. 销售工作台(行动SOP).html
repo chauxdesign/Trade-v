@@ -12339,10 +12339,6 @@ function renderSopScopeFollowHierarchy(spec) {
   var html = [];
   var scopeRows = outline.scopeNames.map(spec.buildRow);
   var scopeAgg = spec.aggregate(scopeRows);
-  html.push(buildCommStatsFollowTeamRowOpenTag() +
-    renderCommStatsFollowNameCell(outline.scopeLabel) +
-    spec.renderCells(scopeAgg, '', false) +
-    '</tr>');
   if (outline.showSelf && outline.selfName) {
     var selfRow = spec.buildRow(outline.selfName);
     html.push('<tr class="comm-follow-row--self">' +
@@ -12350,6 +12346,10 @@ function renderSopScopeFollowHierarchy(spec) {
       spec.renderCells(selfRow, outline.selfName, true) +
       '</tr>');
   }
+  html.push(buildCommStatsFollowTeamRowOpenTag() +
+    renderCommStatsFollowNameCell(outline.scopeLabel) +
+    spec.renderCells(scopeAgg, '', false) +
+    '</tr>');
   outline.childRoles.forEach(function (child) {
     var memberRows = (child.members || []).map(spec.buildRow);
     var groupAgg = spec.aggregate(memberRows);
