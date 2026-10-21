@@ -269,6 +269,10 @@
     .manager-goal-scope-select:focus{
       outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25);
     }
+    .manager-goal-scope-select:disabled{
+      background-color:#f1f5f9;color:#64748b;cursor:not-allowed;opacity:1;
+    }
+    body[data-view="manager"][data-goal-scope="self"] #view-personal .sales-only{display:block}
     .manager-goal-scope-hint{
       width:95%;margin:0;padding:0;box-sizing:border-box;text-align:left;
       font-size:13px;color:#475569;line-height:1.7;
@@ -4701,8 +4705,8 @@
                     <div class="trade-lots-second-row" data-trade-lots-month="5535" data-trade-lots-unit-price="0.3" data-team-month-lots="28957" data-team-members="17" data-personal-month="5535">
                       <div class="trade-lots-mini trade-lots-mini--team">
                         <div class="trade-lots-mini-inner">
-                          <div class="trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--ahead">本月超越团队平均手数 <strong class="trade-lots-avg-diff-val">3,832</strong><span class="trade-lots-unit-once">手</span></div>
-                          <div class="trade-lots-mini-foot">本月团队平均 <strong class="trade-lots-team-avg-val">1,703</strong><span class="trade-lots-unit-once">手</span></div>
+                          <div class="trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--ahead">本月超越区域平均手数 <strong class="trade-lots-avg-diff-val">3,832</strong><span class="trade-lots-unit-once">手</span></div>
+                          <div class="trade-lots-mini-foot">本月区域平均 <strong class="trade-lots-team-avg-val">1,703</strong><span class="trade-lots-unit-once">手</span></div>
                         </div>
                       </div>
                       <div class="trade-lots-mini trade-lots-mini--commission">
@@ -4909,7 +4913,7 @@
                       <div class="trade-lots-mini trade-lots-mini--team">
                         <div class="trade-lots-mini-inner">
                           <div class="trade-lots-mini-diff trade-lots-diff-text" hidden></div>
-                          <div class="trade-lots-mini-foot">本月团队平均 <strong class="trade-lots-team-avg-val">1,703</strong><span class="trade-lots-unit-once">手</span></div>
+                          <div class="trade-lots-mini-foot">本月区域平均 <strong class="trade-lots-team-avg-val">1,703</strong><span class="trade-lots-unit-once">手</span></div>
                         </div>
                       </div>
                       <div class="trade-lots-mini trade-lots-mini--commission">
@@ -4997,6 +5001,30 @@
 
         <!-- 右侧：绩效预估 + 我的客户排行榜 -->
         <aside class="right-sidebar" id="perf-panel">
+          <div class="module manager-goal-scope-panel manager-only" id="manager-goal-scope-module">
+            <div class="module-head">
+              <h2>切换管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
+                  <option value="self" selected>我的个人视角</option>
+                  <option value="all">团队所有人</option>
+                  <option value="IN_TW">印度TW-销售专员</option>
+                  <option value="IN_DANA">印度DANA-销售专员</option>
+                  <option value="DXB_DANA">迪拜DANA-销售专员</option>
+                  <option value="DXB_TW">迪拜TW-销售专员</option>
+                  <option value="PK_SUP">巴基销售主管</option>
+                  <option value="SUP_TW">印度销售主管 - TW</option>
+                  <option value="SUP_BD">印度销售主管 - BD</option>
+                </select>
+                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="选择销售人员" onchange="onManagerGoalScopeLevel2Change()" disabled>
+                  <option value="__self__" selected>May（组长）</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint is-sales-mode" id="managerGoalScopeHint">当前管理视角：<strong>我的个人视角 · May（组长）</strong></p>
+            </div>
+          </div>
           <div id="perf-personal" class="perf-view active">
           <div class="module perf-panel">
             <div class="module-head">
@@ -5036,12 +5064,13 @@
                     <div class="perf-value">6 人 / $600</div>
                   </div>
                 </div>
-                <div class="perf-item perf-item--bonus">
+                <div class="perf-item perf-item--bonus is-leader-split">
                   <span class="perf-icon" aria-hidden="true">📈</span>
                   <div class="perf-body">
                     <div class="perf-label">本月绩效 / 预估绩效</div>
                     <div class="perf-desc">本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）</div>
                     <div class="perf-value">$3,860 / $5,790</div>
+                    <div class="perf-split">个人提成 <em>$2,860</em> + 团队提成 <em>$1,000</em></div>
                   </div>
                 </div>
                 <div class="perf-item perf-item--risk">
@@ -5278,46 +5307,6 @@
           </div>
 
           <div id="perf-team" class="perf-view">
-          <div class="module manager-goal-scope-panel" id="manager-goal-scope-module">
-            <div class="module-head">
-              <h2>切换管理视角</h2>
-            </div>
-            <div class="module-body">
-              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
-                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
-                  <option value="all" selected>团队所有人</option>
-                  <option value="A">TW销售A组</option>
-                  <option value="B">TW销售B组</option>
-                  <option value="C">TW销售C组</option>
-                  <option value="DA">DANA销售A组</option>
-                  <option value="DB">DANA销售B组</option>
-                  <option value="DC">DANA销售C组</option>
-                </select>
-                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="选择销售人员" onchange="onManagerGoalScopeLevel2Change()">
-                  <option value="__all__" selected>全员汇总</option>
-                  <option value="Coulson">Coulson</option>
-                  <option value="May">May</option>
-                  <option value="Daisy">Daisy</option>
-                  <option value="Fitz">Fitz</option>
-                  <option value="Simmons">Simmons</option>
-                  <option value="Mack">Mack</option>
-                  <option value="Fury">Fury</option>
-                  <option value="Hunter">Hunter</option>
-                  <option value="Ward">Ward</option>
-                  <option value="Bobbi">Bobbi</option>
-                  <option value="Skye">Skye</option>
-                  <option value="Melinda">Melinda</option>
-                  <option value="Trip">Trip</option>
-                  <option value="Antoine">Antoine</option>
-                  <option value="Yo-Yo">Yo-Yo</option>
-                  <option value="Deke">Deke</option>
-                  <option value="Jemma">Jemma</option>
-                </select>
-              </div>
-              <p class="manager-goal-scope-hint" id="managerGoalScopeHint">当前管理视角：<strong>团队所有人</strong></p>
-            </div>
-          </div>
-
           <div class="module perf-panel" id="manager-goal-perf-panel">
             <div class="module-head">
               <h2 id="manager-goal-perf-title">团队绩效预估</h2>
@@ -5731,6 +5720,7 @@
   </div>
 </div>
 
+<script src="2. CRM工作台/2. 销售工作台2.0/_india-sales-org.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <script>
 var _growthChartRange = '7d';
@@ -11964,10 +11954,15 @@ function switchView(view, btn) {
   closeGoalMetricHelpModal();
   closeGoalDetailMetricHelpModal();
   document.body.dataset.view = view;
+  if (view === 'manager' && _managerGoalSalesFilter === 'self') {
+    document.body.dataset.goalScope = 'self';
+  } else {
+    delete document.body.dataset.goalScope;
+  }
   try { sessionStorage.setItem('wbView', view); } catch (e) {}
   document.querySelectorAll('.view-btn').forEach(function (b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  var goalId = view === 'sales' ? 'personal' : 'team';
+  var goalId = (view === 'sales' || (view === 'manager' && _managerGoalSalesFilter === 'self')) ? 'personal' : 'team';
   document.querySelectorAll('.target-view').forEach(function (v) { v.classList.remove('active'); });
   document.querySelectorAll('.perf-view').forEach(function (v) { v.classList.remove('active'); });
   var goalEl = document.getElementById('view-' + goalId);
@@ -11985,6 +11980,7 @@ function switchView(view, btn) {
       resizeGcaHistoryChart();
     } else {
       resetManagerGoalSalesFilter();
+      syncPersonalLeaderPerfSplit('May');
       resizeGcaHistoryChart();
     }
   });
@@ -14957,18 +14953,170 @@ function formatGoalKpiPct(actualPct) {
   return formatKpiPct(actualPct);
 }
 
-var _managerGoalSalesFilter = 'all';
-var _managerGoalScopeLevel1 = 'all';
-var _managerGoalScopeLevel2 = '__all__';
+var _managerGoalSalesFilter = 'self';
+var _managerGoalScopeLevel1 = 'self';
+var _managerGoalScopeLevel2 = '__self__';
 
-var MANAGER_GOAL_SALES_GROUPS = {
-  A: { label: 'TW销售A组', members: ['Coulson', 'May', 'Daisy'], leader: 'May' },
-  B: { label: 'TW销售B组', members: ['Fitz', 'Simmons', 'Mack'], leader: 'Fitz' },
-  C: { label: 'TW销售C组', members: ['Fury', 'Hunter'] },
-  DA: { label: 'DANA销售A组', members: ['Ward', 'Bobbi', 'Skye'] },
-  DB: { label: 'DANA销售B组', members: ['Melinda', 'Trip', 'Antoine'] },
-  DC: { label: 'DANA销售C组', members: ['Yo-Yo', 'Deke', 'Jemma'] }
-};
+var MANAGER_GOAL_SALES_GROUPS = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.getManagerGoalSalesGroups)
+  ? INDIA_SALES_ORG.getManagerGoalSalesGroups()
+  : {};
+
+/** 按印度销售组织名单补齐缺失销售的模拟数据与排名元数据，并重算团队汇总 */
+function ensureIndiaSalesOrgMockData() {
+  if (typeof INDIA_SALES_ORG === 'undefined' || typeof MANAGER_GOAL_SALES_DATA === 'undefined') return;
+  var names = INDIA_SALES_ORG.allNames || [];
+  var base = MANAGER_GOAL_SALES_DATA.Hunter || MANAGER_GOAL_SALES_DATA.May || MANAGER_GOAL_SALES_DATA[names[0]];
+  if (!base) return;
+  names.forEach(function (name, i) {
+    if (MANAGER_GOAL_SALES_DATA[name]) {
+      var exist = MANAGER_GOAL_SALES_DATA[name];
+      var existRole = (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || '';
+      exist.isTeam = false;
+      exist.isGroup = false;
+      exist.salesName = name;
+      if (existRole) {
+        exist.note = '当前查看 <strong>' + name + '</strong>（' + existRole + '）的客户目标进度；指标按 5 大维度展示其本月截止到昨日的个人客户目标跟进情况。';
+      }
+      if (!exist.labels || exist.labels.riskPrefix === '团队') {
+        exist.labels = {
+          activeTitle: '充值活跃',
+          netTitle: '净入金',
+          reachTitle: '客户沟通',
+          tradeTitle: '交易手数',
+          riskTitle: '风险',
+          riskPrefix: ''
+        };
+      }
+      if (exist.summary) exist.summary.customerLabel = '我的客户数';
+      return;
+    }
+    var role = (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || '';
+    var roleBump = /主管/.test(role) ? 1.08 : /组长/.test(role) ? 1.04 : /实习/.test(role) ? 0.82 : 1;
+    var f = Math.max(0.32, (0.96 - i * 0.0055) * roleBump);
+    var cov = Math.max(48, Math.min(88, Math.round(74 - i * 0.22 + (roleBump - 1) * 20)));
+    var r = function (n) { return Math.max(1, Math.round(n * f)); };
+    var customers = r(base.summary.customers);
+    var contacts = Math.max(1, Math.round(customers * cov / 100));
+    var connected = Math.max(1, Math.round(contacts * Math.min(cov + 8, 92) / 100));
+    var activeMonth = r(base.active.month);
+    var activeTarget = Math.round(base.active.target * f / 10) * 10;
+    var highRisk = r(base.summary.highRisk);
+    MANAGER_GOAL_SALES_DATA[name] = {
+      isTeam: false,
+      isGroup: false,
+      salesName: name,
+      note: '当前查看 <strong>' + name + '</strong>（' + role + '）的客户目标进度；指标按 5 大维度展示其本月截止到昨日的个人客户目标跟进情况。',
+      summary: {
+        customerLabel: '我的客户数',
+        customers: customers,
+        depositCustomers: r(base.summary.depositCustomers),
+        tradeCustomers: r(base.summary.tradeCustomers),
+        tradeLots: r(base.summary.tradeLots),
+        tradeLotsAvg: Math.round(base.summary.tradeLotsAvg * f * 10) / 10,
+        contacts: contacts,
+        contactCoverage: cov,
+        highRisk: highRisk
+      },
+      active: { today: r(base.active.today), week: r(base.active.week), month: activeMonth, target: activeTarget },
+      netDeposit: {
+        today: r(base.netDeposit.today),
+        week: r(base.netDeposit.week),
+        month: r(base.netDeposit.month),
+        target: Math.round(base.netDeposit.target * f / 1000) * 1000
+      },
+      reach: { contacts: contacts, connected: connected, cr: r(base.reach.cr), tell: r(base.reach.tell) },
+      tradeLots: {
+        today: r(base.tradeLots.today),
+        week: r(base.tradeLots.week),
+        month: r(base.tradeLots.month),
+        teamMonthLots: base.tradeLots.teamMonthLots,
+        members: names.length,
+        personalMonth: r(base.tradeLots.personalMonth)
+      },
+      risk: {
+        depositNoTrade: r(base.risk.depositNoTrade),
+        tradeNoDeposit: r(base.risk.tradeNoDeposit),
+        cancelled: r(base.risk.cancelled),
+        marginCall: r(base.risk.marginCall),
+        withdrawAlert: r(base.risk.withdrawAlert),
+        highRisk: highRisk,
+        uninstalled: r(base.risk.uninstalled)
+      },
+      gcaReachTarget: customers,
+      labels: {
+        activeTitle: '充值活跃',
+        netTitle: '净入金',
+        reachTitle: '客户沟通',
+        tradeTitle: '交易手数',
+        riskTitle: '风险',
+        riskPrefix: ''
+      },
+      ai: [
+        '联系覆盖率 <strong>' + cov + '%</strong>，仍有 <strong>' + Math.max(0, customers - contacts) + '</strong> 名客户待跟进，建议优先触达高意向与待实名客户。',
+        '有 <strong>' + highRisk + '</strong> 名高风险客户待处置，建议 2 小时内完成首次挽回沟通并记录处置结果。',
+        '本月活跃客户 <strong>' + activeMonth + '</strong> 人，KPI 完成 <strong>' + (activeTarget ? Math.round(activeMonth / activeTarget * 100) : 0) + '%</strong>（目标 ' + activeTarget + ' 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
+      ]
+    };
+  });
+  if (typeof MANAGER_GOAL_SALES_META === 'undefined') return;
+  var maxRank = 0;
+  Object.keys(MANAGER_GOAL_SALES_META).forEach(function (name) {
+    var rk = MANAGER_GOAL_SALES_META[name] && MANAGER_GOAL_SALES_META[name].rank;
+    if (rk && rk > maxRank) maxRank = rk;
+  });
+  var nextRank = maxRank + 1;
+  names.forEach(function (name) {
+    if (MANAGER_GOAL_SALES_META[name]) {
+      if (!MANAGER_GOAL_SALES_META[name].role && INDIA_SALES_ORG.getRole) {
+        MANAGER_GOAL_SALES_META[name].role = INDIA_SALES_ORG.getRole(name);
+      }
+      return;
+    }
+    var rank = nextRank++;
+    var reward = Math.max(420, Math.round(4280 - (rank - 1) * 38));
+    MANAGER_GOAL_SALES_META[name] = {
+      rank: rank,
+      reward: '$' + reward.toLocaleString('en-US'),
+      revenueRank: rank,
+      netK: '$' + Math.max(28, Math.round(286 - (rank - 1) * 2.2)) + 'K',
+      feeK: '$' + (Math.max(1.2, 17.2 - (rank - 1) * 0.14)).toFixed(1) + 'K',
+      tradeLots: Math.max(180, Math.round(1280 - (rank - 1) * 10)).toLocaleString('en-US'),
+      v34: 0,
+      topLabel: '第 ' + rank + ' 名',
+      role: (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || ''
+    };
+  });
+  if (MANAGER_GOAL_SALES_META.May) {
+    MANAGER_GOAL_SALES_META.May.personalReward = MANAGER_GOAL_SALES_META.May.personalReward || 2860;
+    MANAGER_GOAL_SALES_META.May.teamReward = MANAGER_GOAL_SALES_META.May.teamReward || 1000;
+    MANAGER_GOAL_SALES_META.May.role = '印度销售组长 - D';
+  }
+  // 组长 / 主管：补齐个人提成 + 团队提成，供绩效卡片拆分展示
+  names.forEach(function (name) {
+    var meta = MANAGER_GOAL_SALES_META[name];
+    if (!meta) return;
+    var role = meta.role || (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || '';
+    if (!(role.indexOf('销售组长') !== -1 || role.indexOf('销售主管') !== -1)) return;
+    meta.role = role;
+    if (meta.personalReward == null || meta.teamReward == null) {
+      var total = parseManagerGoalRewardUsd(meta.reward);
+      var teamPart = role.indexOf('销售主管') !== -1
+        ? Math.round(total * 0.35)
+        : Math.round(total * 0.26);
+      meta.teamReward = teamPart;
+      meta.personalReward = Math.max(0, total - teamPart);
+    }
+  });
+  if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') {
+    var order = names.slice().sort(function (a, b) {
+      return (MANAGER_GOAL_SALES_META[a].rank || 999) - (MANAGER_GOAL_SALES_META[b].rank || 999);
+    });
+    MANAGER_GOAL_PERF_RANK_ORDER.length = 0;
+    order.forEach(function (n) { MANAGER_GOAL_PERF_RANK_ORDER.push(n); });
+  }
+  if (typeof syncManagerGoalTeamAggregates === 'function') syncManagerGoalTeamAggregates();
+}
+
 
 /** 销售名单唯一来源：销售组配置。团队合计、占比分母均基于这份名单，保证 团队 = 各组之和 */
 function getAllManagerGoalSalesNames() {
@@ -14983,11 +15131,16 @@ function getAllManagerGoalSalesNames() {
 
 function isManagerGoalGroupLeader(salesName) {
   if (!salesName) return false;
+  var meta = typeof MANAGER_GOAL_SALES_META !== 'undefined' ? MANAGER_GOAL_SALES_META[salesName] : null;
+  var role = (meta && meta.role)
+    || ((typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.getRole) ? INDIA_SALES_ORG.getRole(salesName) : '');
+  var isLeadRole = !!(role && (role.indexOf('销售组长') !== -1 || role.indexOf('销售主管') !== -1));
+  if (isLeadRole && meta && meta.personalReward != null && meta.teamReward != null) return true;
   var key;
   for (key in MANAGER_GOAL_SALES_GROUPS) {
     if (MANAGER_GOAL_SALES_GROUPS[key].leader === salesName) return true;
   }
-  return false;
+  return isLeadRole;
 }
 
 function formatLeaderPerfSplit(meta) {
@@ -14996,12 +15149,43 @@ function formatLeaderPerfSplit(meta) {
     '</em> + 团队提成 <em>$' + Number(meta.teamReward).toLocaleString('en-US') + '</em>';
 }
 
+/** 销售/我的目标视角：组长绩效拆分同步到个人绩效预估卡片 */
+function syncPersonalLeaderPerfSplit(salesName) {
+  var panel = document.getElementById('perf-personal');
+  if (!panel) return;
+  var bonus = panel.querySelector('.perf-item--bonus');
+  if (!bonus) return;
+  var name = salesName || (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.currentUser
+    ? INDIA_SALES_ORG.currentUser.name
+    : 'May');
+  var meta = typeof MANAGER_GOAL_SALES_META !== 'undefined' ? MANAGER_GOAL_SALES_META[name] : null;
+  var splitEl = bonus.querySelector('.perf-split');
+  if (!splitEl) {
+    splitEl = document.createElement('div');
+    splitEl.className = 'perf-split';
+    bonus.querySelector('.perf-body').appendChild(splitEl);
+  }
+  var splitHtml = isManagerGoalGroupLeader(name) ? formatLeaderPerfSplit(meta) : '';
+  if (splitHtml) {
+    splitEl.innerHTML = splitHtml;
+    splitEl.hidden = false;
+    bonus.classList.add('is-leader-split');
+  } else {
+    splitEl.innerHTML = '';
+    splitEl.hidden = true;
+    bonus.classList.remove('is-leader-split');
+  }
+}
+
 function getManagerGoalScopeDisplayLabel(filter) {
+  if (filter === 'self') {
+    return '我的个人视角 · May（组长）';
+  }
   if (!filter || filter === 'all') return '团队所有人';
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
-    return group ? group.label + ' · 组内所有人' : '组内所有人';
+    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
   }
   if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
     var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
@@ -15013,6 +15197,7 @@ function getManagerGoalScopeDisplayLabel(filter) {
 }
 
 function resolveManagerGoalFilter(level1, level2) {
+  if (level1 === 'self') return 'self';
   if (level1 === 'all') {
     if (!level2 || level2 === '__all__') return 'all';
     return level2;
@@ -15022,13 +15207,18 @@ function resolveManagerGoalFilter(level1, level2) {
 }
 
 function parseManagerGoalFilterToScopes(filter) {
+  if (filter === 'self') return { level1: 'self', level2: '__self__' };
   if (!filter || filter === 'all') return { level1: 'all', level2: '__all__' };
-  if (filter.indexOf('group:') === 0) {
+  if (String(filter).indexOf('group:') === 0) {
     return { level1: filter.slice(6), level2: '__group__' };
   }
   var groupKey;
+  if (_managerGoalScopeLevel1 && MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1]
+    && MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1].members.indexOf(filter) !== -1) {
+    return { level1: _managerGoalScopeLevel1, level2: filter };
+  }
   for (groupKey in MANAGER_GOAL_SALES_GROUPS) {
-    if (MANAGER_GOAL_SALES_GROUPS[groupKey].members.indexOf(filter) !== -1 && _managerGoalScopeLevel1 === groupKey) {
+    if (MANAGER_GOAL_SALES_GROUPS[groupKey].members.indexOf(filter) !== -1) {
       return { level1: groupKey, level2: filter };
     }
   }
@@ -15038,18 +15228,28 @@ function parseManagerGoalFilterToScopes(filter) {
 function rebuildManagerGoalLevel2Options(level1, keepValue) {
   var select = document.getElementById('managerGoalScopeLevel2');
   if (!select) return;
+  if (level1 === 'self') {
+    var selfLabel = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel)
+      ? INDIA_SALES_ORG.formatScopePersonLabel('May')
+      : 'May（组长）';
+    select.disabled = true;
+    select.innerHTML = '<option value="__self__">' + selfLabel + '</option>';
+    select.value = '__self__';
+    return;
+  }
+  select.disabled = false;
   var html = '';
   if (level1 === 'all') {
     html += '<option value="__all__">全员汇总</option>';
     getAllManagerGoalSalesNames().forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
+      html += '<option value="' + name + '">' + ((typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel) ? INDIA_SALES_ORG.formatScopePersonLabel(name) : name) + '</option>';
     });
   } else {
     var group = MANAGER_GOAL_SALES_GROUPS[level1];
     if (!group) return;
-    html += '<option value="__group__">组内所有人</option>';
+    html += '<option value="__group__">角色内所有人</option>';
     group.members.forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
+      html += '<option value="' + name + '">' + ((typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel) ? INDIA_SALES_ORG.formatScopePersonLabel(name) : name) + '</option>';
     });
   }
   select.innerHTML = html;
@@ -15066,14 +15266,18 @@ function syncManagerGoalScopeSelects(filter) {
   if (!level1Select || !level2Select) return;
   if (level1Select.value !== scopes.level1) {
     level1Select.value = scopes.level1;
-    rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
-    return;
   }
-  if (!level2Select.querySelector('option[value="' + scopes.level2 + '"]')) {
+  var hasLevel2Option = false;
+  Array.prototype.forEach.call(level2Select.options, function (opt) {
+    if (opt.value === scopes.level2) hasLevel2Option = true;
+  });
+  if (!hasLevel2Option) {
     rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
-    return;
+  } else {
+    level2Select.value = scopes.level2;
   }
-  level2Select.value = scopes.level2;
+  level2Select.disabled = scopes.level1 === 'self';
+  _managerGoalScopeLevel2 = level2Select.value || scopes.level2;
 }
 
 function onManagerGoalScopeLevel1Change() {
@@ -15093,14 +15297,15 @@ function onManagerGoalScopeLevel2Change() {
 }
 
 function aggregateManagerGoalSalesData(members, groupKey, groupLabel) {
+  var scopeLabel = groupLabel || '团队所有人';
   var agg = {
     isTeam: true,
-    isGroup: true,
-    groupKey: groupKey,
-    groupLabel: groupLabel,
+    isGroup: !!groupKey,
+    groupKey: groupKey || '',
+    groupLabel: scopeLabel,
     groupMembers: members.slice(),
     salesName: '',
-    summary: { customerLabel: '团队客户数', customers: 0, depositCustomers: 0, tradeCustomers: 0, tradeLots: 0, tradeLotsAvg: 0, contacts: 0, contactCoverage: 0, highRisk: 0 },
+    summary: { customerLabel: groupKey ? '角色客户数' : '团队客户数', customers: 0, depositCustomers: 0, tradeCustomers: 0, tradeLots: 0, tradeLotsAvg: 0, contacts: 0, contactCoverage: 0, highRisk: 0 },
     active: { today: 0, week: 0, month: 0, target: 0 },
     netDeposit: { today: 0, week: 0, month: 0, target: 0 },
     reach: { contacts: 0, connected: 0, cr: 0, tell: 0 },
@@ -15149,11 +15354,18 @@ function aggregateManagerGoalSalesData(members, groupKey, groupLabel) {
   agg.tradeLots.teamMonthLots = agg.tradeLots.month;
   agg.summary.contactCoverage = agg.summary.customers > 0 ? Math.round(agg.summary.contacts / agg.summary.customers * 100) : 0;
   agg.summary.tradeLotsAvg = agg.summary.tradeCustomers > 0 ? Math.round(agg.summary.tradeLots / agg.summary.tradeCustomers * 10) / 10 : 0;
-  agg.note = '当前查看 <strong>' + groupLabel + '</strong> 的客户目标进度；指标按 5 大维度展示该组本月截止到昨日的汇总跟进情况。';
+  agg.note = '当前查看 <strong>' + scopeLabel + '</strong> 的客户目标进度；指标按 5 大维度展示本月截止到昨日的汇总跟进情况。';
+  var prefix = groupKey ? '角色内' : '团队';
+  agg.labels.activeTitle = prefix + '充值活跃';
+  agg.labels.netTitle = prefix + '净入金';
+  agg.labels.reachTitle = prefix + '客户沟通';
+  agg.labels.tradeTitle = prefix + '交易手数';
+  agg.labels.riskTitle = prefix + '风险';
+  agg.labels.riskPrefix = prefix;
   agg.ai = [
-    '团队联系覆盖率 <strong>' + agg.summary.contactCoverage + '%</strong>，仍有 <strong>' + Math.max(0, agg.summary.customers - agg.summary.contacts) + '</strong> 名客户待跟进，建议按销售负载重排触达优先级。',
-    '团队高风险流失客户 <strong>' + agg.summary.highRisk + '</strong> 人，建议启动风险处置专场并跟踪闭环进度。',
-    '团队本月活跃客户 <strong>' + agg.active.month.toLocaleString('en-US') + '</strong> 人，建议组内协同冲刺月度活跃目标。'
+    prefix + '联系覆盖率 <strong>' + agg.summary.contactCoverage + '%</strong>，仍有 <strong>' + Math.max(0, agg.summary.customers - agg.summary.contacts) + '</strong> 名客户待跟进，建议按销售负载重排触达优先级。',
+    prefix + '高风险流失客户 <strong>' + agg.summary.highRisk + '</strong> 人，建议启动风险处置专场并跟踪闭环进度。',
+    prefix + '本月活跃客户 <strong>' + agg.active.month.toLocaleString('en-US') + '</strong> 人，建议协同冲刺月度活跃目标。'
   ];
   return agg;
 }
@@ -15161,9 +15373,12 @@ function aggregateManagerGoalSalesData(members, groupKey, groupLabel) {
 function buildManagerGoalGroupSidebar(groupKey) {
   var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
   if (!group) return null;
-  var members = group.members.slice().sort(function (a, b) {
-    return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+  var members = group.members.slice().filter(function (name) {
+    return !!(MANAGER_GOAL_SALES_META[name] && MANAGER_GOAL_SALES_DATA[name]);
+  }).sort(function (a, b) {
+    return (MANAGER_GOAL_SALES_META[a].rank || 999) - (MANAGER_GOAL_SALES_META[b].rank || 999);
   });
+  if (!members.length) members = group.members.slice();
   var groupData = aggregateManagerGoalSalesData(members, groupKey, group.label);
   var scale = getManagerGoalScopeShare(members);
   return {
@@ -15186,7 +15401,11 @@ function buildManagerGoalGroupSidebar(groupKey) {
 function buildManagerGoalGroupData(groupKey) {
   var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
   if (!group) return MANAGER_GOAL_TEAM_DATA;
-  return aggregateManagerGoalSalesData(group.members, groupKey, group.label);
+  var members = group.members.filter(function (name) {
+    return !!MANAGER_GOAL_SALES_DATA[name];
+  });
+  if (!members.length) members = group.members.slice();
+  return aggregateManagerGoalSalesData(members, groupKey, group.label);
 }
 
 var MANAGER_GOAL_TEAM_DATA = {
@@ -15443,7 +15662,7 @@ var MANAGER_GOAL_SALES_DATA = {
  * 统一汇总口径：团队 = 全部销售之和 = 各销售组之和，组 = 组内成员之和。
  * 同时把「平均手数」统一为 交易手数 ÷ 交易客户数，「团队人均手数」统一为 团队本月手数 ÷ 团队人数。
  */
-(function syncManagerGoalTeamAggregates() {
+function syncManagerGoalTeamAggregates() {
   var names = getAllManagerGoalSalesNames().filter(function (name) {
     return !!MANAGER_GOAL_SALES_DATA[name];
   });
@@ -15478,12 +15697,16 @@ var MANAGER_GOAL_SALES_DATA = {
     t.members = teamMembers;
   });
 
+  team.summary.contactCoverage = team.summary.customers > 0
+    ? Math.round(team.summary.contacts / team.summary.customers * 100)
+    : 0;
   team.ai = [
     '团队联系覆盖率 <strong>' + team.summary.contactCoverage + '%</strong>，仍有 <strong>' + Math.max(0, team.summary.customers - team.summary.contacts).toLocaleString('en-US') + '</strong> 名客户待跟进，建议按销售负载重排触达优先级。',
     '团队高风险流失客户 <strong>' + team.summary.highRisk + '</strong> 人，建议启动风险处置专场并跟踪闭环进度。',
     '团队本月活跃客户 <strong>' + team.active.month.toLocaleString('en-US') + '</strong> 人，KPI 完成 <strong>' + Math.round(team.active.month / team.active.target * 100) + '%</strong>（目标 ' + team.active.target.toLocaleString('en-US') + ' 人），建议加大本周唤醒触达以冲刺月度活跃目标。'
   ];
-})();
+}
+syncManagerGoalTeamAggregates();
 
 var MANAGER_GOAL_RANK_LIMIT = 7;
 
@@ -15557,7 +15780,7 @@ var MANAGER_GOAL_SALES_META = {
   Coulson: { rank: 1, reward: '$4,280', revenueRank: 1, netK: '$286K', feeK: '$17.2K', tradeLots: '1,280', v34: 3, topLabel: 'TOP 1' },
   May: { rank: 2, reward: '$3,860', personalReward: 2860, teamReward: 1000, revenueRank: 2, netK: '$248K', feeK: '$18.6K', tradeLots: '1,156', v34: 3, topLabel: 'TOP 2' },
   Daisy: { rank: 3, reward: '$3,520', revenueRank: 3, netK: '$212K', feeK: '$14.8K', tradeLots: '1,024', v34: 2, topLabel: 'TOP 3' },
-  Fitz: { rank: 4, reward: '$3,180', personalReward: 2480, teamReward: 700, revenueRank: 4, netK: '$198K', feeK: '$12.4K', tradeLots: '968', v34: 1, topLabel: '第 4 名' },
+  Fitz: { rank: 4, reward: '$3,180', revenueRank: 4, netK: '$198K', feeK: '$12.4K', tradeLots: '968', v34: 1, topLabel: '第 4 名' },
   Simmons: { rank: 5, reward: '$2,940', revenueRank: 5, netK: '$176K', feeK: '$10.6K', tradeLots: '892', v34: 1, topLabel: '第 5 名' },
   Mack: { rank: 6, reward: '$2,680', revenueRank: 6, netK: '$154K', feeK: '$8.2K', tradeLots: '816', v34: 1, topLabel: '第 6 名' },
   Fury: { rank: 7, reward: '$2,420', revenueRank: 7, netK: '$132K', feeK: '$7.1K', tradeLots: '724', v34: 1, topLabel: '第 7 名' },
@@ -15572,6 +15795,12 @@ var MANAGER_GOAL_SALES_META = {
   Deke: { rank: 16, reward: '$940', revenueRank: 16, netK: '$54K', feeK: '$2.3K', tradeLots: '282', v34: 0, topLabel: '第 16 名' },
   Jemma: { rank: 17, reward: '$860', revenueRank: 17, netK: '$48K', feeK: '$2.1K', tradeLots: '256', v34: 0, topLabel: '第 17 名' }
 };
+
+var MANAGER_GOAL_PERF_RANK_ORDER = [
+  'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter',
+  'Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
+];
+ensureIndiaSalesOrgMockData();
 
 var V34_UPGRADE_REWARD_USD = 100;
 
@@ -15689,7 +15918,20 @@ function buildManagerGoalSalesSidebar(salesName) {
       { label: '交易客户数', desc: '本月累计实盘交易开仓客户数', value: goal.summary.tradeCustomers.toLocaleString('en-US') + ' 人' },
       { label: '手续费总额', desc: '本月累计手续费', value: formatManagerGoalMetaFee(sumManagerGoalMetaMetric('fee', [salesName])) },
       buildV34UpgradePerfItem('', [salesName]),
-      { label: '本月绩效 / 预估绩效', desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）', value: formatPerfRewardWithRelative(meta.reward), split: isManagerGoalGroupLeader(salesName) ? formatLeaderPerfSplit(meta) : '' },
+      {
+        label: '本月绩效 / 预估绩效',
+        desc: '本月绩效值 / 预估绩效值（本月绩效÷当月时间进度）',
+        value: formatPerfRewardWithRelative(meta.reward),
+        split: (function () {
+          if (!isManagerGoalGroupLeader(salesName)) return '';
+          var split = formatLeaderPerfSplit(meta);
+          if (split) return split;
+          // 组长/主管兜底：按总绩效拆出个人 + 团队提成
+          var total = parseManagerGoalRewardUsd(meta.reward);
+          var teamPart = Math.round(total * 0.26);
+          return formatLeaderPerfSplit({ personalReward: total - teamPart, teamReward: teamPart });
+        })()
+      },
       { label: '昨日风险提醒', desc: '可能流失高价值客户', value: goal.summary.highRisk + ' 人' }
     ],
     customerRankIntro: '统计范围：<strong class="rank-date-label">昨日</strong> · <strong>' + salesName + '</strong> 名下客户',
@@ -15723,15 +15965,36 @@ function buildManagerGoalSalesSidebar(salesName) {
 
 function getManagerGoalDisplayData(filter) {
   if (!filter || filter === 'all') {
-    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { sidebar: MANAGER_GOAL_TEAM_SIDEBAR });
+    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { isTeam: true, isGroup: false, salesName: '', sidebar: MANAGER_GOAL_TEAM_SIDEBAR });
   }
-  if (filter.indexOf('group:') === 0) {
+  if (String(filter).indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
-    return Object.assign({}, buildManagerGoalGroupData(groupKey), { sidebar: buildManagerGoalGroupSidebar(groupKey) || MANAGER_GOAL_TEAM_SIDEBAR });
+    var groupData = buildManagerGoalGroupData(groupKey);
+    return Object.assign({}, groupData, {
+      isTeam: true,
+      isGroup: true,
+      sidebar: buildManagerGoalGroupSidebar(groupKey) || MANAGER_GOAL_TEAM_SIDEBAR
+    });
   }
-  var base = MANAGER_GOAL_SALES_DATA[filter] || MANAGER_GOAL_TEAM_DATA;
-  var sidebar = buildManagerGoalSalesSidebar(filter);
-  return Object.assign({}, base, { sidebar: sidebar || MANAGER_GOAL_TEAM_SIDEBAR });
+  if (!MANAGER_GOAL_SALES_DATA[filter] && typeof ensureIndiaSalesOrgMockData === 'function') {
+    ensureIndiaSalesOrgMockData();
+  }
+  var base = MANAGER_GOAL_SALES_DATA[filter];
+  if (!base) {
+    return Object.assign({}, MANAGER_GOAL_TEAM_DATA, { isTeam: true, isGroup: false, salesName: '', sidebar: MANAGER_GOAL_TEAM_SIDEBAR });
+  }
+  var sidebar = null;
+  try {
+    sidebar = buildManagerGoalSalesSidebar(filter);
+  } catch (err) {
+    sidebar = null;
+  }
+  return Object.assign({}, base, {
+    isTeam: false,
+    isGroup: false,
+    salesName: filter,
+    sidebar: sidebar || MANAGER_GOAL_TEAM_SIDEBAR
+  });
 }
 
 function renderManagerGoalCustRankTable(tbody, rows) {
@@ -15812,11 +16075,6 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
     }
   });
 }
-
-var MANAGER_GOAL_PERF_RANK_ORDER = [
-  'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter',
-  'Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
-];
 
 /** 销售维度指标（绩效 / 净入金 / 手续费 / 交易量）按所选范围汇总，默认全部销售 */
 function sumManagerGoalMetaMetric(kind, members) {
@@ -15908,8 +16166,10 @@ function getManagerGoalScopeShare(members) {
 }
 
 function buildManagerGoalPerfTop3Self(members) {
-  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice()).sort(function (a, b) {
-    return MANAGER_GOAL_SALES_META[a].rank - MANAGER_GOAL_SALES_META[b].rank;
+  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice()).filter(function (name) {
+    return !!(MANAGER_GOAL_SALES_META[name]);
+  }).sort(function (a, b) {
+    return (MANAGER_GOAL_SALES_META[a].rank || 999) - (MANAGER_GOAL_SALES_META[b].rank || 999);
   });
   var top3 = list.slice(0, 3);
   var top3Total = sumManagerGoalTeamReward(top3);
@@ -15922,17 +16182,19 @@ function buildManagerGoalPerfTop3Self(members) {
 }
 
 function buildManagerGoalSalesTop3Self(members, kind) {
-  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice());
+  var list = (members && members.length ? members.slice() : MANAGER_GOAL_PERF_RANK_ORDER.slice()).filter(function (name) {
+    return !!(MANAGER_GOAL_SALES_META[name]);
+  });
   list.sort(function (a, b) {
-    var ma = MANAGER_GOAL_SALES_META[a];
-    var mb = MANAGER_GOAL_SALES_META[b];
+    var ma = MANAGER_GOAL_SALES_META[a] || {};
+    var mb = MANAGER_GOAL_SALES_META[b] || {};
     if (kind === 'deposit') {
-      return (parseFloat(mb.netK.replace(/[^\d.]/g, '')) || 0) - (parseFloat(ma.netK.replace(/[^\d.]/g, '')) || 0);
+      return (parseFloat(String(mb.netK || '0').replace(/[^\d.]/g, '')) || 0) - (parseFloat(String(ma.netK || '0').replace(/[^\d.]/g, '')) || 0);
     }
     if (kind === 'fee') {
-      return (parseFloat(mb.feeK.replace(/[^\d.]/g, '')) || 0) - (parseFloat(ma.feeK.replace(/[^\d.]/g, '')) || 0);
+      return (parseFloat(String(mb.feeK || '0').replace(/[^\d.]/g, '')) || 0) - (parseFloat(String(ma.feeK || '0').replace(/[^\d.]/g, '')) || 0);
     }
-    return (parseInt(mb.tradeLots.replace(/,/g, ''), 10) || 0) - (parseInt(ma.tradeLots.replace(/,/g, ''), 10) || 0);
+    return (parseInt(String(mb.tradeLots || '0').replace(/,/g, ''), 10) || 0) - (parseInt(String(ma.tradeLots || '0').replace(/,/g, ''), 10) || 0);
   });
   var top3 = list.slice(0, 3);
   var top3Total = sumManagerGoalMetaMetric(kind, top3);
@@ -16081,13 +16343,19 @@ function applyManagerGoalPerfRankPanel(panel, data) {
   valEl.textContent = meta.reward;
   if (!gapEl) return;
   if (meta.rank === 1) {
-    gapEl.textContent = '领先第 2 名 $' + (topReward - parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META.May.reward)).toLocaleString('en-US');
+    var secondMeta = MANAGER_GOAL_SALES_META.May || MANAGER_GOAL_SALES_META[MANAGER_GOAL_PERF_RANK_ORDER[1]];
+    gapEl.textContent = '领先第 2 名 $' + (topReward - parseManagerGoalRewardUsd(secondMeta && secondMeta.reward)).toLocaleString('en-US');
   } else if (meta.rank >= MANAGER_GOAL_PERF_RANK_ORDER.length) {
     gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US');
   } else {
     var nextName = MANAGER_GOAL_PERF_RANK_ORDER[meta.rank];
-    var nextReward = parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[nextName].reward);
-    gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US') + ' · 领先第 ' + (meta.rank + 1) + ' 名 $' + (reward - nextReward).toLocaleString('en-US');
+    var nextMeta = nextName ? MANAGER_GOAL_SALES_META[nextName] : null;
+    if (!nextMeta) {
+      gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US');
+    } else {
+      var nextReward = parseManagerGoalRewardUsd(nextMeta.reward);
+      gapEl.textContent = '距 TOP1 差 $' + (topReward - reward).toLocaleString('en-US') + ' · 领先第 ' + (meta.rank + 1) + ' 名 $' + (reward - nextReward).toLocaleString('en-US');
+    }
   }
 }
 
@@ -16251,9 +16519,39 @@ function setManagerGoalRiskLabel(btn, prefix, base) {
   if (span) span.textContent = (prefix ? prefix : '') + base;
 }
 
+function syncManagerGoalPerspectiveViews(filter) {
+  var isSelf = filter === 'self';
+  var inManager = document.body.dataset.view === 'manager';
+  if (inManager && isSelf) document.body.dataset.goalScope = 'self';
+  else delete document.body.dataset.goalScope;
+  if (!inManager) return;
+  var goalPersonal = document.getElementById('view-personal');
+  var goalTeam = document.getElementById('view-team');
+  var perfPersonal = document.getElementById('perf-personal');
+  var perfTeam = document.getElementById('perf-team');
+  if (goalPersonal) goalPersonal.classList.toggle('active', isSelf);
+  if (goalTeam) goalTeam.classList.toggle('active', !isSelf);
+  if (perfPersonal) perfPersonal.classList.toggle('active', isSelf);
+  if (perfTeam) perfTeam.classList.toggle('active', !isSelf);
+}
+
 function applyManagerGoalSalesFilter(value) {
   _managerGoalSalesFilter = value || 'all';
   syncManagerGoalScopeSelects(_managerGoalSalesFilter);
+  syncManagerGoalPerspectiveViews(_managerGoalSalesFilter);
+
+  if (_managerGoalSalesFilter === 'self') {
+    resetManagerGoalModuleTitles();
+    var selfHint = document.getElementById('managerGoalScopeHint');
+    if (selfHint) {
+      selfHint.classList.add('is-sales-mode');
+      selfHint.innerHTML = '当前管理视角：<strong>' + getManagerGoalScopeDisplayLabel('self') + '</strong>';
+    }
+    syncPersonalLeaderPerfSplit('May');
+    initGoalCompletionAnalysis('sales');
+    requestAnimationFrame(resizeGcaHistoryChart);
+    return;
+  }
 
   var data = getManagerGoalDisplayData(_managerGoalSalesFilter);
   var root = document.getElementById('view-team');
@@ -16378,13 +16676,14 @@ function applyManagerGoalSalesFilter(value) {
 }
 
 function resetManagerGoalSalesFilter() {
-  _managerGoalSalesFilter = 'all';
-  _managerGoalScopeLevel1 = 'all';
-  _managerGoalScopeLevel2 = '__all__';
-  syncManagerGoalScopeSelects('all');
+  _managerGoalSalesFilter = 'self';
+  _managerGoalScopeLevel1 = 'self';
+  _managerGoalScopeLevel2 = '__self__';
+  syncManagerGoalScopeSelects('self');
   if (document.body.dataset.view === 'manager') {
-    applyManagerGoalSalesFilter('all');
+    applyManagerGoalSalesFilter('self');
   } else {
+    delete document.body.dataset.goalScope;
     resetManagerGoalModuleTitles();
   }
 }
@@ -16426,13 +16725,13 @@ function initTradeLotsCards() {
     var diff = personalMonth - avg;
     if (diff > 0) {
       diffText.className = 'trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--ahead';
-      diffText.innerHTML = '本月超越团队平均手数 <strong class="trade-lots-avg-diff-val">' + diff.toLocaleString('en-US') + '</strong><span class="trade-lots-unit-once">手</span>';
+      diffText.innerHTML = '本月超越区域平均手数 <strong class="trade-lots-avg-diff-val">' + diff.toLocaleString('en-US') + '</strong><span class="trade-lots-unit-once">手</span>';
     } else if (diff === 0) {
       diffText.className = 'trade-lots-mini-diff trade-lots-diff-text';
-      diffText.textContent = '与团队平均手数持平';
+      diffText.textContent = '与区域平均手数持平';
     } else {
       diffText.className = 'trade-lots-mini-diff trade-lots-diff-text trade-lots-diff-text--behind';
-      diffText.innerHTML = '距离团队平均手数 <strong class="trade-lots-avg-diff-val">' + Math.abs(diff).toLocaleString('en-US') + '</strong><span class="trade-lots-unit-once">手</span>';
+      diffText.innerHTML = '距离区域平均手数 <strong class="trade-lots-avg-diff-val">' + Math.abs(diff).toLocaleString('en-US') + '</strong><span class="trade-lots-unit-once">手</span>';
     }
   });
 }
@@ -17437,6 +17736,7 @@ initCustReachCards();
 initTradeLotsCards();
 initGoalCompletionAnalysis('sales');
 initGoalCompletionAnalysis('manager');
+syncPersonalLeaderPerfSplit('May');
 restoreWorkbenchView();
 </script>
 </body>

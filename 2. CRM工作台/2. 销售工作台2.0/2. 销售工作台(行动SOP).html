@@ -105,6 +105,22 @@
     .view-banner{display:none !important}
     body[data-view="manager"] .sales-only{display:none}
     body[data-view="sales"] .manager-only{display:none}
+    /* 管理视角下选「我的行动视角」：展示销售数据，保留右侧切换模块 */
+    body[data-view="manager"][data-sop-scope="self"] .sales-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] .manager-only{display:none}
+    body[data-view="manager"][data-sop-scope="self"] .manager-goal-scope-panel.manager-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] .comm-stats-section .sales-only .comm-channel,
+    body[data-view="manager"][data-sop-scope="self"] .alert-task-section .sales-only .alert-task-card,
+    body[data-view="manager"][data-sop-scope="self"] .temp-mkt-section .sales-only .temp-mkt-card{
+      cursor:pointer;
+      transition:box-shadow .15s ease,border-color .15s ease,transform .15s ease;
+    }
+    body[data-view="manager"][data-sop-scope="self"] .comm-stats-section .sales-only .comm-channel:hover,
+    body[data-view="manager"][data-sop-scope="self"] .alert-task-section .sales-only .alert-task-card:hover{
+      border-color:#93c5fd;
+      box-shadow:0 4px 14px rgba(37,99,235,.12);
+      transform:translateY(-1px);
+    }
 
     .scroll-wrap{flex:1;overflow-y:auto;padding:12px 14px 24px;background:var(--bg)}
     .workbench{width:100%;max-width:none;margin:0;display:flex;flex-direction:column;gap:12px}
@@ -265,6 +281,9 @@
     }
     .manager-goal-scope-select:focus{
       outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25);
+    }
+    .manager-goal-scope-select:disabled{
+      background-color:#f1f5f9;color:#64748b;cursor:not-allowed;opacity:.95;
     }
     .manager-goal-scope-hint{
       width:95%;margin:0;padding:0;box-sizing:border-box;text-align:left;
@@ -1382,6 +1401,19 @@
       padding:10px 16px;
     }
     #panel-sop .comm-rank-panel,#panel-sop .task-rank-panel{height:fit-content}
+    #panel-sop .manager-goal-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+      border-width:1px;min-height:auto;height:fit-content;
+    }
+    #panel-sop .manager-goal-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-sop .manager-goal-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-sop .manager-goal-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-sop .manager-goal-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
     #panel-sop .comm-stats-section{
       background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
       box-shadow:var(--card-shadow);padding:0;overflow:hidden;
@@ -2448,6 +2480,10 @@
     #alertTaskFollowModal .comm-follow-row--team td{background:#fff}
     #commStatsFollowModal .comm-follow-row--team .col-name,
     #alertTaskFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commStatsFollowModal .comm-follow-row--self td,
+    #alertTaskFollowModal .comm-follow-row--self td{background:#fff7ed}
+    #commStatsFollowModal .comm-follow-row--self .col-name,
+    #alertTaskFollowModal .comm-follow-row--self .col-name{font-weight:800;color:#9a3412}
     #commStatsFollowModal .comm-follow-row--group td,
     #alertTaskFollowModal .comm-follow-row--group td{background:#f8fafc}
     #commStatsFollowModal .comm-follow-row--group .col-name,
@@ -2509,6 +2545,8 @@
     #commQcFollowModal .comm-follow-row--team td,
     #commQcFollowModal .comm-follow-row--member td{background:#fff}
     #commQcFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commQcFollowModal .comm-follow-row--self td{background:#fff7ed}
+    #commQcFollowModal .comm-follow-row--self .col-name{font-weight:800;color:#9a3412}
     #commQcFollowModal .comm-follow-row--group td{background:#f8fafc}
     #commQcFollowModal .comm-follow-row--group .col-name{font-weight:800;color:#0f172a}
     #commQcFollowModal .comm-follow-row--toggle{cursor:pointer}
@@ -4877,7 +4915,7 @@
     a.wb-tab{text-decoration:none;color:inherit;display:inline-flex;align-items:center;box-sizing:border-box}
   </style>
 </head>
-<body data-view="sales">
+<body data-view="sales" data-sop-scope="self">
 <div class="app">
   <iframe class="wb-sidebar-frame" src="2. CRM工作台/0. 菜单项/_sidebar-menu.html#lang=zh&amp;active=workbench-home" title="侧边菜单"></iframe>
 
@@ -5410,7 +5448,7 @@
                     <strong>85%</strong>
                   </div>
                   <div class="alert-task-chip warn">
-                    <span>超时24h</span>
+                    <span>超时24h未完成</span>
                     <strong>2</strong>
                   </div>
                 </div>
@@ -5728,7 +5766,7 @@
                     <strong>85%</strong>
                   </div>
                   <div class="alert-task-chip warn">
-                    <span>超时24h</span>
+                    <span>超时24h未完成</span>
                     <strong>34</strong>
                   </div>
                 </div>
@@ -6534,6 +6572,30 @@
           </div>
           <div class="sop-right-col">
           <div class="sop-right-stack">
+          <aside class="module manager-goal-scope-panel manager-only" id="manager-goal-scope-module">
+            <div class="module-head">
+              <h2>切换管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
+                  <option value="self" selected>我的个人视角</option>
+                  <option value="all">团队所有人</option>
+                  <option value="IN_TW">印度TW-销售专员</option>
+                  <option value="IN_DANA">印度DANA-销售专员</option>
+                  <option value="DXB_DANA">迪拜DANA-销售专员</option>
+                  <option value="DXB_TW">迪拜TW-销售专员</option>
+                  <option value="PK_SUP">巴基销售主管</option>
+                  <option value="SUP_TW">印度销售主管 - TW</option>
+                  <option value="SUP_BD">印度销售主管 - BD</option>
+                </select>
+                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="选择销售人员" disabled onchange="onManagerGoalScopeLevel2Change()">
+                  <option value="May" selected>May（组长）</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint is-sales-mode" id="managerGoalScopeHint">当前管理视角：<strong>我的个人视角 · May（组长）</strong></p>
+            </div>
+          </aside>
           <aside class="block large comm-rank-panel">
             <div class="module-head">
               <h2>客户触达排行榜</h2>
@@ -6717,7 +6779,7 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>20.7 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>4 人</strong></span>
-                  <span class="rev-rank-chip">前5名团队占比 <strong>55.4%</strong></span>
+                  <span class="rev-rank-chip">前10名团队占比 <strong>55.4%</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
                   <div class="rev-rank-self-line rev-rank-self-line--main">
@@ -6760,7 +6822,7 @@
                 <div class="rev-rank-foot">
                   <span class="rev-rank-chip">团队均值 <strong>15.8 项</strong></span>
                   <span class="rev-rank-chip">高于均值 <strong>5 人</strong></span>
-                  <span class="rev-rank-chip">前5名团队占比 <strong>56.3%</strong></span>
+                  <span class="rev-rank-chip">前10名团队占比 <strong>56.3%</strong></span>
                 </div>
                 <div class="rev-rank-self sales-only">
                   <div class="rev-rank-self-line rev-rank-self-line--main">
@@ -7294,7 +7356,7 @@
         <li><span class="metric-name">今日新增</span><span class="metric-desc">当日新下发的任务条数，不随上方时间条件变化</span></li>
         <li><span class="metric-name">今日完成</span><span class="metric-desc">当日完成的任务条数，不随上方时间条件变化</span></li>
         <li><span class="metric-name">今日完成率</span><span class="metric-desc">今日完成 / 今日新增，不随上方时间条件变化</span></li>
-        <li><span class="metric-name">超时24h</span><span class="metric-desc">下发超过 24 小时仍未完成的任务条数；当日新增不计入超时</span></li>
+        <li><span class="metric-name">超时24h未完成</span><span class="metric-desc">下发超过 24 小时仍未完成的任务条数；当日新增不计入超时</span></li>
       </ul>
       <p class="alert-task-follow-intro">以下为任务卡片指标定义。</p>
       <ul class="goal-metric-help-list">
@@ -7533,6 +7595,7 @@
   </div>
 </div>
 
+<script src="2. CRM工作台/2. 销售工作台2.0/_india-sales-org.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 <script>
 var _growthChartRange = '7d';
@@ -7983,7 +8046,8 @@ var growthConvertChartData = {
 };
 
 function getGrowthChartViewKey() {
-  return document.body.dataset.view === 'manager' ? 'manager' : 'sales';
+  if (document.body.dataset.view === 'manager' && document.body.dataset.sopScope !== 'self') return 'manager';
+  return 'sales';
 }
 
 function getGrowthLabelsForRange(range) {
@@ -10003,7 +10067,15 @@ function getAlertTaskCardTotals(taskType, period, scope) {
 }
 
 function getAlertTaskManagerCardTotals(taskType, period) {
-  return getAlertTaskCardTotals(taskType, period, 'manager');
+  var totals = getAlertTaskCardTotals(taskType, period, 'manager');
+  if (!totals) return null;
+  var ratio = typeof getSopAlertTaskScopeRatio === 'function' ? getSopAlertTaskScopeRatio() : 1;
+  if (ratio >= 0.999) return totals;
+  return {
+    assigned: Math.max(0, Math.round(totals.assigned * ratio)),
+    completed: Math.max(0, Math.round(totals.completed * ratio)),
+    overdue: Math.max(0, Math.round(totals.overdue * ratio))
+  };
 }
 
 /** 按权重把总量拆成整数份，合计严格等于 total */
@@ -10110,7 +10182,7 @@ function buildAlertTaskFollowDistribution(taskType, period) {
 }
 
 function buildAlertTaskFollowRowForName(name, taskType, period) {
-  var key = taskType + '|' + period;
+  var key = (_managerGoalScopeLevel1 || 'self') + '|' + taskType + '|' + period;
   if (!_alertTaskFollowDistCache[key]) {
     _alertTaskFollowDistCache[key] = buildAlertTaskFollowDistribution(taskType, period);
   }
@@ -10168,40 +10240,14 @@ function renderAlertTaskFollowManagerHierarchy() {
   var period = _alertTaskFollowPeriod;
   var taskType = _alertTaskFollowType;
   if (!taskType) return '';
-  var html = [];
-  var teamNames = getCommStatsManagerSalesNames();
-  var teamRows = teamNames.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
-  var teamAgg = aggregateAlertTaskFollowRows(teamRows);
-  var group;
-  var memberRows;
-  var groupAgg;
-  var expanded;
-  var i;
-
-  html.push(buildCommStatsFollowTeamRowOpenTag() +
-    renderCommStatsFollowNameCell(ALERT_TASK_FOLLOW_TEAM_LABEL) +
-    renderAlertTaskFollowDataCells(teamAgg, '', false) +
-    '</tr>');
-  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-    group = MANAGER_GOAL_SALES_GROUPS[gk];
-    if (!group) return;
-    memberRows = group.members.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
-    groupAgg = aggregateAlertTaskFollowRows(memberRows);
-    expanded = isAlertTaskFollowGroupExpanded(gk);
-    html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-      renderAlertTaskFollowDataCells(groupAgg, '', false) +
-      '</tr>');
-    if (expanded) {
-      for (i = 0; i < memberRows.length; i++) {
-        html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-          renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-          renderAlertTaskFollowDataCells(memberRows[i], memberRows[i].name, true) +
-          '</tr>');
-      }
-    }
+  return renderSopScopeFollowHierarchy({
+    buildRow: function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); },
+    aggregate: aggregateAlertTaskFollowRows,
+    renderCells: renderAlertTaskFollowDataCells,
+    isExpanded: isAlertTaskFollowGroupExpanded,
+    openGroup: buildCommStatsFollowGroupRowOpenTag,
+    parentAttr: 'data-comm-follow-parent'
   });
-  return html.join('');
 }
 
 function padAlertTaskNum(n) {
@@ -11522,8 +11568,12 @@ function refreshAlertTaskSummaryFromCards(root) {
 
 function applyAlertTaskModulePeriod(period) {
   var factor = ALERT_TASK_MODULE_PERIOD_FLOW[period] || 1;
-  document.querySelectorAll('.alert-task-section .alert-task-card').forEach(function (card) {
+  var mgrFactor = factor * (typeof getSopAlertTaskScopeRatio === 'function' ? getSopAlertTaskScopeRatio() : 1);
+  document.querySelectorAll('.alert-task-section .sales-only .alert-task-card').forEach(function (card) {
     applyAlertTaskCardPeriod(card, factor);
+  });
+  document.querySelectorAll('.alert-task-section .manager-only .alert-task-card').forEach(function (card) {
+    applyAlertTaskCardPeriod(card, mgrFactor);
   });
   document.querySelectorAll('.alert-task-section .sales-only, .alert-task-section .manager-only').forEach(function (root) {
     refreshAlertTaskSummaryFromCards(root);
@@ -11702,7 +11752,7 @@ function getCommStatsChannelSplit(period) {
   var block = COMM_STATS_TEAM_CHANNEL_DATA[period];
   if (!block) return null;
   var names = getCommStatsManagerSalesNames();
-  var cacheKey = period + '|' + names.length;
+  var cacheKey = (_managerGoalScopeLevel1 || 'self') + '|' + period + '|' + names.join(',');
   if (_commStatsChannelSplitCache[cacheKey]) return _commStatsChannelSplitCache[cacheKey];
   var custWeights = names.map(getCommStatsSalesCustomerTotal);
   var telContacted = allocateCommStatsTotal(block.tel.contacted, custWeights);
@@ -11990,8 +12040,15 @@ var COMM_STATS_FOLLOW_GROUP_KEYS = ['A', 'B', 'C', 'DA', 'DB', 'DC'];
 var COMM_STATS_FOLLOW_TEAM_LABEL = '团队整体进度';
 
 function getCommStatsManagerSalesNames() {
-  if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') return MANAGER_GOAL_PERF_RANK_ORDER.slice();
-  return ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
+  var names = [];
+  if (typeof getSopScopedSalesNames === 'function') names = getSopScopedSalesNames();
+  else if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') names = MANAGER_GOAL_PERF_RANK_ORDER.slice();
+  else names = ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
+  var selfName = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.currentUser)
+    ? INDIA_SALES_ORG.currentUser.name
+    : 'May';
+  if (selfName && names.indexOf(selfName) === -1) names = names.concat([selfName]);
+  return names;
 }
 
 function isCommStatsFollowGroupExpanded(groupKey) {
@@ -12277,131 +12334,85 @@ function renderCommStatsFollowChatCells(row, salesName, linkable) {
     renderCommStatsFollowRateCell(row.replyRate);
 }
 
-function renderCommStatsFollowManagerHierarchy() {
-  var period = _commStatsFollowPeriod;
+function renderSopScopeFollowHierarchy(spec) {
+  var outline = getSopManagerFollowOutline();
   var html = [];
-  var teamNames = getCommStatsManagerSalesNames();
-  var teamRows;
-  var teamAgg;
-  var groupKey;
-  var group;
-  var memberRows;
-  var groupAgg;
-  var expanded;
-  var i;
-
-  if (_commStatsFollowScope === 'summary') {
-    teamRows = teamNames.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
-    teamAgg = aggregateCommStatsSummaryRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowSummaryCells(teamAgg, '', false) +
+  var scopeRows = outline.scopeNames.map(spec.buildRow);
+  var scopeAgg = spec.aggregate(scopeRows);
+  html.push(buildCommStatsFollowTeamRowOpenTag() +
+    renderCommStatsFollowNameCell(outline.scopeLabel) +
+    spec.renderCells(scopeAgg, '', false) +
+    '</tr>');
+  if (outline.showSelf && outline.selfName) {
+    var selfRow = spec.buildRow(outline.selfName);
+    html.push('<tr class="comm-follow-row--self">' +
+      renderCommStatsFollowNameCell(outline.selfLabel || (outline.selfName + '（我自己）')) +
+      spec.renderCells(selfRow, outline.selfName, true) +
       '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_SALES_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
-      groupAgg = aggregateCommStatsSummaryRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowSummaryCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowSummaryCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
-    });
-    return html.join('');
   }
-
-  if (!_commStatsChannelType) return '';
-  teamRows = teamNames.map(function (name) { return buildCommStatsFollowRowForName(name, _commStatsChannelType, period); });
-  if (_commStatsChannelType === 'tel') {
-    teamAgg = aggregateCommStatsTelRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowTelCells(teamAgg, '', false) +
+  outline.childRoles.forEach(function (child) {
+    var memberRows = (child.members || []).map(spec.buildRow);
+    var groupAgg = spec.aggregate(memberRows);
+    var expanded = spec.isExpanded(child.key);
+    var parentAttr = spec.parentAttr || 'data-comm-follow-parent';
+    html.push(spec.openGroup(child.key, expanded) +
+      renderCommStatsFollowNameCell(child.label, { groupKey: child.key }) +
+      spec.renderCells(groupAgg, '', false) +
       '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_SALES_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'tel', period); });
-      groupAgg = aggregateCommStatsTelRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowTelCells(groupAgg, '', false) +
+    if (!expanded) return;
+    memberRows.forEach(function (row) {
+      var personLabel = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel)
+        ? INDIA_SALES_ORG.formatScopePersonLabel(row.name)
+        : row.name;
+      html.push('<tr class="comm-follow-row--member" ' + parentAttr + '="' + child.key + '">' +
+        renderCommStatsFollowNameCell(personLabel, { isMember: true }) +
+        spec.renderCells(row, row.name, true) +
         '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowTelCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
     });
-    return html.join('');
-  }
-  if (_commStatsChannelType === 'wa') {
-    teamAgg = aggregateCommStatsWaRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowWaCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_SALES_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'wa', period); });
-      groupAgg = aggregateCommStatsWaRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowWaCells(groupAgg, '', false) +
+  });
+  if (!outline.childRoles.length && outline.peerNames && outline.peerNames.length) {
+    outline.peerNames.forEach(function (name) {
+      var row = spec.buildRow(name);
+      var personLabel = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel)
+        ? INDIA_SALES_ORG.formatScopePersonLabel(name)
+        : name;
+      html.push('<tr class="comm-follow-row--member">' +
+        renderCommStatsFollowNameCell(personLabel, { isMember: true }) +
+        spec.renderCells(row, name, true) +
         '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowWaCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
-    });
-    return html.join('');
-  }
-  if (_commStatsChannelType === 'chat') {
-    teamAgg = aggregateCommStatsChatRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowChatCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_SALES_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'chat', period); });
-      groupAgg = aggregateCommStatsChatRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowChatCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowChatCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
     });
   }
   return html.join('');
+}
+
+function renderCommStatsFollowManagerHierarchy() {
+  var period = _commStatsFollowPeriod;
+  if (_commStatsFollowScope === 'summary') {
+    return renderSopScopeFollowHierarchy({
+      buildRow: function (name) { return buildCommStatsSummaryFollowRowForName(name, period); },
+      aggregate: aggregateCommStatsSummaryRows,
+      renderCells: renderCommStatsFollowSummaryCells,
+      isExpanded: isCommStatsFollowGroupExpanded,
+      openGroup: buildCommStatsFollowGroupRowOpenTag,
+      parentAttr: 'data-comm-follow-parent'
+    });
+  }
+  if (!_commStatsChannelType) return '';
+  var channel = _commStatsChannelType;
+  var aggregate = channel === 'tel' ? aggregateCommStatsTelRows
+    : channel === 'wa' ? aggregateCommStatsWaRows
+    : aggregateCommStatsChatRows;
+  var renderCells = channel === 'tel' ? renderCommStatsFollowTelCells
+    : channel === 'wa' ? renderCommStatsFollowWaCells
+    : renderCommStatsFollowChatCells;
+  return renderSopScopeFollowHierarchy({
+    buildRow: function (name) { return buildCommStatsFollowRowForName(name, channel, period); },
+    aggregate: aggregate,
+    renderCells: renderCells,
+    isExpanded: isCommStatsFollowGroupExpanded,
+    openGroup: buildCommStatsFollowGroupRowOpenTag,
+    parentAttr: 'data-comm-follow-parent'
+  });
 }
 
 var _commStatsDetailListMode = 'records';
@@ -14018,18 +14029,17 @@ function handleCommStatsSummaryChipActivate(chip) {
   if (!chip || !chip.closest('.comm-stats-section')) return;
   var chipType = chip.getAttribute('data-comm-chip');
   if (!chipType) return;
-  var view = document.body.dataset.view || 'sales';
   var count = getCommSummaryChipCount(chip);
   if (!count) return;
 
   _commStatsChannelType = '';
   _commStatsFollowPeriod = 'all';
 
-  if (view === 'manager' && chip.closest('.manager-only')) {
+  if (chip.closest('.manager-only')) {
     openCommStatsSummaryFollowModal();
     return;
   }
-  if (view === 'sales' && chip.closest('.sales-only')) {
+  if (chip.closest('.sales-only')) {
     if (chipType === 'my-customers' || chipType === 'reply-rate') {
       var customersChip = chip.closest('.comm-stats-summary');
       customersChip = customersChip && customersChip.querySelector('[data-comm-chip="my-customers"]');
@@ -14650,17 +14660,16 @@ function initCommReviewDrawer() {
 
 function handleCommStatsChannelActivate(card) {
   if (!card || !card.closest('.comm-stats-section')) return;
-  var view = document.body.dataset.view || 'sales';
   var channelType = card.getAttribute('data-channel-type');
   if (!channelType) return;
 
   _commStatsFollowPeriod = _commStatsModulePeriod || 'today';
 
-  if (view === 'manager' && card.closest('.manager-only')) {
+  if (card.closest('.manager-only')) {
     openCommStatsFollowModal(channelType);
     return;
   }
-  if (view === 'sales' && card.closest('.sales-only')) {
+  if (card.closest('.sales-only')) {
     var contacted = getCommChannelContactedCount(card);
     if (!contacted) return;
     openCommChannelTaskDetailDrawer(COMM_STATS_CURRENT_SALES, contacted, channelType);
@@ -14840,37 +14849,17 @@ function renderCommQcFollowCells(row, salesName, linkable) {
 function renderCommQcFollowTable() {
   var tbody = document.getElementById('commQcFollowTbody');
   if (!tbody) return;
-  var html = [];
-  var teamRows = getCommStatsManagerSalesNames().map(function (name) {
-    return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
+  tbody.innerHTML = renderSopScopeFollowHierarchy({
+    buildRow: function (name) { return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod); },
+    aggregate: aggregateCommQcFollowRows,
+    renderCells: renderCommQcFollowCells,
+    isExpanded: isCommQcFollowGroupExpanded,
+    openGroup: function (groupKey, expanded) {
+      return '<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
+        '" data-comm-qc-follow-group="' + groupKey + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">';
+    },
+    parentAttr: 'data-comm-qc-follow-parent'
   });
-  html.push(buildCommStatsFollowTeamRowOpenTag() +
-    renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-    renderCommQcFollowCells(aggregateCommQcFollowRows(teamRows), '', false) +
-    '</tr>');
-  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-    var group = MANAGER_GOAL_SALES_GROUPS[gk];
-    if (!group) return;
-    var memberRows = group.members.map(function (name) {
-      return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
-    });
-    var groupAgg = aggregateCommQcFollowRows(memberRows);
-    var expanded = isCommQcFollowGroupExpanded(gk);
-    html.push('<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
-      '" data-comm-qc-follow-group="' + gk + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">' +
-      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-      renderCommQcFollowCells(groupAgg, '', false) +
-      '</tr>');
-    if (expanded) {
-      memberRows.forEach(function (row) {
-        html.push('<tr class="comm-follow-row--member" data-comm-qc-follow-parent="' + gk + '">' +
-          renderCommStatsFollowNameCell(row.name, { isMember: true }) +
-          renderCommQcFollowCells(row, row.name, true) +
-          '</tr>');
-      });
-    }
-  });
-  tbody.innerHTML = html.join('');
 }
 
 function openCommQcFollowModal(type) {
@@ -14920,15 +14909,19 @@ function getCommQcColType(col) {
 
 function handleCommQcColActivate(col) {
   if (!col || !col.closest('.comm-stats-section')) return;
-  var view = document.body.dataset.view || 'sales';
-  if (view === 'manager' && col.closest('.manager-only')) {
+  if (col.closest('.manager-only')) {
     openCommQcFollowModal(getCommQcColType(col));
   }
 }
 
+function getSopEffectiveDataView() {
+  if (document.body.dataset.view === 'manager' && document.body.dataset.sopScope !== 'self') return 'manager';
+  return 'sales';
+}
+
 function openCommQcAnalysisPage(type, options) {
   options = options || {};
-  var view = document.body.dataset.view || 'sales';
+  var view = getSopEffectiveDataView();
   var url = type === 'cr'
     ? '2. CRM工作台/2. 销售工作台2.0/二级页面/CR质检分析.html'
     : '2. CRM工作台/2. 销售工作台2.0/二级页面/电话质检分析.html';
@@ -14945,8 +14938,7 @@ function openCommQcAnalysisPage(type, options) {
 function handleCommQcLinkActivate(link) {
   if (!link || !link.closest('.comm-stats-section')) return;
   var type = link.getAttribute('data-qc-type') || 'tel';
-  var view = document.body.dataset.view || 'sales';
-  if (view === 'manager' && link.closest('.manager-only')) {
+  if (link.closest('.manager-only')) {
     openCommQcFollowModal(type);
     return;
   }
@@ -15000,17 +14992,16 @@ function initTempMktCardInteractions() {
 
 function handleTempMktCardActivate(card) {
   if (!card || !card.closest('.temp-mkt-section')) return;
-  var view = document.body.dataset.view || 'sales';
   var nameEl = card.querySelector('.temp-mkt-card-name');
   var taskType = nameEl ? nameEl.textContent.trim() : '';
   if (!taskType) return;
 
-  if (view === 'manager' && card.closest('.manager-only')) {
+  if (card.closest('.manager-only')) {
     setAlertTaskDetailCategory(getTempMktCardCategory(card));
     openAlertTaskFollowModal(taskType);
     return;
   }
-  if (view === 'sales' && card.closest('.sales-only')) {
+  if (card.closest('.sales-only')) {
     var counts = getTempMktCardProgressCounts(card);
     if (!counts.completed) return;
     _alertTaskFollowType = taskType;
@@ -15023,18 +15014,17 @@ function handleTempMktCardActivate(card) {
 
 function handleAlertTaskCardActivate(card) {
   if (!card || !card.closest('.alert-task-section')) return;
-  var view = document.body.dataset.view || 'sales';
   var nameEl = card.querySelector('.alert-task-card-name');
   var taskType = nameEl ? nameEl.textContent.trim() : '';
 
-  if (view === 'manager' && card.closest('.manager-only')) {
+  if (card.closest('.manager-only')) {
     if (taskType) {
       clearAlertTaskDetailCategory();
       openAlertTaskFollowModal(taskType);
     }
     return;
   }
-  if (view === 'sales' && card.closest('.sales-only')) {
+  if (card.closest('.sales-only')) {
     var counts = getAlertTaskCardProgressCounts(card);
     if (!taskType) return;
     _alertTaskFollowType = taskType;
@@ -15091,6 +15081,13 @@ function switchView(view, btn) {
       resizeGcaHistoryChart();
     } else {
       resetManagerGoalSalesFilter();
+      document.body.dataset.sopScope = 'self';
+      if (typeof applyCommStatsModulePeriod === 'function') {
+        applyCommStatsModulePeriod(_commStatsModulePeriod || 'today');
+      }
+      if (typeof applyAlertTaskModulePeriod === 'function') {
+        applyAlertTaskModulePeriod(_alertTaskModulePeriod || 'week');
+      }
       resizeGcaHistoryChart();
     }
   });
@@ -18037,31 +18034,200 @@ function formatGoalKpiPct(actualPct) {
   return formatKpiPct(actualPct);
 }
 
-var _managerGoalSalesFilter = 'all';
-var _managerGoalScopeLevel1 = 'all';
-var _managerGoalScopeLevel2 = '__all__';
+var MANAGER_GOAL_SELF_SALES = 'May';
+var _managerGoalSalesFilter = MANAGER_GOAL_SELF_SALES;
+var _managerGoalScopeLevel1 = 'self';
+var _managerGoalScopeLevel2 = MANAGER_GOAL_SELF_SALES;
 
-var MANAGER_GOAL_SALES_GROUPS = {
-  A: { label: 'TW销售A组', members: ['Coulson', 'May', 'Daisy'] },
-  B: { label: 'TW销售B组', members: ['Fitz', 'Simmons', 'Mack'] },
-  C: { label: 'TW销售C组', members: ['Fury', 'Hunter'] },
-  DA: { label: 'DANA销售A组', members: ['Ward', 'Bobbi', 'Skye'] },
-  DB: { label: 'DANA销售B组', members: ['Melinda', 'Trip', 'Antoine'] },
-  DC: { label: 'DANA销售C组', members: ['Yo-Yo', 'Deke', 'Jemma'] }
-};
+var MANAGER_GOAL_SALES_GROUPS = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.getManagerGoalSalesGroups)
+  ? INDIA_SALES_ORG.getManagerGoalSalesGroups()
+  : {};
+
+/** 按印度销售组织名单补齐缺失销售的模拟数据与排名元数据 */
+function ensureIndiaSalesOrgMockData() {
+  if (typeof INDIA_SALES_ORG === 'undefined') return;
+  var names = INDIA_SALES_ORG.allNames || [];
+  var baseName = (typeof MANAGER_GOAL_SALES_DATA !== 'undefined' && MANAGER_GOAL_SALES_DATA.Hunter)
+    ? 'Hunter'
+    : (names.filter(function (n) { return n !== 'May' && MANAGER_GOAL_SALES_DATA && MANAGER_GOAL_SALES_DATA[n]; })[0]);
+  if (!baseName || typeof MANAGER_GOAL_SALES_DATA === 'undefined') return;
+  var base = MANAGER_GOAL_SALES_DATA[baseName];
+  names.forEach(function (name, i) {
+    if (MANAGER_GOAL_SALES_DATA[name]) return;
+    var f = Math.max(0.35, 0.95 - i * 0.006);
+    var cov = Math.max(48, 72 - Math.floor(i / 3));
+    var r = function (n) { return Math.max(1, Math.round(n * f)); };
+    var customers = r(base.summary.customers);
+    var contacts = Math.max(1, Math.round(customers * cov / 100));
+    var connected = Math.max(1, Math.round(contacts * cov / 100));
+    MANAGER_GOAL_SALES_DATA[name] = {
+      isTeam: false,
+      salesName: name,
+      note: String(base.note || '').replace(new RegExp(baseName, 'g'), name),
+      summary: {
+        customerLabel: base.summary.customerLabel,
+        customers: customers,
+        depositCustomers: r(base.summary.depositCustomers),
+        tradeCustomers: r(base.summary.tradeCustomers),
+        tradeLots: r(base.summary.tradeLots),
+        tradeLotsAvg: Math.round(base.summary.tradeLotsAvg * f * 10) / 10,
+        contacts: contacts,
+        contactCoverage: cov,
+        highRisk: r(base.summary.highRisk)
+      },
+      active: { today: r(base.active.today), week: r(base.active.week), month: r(base.active.month), target: Math.round(base.active.target * f / 10) * 10 },
+      netDeposit: {
+        today: r(base.netDeposit.today), week: r(base.netDeposit.week),
+        month: r(base.netDeposit.month), target: Math.round(base.netDeposit.target * f / 1000) * 1000
+      },
+      reach: { contacts: contacts, connected: connected, cr: r(base.reach.cr), tell: r(base.reach.tell) },
+      tradeLots: {
+        today: r(base.tradeLots.today), week: r(base.tradeLots.week), month: r(base.tradeLots.month),
+        teamMonthLots: base.tradeLots.teamMonthLots, members: names.length, personalMonth: r(base.tradeLots.personalMonth)
+      },
+      risk: {
+        depositNoTrade: r(base.risk.depositNoTrade), tradeNoDeposit: r(base.risk.tradeNoDeposit),
+        cancelled: r(base.risk.cancelled), marginCall: r(base.risk.marginCall),
+        withdrawAlert: r(base.risk.withdrawAlert), highRisk: r(base.risk.highRisk), uninstalled: r(base.risk.uninstalled)
+      },
+      gcaReachTarget: customers,
+      labels: base.labels,
+      ai: (base.ai || []).map(function (t) { return String(t); })
+    };
+  });
+  if (typeof MANAGER_GOAL_SALES_META === 'undefined') return;
+  var maxRank = 0;
+  Object.keys(MANAGER_GOAL_SALES_META).forEach(function (name) {
+    var r = MANAGER_GOAL_SALES_META[name] && MANAGER_GOAL_SALES_META[name].rank;
+    if (r && r > maxRank) maxRank = r;
+  });
+  var nextRank = maxRank + 1;
+  names.forEach(function (name, i) {
+    if (MANAGER_GOAL_SALES_META[name]) return;
+    var rank = nextRank++;
+    var reward = Math.max(420, Math.round(4280 - (rank - 1) * 38));
+    MANAGER_GOAL_SALES_META[name] = {
+      rank: rank,
+      reward: '$' + reward.toLocaleString('en-US'),
+      revenueRank: rank,
+      netK: '$' + Math.max(28, Math.round(286 - (rank - 1) * 2.2)) + 'K',
+      feeK: '$' + (Math.max(1.2, 17.2 - (rank - 1) * 0.14)).toFixed(1) + 'K',
+      tradeLots: Math.max(180, Math.round(1280 - (rank - 1) * 10)).toLocaleString('en-US'),
+      v34: 0,
+      topLabel: '第 ' + rank + ' 名',
+      role: (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || ''
+    };
+  });
+  if (MANAGER_GOAL_SALES_META.May) {
+    MANAGER_GOAL_SALES_META.May.personalReward = MANAGER_GOAL_SALES_META.May.personalReward || 2860;
+    MANAGER_GOAL_SALES_META.May.teamReward = MANAGER_GOAL_SALES_META.May.teamReward || 1000;
+    MANAGER_GOAL_SALES_META.May.role = '印度销售组长 - D';
+  }
+  names.forEach(function (name) {
+    if (MANAGER_GOAL_SALES_META[name] && !MANAGER_GOAL_SALES_META[name].role && INDIA_SALES_ORG.getRole) {
+      MANAGER_GOAL_SALES_META[name].role = INDIA_SALES_ORG.getRole(name);
+    }
+  });
+  if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') {
+    var order = names.slice().sort(function (a, b) {
+      return (MANAGER_GOAL_SALES_META[a].rank || 999) - (MANAGER_GOAL_SALES_META[b].rank || 999);
+    });
+    MANAGER_GOAL_PERF_RANK_ORDER.length = 0;
+    order.forEach(function (n) { MANAGER_GOAL_PERF_RANK_ORDER.push(n); });
+  }
+}
+
 
 function getAllManagerGoalSalesNames() {
   return MANAGER_GOAL_PERF_RANK_ORDER.slice();
 }
 
+function getSopManagerFollowOutline() {
+  var selfName = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.currentUser)
+    ? INDIA_SALES_ORG.currentUser.name
+    : (typeof MANAGER_GOAL_SELF_SALES !== 'undefined' ? MANAGER_GOAL_SELF_SALES : 'May');
+  if (_managerGoalScopeLevel1 === 'self' || typeof INDIA_SALES_ORG === 'undefined' || !INDIA_SALES_ORG.getFollowOutline) {
+    return {
+      scopeLabel: '我的个人视角',
+      scopeNames: [selfName],
+      selfName: selfName,
+      selfLabel: selfName + '（我自己）',
+      showSelf: false,
+      childRoles: []
+    };
+  }
+  var outline = INDIA_SALES_ORG.getFollowOutline(_managerGoalScopeLevel1, selfName);
+  outline.selfLabel = selfName + '（我自己）';
+  return outline;
+}
+
+/** 行动SOP：当前管理范围下的销售名单。角色范围固定为角色内所有人，不可单选 */
+function getSopScopedSalesNames() {
+  var outline = getSopManagerFollowOutline();
+  return outline.scopeNames.slice();
+}
+
+function getSopScopedGroupKeys() {
+  if (_managerGoalScopeLevel1 === 'self') return [];
+  if (_managerGoalScopeLevel1 === 'all' || !_managerGoalScopeLevel1) {
+    return COMM_STATS_FOLLOW_GROUP_KEYS.slice();
+  }
+  if (MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1]) return [_managerGoalScopeLevel1];
+  return COMM_STATS_FOLLOW_GROUP_KEYS.slice();
+}
+
+function getSopFollowTeamLabel() {
+  if (_managerGoalScopeLevel1 === 'all' || !_managerGoalScopeLevel1 || _managerGoalScopeLevel1 === 'self') {
+    return COMM_STATS_FOLLOW_TEAM_LABEL;
+  }
+  var group = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
+  return group ? group.label + '整体进度' : COMM_STATS_FOLLOW_TEAM_LABEL;
+}
+
+function getSopAlertTaskScopeRatio() {
+  if (document.body.dataset.view !== 'manager') return 1;
+  if (_managerGoalScopeLevel1 === 'self' || _managerGoalScopeLevel1 === 'all' || !_managerGoalScopeLevel1) return 1;
+  var all = getAllManagerGoalSalesNames().length || 1;
+  var scoped = getSopScopedSalesNames().length || 1;
+  return scoped / all;
+}
+
+function refreshOpenSopScopeModals() {
+  var followModal = document.getElementById('commStatsFollowModal');
+  if (followModal && !followModal.hidden) renderCommStatsFollowTable();
+  var qcModal = document.getElementById('commQcFollowModal');
+  if (qcModal && !qcModal.hidden) renderCommQcFollowTable();
+  var alertModal = document.getElementById('alertTaskFollowModal');
+  if (alertModal && !alertModal.hidden) renderAlertTaskFollowTable();
+}
+
+/** 管理视角下按范围切换：我的行动视角→销售数据；其他→对应人员汇总 */
+function applySopManagerScopeView() {
+  var scope = 'team';
+  if (_managerGoalScopeLevel1 === 'self') scope = 'self';
+  else if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') scope = 'group';
+  document.body.dataset.sopScope = scope;
+  if (document.body.dataset.view !== 'manager') return;
+  if (typeof applyCommStatsModulePeriod === 'function') {
+    applyCommStatsModulePeriod(_commStatsModulePeriod || 'today');
+  }
+  if (typeof applyAlertTaskModulePeriod === 'function') {
+    applyAlertTaskModulePeriod(_alertTaskModulePeriod || 'week');
+  }
+  refreshOpenSopScopeModals();
+}
+
 function getManagerGoalScopeDisplayLabel(filter) {
-  if (!filter || filter === 'all') return '团队所有人';
+  if (_managerGoalScopeLevel1 === 'self' || filter === 'self' || filter === MANAGER_GOAL_SELF_SALES) {
+    return '我的个人视角 · ' + MANAGER_GOAL_SELF_SALES + '（组长）';
+  }
+  if (!filter || filter === 'all') return '团队所有人 · 全员汇总';
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
-    return group ? group.label + ' · 组内所有人' : '组内所有人';
+    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
   }
-  if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
+  if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all' && _managerGoalScopeLevel1 !== 'self') {
     var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
     if (grp && grp.members.indexOf(filter) !== -1) {
       return grp.label + ' · ' + filter;
@@ -18071,16 +18237,16 @@ function getManagerGoalScopeDisplayLabel(filter) {
 }
 
 function resolveManagerGoalFilter(level1, level2) {
-  if (level1 === 'all') {
-    if (!level2 || level2 === '__all__') return 'all';
-    return level2;
-  }
-  if (!level2 || level2 === '__group__') return 'group:' + level1;
-  return level2;
+  if (level1 === 'self') return MANAGER_GOAL_SELF_SALES;
+  if (level1 === 'all' || !level1) return 'all';
+  return 'group:' + level1;
 }
 
 function parseManagerGoalFilterToScopes(filter) {
-  if (!filter || filter === 'all') return { level1: 'all', level2: '__all__' };
+  if (!filter || filter === 'self' || filter === MANAGER_GOAL_SELF_SALES) {
+    return { level1: 'self', level2: MANAGER_GOAL_SELF_SALES };
+  }
+  if (filter === 'all') return { level1: 'all', level2: '__all__' };
   if (filter.indexOf('group:') === 0) {
     return { level1: filter.slice(6), level2: '__group__' };
   }
@@ -18090,29 +18256,30 @@ function parseManagerGoalFilterToScopes(filter) {
       return { level1: groupKey, level2: filter };
     }
   }
-  return { level1: 'all', level2: filter };
+  for (groupKey in MANAGER_GOAL_SALES_GROUPS) {
+    if (MANAGER_GOAL_SALES_GROUPS[groupKey].members.indexOf(filter) !== -1) {
+      return { level1: groupKey, level2: filter };
+    }
+  }
+  return { level1: 'self', level2: MANAGER_GOAL_SELF_SALES };
 }
 
-function rebuildManagerGoalLevel2Options(level1, keepValue) {
+function rebuildManagerGoalLevel2Options(level1) {
   var select = document.getElementById('managerGoalScopeLevel2');
   if (!select) return;
-  var html = '';
-  if (level1 === 'all') {
-    html += '<option value="__all__">全员汇总</option>';
-    getAllManagerGoalSalesNames().forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
-    });
-  } else {
-    var group = MANAGER_GOAL_SALES_GROUPS[level1];
-    if (!group) return;
-    html += '<option value="__group__">组内所有人</option>';
-    group.members.forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
-    });
+  select.disabled = true;
+  if (level1 === 'self') {
+    var selfLabel = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel)
+      ? INDIA_SALES_ORG.formatScopePersonLabel(MANAGER_GOAL_SELF_SALES)
+      : MANAGER_GOAL_SELF_SALES;
+    select.innerHTML = '<option value="' + MANAGER_GOAL_SELF_SALES + '">' + selfLabel + '</option>';
+    select.value = MANAGER_GOAL_SELF_SALES;
+    _managerGoalScopeLevel2 = MANAGER_GOAL_SELF_SALES;
+    return;
   }
-  select.innerHTML = html;
-  var fallback = level1 === 'all' ? '__all__' : '__group__';
-  select.value = (keepValue && select.querySelector('option[value="' + keepValue + '"]')) ? keepValue : fallback;
+  select.innerHTML = '<option value="__group__">角色内所有人</option>';
+  select.value = '__group__';
+  _managerGoalScopeLevel2 = '__group__';
 }
 
 function syncManagerGoalScopeSelects(filter) {
@@ -18122,21 +18289,22 @@ function syncManagerGoalScopeSelects(filter) {
   var level1Select = document.getElementById('managerGoalScopeLevel1');
   var level2Select = document.getElementById('managerGoalScopeLevel2');
   if (!level1Select || !level2Select) return;
-  if (level1Select.value !== scopes.level1) {
-    level1Select.value = scopes.level1;
-    rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
-    return;
-  }
-  if (!level2Select.querySelector('option[value="' + scopes.level2 + '"]')) {
-    rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
-    return;
-  }
-  level2Select.value = scopes.level2;
+  level1Select.value = scopes.level1;
+  rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
+}
+
+function updateManagerGoalScopeHint() {
+  var hintEl = document.getElementById('managerGoalScopeHint');
+  if (!hintEl) return;
+  var data = getManagerGoalDisplayData(_managerGoalSalesFilter);
+  var isSelf = _managerGoalScopeLevel1 === 'self';
+  hintEl.classList.toggle('is-sales-mode', isSelf || !data.isTeam || !!data.isGroup);
+  hintEl.innerHTML = '当前管理视角：<strong>' + getManagerGoalScopeDisplayLabel(_managerGoalSalesFilter) + '</strong>';
 }
 
 function onManagerGoalScopeLevel1Change() {
   var level1Select = document.getElementById('managerGoalScopeLevel1');
-  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'all';
+  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'self';
   rebuildManagerGoalLevel2Options(_managerGoalScopeLevel1);
   _managerGoalScopeLevel2 = document.getElementById('managerGoalScopeLevel2').value;
   applyManagerGoalSalesFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
@@ -18144,9 +18312,8 @@ function onManagerGoalScopeLevel1Change() {
 
 function onManagerGoalScopeLevel2Change() {
   var level1Select = document.getElementById('managerGoalScopeLevel1');
-  var level2Select = document.getElementById('managerGoalScopeLevel2');
-  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'all';
-  _managerGoalScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'self';
+  rebuildManagerGoalLevel2Options(_managerGoalScopeLevel1);
   applyManagerGoalSalesFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
 }
 
@@ -18767,6 +18934,8 @@ var MANAGER_GOAL_PERF_RANK_ORDER = [
   'Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter',
   'Ward', 'Bobbi', 'Skye', 'Melinda', 'Trip', 'Antoine', 'Yo-Yo', 'Deke', 'Jemma'
 ];
+ensureIndiaSalesOrgMockData();
+
 
 function buildManagerGoalPerfTop3() {
   return MANAGER_GOAL_PERF_RANK_ORDER.slice(0, 3).map(function (name) {
@@ -18984,8 +19153,10 @@ function setManagerGoalRiskLabel(btn, prefix, base) {
 }
 
 function applyManagerGoalSalesFilter(value) {
-  _managerGoalSalesFilter = value || 'all';
+  _managerGoalSalesFilter = value || MANAGER_GOAL_SELF_SALES;
   syncManagerGoalScopeSelects(_managerGoalSalesFilter);
+  updateManagerGoalScopeHint();
+  applySopManagerScopeView();
 
   var data = getManagerGoalDisplayData(_managerGoalSalesFilter);
   var root = document.getElementById('view-team');
@@ -19111,12 +19282,13 @@ function applyManagerGoalSalesFilter(value) {
 }
 
 function resetManagerGoalSalesFilter() {
-  _managerGoalSalesFilter = 'all';
-  _managerGoalScopeLevel1 = 'all';
-  _managerGoalScopeLevel2 = '__all__';
-  syncManagerGoalScopeSelects('all');
+  _managerGoalSalesFilter = MANAGER_GOAL_SELF_SALES;
+  _managerGoalScopeLevel1 = 'self';
+  _managerGoalScopeLevel2 = MANAGER_GOAL_SELF_SALES;
+  syncManagerGoalScopeSelects(MANAGER_GOAL_SELF_SALES);
+  updateManagerGoalScopeHint();
   if (document.body.dataset.view === 'manager') {
-    applyManagerGoalSalesFilter('all');
+    applyManagerGoalSalesFilter(MANAGER_GOAL_SELF_SALES);
   } else {
     resetManagerGoalModuleTitles();
   }
