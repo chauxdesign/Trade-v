@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <base href="../" />
+  <title>坐席角色架构梳理</title>
+  <style>
+    :root {
+      --bg: #eceff3;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --line: #e8ecf1;
+      --panel: #fff;
+      --card-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      --card-radius: 14px;
+      --blue: #2563eb;
+      --connector: #a8b4c4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .wb-sidebar-frame {
+      width: 250px;
+      height: 100vh;
+      border: none;
+      display: block;
+    }
+
+    .wb-topbar-frame {
+      width: 100%;
+      height: 80px;
+      border: none;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scroll-wrap {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      padding: 12px 14px 16px;
+      background: var(--bg);
+      display: flex;
+    }
+
+    .org-panel {
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .org-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px 0;
+      border-bottom: 1px solid #eef2f6;
+      flex-shrink: 0;
+    }
+
+    .org-tab {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 10px 14px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      font-family: inherit;
+      position: relative;
+    }
+
+    .org-tab:hover { color: #1e293b; }
+
+    .org-tab.active { color: var(--blue); font-weight: 700; }
+
+    .org-tab.active::after {
+      content: "";
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: -1px;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+      background: var(--blue);
+    }
+
+    .org-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 10px 18px;
+      background: #fafbfc;
+      border-bottom: 1px solid #eef2f6;
+      flex-shrink: 0;
+    }
+
+    .org-toolbar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: auto;
+    }
+
+    .org-toolbar-hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: #94a3b8;
+    }
+
+    .switch-field {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #475569;
+      cursor: pointer;
+      user-select: none;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    .switch {
+      width: 40px;
+      height: 22px;
+      border-radius: 11px;
+      background: #dcdfe6;
+      position: relative;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+
+    .switch.on { background: var(--blue); }
+
+    .switch-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+      transition: left 0.15s ease;
+    }
+
+    .switch.on .switch-knob { left: 20px; }
+
+    .org-canvas {
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 40px 48px 56px;
+      background: #f6f8fb;
+    }
+
+    .org-canvas.is-h {
+      display: flex;
+      align-items: safe center;
+    }
+
+    .org-canvas.is-v {
+      display: flex;
+      justify-content: safe center;
+      align-items: flex-start;
+    }
+
+    .role-placeholder {
+      flex: 1;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .org-panel.show-roles .org-toolbar,
+    .org-panel.show-roles .org-canvas { display: none; }
+    .org-panel.show-roles .role-placeholder { display: flex; }
+
+    .org-fs-btn,
+    .org-fs-exit {
+      appearance: none;
+      border: 1px solid #d7dee8;
+      background: #fff;
+      color: #334155;
+      border-radius: 8px;
+      height: 32px;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .org-fs-btn:hover,
+    .org-fs-exit:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .org-fs-exit {
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 30;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    body.is-org-fullscreen .wb-sidebar-frame,
+    body.is-org-fullscreen .wb-topbar-frame,
+    body.is-org-fullscreen .org-tabs,
+    body.is-org-fullscreen .org-toolbar,
+    body.is-org-fullscreen .role-placeholder { display: none !important; }
+
+    body.is-org-fullscreen .app {
+      display: block;
+      height: 100vh;
+    }
+
+    body.is-org-fullscreen .main,
+    body.is-org-fullscreen .scroll-wrap,
+    body.is-org-fullscreen .org-panel,
+    body.is-org-fullscreen .org-canvas {
+      height: 100vh;
+      min-height: 0;
+    }
+
+    body.is-org-fullscreen .scroll-wrap { padding: 0; }
+
+    body.is-org-fullscreen .org-panel {
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.is-org-fullscreen .org-canvas { display: flex !important; }
+
+    body.is-org-fullscreen .org-fs-exit { display: inline-flex; align-items: center; }
+
+    .node { display: flex; align-items: center; }
+
+    .is-v .node {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card-box { position: relative; flex-shrink: 0; }
+
+    .card {
+      min-width: 156px;
+      background: #fff;
+      border: 1px solid #e6ebf2;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      padding: 10px 16px 8px;
+      text-align: center;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .card:hover {
+      border-color: #c9d7ea;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
+
+    .node.is-open > .card-box > .card {
+      background: #f3f8ff;
+      border-color: #c5daf6;
+    }
+
+    .depth-0.is-open > .card-box > .card {
+      background: #e4f0ff;
+      border-color: #a4c8ef;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: #1e293b;
+      white-space: nowrap;
+    }
+
+    .card-name.is-struck { text-decoration: line-through; }
+
+    .card-id {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #94a3b8;
+      letter-spacing: 0.2px;
+    }
+
+    .toggle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #64748b;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+      z-index: 2;
+      position: absolute;
+      font-family: inherit;
+    }
+
+    .toggle:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .is-h .toggle {
+      right: -9px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .is-v .toggle {
+      left: 50%;
+      bottom: -9px;
+      transform: translateX(-50%);
+    }
+
+    .children { position: relative; display: flex; }
+
+    .is-h .children {
+      flex-direction: column;
+      margin-left: 20px;
+    }
+
+    .is-v .children {
+      flex-direction: row;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    .is-h .children::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      width: 20px;
+      height: 1px;
+      background: var(--connector);
+    }
+
+    .is-v .children::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      width: 1px;
+      height: 20px;
+      background: var(--connector);
+    }
+
+    .child { position: relative; }
+
+    .is-h .child {
+      display: flex;
+      align-items: center;
+      padding: 4px 0 4px 22px;
+    }
+
+    .is-v .child {
+      display: flex;
+      justify-content: center;
+      padding: 24px 14px 0;
+    }
+
+    .is-h .child::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 22px;
+      height: 1px;
+      background: var(--connector);
+    }
+
+    .is-h .child::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--connector);
+    }
+
+    .is-h .child:first-child::after { top: 50%; }
+    .is-h .child:last-child::after { bottom: 50%; }
+    .is-h .child:only-child::after { display: none; }
+
+    .is-v .child::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 24px;
+      background: var(--connector);
+    }
+
+    .is-v .child::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--connector);
+    }
+
+    .is-v .child:first-child::after { left: 50%; }
+    .is-v .child:last-child::after { right: 50%; }
+    .is-v .child:only-child::after { display: none; }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+      }
+      .wb-sidebar-frame {
+        width: 100%;
+        height: 40vh;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <iframe class="wb-sidebar-frame" src="1. 需求迭代/0. 菜单项/_sidebar-menu.html#active=cs-role-arch" title="侧边菜单"></iframe>
+
+  <main class="main">
+    <iframe class="wb-topbar-frame" src="1. 需求迭代/0. 菜单项/_topbar.html#active=cs-role-arch" title="顶部导航"></iframe>
+
+    <div class="scroll-wrap">
+      <section class="org-panel" id="orgPanel">
+        <div class="org-tabs">
+          <button type="button" class="org-tab" id="tabRoles">角色管理</button>
+          <button type="button" class="org-tab active" id="tabOrg">组织架构管理</button>
+        </div>
+        <div class="org-toolbar">
+          <div class="org-toolbar-title">组织架构<span class="org-toolbar-hint">点击节点旁的按钮展开或收起</span></div>
+          <button type="button" class="switch-field" id="btnHorizontal" aria-pressed="true">
+            <span class="switch on" id="switchHorizontal"><span class="switch-knob"></span></span>
+            <span>横向</span>
+          </button>
+          <button type="button" class="switch-field" id="btnCollapsible" aria-pressed="true">
+            <span class="switch on" id="switchCollapsible"><span class="switch-knob"></span></span>
+            <span>可收起</span>
+          </button>
+          <button type="button" class="org-fs-btn" id="btnCollapseAll">折叠全部</button>
+          <button type="button" class="org-fs-btn" id="btnFullscreen">全屏</button>
+        </div>
+        <div class="org-canvas is-h" id="orgCanvas"></div>
+        <button type="button" class="org-fs-exit" id="btnExitFullscreen">退出全屏</button>
+        <div class="role-placeholder">角色管理列表不在本次架构梳理范围内</div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+  function role(id, name, children, extra) {
+    return {
+      id: id,
+      name: name,
+      extra: !!extra,
+      expanded: false,
+      children: children || []
+    };
+  }
+
+  const TREE = role(1, "管理员", [
+    role(23, "超级运营", [], true),
+    role(27, "客服管理（将移除）", [], true),
+    role(null, "咨询客服", [
+      role(53, "印尼客服组长", [], true),
+      role(54, "印度客服组长", [], true)
+    ], true),
+    role(null, "账户经理", [
+      role(122, "印度留存客服组长"),
+      role(143, "巴基留存客服组长", [
+        role(141, "巴基Dana留存客服", [], true),
+        role(142, "巴基TW留存客服", [], true)
+      ], true),
+      role(222, "尼日留存客服组长")
+    ], true),
+    role(null, "推广经理（暂定名）", [
+      role(96, "巴西推广主管", [
+        role(49, "巴西tw销售专员"),
+        role(104, "巴西bd销售专员"),
+        role(240, "菲律宾tw销售专员"),
+        role(241, "菲律宾bd销售专员")
+      ], true),
+      role(126, "墨西哥推广主管", [
+        role(125, "墨西哥tw销售专员"),
+        role(127, "墨西哥bd销售专员")
+      ], true)
+    ]),
+    role(149, "销售管理", [
+      role(40, "印尼销售主管", [
+        role(41, "印尼销售Team A组长", [
+          role(43, "印尼销售A-TW销售专员", [], true),
+          role(44, "印尼销售A-DANA销售专员", [], true)
+        ], true),
+        role(42, "印尼销售Team B组长", [
+          role(45, "印尼销售B-DANA销售专员", [], true),
+          role(46, "印尼销售B-TW销售专员", [], true)
+        ], true),
+        role(105, "印尼销售Team C组长", [
+          role(106, "印尼销售C-TW销售专员", [], true),
+          role(107, "印尼销售C-DANA销售专员", [], true)
+        ], true),
+        role(133, "印尼销售Team D组长", [
+          role(131, "印尼销售D-DANA销售专员", [], true),
+          role(132, "印尼销售D-TW销售专员", [], true)
+        ], true),
+        role(138, "印尼销售Team E组长", [
+          role(139, "印尼销售E-TW销售专员", [], true),
+          role(140, "印尼销售E-DANA销售专员", [], true)
+        ], true),
+        role(164, "印尼销售Team F组长", [
+          role(165, "印尼销售F-DANA销售专员", [], true),
+          role(166, "印尼销售F-TW销售专员", [], true)
+        ], true)
+      ], true),
+      role(47, "印度销售经理", [
+        role(48, "印度TW-销售专员", [], true),
+        role(58, "印度DANA-销售专员", [], true),
+        role(109, "迪拜DANA-销售专员", [], true),
+        role(110, "迪拜TW-销售专员", [], true),
+        role(146, "巴基销售主管", [
+          role(147, "巴基销售-DANA销售专员", [], true),
+          role(148, "巴基销售-TW销售专员", [], true)
+        ], true),
+        role(236, "印度销售主管 - TW", [
+          role(197, "印度销售组长 - C", [
+            role(198, "印度-销售-C-BD", [], true),
+            role(199, "印度-销售-C", [], true)
+          ], true),
+          role(200, "印度销售组长 - D", [
+            role(201, "印度-销售-D-BD", [], true),
+            role(202, "印度-销售-D", [], true)
+          ], true),
+          role(203, "印度销售组长 - E", [
+            role(204, "印度-销售-E-BD", [], true),
+            role(205, "印度-销售-E", [], true)
+          ], true),
+          role(238, "印度销售实习 - TW", [], true),
+          role(242, "印度销售组长 - F", [
+            role(243, "印度-销售-F", [], true)
+          ], true)
+        ], true),
+        role(237, "印度销售主管 - BD", [
+          role(191, "印度销售组长 - A", [
+            role(192, "印度-销售-A", [], true),
+            role(193, "印度-销售-A-TW", [], true)
+          ], true),
+          role(194, "印度销售组长 - B", [
+            role(195, "印度-销售-B", [], true),
+            role(196, "印度-销售-B-TW", [], true)
+          ], true),
+          role(206, "印度销售组长 - G", [
+            role(207, "印度-销售-G", [], true),
+            role(208, "印度-销售-G-TW", [], true)
+          ], true),
+          role(239, "印度销售实习 - BD", [], true)
+        ], true)
+      ], true),
+      role(98, "尼日销售主管", [
+        role(50, "尼日销售专员", [], true),
+        role(223, "尼日销售A组-TW组长", [
+          role(224, "尼日销售A-TW销售专员", [], true)
+        ], true),
+        role(225, "尼日销售B-DANA销售专员", [], true)
+      ], true)
+    ], true),
+    role(28, "直播主管", [], true),
+    role(97, "产研", [], true),
+    role(144, "风控管理"),
+    role(173, "IB经理业务", [
+      role(175, "IB经理 马来", [
+        role(177, "马来A组IB-tw", [
+          role(185, "马来A组IB经理-tw", [], true)
+        ], true),
+        role(178, "马来B组IB-bd", [
+          role(186, "马来B组IB经理-bd", [], true)
+        ], true)
+      ], true),
+      role(176, "IB经理 缅甸", [
+        role(179, "缅甸一组IB", [
+          role(187, "缅甸一组IB经理", [], true)
+        ], true),
+        role(180, "缅甸二组IB", [
+          role(188, "缅甸二组IB经理", [], true)
+        ], true),
+        role(181, "缅甸三组IB", [
+          role(189, "缅甸三组IB经理", [], true)
+        ], true),
+        role(182, "缅甸四组IB", [], true),
+        role(183, "缅甸五组IB", [], true),
+        role(184, "泰国一组IB", [], true)
+      ], true),
+      role(209, "总部_IB经理_项目管理", [
+        role(220, "印尼_IB经理_管理", [
+          role(221, "印尼_IB经理_TW", [], true),
+          role(229, "印尼_IB经理_DANA", [], true)
+        ], true),
+        role(230, "印度_IB经理_管理", [
+          role(231, "印度_IB经理_TW", [], true),
+          role(232, "印度_IB经理_DANA", [], true)
+        ], true),
+        role(233, "尼日_IB经理_管理", [
+          role(226, "尼日_IB经理_TW", [], true),
+          role(234, "尼日_IB经理_DANA", [], true)
+        ], true)
+      ], true)
+    ], true)
+  ]);
+  TREE.expanded = true;
+
+  let horizontal = true;
+  let collapsible = true;
+
+  function renderNode(node, depth) {
+    depth = depth || 0;
+    const hasChildren = node.children && node.children.length > 0;
+    const expanded = hasChildren && (!collapsible || node.expanded);
+
+    const wrap = document.createElement("div");
+    wrap.className = "node depth-" + Math.min(depth, 5) + (expanded ? " is-open" : "");
+
+    const box = document.createElement("div");
+    box.className = "card-box";
+
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML =
+      '<div class="card-title"><span class="card-name' + (node.id === 27 ? " is-struck" : "") + '">' + node.name + "</span>" +
+      (node.id == null ? "" : '<span class="card-id">ID:' + node.id + "</span>") + "</div>";
+    box.appendChild(card);
+
+    if (collapsible && hasChildren) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "toggle";
+      btn.setAttribute("aria-label", expanded ? "收起" + node.name : "展开" + node.name);
+      btn.innerHTML = expanded
+        ? '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 5h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>'
+        : '<svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 2v6M2 5h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+      btn.addEventListener("click", function () {
+        node.expanded = !node.expanded;
+        render();
+      });
+      box.appendChild(btn);
+    }
+
+    wrap.appendChild(box);
+
+    if (expanded) {
+      const children = document.createElement("div");
+      children.className = "children";
+      node.children.forEach(function (child) {
+        const childWrap = document.createElement("div");
+        childWrap.className = "child";
+        childWrap.appendChild(renderNode(child, depth + 1));
+        children.appendChild(childWrap);
+      });
+      wrap.appendChild(children);
+    }
+
+    return wrap;
+  }
+
+  function render() {
+    const canvas = document.getElementById("orgCanvas");
+    canvas.className = "org-canvas " + (horizontal ? "is-h" : "is-v");
+    canvas.innerHTML = "";
+    canvas.appendChild(renderNode(TREE));
+  }
+
+  function setSwitch(id, on) {
+    document.getElementById(id).classList.toggle("on", on);
+  }
+
+  document.getElementById("btnHorizontal").addEventListener("click", function () {
+    horizontal = !horizontal;
+    this.setAttribute("aria-pressed", String(horizontal));
+    setSwitch("switchHorizontal", horizontal);
+    render();
+  });
+
+  document.getElementById("btnCollapsible").addEventListener("click", function () {
+    collapsible = !collapsible;
+    this.setAttribute("aria-pressed", String(collapsible));
+    setSwitch("switchCollapsible", collapsible);
+    render();
+  });
+
+  document.getElementById("tabOrg").addEventListener("click", function () {
+    document.getElementById("orgPanel").classList.remove("show-roles");
+    document.getElementById("tabOrg").classList.add("active");
+    document.getElementById("tabRoles").classList.remove("active");
+  });
+
+  document.getElementById("tabRoles").addEventListener("click", function () {
+    document.getElementById("orgPanel").classList.add("show-roles");
+    document.getElementById("tabRoles").classList.add("active");
+    document.getElementById("tabOrg").classList.remove("active");
+  });
+
+  function enterOrgFullscreen() {
+    document.getElementById("orgPanel").classList.remove("show-roles");
+    document.getElementById("tabOrg").classList.add("active");
+    document.getElementById("tabRoles").classList.remove("active");
+    document.body.classList.add("is-org-fullscreen");
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(function () {});
+    }
+  }
+
+  function exitOrgFullscreen() {
+    document.body.classList.remove("is-org-fullscreen");
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(function () {});
+    }
+  }
+
+  let expandAllNext = false;
+
+  function setExpanded(node, expanded) {
+    node.expanded = expanded;
+    (node.children || []).forEach(function (child) { setExpanded(child, expanded); });
+  }
+
+  document.getElementById("btnCollapseAll").addEventListener("click", function () {
+    const btn = this;
+    if (expandAllNext) {
+      setExpanded(TREE, true);
+      btn.textContent = "折叠全部";
+      expandAllNext = false;
+    } else {
+      setExpanded(TREE, false);
+      TREE.expanded = true;
+      btn.textContent = "展开全部";
+      expandAllNext = true;
+    }
+    render();
+  });
+
+  document.getElementById("btnFullscreen").addEventListener("click", enterOrgFullscreen);
+  document.getElementById("btnExitFullscreen").addEventListener("click", exitOrgFullscreen);
+  document.addEventListener("fullscreenchange", function () {
+    if (!document.fullscreenElement) document.body.classList.remove("is-org-fullscreen");
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && document.body.classList.contains("is-org-fullscreen")) exitOrgFullscreen();
+  });
+
+  render();
+</script>
+</body>
+</html>
