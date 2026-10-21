@@ -306,6 +306,28 @@
     .manager-goal-scope-select:focus{
       outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25);
     }
+    .manager-goal-scope-select:disabled{
+      background-color:#f1f5f9;color:#64748b;cursor:not-allowed;opacity:1;
+    }
+    body[data-view="manager"][data-goal-scope="self"] #view-personal .cs-only,
+    body[data-view="manager"][data-goal-scope="self"] #perf-personal .cs-only{display:block}
+    /* 行动 SOP：管理视角选「我的个人视角」时展示客服本人数据，并保留切换模块 */
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .cs-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .manager-only{display:none}
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .manager-goal-scope-panel.manager-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .comm-stats-section .cs-only .comm-channel,
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .alert-task-section .cs-only .alert-task-card,
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .temp-mkt-section .cs-only .temp-mkt-card{
+      cursor:pointer;
+      transition:box-shadow .15s ease,border-color .15s ease,transform .15s ease;
+    }
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .comm-stats-section .cs-only .comm-channel:hover,
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .alert-task-section .cs-only .alert-task-card:hover,
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .temp-mkt-section .cs-only .temp-mkt-card:hover{
+      border-color:#93c5fd;
+      box-shadow:0 4px 14px rgba(37,99,235,.12);
+      transform:translateY(-1px);
+    }
     .manager-goal-scope-hint{
       width:95%;margin:0;padding:0;box-sizing:border-box;text-align:left;
       font-size:13px;color:#475569;line-height:1.7;
@@ -1504,6 +1526,19 @@
     .sop-left-stack > section,.sop-right-stack > aside{
       margin:0;flex-shrink:0;
     }
+    #panel-sop .manager-goal-scope-panel{
+      background:#fff;border:1px solid #e8ecf1;border-radius:var(--card-radius);
+      box-shadow:var(--card-shadow);padding:0;overflow:hidden;
+      border-width:1px;min-height:auto;height:fit-content;
+    }
+    #panel-sop .manager-goal-scope-panel .module-head{padding:12px 14px 8px}
+    #panel-sop .manager-goal-scope-panel .module-head h2{font-size:14px;margin:0}
+    #panel-sop .manager-goal-scope-panel .module-head h2::before{
+      background:linear-gradient(180deg,#6366f1,#4f46e5);
+    }
+    #panel-sop .manager-goal-scope-panel .module-body{
+      padding:10px 14px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    }
     #panel-sop .comm-stats-section .module-head,
     #panel-sop .alert-task-section .module-head,
     #panel-sop .temp-mkt-section .module-head{
@@ -2586,6 +2621,10 @@
     #alertTaskFollowModal .comm-follow-row--team td{background:#fff}
     #commStatsFollowModal .comm-follow-row--team .col-name,
     #alertTaskFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commStatsFollowModal .comm-follow-row--self td,
+    #alertTaskFollowModal .comm-follow-row--self td{background:#fff7ed}
+    #commStatsFollowModal .comm-follow-row--self .col-name,
+    #alertTaskFollowModal .comm-follow-row--self .col-name{font-weight:800;color:#9a3412}
     #commStatsFollowModal .comm-follow-row--group td,
     #alertTaskFollowModal .comm-follow-row--group td{background:#f8fafc}
     #commStatsFollowModal .comm-follow-row--group .col-name,
@@ -2647,6 +2686,8 @@
     #commQcFollowModal .comm-follow-row--team td,
     #commQcFollowModal .comm-follow-row--member td{background:#fff}
     #commQcFollowModal .comm-follow-row--team .col-name{font-weight:800;color:#0f172a}
+    #commQcFollowModal .comm-follow-row--self td{background:#fff7ed}
+    #commQcFollowModal .comm-follow-row--self .col-name{font-weight:800;color:#9a3412}
     #commQcFollowModal .comm-follow-row--group td{background:#f8fafc}
     #commQcFollowModal .comm-follow-row--group .col-name{font-weight:800;color:#0f172a}
     #commQcFollowModal .comm-follow-row--toggle{cursor:pointer}
@@ -6066,6 +6107,26 @@
 
         <!-- 右侧：绩效预估 + 我的客户排行榜 -->
         <aside class="right-sidebar" id="perf-panel">
+          <div class="module manager-goal-scope-panel manager-only" id="manager-goal-scope-module">
+            <div class="module-head">
+              <h2>切换客服管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
+                  <option value="self" selected>我的个人视角</option>
+                  <option value="all">账户经理</option>
+                  <option value="IN_RET">印度留存客服组长</option>
+                  <option value="PK_RET">巴基留存客服组长</option>
+                  <option value="NG_RET">尼日留存客服组长</option>
+                </select>
+                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onManagerGoalScopeLevel2Change()" disabled>
+                  <option value="__self__" selected>May（组长）</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint is-cs-mode" id="managerGoalScopeHint">当前客服管理视角：<strong>我的个人视角 · May（组长）</strong></p>
+            </div>
+          </div>
           <div id="perf-personal" class="perf-view active">
           <div class="module perf-panel">
             <div class="module-head">
@@ -6357,46 +6418,6 @@
           </div>
 
           <div id="perf-team" class="perf-view">
-          <div class="module manager-goal-scope-panel" id="manager-goal-scope-module">
-            <div class="module-head">
-              <h2>切换客服管理视角</h2>
-            </div>
-            <div class="module-body">
-              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
-                <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
-                  <option value="all" selected>团队所有人</option>
-                  <option value="A">TW客服A组</option>
-                  <option value="B">TW客服B组</option>
-                  <option value="C">TW客服C组</option>
-                  <option value="DA">DANA客服A组</option>
-                  <option value="DB">DANA客服B组</option>
-                  <option value="DC">DANA客服C组</option>
-                </select>
-                <select id="managerGoalScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onManagerGoalScopeLevel2Change()">
-                  <option value="__all__" selected>全员汇总</option>
-                  <option value="Coulson">Coulson</option>
-                  <option value="May">May</option>
-                  <option value="Daisy">Daisy</option>
-                  <option value="Fitz">Fitz</option>
-                  <option value="Simmons">Simmons</option>
-                  <option value="Mack">Mack</option>
-                  <option value="Fury">Fury</option>
-                  <option value="Hunter">Hunter</option>
-                  <option value="Ward">Ward</option>
-                  <option value="Bobbi">Bobbi</option>
-                  <option value="Skye">Skye</option>
-                  <option value="Melinda">Melinda</option>
-                  <option value="Trip">Trip</option>
-                  <option value="Antoine">Antoine</option>
-                  <option value="Yo-Yo">Yo-Yo</option>
-                  <option value="Deke">Deke</option>
-                  <option value="Jemma">Jemma</option>
-                </select>
-              </div>
-              <p class="manager-goal-scope-hint" id="managerGoalScopeHint">当前客服管理视角：<strong>团队所有人</strong></p>
-            </div>
-          </div>
-
           <div class="module perf-panel" id="manager-goal-perf-panel">
             <div class="module-head">
               <h2 id="manager-goal-perf-title">团队绩效预估</h2>
@@ -8194,6 +8215,26 @@
           </div>
           <div class="sop-right-col">
           <div class="sop-right-stack">
+          <aside class="module manager-goal-scope-panel manager-only" id="sop-manager-scope-module">
+            <div class="module-head">
+              <h2>切换管理视角</h2>
+            </div>
+            <div class="module-body">
+              <div class="manager-goal-scope-row manager-goal-scope-row--dual">
+                <select id="sopScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onSopScopeLevel1Change()">
+                  <option value="self" selected>我的个人视角</option>
+                  <option value="all">账户经理</option>
+                  <option value="IN_RET">印度留存客服组长</option>
+                  <option value="PK_RET">巴基留存客服组长</option>
+                  <option value="NG_RET">尼日留存客服组长</option>
+                </select>
+                <select id="sopScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" disabled onchange="onSopScopeLevel2Change()">
+                  <option value="__self__" selected>May（组长）</option>
+                </select>
+              </div>
+              <p class="manager-goal-scope-hint is-cs-mode" id="sopScopeHint">当前客服管理视角：<strong>我的个人视角 · May（组长）</strong></p>
+            </div>
+          </aside>
           <aside class="block large comm-rank-panel">
             <div class="module-head">
               <h2>客户触达排行榜</h2>
@@ -8847,19 +8888,17 @@
             <div class="module-body">
               <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                 <select id="chanceScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onChanceScopeLevel1Change()">
-                  <option value="all" selected>团队所有人</option>
-                  <option value="A">TW客服A组</option>
-                  <option value="B">TW客服B组</option>
-                  <option value="C">TW客服C组</option>
-                  <option value="DA">DANA客服A组</option>
-                  <option value="DB">DANA客服B组</option>
-                  <option value="DC">DANA客服C组</option>
+                  <option value="self" selected>我的个人视角</option>
+                  <option value="all">账户经理</option>
+                  <option value="IN_RET">印度留存客服组长</option>
+                  <option value="PK_RET">巴基留存客服组长</option>
+                  <option value="NG_RET">尼日留存客服组长</option>
                 </select>
-                <select id="chanceScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onChanceScopeLevel2Change()">
-                  <option value="__all__" selected>全员汇总</option>
+                <select id="chanceScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onChanceScopeLevel2Change()" disabled>
+                  <option value="__self__" selected>May（组长）</option>
                 </select>
               </div>
-              <p class="manager-goal-scope-hint" id="chanceScopeHint">当前客服管理视角：<strong>团队所有人</strong></p>
+              <p class="manager-goal-scope-hint is-cs-mode" id="chanceScopeHint">当前客服管理视角：<strong>我的个人视角 · May（组长）</strong></p>
             </div>
           </aside>
           <aside class="block large breakthrough-star-section" id="breakthrough-star-section">
@@ -9137,19 +9176,17 @@
                   <div class="module-body">
                     <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                       <select id="rpScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onRpScopeLevel1Change()">
-                        <option value="all" selected>团队所有人</option>
-                        <option value="A">TW客服A组</option>
-                        <option value="B">TW客服B组</option>
-                        <option value="C">TW客服C组</option>
-                        <option value="DA">DANA客服A组</option>
-                        <option value="DB">DANA客服B组</option>
-                        <option value="DC">DANA客服C组</option>
+                        <option value="self" selected>我的个人视角</option>
+                        <option value="all">账户经理</option>
+                        <option value="IN_RET">印度留存客服组长</option>
+                        <option value="PK_RET">巴基留存客服组长</option>
+                        <option value="NG_RET">尼日留存客服组长</option>
                       </select>
-                      <select id="rpScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onRpScopeLevel2Change()">
-                        <option value="__all__" selected>全员汇总</option>
+                      <select id="rpScopeLevel2" class="manager-goal-scope-select" aria-label="选择客服人员" onchange="onRpScopeLevel2Change()" disabled>
+                        <option value="__self__" selected>May（组长）</option>
                       </select>
                     </div>
-                    <p class="manager-goal-scope-hint" id="rpScopeHint">当前客服管理视角：<strong>团队所有人</strong></p>
+                    <p class="manager-goal-scope-hint is-cs-mode" id="rpScopeHint">当前客服管理视角：<strong>我的个人视角 · May（组长）</strong></p>
                   </div>
                 </aside>
                 <aside class="module rp-rank-panel" id="rp-rank-panel">
@@ -13522,44 +13559,63 @@ function renderAlertTaskFollowDataCells(row, csName, linkable) {
     '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
 }
 
+function renderCsScopeFollowHierarchy(spec) {
+  var outline = getCsFollowOutline();
+  var html = [];
+  var scopeRows = outline.scopeNames.map(spec.buildRow);
+  var scopeAgg = spec.aggregate(scopeRows);
+  if (outline.showSelf && outline.selfName) {
+    var selfRow = spec.buildRow(outline.selfName);
+    html.push('<tr class="comm-follow-row--self">' +
+      renderCommStatsFollowNameCell(outline.selfLabel || (outline.selfName + '（我自己）')) +
+      spec.renderCells(selfRow, outline.selfName, true) +
+      '</tr>');
+  }
+  html.push(buildCommStatsFollowTeamRowOpenTag() +
+    renderCommStatsFollowNameCell(outline.scopeLabel) +
+    spec.renderCells(scopeAgg, '', false) +
+    '</tr>');
+  outline.childRoles.forEach(function (child) {
+    var memberRows = (child.members || []).map(spec.buildRow);
+    var groupAgg = spec.aggregate(memberRows);
+    var expanded = spec.isExpanded(child.key);
+    var parentAttr = spec.parentAttr || 'data-comm-follow-parent';
+    html.push(spec.openGroup(child.key, expanded) +
+      renderCommStatsFollowNameCell(child.label, { groupKey: child.key }) +
+      spec.renderCells(groupAgg, '', false) +
+      '</tr>');
+    if (!expanded) return;
+    memberRows.forEach(function (row) {
+      html.push('<tr class="comm-follow-row--member" ' + parentAttr + '="' + child.key + '">' +
+        renderCommStatsFollowNameCell(formatCsScopePersonLabel(row.name), { isMember: true }) +
+        spec.renderCells(row, row.name, true) +
+        '</tr>');
+    });
+  });
+  if (!outline.childRoles.length && outline.peerNames && outline.peerNames.length) {
+    outline.peerNames.forEach(function (name) {
+      var row = spec.buildRow(name);
+      html.push('<tr class="comm-follow-row--member">' +
+        renderCommStatsFollowNameCell(formatCsScopePersonLabel(name), { isMember: true }) +
+        spec.renderCells(row, name, true) +
+        '</tr>');
+    });
+  }
+  return html.join('');
+}
+
 function renderAlertTaskFollowManagerHierarchy() {
   var period = _alertTaskFollowPeriod;
   var taskType = _alertTaskFollowType;
   if (!taskType) return '';
-  var html = [];
-  var teamNames = getCommStatsManagerCsNames();
-  var teamRows = teamNames.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
-  var teamAgg = aggregateAlertTaskFollowRows(teamRows);
-  var group;
-  var memberRows;
-  var groupAgg;
-  var expanded;
-  var i;
-
-  html.push(buildCommStatsFollowTeamRowOpenTag() +
-    renderCommStatsFollowNameCell(ALERT_TASK_FOLLOW_TEAM_LABEL) +
-    renderAlertTaskFollowDataCells(teamAgg, '', false) +
-    '</tr>');
-  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-    group = MANAGER_GOAL_CS_GROUPS[gk];
-    if (!group) return;
-    memberRows = group.members.map(function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); });
-    groupAgg = aggregateAlertTaskFollowRows(memberRows);
-    expanded = isAlertTaskFollowGroupExpanded(gk);
-    html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-      renderAlertTaskFollowDataCells(groupAgg, '', false) +
-      '</tr>');
-    if (expanded) {
-      for (i = 0; i < memberRows.length; i++) {
-        html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-          renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-          renderAlertTaskFollowDataCells(memberRows[i], memberRows[i].name, true) +
-          '</tr>');
-      }
-    }
+  return renderCsScopeFollowHierarchy({
+    buildRow: function (name) { return buildAlertTaskFollowRowForName(name, taskType, period); },
+    aggregate: aggregateAlertTaskFollowRows,
+    renderCells: renderAlertTaskFollowDataCells,
+    isExpanded: isAlertTaskFollowGroupExpanded,
+    openGroup: buildCommStatsFollowGroupRowOpenTag,
+    parentAttr: 'data-comm-follow-parent'
   });
-  return html.join('');
 }
 
 function padAlertTaskNum(n) {
@@ -15696,10 +15752,14 @@ function syncCommDetailPeriodFromSelect(selectId, periodLabelId) {
 }
 
 var _commStatsFollowExpandedGroups = {};
-var COMM_STATS_FOLLOW_GROUP_KEYS = ['A', 'B', 'C', 'DA', 'DB', 'DC'];
-var COMM_STATS_FOLLOW_TEAM_LABEL = '团队整体进度';
+var COMM_STATS_FOLLOW_GROUP_KEYS = ['IN_RET', 'PK_RET', 'NG_RET'];
+var COMM_STATS_FOLLOW_TEAM_LABEL = '账户经理';
 
 function getCommStatsManagerCsNames() {
+  if (document.body.dataset.view === 'manager' && typeof getSopScopedCsNames === 'function') {
+    var scoped = getSopScopedCsNames();
+    if (scoped && scoped.length) return scoped;
+  }
   if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') return MANAGER_GOAL_PERF_RANK_ORDER.slice();
   return ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
 }
@@ -15954,129 +16014,32 @@ function renderCommStatsFollowChatCells(row, csName, linkable) {
 
 function renderCommStatsFollowManagerHierarchy() {
   var period = _commStatsFollowPeriod;
-  var html = [];
-  var teamNames = getCommStatsManagerCsNames();
-  var teamRows;
-  var teamAgg;
-  var groupKey;
-  var group;
-  var memberRows;
-  var groupAgg;
-  var expanded;
-  var i;
-
   if (_commStatsFollowScope === 'summary') {
-    teamRows = teamNames.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
-    teamAgg = aggregateCommStatsSummaryRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowSummaryCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_CS_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsSummaryFollowRowForName(name, period); });
-      groupAgg = aggregateCommStatsSummaryRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowSummaryCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowSummaryCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
+    return renderCsScopeFollowHierarchy({
+      buildRow: function (name) { return buildCommStatsSummaryFollowRowForName(name, period); },
+      aggregate: aggregateCommStatsSummaryRows,
+      renderCells: renderCommStatsFollowSummaryCells,
+      isExpanded: isCommStatsFollowGroupExpanded,
+      openGroup: buildCommStatsFollowGroupRowOpenTag,
+      parentAttr: 'data-comm-follow-parent'
     });
-    return html.join('');
   }
-
   if (!_commStatsChannelType) return '';
-  teamRows = teamNames.map(function (name) { return buildCommStatsFollowRowForName(name, _commStatsChannelType, period); });
-  if (_commStatsChannelType === 'tel') {
-    teamAgg = aggregateCommStatsTelRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowTelCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_CS_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'tel', period); });
-      groupAgg = aggregateCommStatsTelRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowTelCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowTelCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
-    });
-    return html.join('');
-  }
-  if (_commStatsChannelType === 'wa') {
-    teamAgg = aggregateCommStatsWaRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowWaCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_CS_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'wa', period); });
-      groupAgg = aggregateCommStatsWaRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowWaCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowWaCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
-    });
-    return html.join('');
-  }
-  if (_commStatsChannelType === 'chat') {
-    teamAgg = aggregateCommStatsChatRows(teamRows);
-    html.push(buildCommStatsFollowTeamRowOpenTag() +
-      renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-      renderCommStatsFollowChatCells(teamAgg, '', false) +
-      '</tr>');
-    COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-      group = MANAGER_GOAL_CS_GROUPS[gk];
-      if (!group) return;
-      memberRows = group.members.map(function (name) { return buildCommStatsFollowRowForName(name, 'chat', period); });
-      groupAgg = aggregateCommStatsChatRows(memberRows);
-      expanded = isCommStatsFollowGroupExpanded(gk);
-      html.push(buildCommStatsFollowGroupRowOpenTag(gk, expanded) +
-        renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-        renderCommStatsFollowChatCells(groupAgg, '', false) +
-        '</tr>');
-      if (expanded) {
-        for (i = 0; i < memberRows.length; i++) {
-          html.push('<tr class="comm-follow-row--member" data-comm-follow-parent="' + gk + '">' +
-            renderCommStatsFollowNameCell(memberRows[i].name, { isMember: true }) +
-            renderCommStatsFollowChatCells(memberRows[i], memberRows[i].name, true) +
-            '</tr>');
-        }
-      }
-    });
-  }
-  return html.join('');
+  var channel = _commStatsChannelType;
+  var aggregate = channel === 'tel' ? aggregateCommStatsTelRows
+    : channel === 'wa' ? aggregateCommStatsWaRows
+    : aggregateCommStatsChatRows;
+  var renderCells = channel === 'tel' ? renderCommStatsFollowTelCells
+    : channel === 'wa' ? renderCommStatsFollowWaCells
+    : renderCommStatsFollowChatCells;
+  return renderCsScopeFollowHierarchy({
+    buildRow: function (name) { return buildCommStatsFollowRowForName(name, channel, period); },
+    aggregate: aggregate,
+    renderCells: renderCells,
+    isExpanded: isCommStatsFollowGroupExpanded,
+    openGroup: buildCommStatsFollowGroupRowOpenTag,
+    parentAttr: 'data-comm-follow-parent'
+  });
 }
 
 var _commStatsDetailListMode = 'records';
@@ -17796,6 +17759,11 @@ function getCommSummaryChipCount(chip) {
   return parseInt(text.replace(/[^\d]/g, ''), 10) || 0;
 }
 
+function isCsSopPersonalView() {
+  var view = document.body.dataset.view || 'cs';
+  return view === 'cs' || (view === 'manager' && document.body.dataset.sopScope === 'self');
+}
+
 function handleCommStatsSummaryChipActivate(chip) {
   if (!chip || !chip.closest('.comm-stats-section')) return;
   var chipType = chip.getAttribute('data-comm-chip');
@@ -17811,7 +17779,7 @@ function handleCommStatsSummaryChipActivate(chip) {
     openCommStatsSummaryFollowModal();
     return;
   }
-  if (view === 'cs' && chip.closest('.cs-only')) {
+  if (isCsSopPersonalView() && chip.closest('.cs-only')) {
     if (chipType === 'my-customers' || chipType === 'reply-rate') {
       var customersChip = chip.closest('.comm-stats-summary');
       customersChip = customersChip && customersChip.querySelector('[data-comm-chip="my-customers"]');
@@ -18452,7 +18420,7 @@ function handleCommStatsChannelActivate(card) {
     openCommStatsFollowModal(channelType);
     return;
   }
-  if (view === 'cs' && card.closest('.cs-only')) {
+  if (isCsSopPersonalView() && card.closest('.cs-only')) {
     var contacted = getCommChannelContactedCount(card);
     if (!contacted) return;
     openCommChannelTaskDetailDrawer(COMM_STATS_CURRENT_CS, contacted, channelType);
@@ -18632,37 +18600,17 @@ function renderCommQcFollowCells(row, csName, linkable) {
 function renderCommQcFollowTable() {
   var tbody = document.getElementById('commQcFollowTbody');
   if (!tbody) return;
-  var html = [];
-  var teamRows = getCommStatsManagerCsNames().map(function (name) {
-    return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
+  tbody.innerHTML = renderCsScopeFollowHierarchy({
+    buildRow: function (name) { return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod); },
+    aggregate: aggregateCommQcFollowRows,
+    renderCells: renderCommQcFollowCells,
+    isExpanded: isCommQcFollowGroupExpanded,
+    openGroup: function (groupKey, expanded) {
+      return '<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
+        '" data-comm-qc-follow-group="' + groupKey + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">';
+    },
+    parentAttr: 'data-comm-qc-follow-parent'
   });
-  html.push(buildCommStatsFollowTeamRowOpenTag() +
-    renderCommStatsFollowNameCell(COMM_STATS_FOLLOW_TEAM_LABEL) +
-    renderCommQcFollowCells(aggregateCommQcFollowRows(teamRows), '', false) +
-    '</tr>');
-  COMM_STATS_FOLLOW_GROUP_KEYS.forEach(function (gk) {
-    var group = MANAGER_GOAL_CS_GROUPS[gk];
-    if (!group) return;
-    var memberRows = group.members.map(function (name) {
-      return buildCommQcFollowRowForName(name, _commQcFollowType, _commQcFollowPeriod);
-    });
-    var groupAgg = aggregateCommQcFollowRows(memberRows);
-    var expanded = isCommQcFollowGroupExpanded(gk);
-    html.push('<tr class="comm-follow-row--group comm-follow-row--toggle' + (expanded ? '' : ' is-collapsed') +
-      '" data-comm-qc-follow-group="' + gk + '" role="button" tabindex="0" aria-expanded="' + (expanded ? 'true' : 'false') + '">' +
-      renderCommStatsFollowNameCell(group.label, { groupKey: gk }) +
-      renderCommQcFollowCells(groupAgg, '', false) +
-      '</tr>');
-    if (expanded) {
-      memberRows.forEach(function (row) {
-        html.push('<tr class="comm-follow-row--member" data-comm-qc-follow-parent="' + gk + '">' +
-          renderCommStatsFollowNameCell(row.name, { isMember: true }) +
-          renderCommQcFollowCells(row, row.name, true) +
-          '</tr>');
-      });
-    }
-  });
-  tbody.innerHTML = html.join('');
 }
 
 function openCommQcFollowModal(type) {
@@ -18721,6 +18669,7 @@ function handleCommQcColActivate(col) {
 function openCommQcAnalysisPage(type, options) {
   options = options || {};
   var view = document.body.dataset.view || 'cs';
+  if (view === 'manager' && document.body.dataset.sopScope === 'self') view = 'cs';
   var url = type === 'cr'
     ? '2. CRM工作台/2. 销售工作台2.0/二级页面/CR质检分析.html'
     : '2. CRM工作台/2. 销售工作台2.0/二级页面/电话质检分析.html';
@@ -18802,7 +18751,7 @@ function handleTempMktCardActivate(card) {
     openAlertTaskFollowModal(taskType);
     return;
   }
-  if (view === 'cs' && card.closest('.cs-only')) {
+  if (isCsSopPersonalView() && card.closest('.cs-only')) {
     var counts = getTempMktCardProgressCounts(card);
     if (!counts.completed) return;
     _alertTaskFollowType = taskType;
@@ -18826,7 +18775,7 @@ function handleAlertTaskCardActivate(card) {
     }
     return;
   }
-  if (view === 'cs' && card.closest('.cs-only')) {
+  if (isCsSopPersonalView() && card.closest('.cs-only')) {
     var counts = getAlertTaskCardProgressCounts(card);
     if (!taskType) return;
     _alertTaskFollowType = taskType;
@@ -19238,8 +19187,8 @@ var RP_PERSON_WEIGHT = {
 };
 var RP_PERSON_DIM = {};
 var RP_PERSON_MONTH = {};
-var _rpScopeLevel1 = 'all';
-var _rpScopeLevel2 = '__all__';
+var _rpScopeLevel1 = 'self';
+var _rpScopeLevel2 = '__self__';
 var _rpBuildSalt = 1;
 
 function rpAllNames() {
@@ -19522,6 +19471,7 @@ function rpBuildPersonLedger() {
 function rpActiveNames() {
   var view = document.body.dataset.view || 'cs';
   if (view !== 'manager') return [RP_RANK_ME];
+  if (_rpScopeLevel1 === 'self') return ['May'];
   if (_rpScopeLevel1 === 'all') {
     if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return rpAllNames();
     return [_rpScopeLevel2];
@@ -19533,19 +19483,21 @@ function rpActiveNames() {
 }
 
 function rpScopeLabel() {
+  if (_rpScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
   if (_rpScopeLevel1 === 'all') {
-    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
-    return _rpScopeLevel2;
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '账户经理';
+    return formatCsScopePersonLabel(_rpScopeLevel2);
   }
   var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
-  var label = group ? group.label : '当前组';
-  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 组内所有人';
-  return label + ' · ' + _rpScopeLevel2;
+  var label = group ? group.label : '当前角色';
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 角色内所有人';
+  return label + ' · ' + formatCsScopePersonLabel(_rpScopeLevel2);
 }
 
 function rpScopeTitleName() {
+  if (_rpScopeLevel1 === 'self') return 'May';
   if (_rpScopeLevel1 === 'all') {
-    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '账户经理';
     return _rpScopeLevel2;
   }
   var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
@@ -19610,15 +19562,22 @@ function rpPersonSixMonth(name, tab) {
 function rpRebuildScopeLevel2(level1, keepValue) {
   var select = document.getElementById('rpScopeLevel2');
   if (!select) return;
+  if (level1 === 'self') {
+    select.disabled = true;
+    select.innerHTML = '<option value="__self__">' + formatCsScopePersonLabel('May') + '</option>';
+    select.value = '__self__';
+    return;
+  }
+  select.disabled = false;
   var options = [];
   if (level1 === 'all') {
     options.push({ value: '__all__', label: '全员汇总' });
-    rpAllNames().forEach(function (name) { options.push({ value: name, label: name }); });
+    rpAllNames().forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
   } else {
     var group = MANAGER_GOAL_CS_GROUPS[level1];
     if (!group) return;
-    options.push({ value: '__group__', label: '组内所有人' });
-    group.members.forEach(function (name) { options.push({ value: name, label: name }); });
+    options.push({ value: '__group__', label: '角色内所有人' });
+    group.members.forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
   }
   select.textContent = '';
   options.forEach(function (item) {
@@ -20114,7 +20073,7 @@ function switchRpRankTab(tab) {
 
 function initRpOps() {
   rpBuildPersonLedger();
-  rpRebuildScopeLevel2('all', '__all__');
+  rpRebuildScopeLevel2('self', '__self__');
   rpSyncScopeHint();
   renderRpKpis();
   renderRpMetricPicks();
@@ -20147,10 +20106,20 @@ function switchView(view, btn) {
   closeWeekGoalMetricHelpModal();
   closeVeteranGoalMetricHelpModal();
   document.body.dataset.view = view;
+  if (view === 'manager' && _managerGoalCsFilter === 'self') {
+    document.body.dataset.goalScope = 'self';
+  } else {
+    delete document.body.dataset.goalScope;
+  }
+  if (view !== 'manager') {
+    resetSopManagerScope();
+  } else {
+    document.body.dataset.sopScope = _sopScopeLevel1 === 'self' ? 'self' : (_sopScopeLevel1 === 'all' ? 'team' : 'group');
+  }
   try { sessionStorage.setItem('wbView', view); } catch (e) {}
   document.querySelectorAll('.view-btn').forEach(function (b) { b.classList.remove('active'); });
   btn.classList.add('active');
-  var goalId = view === 'cs' ? 'personal' : 'team';
+  var goalId = (view === 'cs' || (view === 'manager' && _managerGoalCsFilter === 'self')) ? 'personal' : 'team';
   document.querySelectorAll('.target-view').forEach(function (v) { v.classList.remove('active'); });
   document.querySelectorAll('.perf-view').forEach(function (v) { v.classList.remove('active'); });
   var goalEl = document.getElementById('view-' + goalId);
@@ -20167,6 +20136,7 @@ function switchView(view, btn) {
   requestAnimationFrame(function () {
     if (view === 'manager') {
       applyManagerGoalCsFilter(_managerGoalCsFilter);
+      applySopManagerScopeView();
       initGoalCompletionAnalysis('manager');
       resizeGcaHistoryChart();
     } else {
@@ -23966,8 +23936,8 @@ var CHANCE_POOL_TOTALS = {
 var CHANCE_CLUE_PREVIEW = { risk: 4, value: 8, stable: 8 };
 var CHANCE_CLUE_PREFIX = { risk: '最紧急', value: '优先', stable: '维护' };
 var CHANCE_PERSON = null;
-var _chanceScopeLevel1 = 'all';
-var _chanceScopeLevel2 = '__all__';
+var _chanceScopeLevel1 = 'self';
+var _chanceScopeLevel2 = '__self__';
 var _chanceVisibleBands = null;
 var _chanceBuildSalt = 0;
 
@@ -24135,6 +24105,7 @@ function chanceEnsureLedger() {
 }
 
 function chanceActiveNames() {
+  if (_chanceScopeLevel1 === 'self') return ['May'];
   if (_chanceScopeLevel1 === 'all') {
     if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return rpAllNames();
     return [_chanceScopeLevel2];
@@ -24146,14 +24117,15 @@ function chanceActiveNames() {
 }
 
 function chanceScopeLabel() {
+  if (_chanceScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
   if (_chanceScopeLevel1 === 'all') {
-    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return '团队所有人';
-    return _chanceScopeLevel2;
+    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return '账户经理';
+    return formatCsScopePersonLabel(_chanceScopeLevel2);
   }
   var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
-  var label = group ? group.label : '当前组';
-  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return label + ' · 组内所有人';
-  return label + ' · ' + _chanceScopeLevel2;
+  var label = group ? group.label : '当前角色';
+  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return label + ' · 角色内所有人';
+  return label + ' · ' + formatCsScopePersonLabel(_chanceScopeLevel2);
 }
 
 function chanceInvalidateClueBands() {
@@ -24237,15 +24209,22 @@ function chanceSyncScopeHint() {
 function chanceRebuildScopeLevel2(level1, keepValue) {
   var select = document.getElementById('chanceScopeLevel2');
   if (!select) return;
+  if (level1 === 'self') {
+    select.disabled = true;
+    select.innerHTML = '<option value="__self__">' + formatCsScopePersonLabel('May') + '</option>';
+    select.value = '__self__';
+    return;
+  }
+  select.disabled = false;
   var options = [];
   if (level1 === 'all') {
     options.push({ value: '__all__', label: '全员汇总' });
-    rpAllNames().forEach(function (name) { options.push({ value: name, label: name }); });
+    rpAllNames().forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
   } else {
     var group = MANAGER_GOAL_CS_GROUPS[level1];
     if (!group) return;
-    options.push({ value: '__group__', label: '组内所有人' });
-    group.members.forEach(function (name) { options.push({ value: name, label: name }); });
+    options.push({ value: '__group__', label: '角色内所有人' });
+    group.members.forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
   }
   select.textContent = '';
   options.forEach(function (item) {
@@ -24588,17 +24567,89 @@ function formatGoalKpiPct(actualPct) {
   return formatKpiPct(actualPct);
 }
 
-var _managerGoalCsFilter = 'all';
-var _managerGoalScopeLevel1 = 'all';
-var _managerGoalScopeLevel2 = '__all__';
+var _managerGoalCsFilter = 'self';
+var _managerGoalScopeLevel1 = 'self';
+var _managerGoalScopeLevel2 = '__self__';
+
+/** 账户经理组织：一级下拉是账户经理的直接下级，人员范围含该角色及其下级 */
+var CS_RETENTION_ORG = (function () {
+  var ROLE_PEOPLE = {
+    '印度留存客服组长': ['May', 'Coulson', 'Daisy', 'Fitz'],
+    '巴基留存客服组长': ['Simmons', 'Mack', 'Fury'],
+    '巴基Dana留存客服': ['Hunter', 'Ward', 'Bobbi'],
+    '巴基TW留存客服': ['Skye', 'Melinda', 'Trip'],
+    '尼日留存客服组长': ['Antoine', 'Yo-Yo', 'Deke', 'Jemma']
+  };
+  var ROLE_CHILDREN = {
+    '账户经理': ['印度留存客服组长', '巴基留存客服组长', '尼日留存客服组长'],
+    '巴基留存客服组长': ['巴基Dana留存客服', '巴基TW留存客服']
+  };
+  var LEVEL1_ROLE_NAME = {
+    all: '账户经理',
+    IN_RET: '印度留存客服组长',
+    PK_RET: '巴基留存客服组长',
+    NG_RET: '尼日留存客服组长'
+  };
+  var PERSON_ROLE = {};
+  Object.keys(ROLE_PEOPLE).forEach(function (role) {
+    ROLE_PEOPLE[role].forEach(function (name) { PERSON_ROLE[name] = role; });
+  });
+  function collectRolePeople(role, bucket) {
+    var list = bucket || [];
+    (ROLE_PEOPLE[role] || []).forEach(function (name) {
+      if (list.indexOf(name) === -1) list.push(name);
+    });
+    (ROLE_CHILDREN[role] || []).forEach(function (child) {
+      collectRolePeople(child, list);
+    });
+    return list;
+  }
+  function getFollowOutline(level1, selfName) {
+    var role = LEVEL1_ROLE_NAME[level1] || LEVEL1_ROLE_NAME.all;
+    var scopeNames = collectRolePeople(role);
+    var childRoles = (ROLE_CHILDREN[role] || []).map(function (child) {
+      return { key: child, label: child, members: collectRolePeople(child) };
+    });
+    var own = (ROLE_PEOPLE[role] || []).slice();
+    if (own.length && childRoles.length) {
+      childRoles.unshift({ key: role + '::own', label: role, members: own });
+    }
+    var self = selfName || 'May';
+    var peerNames = [];
+    if (!childRoles.length) {
+      scopeNames.forEach(function (name) {
+        if (name !== self) peerNames.push(name);
+      });
+    }
+    return {
+      roleName: role,
+      scopeLabel: role === '账户经理' ? '账户经理' : (role + ' · 所有人'),
+      scopeNames: scopeNames,
+      selfName: self,
+      selfLabel: self + '（我自己）',
+      showSelf: true,
+      childRoles: childRoles,
+      peerNames: peerNames
+    };
+  }
+  function formatScopePersonLabel(name) {
+    var role = PERSON_ROLE[name] || '';
+    return role.indexOf('组长') !== -1 ? (name + '（组长）') : name;
+  }
+  return {
+    currentUser: { name: 'May', role: '印度留存客服组长' },
+    personRole: PERSON_ROLE,
+    level1RoleName: LEVEL1_ROLE_NAME,
+    collectRolePeople: collectRolePeople,
+    getFollowOutline: getFollowOutline,
+    formatScopePersonLabel: formatScopePersonLabel
+  };
+})();
 
 var MANAGER_GOAL_CS_GROUPS = {
-  A: { label: 'TW客服A组', members: ['Coulson', 'May', 'Daisy'], leader: 'May' },
-  B: { label: 'TW客服B组', members: ['Fitz', 'Simmons', 'Mack'], leader: 'Fitz' },
-  C: { label: 'TW客服C组', members: ['Fury', 'Hunter'] },
-  DA: { label: 'DANA客服A组', members: ['Ward', 'Bobbi', 'Skye'] },
-  DB: { label: 'DANA客服B组', members: ['Melinda', 'Trip', 'Antoine'] },
-  DC: { label: 'DANA客服C组', members: ['Yo-Yo', 'Deke', 'Jemma'] }
+  IN_RET: { label: '印度留存客服组长', members: CS_RETENTION_ORG.collectRolePeople('印度留存客服组长'), leader: 'May' },
+  PK_RET: { label: '巴基留存客服组长', members: CS_RETENTION_ORG.collectRolePeople('巴基留存客服组长'), leader: 'Simmons' },
+  NG_RET: { label: '尼日留存客服组长', members: CS_RETENTION_ORG.collectRolePeople('尼日留存客服组长'), leader: 'Antoine' }
 };
 
 /** 客服名单唯一来源：客服组配置。团队合计、占比分母均基于这份名单，保证 团队 = 各组之和 */
@@ -24621,6 +24672,15 @@ function isManagerGoalGroupLeader(csName) {
   return false;
 }
 
+/** 二级下拉：角色名含「组长」才标注，普通留存客服只显示姓名 */
+function formatCsScopePersonLabel(name) {
+  if (!name) return '';
+  if (typeof CS_RETENTION_ORG !== 'undefined' && CS_RETENTION_ORG.formatScopePersonLabel) {
+    return CS_RETENTION_ORG.formatScopePersonLabel(name);
+  }
+  return isManagerGoalGroupLeader(name) ? (name + '（组长）') : name;
+}
+
 function formatLeaderPerfSplit(meta) {
   if (!meta || meta.personalReward == null || meta.teamReward == null) return '';
   return '个人提成 <em>$' + Number(meta.personalReward).toLocaleString('en-US') +
@@ -24628,22 +24688,24 @@ function formatLeaderPerfSplit(meta) {
 }
 
 function getManagerGoalScopeDisplayLabel(filter) {
-  if (!filter || filter === 'all') return '团队所有人';
+  if (filter === 'self') return '我的个人视角 · May（组长）';
+  if (!filter || filter === 'all') return '账户经理';
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_CS_GROUPS[groupKey];
-    return group ? group.label + ' · 组内所有人' : '组内所有人';
+    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
   }
-  if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
+  if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all' && _managerGoalScopeLevel1 !== 'self') {
     var grp = MANAGER_GOAL_CS_GROUPS[_managerGoalScopeLevel1];
     if (grp && grp.members.indexOf(filter) !== -1) {
-      return grp.label + ' · ' + filter;
+      return grp.label + ' · ' + formatCsScopePersonLabel(filter);
     }
   }
-  return filter;
+  return formatCsScopePersonLabel(filter);
 }
 
 function resolveManagerGoalFilter(level1, level2) {
+  if (level1 === 'self') return 'self';
   if (level1 === 'all') {
     if (!level2 || level2 === '__all__') return 'all';
     return level2;
@@ -24653,6 +24715,7 @@ function resolveManagerGoalFilter(level1, level2) {
 }
 
 function parseManagerGoalFilterToScopes(filter) {
+  if (filter === 'self') return { level1: 'self', level2: '__self__' };
   if (!filter || filter === 'all') return { level1: 'all', level2: '__all__' };
   if (filter.indexOf('group:') === 0) {
     return { level1: filter.slice(6), level2: '__group__' };
@@ -24669,18 +24732,25 @@ function parseManagerGoalFilterToScopes(filter) {
 function rebuildManagerGoalLevel2Options(level1, keepValue) {
   var select = document.getElementById('managerGoalScopeLevel2');
   if (!select) return;
+  if (level1 === 'self') {
+    select.disabled = true;
+    select.innerHTML = '<option value="__self__">' + formatCsScopePersonLabel('May') + '</option>';
+    select.value = '__self__';
+    return;
+  }
+  select.disabled = false;
   var html = '';
   if (level1 === 'all') {
     html += '<option value="__all__">全员汇总</option>';
     getAllManagerGoalCsNames().forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
+      html += '<option value="' + name + '">' + formatCsScopePersonLabel(name) + '</option>';
     });
   } else {
     var group = MANAGER_GOAL_CS_GROUPS[level1];
     if (!group) return;
-    html += '<option value="__group__">组内所有人</option>';
+    html += '<option value="__group__">角色内所有人</option>';
     group.members.forEach(function (name) {
-      html += '<option value="' + name + '">' + name + '</option>';
+      html += '<option value="' + name + '">' + formatCsScopePersonLabel(name) + '</option>';
     });
   }
   select.innerHTML = html;
@@ -24702,9 +24772,11 @@ function syncManagerGoalScopeSelects(filter) {
   }
   if (!level2Select.querySelector('option[value="' + scopes.level2 + '"]')) {
     rebuildManagerGoalLevel2Options(scopes.level1, scopes.level2);
-    return;
+  } else {
+    level2Select.value = scopes.level2;
   }
-  level2Select.value = scopes.level2;
+  level2Select.disabled = scopes.level1 === 'self';
+  _managerGoalScopeLevel2 = level2Select.value || scopes.level2;
 }
 
 function onManagerGoalScopeLevel1Change() {
@@ -24721,6 +24793,104 @@ function onManagerGoalScopeLevel2Change() {
   _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'all';
   _managerGoalScopeLevel2 = level2Select ? level2Select.value : '__all__';
   applyManagerGoalCsFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
+}
+
+var _sopScopeLevel1 = 'self';
+var _sopScopeLevel2 = '__self__';
+
+function getCsFollowOutline() {
+  var selfName = 'May';
+  if (_sopScopeLevel1 === 'self' || typeof CS_RETENTION_ORG === 'undefined' || !CS_RETENTION_ORG.getFollowOutline) {
+    return {
+      scopeLabel: '我的个人视角',
+      scopeNames: [selfName],
+      selfName: selfName,
+      selfLabel: selfName + '（我自己）',
+      showSelf: false,
+      childRoles: [],
+      peerNames: []
+    };
+  }
+  return CS_RETENTION_ORG.getFollowOutline(_sopScopeLevel1, selfName);
+}
+
+function getSopScopedCsNames() {
+  return getCsFollowOutline().scopeNames.slice();
+}
+
+function getSopScopeDisplayLabel() {
+  if (_sopScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
+  if (!_sopScopeLevel1 || _sopScopeLevel1 === 'all') return '账户经理';
+  var group = MANAGER_GOAL_CS_GROUPS[_sopScopeLevel1];
+  return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+}
+
+function updateSopScopeHint() {
+  var hintEl = document.getElementById('sopScopeHint');
+  if (!hintEl) return;
+  hintEl.classList.add('is-cs-mode');
+  hintEl.innerHTML = '当前客服管理视角：<strong>' + getSopScopeDisplayLabel() + '</strong>';
+}
+
+function rebuildSopScopeLevel2(level1) {
+  var select = document.getElementById('sopScopeLevel2');
+  if (!select) return;
+  select.disabled = true;
+  if (level1 === 'self') {
+    select.innerHTML = '<option value="__self__">' + formatCsScopePersonLabel('May') + '</option>';
+    select.value = '__self__';
+    _sopScopeLevel2 = '__self__';
+    return;
+  }
+  select.innerHTML = '<option value="__group__">角色内所有人</option>';
+  select.value = '__group__';
+  _sopScopeLevel2 = '__group__';
+}
+
+function refreshOpenSopScopeModals() {
+  var followModal = document.getElementById('commStatsFollowModal');
+  if (followModal && !followModal.hidden && typeof renderCommStatsFollowTable === 'function') renderCommStatsFollowTable();
+  var qcModal = document.getElementById('commQcFollowModal');
+  if (qcModal && !qcModal.hidden && typeof renderCommQcFollowTable === 'function') renderCommQcFollowTable();
+  var alertModal = document.getElementById('alertTaskFollowModal');
+  if (alertModal && !alertModal.hidden && typeof renderAlertTaskFollowTable === 'function') renderAlertTaskFollowTable();
+}
+
+function applySopManagerScopeView() {
+  var scope = 'team';
+  if (_sopScopeLevel1 === 'self') scope = 'self';
+  else if (_sopScopeLevel1 && _sopScopeLevel1 !== 'all') scope = 'group';
+  document.body.dataset.sopScope = scope;
+  updateSopScopeHint();
+  if (document.body.dataset.view !== 'manager') return;
+  if (typeof applyCommStatsModulePeriod === 'function') {
+    applyCommStatsModulePeriod(_commStatsModulePeriod || 'today');
+  }
+  if (typeof applyAlertTaskModulePeriod === 'function') {
+    applyAlertTaskModulePeriod(_alertTaskModulePeriod || 'week');
+  }
+  refreshOpenSopScopeModals();
+}
+
+function resetSopManagerScope() {
+  _sopScopeLevel1 = 'self';
+  _sopScopeLevel2 = '__self__';
+  var level1 = document.getElementById('sopScopeLevel1');
+  if (level1) level1.value = 'self';
+  rebuildSopScopeLevel2('self');
+  document.body.dataset.sopScope = 'self';
+  updateSopScopeHint();
+}
+
+function onSopScopeLevel1Change() {
+  var level1Select = document.getElementById('sopScopeLevel1');
+  _sopScopeLevel1 = level1Select ? level1Select.value : 'self';
+  rebuildSopScopeLevel2(_sopScopeLevel1);
+  applySopManagerScopeView();
+}
+
+function onSopScopeLevel2Change() {
+  rebuildSopScopeLevel2(_sopScopeLevel1);
 }
 
 function aggregateManagerGoalCsData(members, groupKey, groupLabel) {
@@ -26244,9 +26414,38 @@ function applyGoalKpiAndDetailCards(root, data) {
   applyManagerGoalVeteranTargetCard(root, data);
 }
 
+function syncManagerGoalPerspectiveViews(filter) {
+  var isSelf = filter === 'self';
+  var inManager = document.body.dataset.view === 'manager';
+  if (inManager && isSelf) document.body.dataset.goalScope = 'self';
+  else delete document.body.dataset.goalScope;
+  if (!inManager) return;
+  var goalPersonal = document.getElementById('view-personal');
+  var goalTeam = document.getElementById('view-team');
+  var perfPersonal = document.getElementById('perf-personal');
+  var perfTeam = document.getElementById('perf-team');
+  if (goalPersonal) goalPersonal.classList.toggle('active', isSelf);
+  if (goalTeam) goalTeam.classList.toggle('active', !isSelf);
+  if (perfPersonal) perfPersonal.classList.toggle('active', isSelf);
+  if (perfTeam) perfTeam.classList.toggle('active', !isSelf);
+}
+
 function applyManagerGoalCsFilter(value) {
-  _managerGoalCsFilter = value || 'all';
+  _managerGoalCsFilter = value || 'self';
   syncManagerGoalScopeSelects(_managerGoalCsFilter);
+  syncManagerGoalPerspectiveViews(_managerGoalCsFilter);
+
+  if (_managerGoalCsFilter === 'self') {
+    resetManagerGoalModuleTitles();
+    var selfHint = document.getElementById('managerGoalScopeHint');
+    if (selfHint) {
+      selfHint.classList.add('is-cs-mode');
+      selfHint.innerHTML = '当前客服管理视角：<strong>' + getManagerGoalScopeDisplayLabel('self') + '</strong>';
+    }
+    initGoalCompletionAnalysis('cs');
+    requestAnimationFrame(resizeGcaHistoryChart);
+    return;
+  }
 
   var data = withGoalPeriodData(getManagerGoalDisplayData(_managerGoalCsFilter));
   var root = document.getElementById('view-team');
@@ -26353,13 +26552,14 @@ function applyManagerGoalCsFilter(value) {
 }
 
 function resetManagerGoalCsFilter() {
-  _managerGoalCsFilter = 'all';
-  _managerGoalScopeLevel1 = 'all';
-  _managerGoalScopeLevel2 = '__all__';
-  syncManagerGoalScopeSelects('all');
+  _managerGoalCsFilter = 'self';
+  _managerGoalScopeLevel1 = 'self';
+  _managerGoalScopeLevel2 = '__self__';
+  syncManagerGoalScopeSelects('self');
   if (document.body.dataset.view === 'manager') {
-    applyManagerGoalCsFilter('all');
+    applyManagerGoalCsFilter('self');
   } else {
+    delete document.body.dataset.goalScope;
     resetManagerGoalModuleTitles();
   }
 }
