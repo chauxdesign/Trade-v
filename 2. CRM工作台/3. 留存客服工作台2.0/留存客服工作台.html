@@ -315,6 +315,7 @@
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .cs-only{display:block}
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .manager-only{display:none}
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .manager-goal-scope-panel.manager-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] #panel-sop .comm-review-entry-btn.manager-only{display:inline-flex}
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .comm-stats-section .cs-only .comm-channel,
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .alert-task-section .cs-only .alert-task-card,
     body[data-view="manager"][data-sop-scope="self"] #panel-sop .temp-mkt-section .cs-only .temp-mkt-card{
@@ -2447,7 +2448,7 @@
       width:10%;
     }
     #commStatsFollowModal.is-tel-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(780px,100%);
+      width:min(819px,100%);
     }
     #commStatsFollowModal.is-tel-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -2485,7 +2486,7 @@
       width:13%;
     }
     #commStatsFollowModal.is-wa-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(720px,100%);
+      width:min(756px,100%);
     }
     #commStatsFollowModal.is-wa-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -2519,7 +2520,7 @@
       width:15%;
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(720px,100%);
+      width:min(756px,100%);
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -3059,6 +3060,15 @@
     #phoneCommDetailDrawer .alert-task-detail-table{min-width:920px}
     #phoneCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px;overflow:hidden}
     #phoneCommDetailDrawer .phone-comm-duration--short{color:#dc2626;font-weight:700}
+    #phoneCommDetailDrawer .col-sid-stack,
+    #waCommDetailDrawer .col-sid-stack,
+    #chatCommDetailDrawer .col-sid-stack{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+    #phoneCommDetailDrawer .comm-entry-mode,
+    #waCommDetailDrawer .comm-entry-mode,
+    #chatCommDetailDrawer .comm-entry-mode{font-size:11px;font-weight:600;line-height:1.3;color:#334155;font-family:inherit}
+    #phoneCommDetailDrawer .comm-entry-mode--pending,
+    #waCommDetailDrawer .comm-entry-mode--pending,
+    #chatCommDetailDrawer .comm-entry-mode--pending{color:#94a3b8;font-weight:600}
     #phoneCommDetailDrawer .channel-comm-result-block,
     #phoneCommDetailDrawer .phone-comm-result-block,
     #waCommDetailDrawer .channel-comm-result-block,
@@ -3184,6 +3194,12 @@
       font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;
     }
     .alert-task-detail-table .col-sid-link:hover{text-decoration:underline}
+    .alert-task-overdue-ico{
+      display:inline-flex;align-items:center;justify-content:center;
+      margin-left:6px;padding:0 4px;height:16px;border-radius:3px;
+      background:#dc2626;color:#fff;font-size:10px;font-weight:700;
+      font-family:inherit;line-height:1;vertical-align:middle;letter-spacing:0;
+    }
     .alert-task-detail-table .col-time{white-space:nowrap;color:#334155;font-variant-numeric:tabular-nums}
     .alert-task-detail-table .col-status{white-space:nowrap}
     .alert-task-detail-table .task-status-tag{
@@ -4221,12 +4237,14 @@
     .lead-clue-band--value .lead-clue-customer-stat + .lead-clue-customer-stat{border-left-color:#f0b8c4}
     .lead-clue-band--stable .lead-clue-customer-stat + .lead-clue-customer-stat{border-left-color:#dbeafe}
     .lead-clue-customer-stat-label{font-size:9px;color:#64748b;line-height:1.2}
+    .lead-clue-pool-section .lead-clue-customer-stat-label{font-size:10px}
     .lead-clue-band--value .lead-clue-customer-stat-label{color:#9e6670}
     .lead-clue-customer-stat-val{
       font-size:12px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
       max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
+    .lead-clue-pool-section .lead-clue-customer-stat-val{font-size:14px}
     .lead-clue-customer-stat--funds .lead-clue-customer-stat-val{color:#0d9488}
     .lead-clue-band--value .lead-clue-customer-stat--funds .lead-clue-customer-stat-val{color:#c94862}
     .lead-clue-customer-card-tags{
@@ -4313,9 +4331,9 @@
       padding:4px 2px;text-align:center;
     }
     .customer-pool-stat + .customer-pool-stat{border-left:1px solid #f3e8ff}
-    .customer-pool-stat-label{font-size:9px;color:#64748b;line-height:1.2}
+    .customer-pool-stat-label{font-size:10px;color:#64748b;line-height:1.2}
     .customer-pool-stat-val{
-      font-size:13px;font-weight:800;color:#0f172a;
+      font-size:14px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
     }
     .customer-pool-stat--hot .customer-pool-stat-val{color:#7c3aed}
@@ -4586,7 +4604,7 @@
       padding:4px 2px;text-align:center;
     }
     .lead-corral-stat + .lead-corral-stat{border-left:1px solid #dbeafe}
-    .lead-corral-stat-label{font-size:9px;color:#64748b;line-height:1.2}
+    .lead-corral-stat-label{font-size:10px;color:#64748b;line-height:1.2}
     .lead-corral-stat-val{
       font-size:14px;font-weight:800;color:#0f172a;
       font-variant-numeric:tabular-nums;line-height:1.2;
@@ -6115,7 +6133,7 @@
               <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                 <select id="managerGoalScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onManagerGoalScopeLevel1Change()">
                   <option value="self" selected>我的个人视角</option>
-                  <option value="all">账户经理</option>
+                  <option value="all">团队所有人</option>
                   <option value="IN_RET">印度留存客服组长</option>
                   <option value="PK_RET">巴基留存客服组长</option>
                   <option value="NG_RET">尼日留存客服组长</option>
@@ -8223,7 +8241,7 @@
               <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                 <select id="sopScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onSopScopeLevel1Change()">
                   <option value="self" selected>我的个人视角</option>
-                  <option value="all">账户经理</option>
+                  <option value="all">团队所有人</option>
                   <option value="IN_RET">印度留存客服组长</option>
                   <option value="PK_RET">巴基留存客服组长</option>
                   <option value="NG_RET">尼日留存客服组长</option>
@@ -8889,7 +8907,7 @@
               <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                 <select id="chanceScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onChanceScopeLevel1Change()">
                   <option value="self" selected>我的个人视角</option>
-                  <option value="all">账户经理</option>
+                  <option value="all">团队所有人</option>
                   <option value="IN_RET">印度留存客服组长</option>
                   <option value="PK_RET">巴基留存客服组长</option>
                   <option value="NG_RET">尼日留存客服组长</option>
@@ -9177,7 +9195,7 @@
                     <div class="manager-goal-scope-row manager-goal-scope-row--dual">
                       <select id="rpScopeLevel1" class="manager-goal-scope-select" aria-label="选择团队范围" onchange="onRpScopeLevel1Change()">
                         <option value="self" selected>我的个人视角</option>
-                        <option value="all">账户经理</option>
+                        <option value="all">团队所有人</option>
                         <option value="IN_RET">印度留存客服组长</option>
                         <option value="PK_RET">巴基留存客服组长</option>
                         <option value="NG_RET">尼日留存客服组长</option>
@@ -10017,7 +10035,6 @@
               · 统计范围：<strong id="alertTaskDetailPeriod">—</strong>
               · 共 <strong id="alertTaskDetailCount">0</strong> <span id="alertTaskDetailCountSuffix">条已完成</span>
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="alertTaskDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeAlertTaskDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -10066,7 +10083,6 @@
             <p class="alert-task-detail-sub">
               共 <strong id="commReviewCount">0</strong> 条 WhatsApp 沟通待审/已审记录 · 支持按客服、客户与审核状态筛选
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="commReviewUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeCommReviewDrawer()" aria-label="关闭">×</button>
         </div>
@@ -10129,7 +10145,6 @@
               · 共 <strong id="commStatsDetailCount">0</strong> 条
               <strong id="commStatsDetailMetricLabel" hidden>沟通</strong>
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="commStatsDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeCommStatsDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -10210,7 +10225,6 @@
               · 统计范围：<strong id="phoneCommDetailPeriod">—</strong>
               · 共 <strong id="phoneCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="phoneCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closePhoneCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -10283,7 +10297,6 @@
               · 统计范围：<strong id="waCommDetailPeriod">—</strong>
               · 共 <strong id="waCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="waCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeWaCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -10359,7 +10372,6 @@
               · 统计范围：<strong id="chatCommDetailPeriod">—</strong>
               · 共 <strong id="chatCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="chatCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeChatCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -13101,6 +13113,7 @@ var _alertTaskDetailCategory = null;
 var _alertTaskDetailMode = 'default';
 var _alertTaskDetailListScope = 'completed';
 var _alertTaskDetailManagerReview = false;
+var _alertTaskDetailOverdueCount = 0;
 var CANCELLATION_RETENTION_TASK_TYPES = ['注销挽回'];
 var DEPOSIT_GUIDANCE_TASK_TYPES = ['入金引导'];
 var ALERT_TASK_SPECIAL_DETAIL_MODES = {
@@ -13540,11 +13553,11 @@ function toggleAlertTaskFollowGroup(groupKey) {
   renderAlertTaskFollowTable();
 }
 
-function renderAlertTaskFollowCountCell(count, csName, metric, assigned, completed, linkable) {
+function renderAlertTaskFollowCountCell(count, csName, metric, assigned, completed, linkable, overdue) {
   count = parseInt(count, 10) || 0;
   if (linkable && csName && count > 0) {
     var title = metric === 'assigned' ? '查看下发任务明细' : '查看完成任务明细';
-    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-cs="' + csName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '">' + count + '</a></td>';
+    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-cs="' + csName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '" data-overdue="' + (parseInt(overdue, 10) || 0) + '">' + count + '</a></td>';
   }
   if (!count) {
     return '<td class="col-num"><span class="col-completed-zero">0</span></td>';
@@ -13553,8 +13566,8 @@ function renderAlertTaskFollowCountCell(count, csName, metric, assigned, complet
 }
 
 function renderAlertTaskFollowDataCells(row, csName, linkable) {
-  return renderAlertTaskFollowCountCell(row.assigned, csName, 'assigned', row.assigned, row.completed, linkable) +
-    renderAlertTaskFollowCountCell(row.completed, csName, 'completed', row.assigned, row.completed, linkable) +
+  return renderAlertTaskFollowCountCell(row.assigned, csName, 'assigned', row.assigned, row.completed, linkable, row.overdue) +
+    renderAlertTaskFollowCountCell(row.completed, csName, 'completed', row.assigned, row.completed, linkable, row.overdue) +
     '<td class="col-num col-overdue"><strong>' + (row.overdue || 0) + '</strong></td>' +
     '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
 }
@@ -13843,6 +13856,7 @@ function buildCancellationRetentionDetailRows(csName, taskCount) {
 }
 
 function renderAlertTaskViewCommActionHtml(row) {
+  if (!row || !row.isDone) return '';
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="view-comm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">沟通详情</a>' +
     '</span>';
@@ -13858,11 +13872,10 @@ function renderAlertTaskSpecialActionHtml(row) {
 }
 
 function renderAiSummaryPendingActionHtml(row) {
-  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
-    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">录入</a>' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-confirm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">去确认</a>' +
     '</span>';
 }
 
@@ -13923,11 +13936,20 @@ function renderCancellationRetentionActionHtml(row) {
   return renderAlertTaskSpecialActionHtml(row);
 }
 
+function renderAlertTaskOverdueIco(row) {
+  if (!row || !row.overdue24) return '';
+  return '<span class="alert-task-overdue-ico" title="超时24小时未完成">超时</span>';
+}
+
+function renderAlertTaskSidLinkHtml(row) {
+  return '<a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>' + renderAlertTaskOverdueIco(row);
+}
+
 function renderCancellationRetentionDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
     '<td class="col-status">' + buildCancellationRetentionAuditStatusHtml(row.auditStatus) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-level">' + row.vipLevel + '</td>' +
     '<td class="col-time">' + row.registerTime + '</td>' +
     '<td class="col-nick">' + row.applicant + '</td>' +
@@ -13974,7 +13996,7 @@ function buildDepositGuidanceDetailRows(csName, taskCount) {
 function renderDepositGuidanceDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order">' + row.orderNo + '</td>' +
     '<td class="col-source">' + row.orderSource + '</td>' +
     '<td class="col-time">' + row.orderCreateTime + '</td>' +
@@ -14021,7 +14043,7 @@ function buildMarginCallCareDetailRows(csName, taskCount) {
 function renderMarginCallCareDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.accountType + '</td>' +
     '<td class="col-amount">' + row.netValue + '</td>' +
     '<td class="col-amount">' + row.marginCallAmount + '</td>' +
@@ -14069,7 +14091,7 @@ function buildWithdrawalGuidanceDetailRows(csName, taskCount) {
 function renderWithdrawalGuidanceDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.accountType + '</td>' +
     '<td class="col-order">' + row.orderNo + '</td>' +
     '<td class="col-amount">' + row.withdrawAmount + '</td>' +
@@ -14114,7 +14136,7 @@ function buildForcedLiquidationDetailRows(csName, taskCount) {
 function renderForcedLiquidationDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order">' + row.closeOrderNo + '</td>' +
     '<td class="col-account">' + row.liveAccount + '</td>' +
     '<td class="col-time">' + row.openTime + '</td>' +
@@ -14160,7 +14182,7 @@ function buildKycCoachingDetailRows(csName, taskCount) {
 function renderKycCoachingDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.verifyType + '</td>' +
     '<td class="col-status">' + buildKycVerifyStatusHtml(row.verifyStatus) + '</td>' +
     '<td class="col-content">' + row.failReason + '</td>' +
@@ -14201,7 +14223,7 @@ function buildUninstallRecoveryDetailRows(csName, taskCount) {
 function renderUninstallRecoveryDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time">' + row.uninstallTime + '</td>' +
     '<td class="col-version">' + row.uninstallVersion + '</td>' +
     '<td class="col-time">' + row.pushTime + '</td>' +
@@ -14242,7 +14264,7 @@ function buildWithdrawalClearoutDetailRows(csName, taskCount) {
 function renderWithdrawalClearoutDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order" title="' + row.withdrawOrderNo + '">' + row.withdrawOrderNo + '</td>' +
     '<td class="col-amount">' + row.withdrawAmount + '</td>' +
     '<td class="col-num">' + row.depositCount + '</td>' +
@@ -14282,7 +14304,7 @@ function buildAiSummaryPendingDetailRows(csName, taskCount) {
 function renderAiSummaryPendingDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time" title="' + row.startTime + '">' + formatAlertTaskDetailDateTime(row.startTime) + '</td>' +
     '<td class="col-channel">' + row.channel + '</td>' +
     '<td class="col-scope">' + row.analysisScope + '</td>' +
@@ -14318,7 +14340,7 @@ function buildAlarmReminderDetailRows(csName, taskCount) {
 
 function renderAlarmReminderDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time" title="' + row.followUpTime + '">' + formatAlertTaskDetailDateTime(row.followUpTime) + '</td>' +
     '<td class="col-freq">' + row.frequency + '</td>' +
     '<td class="col-note" title="' + row.note + '">' + row.note + '</td>' +
@@ -14373,7 +14395,7 @@ function renderFeedbackOpinionDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
     '<td class="col-status">' + buildFeedbackOpinionInfoProcessHtml(row.infoStatus) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.opinionType + '</td>' +
     '<td class="col-content" title="' + row.content + '">' + row.content + '</td>' +
     '<td class="col-screenshot">' + renderFeedbackOpinionImageHtml(row) + '</td>' +
@@ -14415,7 +14437,7 @@ function buildBirthdayCareDetailRows(csName, taskCount) {
 function renderBirthdayCareDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-level">' + row.vipLevel + '</td>' +
     '<td class="col-time" title="' + row.lastFollowTime + '">' + formatAlertTaskDetailDateTime(row.lastFollowTime) + '</td>' +
     '<td class="col-content" title="' + row.lastFollowRecord + '">' + row.lastFollowRecord + '</td>' +
@@ -14456,7 +14478,7 @@ function buildUpdatePhoneDetailRows(csName, taskCount) {
 function renderUpdatePhoneDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time" title="' + row.phoneChangeTime + '">' + formatAlertTaskDetailDateTime(row.phoneChangeTime) + '</td>' +
     '<td class="col-level">' + row.vipLevel + '</td>' +
     '<td class="col-time" title="' + row.lastContactTime + '">' + formatAlertTaskDetailDateTime(row.lastContactTime) + '</td>' +
@@ -14498,7 +14520,7 @@ function buildTodayAssignDetailRows(csName, taskCount) {
 function renderTodayAssignDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-nick">' + row.nick + '</td>' +
     '<td class="col-email" title="' + row.email + '">' + row.email + '</td>' +
     '<td class="col-version">' + row.appVersion + '</td>' +
@@ -14546,7 +14568,7 @@ function buildHighRiskChurnRecoveryDetailRows(csName, taskCount) {
 function buildChurnCustomerInfoStackHtml(row, peakLabel) {
   peakLabel = peakLabel || '峰值交易时间段:';
   return buildAlertTaskDetailCellStack([
-    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
+    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>' + renderAlertTaskOverdueIco(row),
     '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
     '<span class="churn-peak-trade-line"><span class="churn-peak-trade-label">' + peakLabel + '</span> <span class="churn-peak-trade-value">' + row.peakTradeTimeSlot + '</span></span>'
   ]);
@@ -14652,7 +14674,7 @@ function renderAlertTaskFollowTable() {
 function renderAlertTaskDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-nick">' + row.nick + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time">' + row.assignTime + '</td>' +
     '<td class="col-time">' + row.completeTime + '</td>' +
     '<td class="col-status">' + row.statusHtml + '</td>' +
@@ -14815,6 +14837,14 @@ function resetAlertTaskDetailFilters() {
   applyAlertTaskDetailFilters();
 }
 
+function markAlertTaskDetailOverdue(rows, overdueCount) {
+  var left = Math.max(0, parseInt(overdueCount, 10) || 0);
+  rows.forEach(function (row) {
+    row.overdue24 = !row.isDone && left > 0;
+    if (row.overdue24) left -= 1;
+  });
+}
+
 function renderAlertTaskDetailTable(csName, assignedCount, completedCount) {
   if (isSpecialAlertTaskDetailMode()) {
     var specialCount = _alertTaskDetailManagerReview && _alertTaskDetailListScope === 'completed'
@@ -14845,6 +14875,7 @@ function renderAlertTaskDetailTable(csName, assignedCount, completedCount) {
     });
     _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   }
+  markAlertTaskDetailOverdue(_alertTaskDetailAllRows, _alertTaskDetailOverdueCount);
   _alertTaskDetailPage = 1;
   renderAlertTaskDetailThead();
   updateAlertTaskDetailFilterVisibility();
@@ -15011,6 +15042,7 @@ function openAlertTaskDetailDrawer(csName, assignedCount, completedCount, listSc
   }
   _alertTaskDetailListScope = nextScope;
   _alertTaskDetailManagerReview = options.managerReview === true;
+  _alertTaskDetailOverdueCount = Math.max(0, parseInt(options.overdue, 10) || 0);
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
   var csEl = document.getElementById('alertTaskDetailCs');
@@ -15064,6 +15096,7 @@ function closeAlertTaskDetailDrawer() {
   _alertTaskDetailMode = 'default';
   _alertTaskDetailListScope = 'completed';
   _alertTaskDetailManagerReview = false;
+  _alertTaskDetailOverdueCount = 0;
   clearAlertTaskDetailFilterInputs();
   updateAlertTaskDetailFilterVisibility();
   clearAlertTaskDetailCategory();
@@ -15313,7 +15346,7 @@ function initAlertTaskCardInteractions() {
         parseInt(link.getAttribute('data-assigned'), 10) || 0,
         parseInt(link.getAttribute('data-completed'), 10) || 0,
         link.getAttribute('data-metric') === 'assigned' ? 'assigned' : 'completed',
-        { managerReview: true }
+        { managerReview: true, overdue: parseInt(link.getAttribute('data-overdue'), 10) || 0 }
       );
     });
   }
@@ -15457,11 +15490,23 @@ function allocateCommStatsTotal(total, weights) {
 
 var _commStatsChannelSplitCache = {};
 
+function getCommStatsRosterNames() {
+  if (typeof getAllManagerGoalCsNames === 'function') {
+    var names = getAllManagerGoalCsNames();
+    if (names.length) return names;
+  }
+  if (typeof rpAllNames === 'function') {
+    var all = rpAllNames();
+    if (all.length) return all;
+  }
+  return [];
+}
+
 function getCommStatsChannelSplit(period) {
   var block = COMM_STATS_TEAM_CHANNEL_DATA[period];
   if (!block) return null;
-  var names = getCommStatsManagerCsNames();
-  var cacheKey = period + '|' + names.length;
+  var names = getCommStatsRosterNames();
+  var cacheKey = 'roster|' + period + '|' + names.join(',');
   if (_commStatsChannelSplitCache[cacheKey]) return _commStatsChannelSplitCache[cacheKey];
   var custWeights = names.map(getCommStatsCsCustomerTotal);
   var telContacted = allocateCommStatsTotal(block.tel.contacted, custWeights);
@@ -15753,7 +15798,7 @@ function syncCommDetailPeriodFromSelect(selectId, periodLabelId) {
 
 var _commStatsFollowExpandedGroups = {};
 var COMM_STATS_FOLLOW_GROUP_KEYS = ['IN_RET', 'PK_RET', 'NG_RET'];
-var COMM_STATS_FOLLOW_TEAM_LABEL = '账户经理';
+var COMM_STATS_FOLLOW_TEAM_LABEL = '团队所有人';
 
 function getCommStatsManagerCsNames() {
   if (document.body.dataset.view === 'manager' && typeof getSopScopedCsNames === 'function') {
@@ -17100,6 +17145,24 @@ function handleChannelCommScreenshotPreview(nick, screenshotName) {
   alert('查看截图\n客户：' + nick + '\n文件：' + screenshotName + '\n（原型占位）');
 }
 
+var COMM_ENTRY_MODES = ['手动', '自动', '自动（待确认）'];
+
+function buildCommEntryMode(seed) {
+  return COMM_ENTRY_MODES[Math.abs(seed) % COMM_ENTRY_MODES.length];
+}
+
+function renderCommEntryModeHtml(mode) {
+  var pending = mode === '自动（待确认）';
+  return '<span class="comm-entry-mode' + (pending ? ' comm-entry-mode--pending' : '') + '">' + mode + '</span>';
+}
+
+function renderCommSidWithEntryModeHtml(row) {
+  return '<div class="col-sid-stack">' +
+    '<a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
+    renderCommEntryModeHtml(row.entryMode) +
+    '</div>';
+}
+
 function buildPhoneCommDetailRows(csName, rowCount, metric) {
   var seed = alertTaskFollowSeed('phone-comm-detail|' + _commStatsFollowPeriod + '|' + csName + '|' + metric);
   var total = Math.max(0, parseInt(rowCount, 10) || 0);
@@ -17126,7 +17189,8 @@ function buildPhoneCommDetailRows(csName, rowCount, metric) {
       durationSec: durationSec,
       connectedLabel: isConnected ? '是' : '否',
       durationHtml: formatPhoneCommDurationHtml(durationSec),
-      resultHtml: buildPhoneCommResultHtml(s)
+      resultHtml: buildPhoneCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -17160,7 +17224,7 @@ function filterPhoneCommDetailRows(rows, filters) {
 
 function renderPhoneCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-connected">' + buildCommStatsContactedHtml(row.connectedLabel) + '</td>' +
@@ -17348,7 +17412,8 @@ function buildWaCommDetailRows(csName, rowCount, metric) {
       hasScreenshot: screenshotMeta.hasScreenshot,
       screenshotName: screenshotMeta.screenshotName,
       screenshotNames: screenshotMeta.screenshotNames,
-      resultHtml: buildChannelCommResultHtml(s)
+      resultHtml: buildChannelCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -17382,7 +17447,7 @@ function filterWaCommDetailRows(rows, filters) {
 function renderWaCommDetailRowHtml(row) {
   var auditedHtml = renderCommReviewStatusHtml(row.auditStatus);
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
@@ -17573,7 +17638,8 @@ function buildChatCommDetailRows(csName, rowCount, metric) {
       isReplied: isReplied,
       isFollowup2min: isFollowup2min,
       repliedLabel: isReplied ? '是' : '否',
-      resultHtml: buildChannelCommResultHtml(s)
+      resultHtml: buildChannelCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -17603,7 +17669,7 @@ function filterChatCommDetailRows(rows, filters) {
 
 function renderChatCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
@@ -18701,6 +18767,12 @@ function handleCommQcLinkActivate(link) {
   }
 }
 
+function getAlertTaskCardOverdueCount(card) {
+  if (!card) return 0;
+  var strong = card.querySelector('.alert-task-card-meta strong');
+  return strong ? (parseInt(strong.textContent, 10) || 0) : 0;
+}
+
 function getAlertTaskCardProgressCounts(card) {
   var strongEl = card.querySelector('.alert-task-card-progress strong');
   if (!strongEl) return { completed: 0, assigned: 0 };
@@ -18758,7 +18830,7 @@ function handleTempMktCardActivate(card) {
     _alertTaskFollowPeriod = 'today';
     setAlertTaskDetailCategory(getTempMktCardCategory(card));
     _alertTaskDetailMode = 'default';
-    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed);
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
   }
 }
 
@@ -18785,12 +18857,12 @@ function handleAlertTaskCardActivate(card) {
     if (specialMode) {
       if (!counts.assigned) return;
       _alertTaskDetailMode = specialMode;
-      openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed);
+      openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
       return;
     }
     if (!counts.completed) return;
     _alertTaskDetailMode = 'default';
-    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed);
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_CS, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
   }
 }
 
@@ -19485,19 +19557,19 @@ function rpActiveNames() {
 function rpScopeLabel() {
   if (_rpScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
   if (_rpScopeLevel1 === 'all') {
-    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '账户经理';
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
     return formatCsScopePersonLabel(_rpScopeLevel2);
   }
   var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
   var label = group ? group.label : '当前角色';
-  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 角色内所有人';
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 角色内汇总';
   return label + ' · ' + formatCsScopePersonLabel(_rpScopeLevel2);
 }
 
 function rpScopeTitleName() {
   if (_rpScopeLevel1 === 'self') return 'May';
   if (_rpScopeLevel1 === 'all') {
-    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '账户经理';
+    if (!_rpScopeLevel2 || _rpScopeLevel2 === '__all__') return '团队所有人';
     return _rpScopeLevel2;
   }
   var group = MANAGER_GOAL_CS_GROUPS[_rpScopeLevel1];
@@ -19576,7 +19648,7 @@ function rpRebuildScopeLevel2(level1, keepValue) {
   } else {
     var group = MANAGER_GOAL_CS_GROUPS[level1];
     if (!group) return;
-    options.push({ value: '__group__', label: '角色内所有人' });
+    options.push({ value: '__group__', label: '角色内汇总' });
     group.members.forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
   }
   select.textContent = '';
@@ -20252,6 +20324,11 @@ function normalizeTempMktRemainingDays() {
 
 function randomizeRankNamesInPanel(panel) {
   if (!panel) return;
+  if (document.body.dataset.view === 'manager' && panel.closest('#panel-goals')) return;
+  if (document.body.dataset.view === 'manager' && panel.closest('#panel-sop') && !panel.closest('.customer-rank-panel') && _sopScopeLevel1 && _sopScopeLevel1 !== 'self') {
+    applySopScopeRankBoards();
+    return;
+  }
   var tbody = panel.querySelector('table tbody');
   if (!tbody) return;
   var rows = tbody.querySelectorAll('tr');
@@ -21060,20 +21137,53 @@ function renderChanceAiRemind(elId, data, maxTips) {
   });
 }
 
+function chancePersonMetric(kind, id) {
+  var name = (typeof chanceActiveNames === 'function' && chanceActiveNames()[0]) || 'May';
+  var row = CHANCE_PERSON && CHANCE_PERSON[name];
+  if (kind === 'pool') {
+    var cell = row && row.pools[id] ? row.pools[id] : { primary: 0, secondary: 0 };
+    return { name: name, primary: cell.primary || 0, secondary: cell.secondary || 0 };
+  }
+  return { name: name, primary: row && row.corrals ? (row.corrals[id] || 0) : 0, secondary: 0 };
+}
+
 function syncLeadCorralAiRemind(corralId) {
   var view = document.body.dataset.view || 'cs';
-  var key = view === 'manager' ? 'manager' : 'cs';
-  var pack = leadCorralAiReminds[corralId] || leadCorralAiReminds.default;
   var elId = view === 'manager' ? 'lead-corral-ai-remind-mgr' : 'lead-corral-ai-remind';
-  renderChanceAiRemind(elId, pack[key], CHANCE_CORRAL_POOL_AI_MAX);
+  if (view === 'manager' && CHANCE_PERSON) {
+    var info = chancePersonMetric('corral', corralId);
+    var fresh = Math.max(0, Math.round(info.primary * 0.12));
+    renderChanceAiRemind(elId, {
+      title: info.name + ' · 匹配客户 ' + info.primary + ' 人',
+      tips: [
+        info.name + ' 名下当前匹配 ' + info.primary + ' 人，建议今日优先联系 ' + Math.min(3, info.primary) + ' 人',
+        '今日新增 ' + fresh + ' 人，分配后 24 小时内完成首次触达',
+        '统计范围是当前所选人员名下客户'
+      ]
+    }, CHANCE_CORRAL_POOL_AI_MAX);
+    return;
+  }
+  var pack = leadCorralAiReminds[corralId] || leadCorralAiReminds.default;
+  renderChanceAiRemind(elId, pack.cs, CHANCE_CORRAL_POOL_AI_MAX);
 }
 
 function syncCustomerPoolAiRemind(poolId) {
   var view = document.body.dataset.view || 'cs';
-  var key = view === 'manager' ? 'manager' : 'cs';
-  var pack = customerPoolAiReminds[poolId] || customerPoolAiReminds.default;
   var elId = view === 'manager' ? 'customer-pool-ai-remind-mgr' : 'customer-pool-ai-remind';
-  renderChanceAiRemind(elId, pack[key], CHANCE_CORRAL_POOL_AI_MAX);
+  if (view === 'manager' && CHANCE_PERSON) {
+    var info = chancePersonMetric('pool', poolId);
+    renderChanceAiRemind(elId, {
+      title: info.name + ' · 客户 ' + info.primary + ' 人',
+      tips: [
+        info.name + ' 名下该客群 ' + info.primary + ' 人，其中重点跟进 ' + info.secondary + ' 人',
+        '建议按当前人员的客户量安排今日触达，优先处理重点 ' + Math.min(info.secondary, 3) + ' 人',
+        '统计范围是当前所选人员名下客户'
+      ]
+    }, CHANCE_CORRAL_POOL_AI_MAX);
+    return;
+  }
+  var pack = customerPoolAiReminds[poolId] || customerPoolAiReminds.default;
+  renderChanceAiRemind(elId, pack.cs, CHANCE_CORRAL_POOL_AI_MAX);
 }
 
 function renderLeadClueBandAiRemindShell(bandType) {
@@ -21216,9 +21326,21 @@ var breakthroughStarCustomers = {
   ]
 };
 
+function chanceManagerBreakthroughList() {
+  if (!CHANCE_PERSON || typeof chanceActiveNames !== 'function') return (breakthroughStarCustomers.manager || []).slice();
+  chanceEnsureLedger();
+  var list = [];
+  chanceActiveNames().forEach(function (name) {
+    var rows = CHANCE_PERSON[name] && CHANCE_PERSON[name].breakthrough;
+    if (rows) list = list.concat(rows);
+  });
+  return list;
+}
+
 function getBreakthroughStarCustomers() {
   var view = document.body.dataset.view || 'cs';
-  return breakthroughStarCustomers[view === 'manager' ? 'manager' : 'cs'] || [];
+  if (view === 'manager') return chanceManagerBreakthroughList();
+  return breakthroughStarCustomers.cs || [];
 }
 
 function breakthroughStarCustomerSid(c, index) {
@@ -21361,7 +21483,7 @@ function renderBreakthroughStarDrawerCardHtml(entry, isMgr) {
 
 function renderBreakthroughStarPreviewCards(scopeKey) {
   var isMgr = scopeKey === 'mgr';
-  var list = breakthroughStarCustomers[isMgr ? 'manager' : 'cs'] || [];
+  var list = isMgr ? chanceManagerBreakthroughList() : (breakthroughStarCustomers.cs || []);
   var container = document.getElementById('breakthrough-star-cards-' + scopeKey);
   var moreEl = document.getElementById('breakthrough-star-more-' + scopeKey);
   if (!container) return;
@@ -21544,7 +21666,9 @@ function openBreakthroughStarCustomer(index, btn) {
 
 function syncBreakthroughStarSummary() {
   var csList = breakthroughStarCustomers.cs || [];
-  var mgrList = breakthroughStarCustomers.manager || [];
+  var mgrList = (document.body.dataset.view || 'cs') === 'manager'
+    ? chanceManagerBreakthroughList()
+    : (breakthroughStarCustomers.manager || []);
   var csCount = csList.length;
   var mgrCount = mgrList.length;
   var csCountEl = document.getElementById('breakthrough-count-cs');
@@ -21646,7 +21770,18 @@ function openLeadCorral(corralId, btn, pinOnSelect) {
   if (enterCountEl) enterCountEl.textContent = count;
 
   var tbody = document.getElementById('corral-preview-tbody');
-  var rows = leadCorralPreviewRows[corralId] || leadCorralPreviewRows.default;
+  var rows = (leadCorralPreviewRows[corralId] || leadCorralPreviewRows.default).slice();
+  if ((document.body.dataset.view || 'cs') === 'manager') {
+    var personCount = parseInt(String(count).replace(/[^\d]/g, ''), 10) || 0;
+    var ownerName = (typeof chanceActiveNames === 'function' && chanceActiveNames()[0]) || '';
+    var shift = 0;
+    var si;
+    for (si = 0; si < ownerName.length; si++) shift += ownerName.charCodeAt(si);
+    var owned = [];
+    var limit = Math.min(personCount, rows.length);
+    for (si = 0; si < limit; si++) owned.push(rows[(shift + si) % rows.length]);
+    rows = owned;
+  }
   if (tbody) {
     tbody.innerHTML = '';
     rows.forEach(function (row) {
@@ -23941,12 +24076,49 @@ var _chanceScopeLevel2 = '__self__';
 var _chanceVisibleBands = null;
 var _chanceBuildSalt = 0;
 
+function chancePersonRole(name) {
+  if (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.getRole) return INDIA_SALES_ORG.getRole(name) || '';
+  if (typeof CS_RETENTION_ORG !== 'undefined' && CS_RETENTION_ORG.personRole) return CS_RETENTION_ORG.personRole[name] || '';
+  return '';
+}
+
+function chanceRoleBump(name, role) {
+  if (/主管/.test(role) && role.indexOf('组长') === -1) return 2.6;
+  if (typeof MANAGER_GOAL_CS_GROUPS !== 'undefined') {
+    var leader = false;
+    Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+      if (MANAGER_GOAL_CS_GROUPS[key].leader === name) leader = true;
+    });
+    return leader ? 1.8 : 1;
+  }
+  if (/组长/.test(role)) return 1.8;
+  if (/实习/.test(role)) return 0.7;
+  return 1;
+}
+
 function chanceWeights(names) {
-  return names.map(function (name) {
-    var base = RP_PERSON_WEIGHT[name] || 4;
-    var wobble = _chanceBuildSalt ? ((name.length * 3 + _chanceBuildSalt * 11) % 5) : 0;
-    return base + wobble;
+  return names.map(function (name, i) {
+    var hash = 0;
+    var c;
+    for (c = 0; c < name.length; c++) hash = (hash + name.charCodeAt(c) * (c + 3)) % 9;
+    var base = RP_PERSON_WEIGHT[name] || (5 + hash);
+    var wobble = _chanceBuildSalt ? ((name.length * 3 + _chanceBuildSalt * 11 + i) % 4) : 0;
+    return Math.max(1, Math.round(base * chanceRoleBump(name, chancePersonRole(name))) + wobble);
   });
+}
+
+function chanceBreakthroughCount(name, index) {
+  var role = chancePersonRole(name);
+  var base = (/主管/.test(role) && role.indexOf('组长') === -1) ? 4 : (/组长/.test(role) ? 3 : 1);
+  if (typeof MANAGER_GOAL_CS_GROUPS !== 'undefined') {
+    var leader = false;
+    Object.keys(MANAGER_GOAL_CS_GROUPS).forEach(function (key) {
+      if (MANAGER_GOAL_CS_GROUPS[key].leader === name) leader = true;
+    });
+    base = leader ? 3 : 1;
+  }
+  if (/实习/.test(role)) return 1;
+  return base + ((name.charCodeAt(0) + index) % 2);
 }
 
 function chanceRepairCapped(parts, caps, total) {
@@ -23985,6 +24157,59 @@ function chanceRepairCapped(parts, caps, total) {
 function chanceFullClueList(bandType) {
   var band = leadCluePoolBands.filter(function (b) { return b.type === bandType; })[0];
   return (band ? band.customers.slice() : []).concat(LEAD_CLUE_BAND_DRAWER_EXTRAS[bandType] || []);
+}
+
+var CHANCE_CLUE_MIN = { risk: 4, value: 8, stable: 8 };
+
+function chanceClueMin(bandType) {
+  return CHANCE_CLUE_MIN[bandType] || 4;
+}
+var CHANCE_CLUE_GIVEN = ['Aarav', 'Vihaan', 'Aditya', 'Arjun', 'Kabir', 'Reyansh', 'Ayaan', 'Ishaan', 'Shaurya', 'Atharv', 'Zara', 'Aisha', 'Meera', 'Anika', 'Diya', 'Leila', 'Noor', 'Hassan', 'Yusuf', 'Farhan', 'Bilal', 'Tariq', 'Nadia', 'Hana', 'Layla', 'Amira', 'James', 'Oliver', 'Henry', 'Lucas', 'Ethan', 'Noah', 'Liam', 'Mason', 'Logan', 'Jack', 'Owen', 'Caleb', 'Nina', 'Priya'];
+var CHANCE_CLUE_FAMILY = ['Mehta', 'Sharma', 'Iyer', 'Nair', 'Kapoor', 'Reddy', 'Patel', 'Singh', 'Khan', 'Malik', 'Qureshi', 'Farooq', 'Hussain', 'Rahman', 'Chowdhury', 'Das', 'Banerjee', 'Ghosh', 'Fernandes', 'Dsouza', 'Almeida', 'Costa', 'Santos', 'Oliveira', 'Nguyen', 'Tran', 'Pham', 'Lim', 'Tanaka', 'Sato', 'Kim', 'Park', 'Choi', 'Brown', 'Clark', 'Lewis', 'Walker', 'Young', 'Reed'];
+
+function chanceSynthClue(bandType, index) {
+  var given = CHANCE_CLUE_GIVEN[index % CHANCE_CLUE_GIVEN.length];
+  var family = CHANCE_CLUE_FAMILY[Math.floor(index / CHANCE_CLUE_GIVEN.length) % CHANCE_CLUE_FAMILY.length];
+  if (bandType === 'risk') {
+    return {
+      name: given + ' ' + family,
+      tags: ['流失风险', '不活跃'],
+      action: '今日内触达召回',
+      funds: '净值 $' + (4 + (index % 28)) + 'K · ' + (20 + (index % 40)) + '日无交易'
+    };
+  }
+  if (bandType === 'value') {
+    return {
+      name: given + ' ' + family,
+      tags: ['高交易', '高存款'],
+      action: '邀请净存款提升计划',
+      funds: '净值 $' + (180 + (index % 40) * 12) + 'K · 月交易活跃'
+    };
+  }
+  return {
+    name: given + ' ' + family,
+    tags: ['活跃稳定'],
+    action: '月度关怀问候',
+    funds: '净值 $' + (40 + (index % 30) * 3) + 'K · 交易稳定'
+  };
+}
+
+function chanceScopedClueList(bandType) {
+  var names = rpAllNames();
+  var list = chanceFullClueList(bandType);
+  var floor = chanceClueMin(bandType);
+  var target = Math.max(list.length, names.length * floor + names.length * 2);
+  while (list.length < target) list.push(chanceSynthClue(bandType, list.length));
+  return list;
+}
+
+function chanceSplitWithFloor(total, weights, floorEach) {
+  var counts = [];
+  var i;
+  for (i = 0; i < weights.length; i++) counts.push(floorEach);
+  var extra = rpSplitExact(Math.max(0, total - floorEach * weights.length), weights);
+  for (i = 0; i < weights.length; i++) counts[i] += extra[i];
+  return counts;
 }
 
 function chanceAuditLedger() {
@@ -24028,11 +24253,13 @@ function chanceAuditLedger() {
     });
   });
   ['risk', 'value', 'stable'].forEach(function (bandType) {
-    var original = chanceFullClueList(bandType);
+    var original = chanceScopedClueList(bandType);
     var rebuilt = [];
     var groupCount = 0;
     names.forEach(function (name) {
-      rebuilt = rebuilt.concat(CHANCE_PERSON[name].clues[bandType] || []);
+      var owned = CHANCE_PERSON[name].clues[bandType] || [];
+      if (owned.length < chanceClueMin(bandType)) errors.push('clue min ' + bandType + ' ' + name);
+      rebuilt = rebuilt.concat(owned);
     });
     if (rebuilt.length !== original.length) errors.push('clue len ' + bandType);
     else {
@@ -24081,14 +24308,29 @@ function chanceBuildOnce() {
     });
   });
   ['risk', 'value', 'stable'].forEach(function (bandType) {
-    var list = chanceFullClueList(bandType);
-    var counts = rpSplitExact(list.length, weights);
+    var list = chanceScopedClueList(bandType);
+    var counts = chanceSplitWithFloor(list.length, weights, chanceClueMin(bandType));
     var cursor = 0;
     names.forEach(function (name, i) {
       var n = counts[i];
       person[name].clues[bandType] = list.slice(cursor, cursor + n);
       cursor += n;
     });
+  });
+  var stars = (breakthroughStarCustomers.manager || []).slice();
+  names.forEach(function (name, i) {
+    var owned = [];
+    var starCount = chanceBreakthroughCount(name, i);
+    var s;
+    for (s = 0; s < starCount && stars.length; s++) {
+      var src = stars[(i * 3 + s) % stars.length];
+      var copy = {};
+      Object.keys(src).forEach(function (key) { copy[key] = src[key]; });
+      copy.owner = name;
+      copy.sid = String(src.sid || '20886153') + '-' + (i + 1) + '-' + (s + 1);
+      owned.push(copy);
+    }
+    person[name].breakthrough = owned;
   });
   CHANCE_PERSON = person;
   return poolOk && chanceAuditLedger();
@@ -24104,28 +24346,27 @@ function chanceEnsureLedger() {
   }
 }
 
-function chanceActiveNames() {
+function chanceScopePeople() {
   if (_chanceScopeLevel1 === 'self') return ['May'];
-  if (_chanceScopeLevel1 === 'all') {
-    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return rpAllNames();
+  if (!_chanceScopeLevel1 || _chanceScopeLevel1 === 'all') return rpAllNames();
+  var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
+  return group && group.members.length ? group.members.slice() : rpAllNames();
+}
+
+function chanceActiveNames() {
+  var people = chanceScopePeople();
+  if (_chanceScopeLevel1 !== 'self' && _chanceScopeLevel2 && people.indexOf(_chanceScopeLevel2) >= 0) {
     return [_chanceScopeLevel2];
   }
-  var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
-  if (!group) return rpAllNames();
-  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return group.members.slice();
-  return [_chanceScopeLevel2];
+  return people.length ? [people[0]] : ['May'];
 }
 
 function chanceScopeLabel() {
-  if (_chanceScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
-  if (_chanceScopeLevel1 === 'all') {
-    if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__all__') return '账户经理';
-    return formatCsScopePersonLabel(_chanceScopeLevel2);
-  }
+  var person = formatCsScopePersonLabel(chanceActiveNames()[0]);
+  if (_chanceScopeLevel1 === 'self') return '我的个人视角 · ' + person;
+  if (!_chanceScopeLevel1 || _chanceScopeLevel1 === 'all') return '团队所有人 · ' + person;
   var group = MANAGER_GOAL_CS_GROUPS[_chanceScopeLevel1];
-  var label = group ? group.label : '当前角色';
-  if (!_chanceScopeLevel2 || _chanceScopeLevel2 === '__group__') return label + ' · 角色内所有人';
-  return label + ' · ' + formatCsScopePersonLabel(_chanceScopeLevel2);
+  return (group ? group.label : '当前角色') + ' · ' + person;
 }
 
 function chanceInvalidateClueBands() {
@@ -24215,26 +24456,19 @@ function chanceRebuildScopeLevel2(level1, keepValue) {
     select.value = '__self__';
     return;
   }
+  var people = (!level1 || level1 === 'all')
+    ? rpAllNames()
+    : ((MANAGER_GOAL_CS_GROUPS[level1] && MANAGER_GOAL_CS_GROUPS[level1].members) || []);
+  if (!people.length) return;
   select.disabled = false;
-  var options = [];
-  if (level1 === 'all') {
-    options.push({ value: '__all__', label: '全员汇总' });
-    rpAllNames().forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
-  } else {
-    var group = MANAGER_GOAL_CS_GROUPS[level1];
-    if (!group) return;
-    options.push({ value: '__group__', label: '角色内所有人' });
-    group.members.forEach(function (name) { options.push({ value: name, label: formatCsScopePersonLabel(name) }); });
-  }
   select.textContent = '';
-  options.forEach(function (item) {
+  people.forEach(function (name) {
     var option = document.createElement('option');
-    option.value = item.value;
-    option.textContent = item.label;
+    option.value = name;
+    option.textContent = formatCsScopePersonLabel(name);
     select.appendChild(option);
   });
-  var fallback = level1 === 'all' ? '__all__' : '__group__';
-  select.value = keepValue && select.querySelector('option[value="' + keepValue + '"]') ? keepValue : fallback;
+  select.value = keepValue && people.indexOf(keepValue) >= 0 ? keepValue : people[0];
 }
 
 function chanceSyncScopeControls() {
@@ -24251,6 +24485,8 @@ function applyChanceScope() {
   chanceSyncScopeHint();
   chancePaintManagerCards();
   renderLeadCluePool();
+  if (typeof renderBreakthroughStarPreviewPanels === 'function') renderBreakthroughStarPreviewPanels();
+  if (typeof syncBreakthroughStarSummary === 'function') syncBreakthroughStarSummary();
   var panel = document.getElementById('panel-chance');
   if (!panel || (document.body.dataset.view || 'cs') !== 'manager') return;
   var active = panel.querySelector('.manager-only .customer-pool-card.active')
@@ -24571,7 +24807,7 @@ var _managerGoalCsFilter = 'self';
 var _managerGoalScopeLevel1 = 'self';
 var _managerGoalScopeLevel2 = '__self__';
 
-/** 账户经理组织：一级下拉是账户经理的直接下级，人员范围含该角色及其下级 */
+/** 团队所有人：一级下拉是其直接下级，人员范围含该角色及其下级 */
 var CS_RETENTION_ORG = (function () {
   var ROLE_PEOPLE = {
     '印度留存客服组长': ['May', 'Coulson', 'Daisy', 'Fitz'],
@@ -24581,11 +24817,11 @@ var CS_RETENTION_ORG = (function () {
     '尼日留存客服组长': ['Antoine', 'Yo-Yo', 'Deke', 'Jemma']
   };
   var ROLE_CHILDREN = {
-    '账户经理': ['印度留存客服组长', '巴基留存客服组长', '尼日留存客服组长'],
+    '团队所有人': ['印度留存客服组长', '巴基留存客服组长', '尼日留存客服组长'],
     '巴基留存客服组长': ['巴基Dana留存客服', '巴基TW留存客服']
   };
   var LEVEL1_ROLE_NAME = {
-    all: '账户经理',
+    all: '团队所有人',
     IN_RET: '印度留存客服组长',
     PK_RET: '巴基留存客服组长',
     NG_RET: '尼日留存客服组长'
@@ -24623,7 +24859,7 @@ var CS_RETENTION_ORG = (function () {
     }
     return {
       roleName: role,
-      scopeLabel: role === '账户经理' ? '账户经理' : (role + ' · 所有人'),
+      scopeLabel: role === '团队所有人' ? '团队所有人' : (role + ' · 所有人'),
       scopeNames: scopeNames,
       selfName: self,
       selfLabel: self + '（我自己）',
@@ -24689,11 +24925,11 @@ function formatLeaderPerfSplit(meta) {
 
 function getManagerGoalScopeDisplayLabel(filter) {
   if (filter === 'self') return '我的个人视角 · May（组长）';
-  if (!filter || filter === 'all') return '账户经理';
+  if (!filter || filter === 'all') return '团队所有人';
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_CS_GROUPS[groupKey];
-    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+    return group ? group.label + ' · 角色内汇总' : '角色内汇总';
   }
   if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all' && _managerGoalScopeLevel1 !== 'self') {
     var grp = MANAGER_GOAL_CS_GROUPS[_managerGoalScopeLevel1];
@@ -24748,7 +24984,7 @@ function rebuildManagerGoalLevel2Options(level1, keepValue) {
   } else {
     var group = MANAGER_GOAL_CS_GROUPS[level1];
     if (!group) return;
-    html += '<option value="__group__">角色内所有人</option>';
+    html += '<option value="__group__">角色内汇总</option>';
     group.members.forEach(function (name) {
       html += '<option value="' + name + '">' + formatCsScopePersonLabel(name) + '</option>';
     });
@@ -24820,9 +25056,10 @@ function getSopScopedCsNames() {
 
 function getSopScopeDisplayLabel() {
   if (_sopScopeLevel1 === 'self') return '我的个人视角 · May（组长）';
-  if (!_sopScopeLevel1 || _sopScopeLevel1 === 'all') return '账户经理';
+  if (!_sopScopeLevel1 || _sopScopeLevel1 === 'all') return '团队所有人 · 全员汇总';
   var group = MANAGER_GOAL_CS_GROUPS[_sopScopeLevel1];
-  return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+  var label = group ? group.label : '当前角色';
+  return label + ' · 角色内汇总';
 }
 
 function updateSopScopeHint() {
@@ -24842,7 +25079,14 @@ function rebuildSopScopeLevel2(level1) {
     _sopScopeLevel2 = '__self__';
     return;
   }
-  select.innerHTML = '<option value="__group__">角色内所有人</option>';
+  if (!level1 || level1 === 'all') {
+    select.innerHTML = '<option value="__all__">全员汇总</option>';
+    select.value = '__all__';
+    _sopScopeLevel2 = '__all__';
+    return;
+  }
+  if (!MANAGER_GOAL_CS_GROUPS[level1]) return;
+  select.innerHTML = '<option value="__group__">角色内汇总</option>';
   select.value = '__group__';
   _sopScopeLevel2 = '__group__';
 }
@@ -24869,7 +25113,118 @@ function applySopManagerScopeView() {
   if (typeof applyAlertTaskModulePeriod === 'function') {
     applyAlertTaskModulePeriod(_alertTaskModulePeriod || 'week');
   }
+  applySopScopeRankBoards();
   refreshOpenSopScopeModals();
+}
+
+var _sopRankBoardSnapshot = null;
+
+function captureSopRankBoardSnapshot() {
+  if (_sopRankBoardSnapshot) return;
+  _sopRankBoardSnapshot = [];
+  document.querySelectorAll('#panel-sop .comm-rank-panel .rank-tab-panel, #panel-sop .task-rank-panel .rev-rank-tab-panel').forEach(function (panel) {
+    if (panel.classList.contains('gca-pending-wrap')) return;
+    var tbody = panel.querySelector('tbody');
+    var foot = panel.querySelector('.rev-rank-foot');
+    if (!tbody) return;
+    _sopRankBoardSnapshot.push({
+      tbody: tbody,
+      foot: foot,
+      tbodyHtml: tbody.innerHTML,
+      footHtml: foot ? foot.innerHTML : ''
+    });
+  });
+}
+
+function restoreSopRankBoardSnapshot() {
+  captureSopRankBoardSnapshot();
+  _sopRankBoardSnapshot.forEach(function (item) {
+    item.tbody.innerHTML = item.tbodyHtml;
+    if (item.foot) item.foot.innerHTML = item.footHtml;
+  });
+}
+
+function applySopScopeRankBoards() {
+  captureSopRankBoardSnapshot();
+  if (document.body.dataset.view !== 'manager' || !_sopScopeLevel1 || _sopScopeLevel1 === 'self') {
+    restoreSopRankBoardSnapshot();
+    return;
+  }
+  var names = getSopScopedCsNames();
+  if (!names.length) return;
+  var period = _commStatsModulePeriod || 'today';
+  var split = getCommStatsChannelSplit(period);
+  function topBy(scoreFn) {
+    return names.slice().sort(function (a, b) {
+      return scoreFn(b) - scoreFn(a) || String(a).localeCompare(String(b));
+    }).slice(0, 10);
+  }
+  function fillBoard(panel, rowsHtml, footHtml) {
+    if (!panel) return;
+    var tbody = panel.querySelector('tbody');
+    if (tbody) tbody.innerHTML = rowsHtml;
+    var foot = panel.querySelector('.rev-rank-foot');
+    if (foot && footHtml) foot.innerHTML = footHtml;
+  }
+  function average(scoreFn) {
+    return names.reduce(function (sum, name) { return sum + scoreFn(name); }, 0) / names.length;
+  }
+  var root = document.getElementById('panel-sop');
+  var telScore = function (name) {
+    return (split && split.tel[name] && split.tel[name].totalDurationMin) || 0;
+  };
+  var telList = topBy(telScore);
+  fillBoard(root.querySelector('.comm-rank-panel [data-comm-panel="tel"]'), telList.map(function (name, i) {
+    var row = (split && split.tel[name]) || { totalDurationMin: 0, contacted: 0 };
+    return '<tr><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + name + '</td><td class="rank-val">' + formatCommStatsCallDuration(row.totalDurationMin) + '</td><td class="rank-val">' + row.contacted + '</td></tr>';
+  }).join(''),
+    '<span class="rev-rank-chip">范围均值 <strong>' + formatCommStatsCallDuration(Math.round(average(telScore))) + '</strong></span>' +
+    '<span class="rev-rank-chip">人均通话 <strong>' + Math.round(average(function (name) { return (split && split.tel[name] && split.tel[name].contacted) || 0; })) + ' 通</strong></span>');
+  [['whatsapp', 'wa'], ['chatroom', 'chat']].forEach(function (pair) {
+    var score = function (name) {
+      return (split && split[pair[1]][name] && split[pair[1]][name].contacted) || 0;
+    };
+    var list = topBy(score);
+    fillBoard(root.querySelector('.comm-rank-panel [data-comm-panel="' + pair[0] + '"]'), list.map(function (name, i) {
+      var row = (split && split[pair[1]][name]) || { contacted: 0, replied: 0 };
+      var rate = row.contacted ? Math.round(row.replied / row.contacted * 100) : 0;
+      return '<tr><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + name + '</td><td class="rank-val">' + row.contacted + ' 人</td><td class="rank-val">' + rate + '%</td></tr>';
+    }).join(''),
+      '<span class="rev-rank-chip">范围均值 <strong>' + Math.round(average(score)) + ' 人</strong></span>');
+  });
+  ['risk', 'daily'].forEach(function (key, keyIndex) {
+    var panel = root.querySelector('.task-rank-panel [data-task-panel="' + key + '"]');
+    if (!panel || panel.classList.contains('gca-pending-wrap')) return;
+    var score = function (name) {
+      return Math.max(1, Math.round(getCommStatsCsCustomerTotal(name) / (18 + keyIndex * 4)));
+    };
+    var list = topBy(score);
+    var scopeTotal = names.reduce(function (sum, name) { return sum + score(name); }, 0);
+    var max = list.length ? score(list[0]) : 0;
+    var mean = average(score);
+    var above = names.filter(function (name) { return score(name) > mean; }).length;
+    var topSum = list.reduce(function (sum, name) { return sum + score(name); }, 0);
+    var medals = ['🥇', '🥈', '🥉'];
+    fillBoard(panel, list.map(function (name, i) {
+      var value = score(name);
+      var pct = scopeTotal ? (value / scopeTotal * 100).toFixed(1) : '0.0';
+      var width = max ? Math.round(value / max * 100) : 0;
+      var cls = i < 3 ? ' class="rank-top' + (i + 1) + '"' : '';
+      var no = i < 3 ? medals[i] : String(i + 1);
+      return '<tr' + cls + '><td class="rank-no">' + no + '</td><td class="rank-name">' + name + '</td><td class="rank-val-main">' + value + ' 项</td><td class="rank-share-cell"><span class="rank-share-pct">' + pct + '%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:' + width + '%"></span></span></td></tr>';
+    }).join(''),
+      '<span class="rev-rank-chip">范围均值 <strong>' + mean.toFixed(1) + ' 项</strong></span>' +
+      '<span class="rev-rank-chip">高于均值 <strong>' + above + ' 人</strong></span>' +
+      '<span class="rev-rank-chip">前' + list.length + '名范围占比 <strong>' + (scopeTotal ? (topSum / scopeTotal * 100).toFixed(1) : '0.0') + '%</strong></span>');
+    var self = panel.querySelector('.rev-rank-self.manager-only');
+    if (self && list.length) {
+      var nameEl = self.querySelector('.rev-rank-self-name');
+      var valEl = self.querySelector('.rev-rank-self-val');
+      var top3 = list.slice(0, 3).reduce(function (sum, name) { return sum + score(name); }, 0);
+      if (nameEl) nameEl.textContent = list[0] + ' · 第 1 名';
+      if (valEl) valEl.textContent = '范围 TOP3 完成总数为：' + top3 + ' 项';
+    }
+  });
 }
 
 function resetSopManagerScope() {
@@ -24890,7 +25245,9 @@ function onSopScopeLevel1Change() {
 }
 
 function onSopScopeLevel2Change() {
-  rebuildSopScopeLevel2(_sopScopeLevel1);
+  var level2Select = document.getElementById('sopScopeLevel2');
+  _sopScopeLevel2 = level2Select ? level2Select.value : '__all__';
+  applySopManagerScopeView();
 }
 
 function aggregateManagerGoalCsData(members, groupKey, groupLabel) {
@@ -25637,10 +25994,31 @@ function applyManagerGoalCustomerRankPanel(panel, sidebar) {
   });
 }
 
-function applyManagerGoalRevenueRankPanel(panel, sidebar) {
+function renderManagerGoalRevenueRankRows(tbody, members, kind) {
+  if (!tbody) return;
+  var list = (members && members.length ? members.slice() : getAllManagerGoalCsNames()).filter(function (name) {
+    return !!MANAGER_GOAL_CS_META[name];
+  });
+  var total = sumManagerGoalMetaMetric(kind, list);
+  list.sort(function (a, b) {
+    return sumManagerGoalMetaMetric(kind, [b]) - sumManagerGoalMetaMetric(kind, [a]);
+  });
+  var format = kind === 'deposit' ? formatManagerGoalMetaNet : kind === 'fee' ? formatManagerGoalMetaFee : formatManagerGoalMetaLots;
+  var medals = ['🥇', '🥈', '🥉'];
+  tbody.innerHTML = list.slice(0, MANAGER_GOAL_RANK_LIMIT).map(function (name, i) {
+    var value = sumManagerGoalMetaMetric(kind, [name]);
+    var pct = total > 0 ? (value / total * 100).toFixed(1) + '%' : '0%';
+    var cls = i < 3 ? ' class="rank-top' + (i + 1) + '"' : '';
+    var no = i < 3 ? medals[i] : String(i + 1);
+    return '<tr' + cls + '><td class="rank-no">' + no + '</td><td class="rank-name">' + name + '</td><td class="rank-val-main">' + format(value) + '</td><td class="rank-val-sub">' + pct + '</td></tr>';
+  }).join('');
+}
+
+function applyManagerGoalRevenueRankPanel(panel, sidebar, data) {
   if (!panel || !sidebar) return;
   var intro = panel.querySelector('.rank-period-intro');
   if (intro) intro.innerHTML = sidebar.revenueIntro;
+  var members = (data && data.isGroup && data.groupMembers && data.groupMembers.length) ? data.groupMembers : null;
   ['deposit', 'fee', 'trade'].forEach(function (key) {
     var tabPanel = panel.querySelector('[data-rev-panel="' + key + '"]');
     var block = sidebar.revenueRank[key];
@@ -25657,7 +26035,7 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
       heroes[2].querySelector('.rev-hero-val').textContent = block.mineVal;
       heroes[2].querySelector('.rev-hero-sub').textContent = block.mineSub;
     }
-    limitManagerGoalTableRows(tabPanel.querySelector('.revenue-rank-table tbody'), MANAGER_GOAL_RANK_LIMIT);
+    renderManagerGoalRevenueRankRows(tabPanel.querySelector('.revenue-rank-table tbody'), members, key);
     var self = tabPanel.querySelector('.rev-rank-self');
     if (self && block.self) {
       self.style.display = '';
@@ -25975,7 +26353,7 @@ function applyManagerGoalSidebar(data) {
 
   applyManagerGoalPerfRankPanel(document.getElementById('manager-goal-perf-rank-panel'), data);
   applyManagerGoalCustomerRankPanel(perfTeam.querySelector('.customer-rank-panel'), sb);
-  applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb);
+  applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb, data);
 }
 
 /** 管理视角三种范围：团队汇总 / 单个客服组 / 单个客服 */
