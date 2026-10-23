@@ -109,6 +109,7 @@
     body[data-view="manager"][data-sop-scope="self"] .sales-only{display:block}
     body[data-view="manager"][data-sop-scope="self"] .manager-only{display:none}
     body[data-view="manager"][data-sop-scope="self"] .manager-goal-scope-panel.manager-only{display:block}
+    body[data-view="manager"][data-sop-scope="self"] .comm-review-entry-btn.manager-only{display:inline-flex}
     body[data-view="manager"][data-sop-scope="self"] .comm-stats-section .sales-only .comm-channel,
     body[data-view="manager"][data-sop-scope="self"] .alert-task-section .sales-only .alert-task-card,
     body[data-view="manager"][data-sop-scope="self"] .temp-mkt-section .sales-only .temp-mkt-card{
@@ -2306,7 +2307,7 @@
       width:10%;
     }
     #commStatsFollowModal.is-tel-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(780px,100%);
+      width:min(819px,100%);
     }
     #commStatsFollowModal.is-tel-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -2344,7 +2345,7 @@
       width:13%;
     }
     #commStatsFollowModal.is-wa-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(720px,100%);
+      width:min(756px,100%);
     }
     #commStatsFollowModal.is-wa-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -2378,7 +2379,7 @@
       width:15%;
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-dialog{
-      width:min(720px,100%);
+      width:min(756px,100%);
     }
     #commStatsFollowModal.is-chat-scope:not(.is-summary-scope) .alert-task-follow-table{
       table-layout:fixed;
@@ -2838,6 +2839,15 @@
     #phoneCommDetailDrawer .alert-task-detail-table{min-width:920px}
     #phoneCommDetailDrawer .col-comm-result{min-width:280px;max-width:380px;overflow:hidden}
     #phoneCommDetailDrawer .phone-comm-duration--short{color:#dc2626;font-weight:700}
+    #phoneCommDetailDrawer .col-sid-stack,
+    #waCommDetailDrawer .col-sid-stack,
+    #chatCommDetailDrawer .col-sid-stack{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+    #phoneCommDetailDrawer .comm-entry-mode,
+    #waCommDetailDrawer .comm-entry-mode,
+    #chatCommDetailDrawer .comm-entry-mode{font-size:11px;font-weight:600;line-height:1.3;color:#334155;font-family:inherit}
+    #phoneCommDetailDrawer .comm-entry-mode--pending,
+    #waCommDetailDrawer .comm-entry-mode--pending,
+    #chatCommDetailDrawer .comm-entry-mode--pending{color:#94a3b8;font-weight:600}
     #phoneCommDetailDrawer .channel-comm-result-block,
     #phoneCommDetailDrawer .phone-comm-result-block,
     #waCommDetailDrawer .channel-comm-result-block,
@@ -2963,6 +2973,12 @@
       font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;
     }
     .alert-task-detail-table .col-sid-link:hover{text-decoration:underline}
+    .alert-task-overdue-ico{
+      display:inline-flex;align-items:center;justify-content:center;
+      margin-left:6px;padding:0 4px;height:16px;border-radius:3px;
+      background:#dc2626;color:#fff;font-size:10px;font-weight:700;
+      font-family:inherit;line-height:1;vertical-align:middle;letter-spacing:0;
+    }
     .alert-task-detail-table .col-time{white-space:nowrap;color:#334155;font-variant-numeric:tabular-nums}
     .alert-task-detail-table .col-status{white-space:nowrap}
     .alert-task-detail-table .task-status-tag{
@@ -6912,7 +6928,6 @@
               · 统计范围：<strong id="alertTaskDetailPeriod">—</strong>
               · 共 <strong id="alertTaskDetailCount">0</strong> <span id="alertTaskDetailCountSuffix">条已完成</span>
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="alertTaskDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeAlertTaskDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -6961,7 +6976,6 @@
             <p class="alert-task-detail-sub">
               共 <strong id="commReviewCount">0</strong> 条 WhatsApp 沟通待审/已审记录 · 支持按销售、客户与审核状态筛选
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="commReviewUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeCommReviewDrawer()" aria-label="关闭">×</button>
         </div>
@@ -7024,7 +7038,6 @@
               · 共 <strong id="commStatsDetailCount">0</strong> 条
               <strong id="commStatsDetailMetricLabel" hidden>沟通</strong>
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="commStatsDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeCommStatsDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -7101,7 +7114,6 @@
               · 统计范围：<strong id="phoneCommDetailPeriod">—</strong>
               · 共 <strong id="phoneCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="phoneCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closePhoneCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -7174,7 +7186,6 @@
               · 统计范围：<strong id="waCommDetailPeriod">—</strong>
               · 共 <strong id="waCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="waCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeWaCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -7250,7 +7261,6 @@
               · 统计范围：<strong id="chatCommDetailPeriod">—</strong>
               · 共 <strong id="chatCommDetailCount">0</strong> 条沟通记录
             </p>
-            <p class="alert-task-detail-update">数据更新时间：<strong id="chatCommDetailUpdatedAt">—</strong></p>
           </div>
           <button type="button" class="alert-task-detail-close" onclick="closeChatCommDetailDrawer()" aria-label="关闭">×</button>
         </div>
@@ -9874,6 +9884,7 @@ var _alertTaskDetailCategory = null;
 var _alertTaskDetailMode = 'default';
 var _alertTaskDetailListScope = 'completed';
 var _alertTaskDetailManagerReview = false;
+var _alertTaskDetailOverdueCount = 0;
 var CANCELLATION_RETENTION_TASK_TYPES = ['注销挽回'];
 var DEPOSIT_GUIDANCE_TASK_TYPES = ['入金引导'];
 var ALERT_TASK_SPECIAL_DETAIL_MODES = {
@@ -10217,11 +10228,11 @@ function toggleAlertTaskFollowGroup(groupKey) {
   renderAlertTaskFollowTable();
 }
 
-function renderAlertTaskFollowCountCell(count, salesName, metric, assigned, completed, linkable) {
+function renderAlertTaskFollowCountCell(count, salesName, metric, assigned, completed, linkable, overdue) {
   count = parseInt(count, 10) || 0;
   if (linkable && salesName && count > 0) {
     var title = metric === 'assigned' ? '查看下发任务明细' : '查看完成任务明细';
-    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-sales="' + salesName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '">' + count + '</a></td>';
+    return '<td class="col-num"><a href="#" class="col-completed-link" title="' + title + '" data-metric="' + metric + '" data-sales="' + salesName + '" data-assigned="' + (assigned || 0) + '" data-completed="' + (completed || 0) + '" data-overdue="' + (parseInt(overdue, 10) || 0) + '">' + count + '</a></td>';
   }
   if (!count) {
     return '<td class="col-num"><span class="col-completed-zero">0</span></td>';
@@ -10230,8 +10241,8 @@ function renderAlertTaskFollowCountCell(count, salesName, metric, assigned, comp
 }
 
 function renderAlertTaskFollowDataCells(row, salesName, linkable) {
-  return renderAlertTaskFollowCountCell(row.assigned, salesName, 'assigned', row.assigned, row.completed, linkable) +
-    renderAlertTaskFollowCountCell(row.completed, salesName, 'completed', row.assigned, row.completed, linkable) +
+  return renderAlertTaskFollowCountCell(row.assigned, salesName, 'assigned', row.assigned, row.completed, linkable, row.overdue) +
+    renderAlertTaskFollowCountCell(row.completed, salesName, 'completed', row.assigned, row.completed, linkable, row.overdue) +
     '<td class="col-num col-overdue"><strong>' + (row.overdue || 0) + '</strong></td>' +
     '<td class="' + getFollowModalRateClass(row.rate) + '">' + row.rate + '%</td>';
 }
@@ -10445,6 +10456,7 @@ function buildCancellationRetentionDetailRows(salesName, taskCount) {
 }
 
 function renderAlertTaskViewCommActionHtml(row) {
+  if (!row || !row.isDone) return '';
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="view-comm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">沟通详情</a>' +
     '</span>';
@@ -10460,11 +10472,10 @@ function renderAlertTaskSpecialActionHtml(row) {
 }
 
 function renderAiSummaryPendingActionHtml(row) {
-  if (_alertTaskDetailManagerReview) return renderAlertTaskViewCommActionHtml(row);
   return '<span class="col-action-links">' +
     '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="chat" data-sid="' + row.sid + '" data-nick="' + row.nick + '">私聊</a>' +
     ' · ' +
-    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="log" data-sid="' + row.sid + '" data-nick="' + row.nick + '">录入</a>' +
+    '<a href="#" class="comm-review-action-link alert-task-detail-action-link" data-action="ai-confirm" data-sid="' + row.sid + '" data-nick="' + row.nick + '">去确认</a>' +
     '</span>';
 }
 
@@ -10525,11 +10536,20 @@ function renderCancellationRetentionActionHtml(row) {
   return renderAlertTaskSpecialActionHtml(row);
 }
 
+function renderAlertTaskOverdueIco(row) {
+  if (!row || !row.overdue24) return '';
+  return '<span class="alert-task-overdue-ico" title="超时24小时未完成">超时</span>';
+}
+
+function renderAlertTaskSidLinkHtml(row) {
+  return '<a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>' + renderAlertTaskOverdueIco(row);
+}
+
 function renderCancellationRetentionDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
     '<td class="col-status">' + buildCancellationRetentionAuditStatusHtml(row.auditStatus) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-level">' + row.vipLevel + '</td>' +
     '<td class="col-time">' + row.registerTime + '</td>' +
     '<td class="col-nick">' + row.applicant + '</td>' +
@@ -10576,7 +10596,7 @@ function buildDepositGuidanceDetailRows(salesName, taskCount) {
 function renderDepositGuidanceDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order">' + row.orderNo + '</td>' +
     '<td class="col-source">' + row.orderSource + '</td>' +
     '<td class="col-time">' + row.orderCreateTime + '</td>' +
@@ -10623,7 +10643,7 @@ function buildMarginCallCareDetailRows(salesName, taskCount) {
 function renderMarginCallCareDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.accountType + '</td>' +
     '<td class="col-amount">' + row.netValue + '</td>' +
     '<td class="col-amount">' + row.marginCallAmount + '</td>' +
@@ -10671,7 +10691,7 @@ function buildWithdrawalGuidanceDetailRows(salesName, taskCount) {
 function renderWithdrawalGuidanceDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.accountType + '</td>' +
     '<td class="col-order">' + row.orderNo + '</td>' +
     '<td class="col-amount">' + row.withdrawAmount + '</td>' +
@@ -10716,7 +10736,7 @@ function buildForcedLiquidationDetailRows(salesName, taskCount) {
 function renderForcedLiquidationDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order">' + row.closeOrderNo + '</td>' +
     '<td class="col-account">' + row.liveAccount + '</td>' +
     '<td class="col-time">' + row.openTime + '</td>' +
@@ -10762,7 +10782,7 @@ function buildKycCoachingDetailRows(salesName, taskCount) {
 function renderKycCoachingDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-type">' + row.verifyType + '</td>' +
     '<td class="col-status">' + buildKycVerifyStatusHtml(row.verifyStatus) + '</td>' +
     '<td class="col-content">' + row.failReason + '</td>' +
@@ -10803,7 +10823,7 @@ function buildUninstallRecoveryDetailRows(salesName, taskCount) {
 function renderUninstallRecoveryDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time">' + row.uninstallTime + '</td>' +
     '<td class="col-version">' + row.uninstallVersion + '</td>' +
     '<td class="col-time">' + row.pushTime + '</td>' +
@@ -10844,7 +10864,7 @@ function buildWithdrawalClearoutDetailRows(salesName, taskCount) {
 function renderWithdrawalClearoutDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-order" title="' + row.withdrawOrderNo + '">' + row.withdrawOrderNo + '</td>' +
     '<td class="col-amount">' + row.withdrawAmount + '</td>' +
     '<td class="col-num">' + row.depositCount + '</td>' +
@@ -10884,7 +10904,7 @@ function buildAiSummaryPendingDetailRows(salesName, taskCount) {
 function renderAiSummaryPendingDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-status">' + buildAlertTaskStatusHtml(row.isDone) + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time" title="' + row.startTime + '">' + formatAlertTaskDetailDateTime(row.startTime) + '</td>' +
     '<td class="col-channel">' + row.channel + '</td>' +
     '<td class="col-scope">' + row.analysisScope + '</td>' +
@@ -10928,7 +10948,7 @@ function buildHighRiskChurnRecoveryDetailRows(salesName, taskCount) {
 function buildChurnCustomerInfoStackHtml(row, peakLabel) {
   peakLabel = peakLabel || '峰值交易时间段:';
   return buildAlertTaskDetailCellStack([
-    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>',
+    '<a href="#" class="col-sid-link col-sid-line" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a>' + renderAlertTaskOverdueIco(row),
     '<button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.nick + '</button>',
     '<span class="churn-peak-trade-line"><span class="churn-peak-trade-label">' + peakLabel + '</span> <span class="churn-peak-trade-value">' + row.peakTradeTimeSlot + '</span></span>'
   ]);
@@ -10969,6 +10989,10 @@ function handleAlertTaskDetailAction(action, sid, nick) {
   }
   if (action === 'ai-summary') {
     alert('提交 AI 总结\nSID：' + sid + '\n客户：' + nick + '\n（原型占位，可对接 AI 总结提交）');
+    return;
+  }
+  if (action === 'ai-confirm') {
+    alert('确认 AI 总结\nSID：' + sid + '\n客户：' + nick + '\n（原型占位，可对接确认动作）');
     return;
   }
   if (action === 'churn-analysis') {
@@ -11026,7 +11050,7 @@ function renderAlertTaskFollowTable() {
 function renderAlertTaskDetailRowHtml(row) {
   return '<tr>' +
     '<td class="col-nick">' + row.nick + '</td>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.nick + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderAlertTaskSidLinkHtml(row) + '</td>' +
     '<td class="col-time">' + row.assignTime + '</td>' +
     '<td class="col-time">' + row.completeTime + '</td>' +
     '<td class="col-status">' + row.statusHtml + '</td>' +
@@ -11179,6 +11203,14 @@ function resetAlertTaskDetailFilters() {
   applyAlertTaskDetailFilters();
 }
 
+function markAlertTaskDetailOverdue(rows, overdueCount) {
+  var left = Math.max(0, parseInt(overdueCount, 10) || 0);
+  rows.forEach(function (row) {
+    row.overdue24 = !row.isDone && left > 0;
+    if (row.overdue24) left -= 1;
+  });
+}
+
 function renderAlertTaskDetailTable(salesName, assignedCount, completedCount) {
   if (isSpecialAlertTaskDetailMode()) {
     var specialCount = _alertTaskDetailManagerReview && _alertTaskDetailListScope === 'completed'
@@ -11209,6 +11241,7 @@ function renderAlertTaskDetailTable(salesName, assignedCount, completedCount) {
     });
     _alertTaskDetailRows = _alertTaskDetailAllRows.slice();
   }
+  markAlertTaskDetailOverdue(_alertTaskDetailAllRows, _alertTaskDetailOverdueCount);
   _alertTaskDetailPage = 1;
   renderAlertTaskDetailThead();
   updateAlertTaskDetailFilterVisibility();
@@ -11375,6 +11408,7 @@ function openAlertTaskDetailDrawer(salesName, assignedCount, completedCount, lis
   }
   _alertTaskDetailListScope = nextScope;
   _alertTaskDetailManagerReview = options.managerReview === true;
+  _alertTaskDetailOverdueCount = Math.max(0, parseInt(options.overdue, 10) || 0);
   var drawer = document.getElementById('alertTaskDetailDrawer');
   if (!drawer) return;
   var salesEl = document.getElementById('alertTaskDetailSales');
@@ -11428,6 +11462,7 @@ function closeAlertTaskDetailDrawer() {
   _alertTaskDetailMode = 'default';
   _alertTaskDetailListScope = 'completed';
   _alertTaskDetailManagerReview = false;
+  _alertTaskDetailOverdueCount = 0;
   clearAlertTaskDetailFilterInputs();
   updateAlertTaskDetailFilterVisibility();
   clearAlertTaskDetailCategory();
@@ -11512,11 +11547,11 @@ function captureAlertTaskCardBaseline(card) {
   card.dataset.alertBaseCaptured = '1';
 }
 
-function applyAlertTaskCardPeriod(card, factor) {
+function applyAlertTaskCardPeriod(card, factor, scopeRatio) {
   captureAlertTaskCardBaseline(card);
   var total = Math.max(0, Math.round((parseInt(card.dataset.alertBaseTotal, 10) || 0) * factor));
   var done = Math.min(total, Math.max(0, Math.round((parseInt(card.dataset.alertBaseDone, 10) || 0) * factor)));
-  var added = Math.max(0, parseInt(card.dataset.alertBaseNew, 10) || 0);
+  var added = Math.max(0, Math.round((parseInt(card.dataset.alertBaseNew, 10) || 0) * (scopeRatio == null ? 1 : scopeRatio)));
   var pending = Math.max(0, total - done);
   var overdue = Math.max(0, pending - added);
   var rate = total ? Math.round(done / total * 100) : 0;
@@ -11573,7 +11608,7 @@ function applyAlertTaskModulePeriod(period) {
     applyAlertTaskCardPeriod(card, factor);
   });
   document.querySelectorAll('.alert-task-section .manager-only .alert-task-card').forEach(function (card) {
-    applyAlertTaskCardPeriod(card, mgrFactor);
+    applyAlertTaskCardPeriod(card, mgrFactor, typeof getSopAlertTaskScopeRatio === 'function' ? getSopAlertTaskScopeRatio() : 1);
   });
   document.querySelectorAll('.alert-task-section .sales-only, .alert-task-section .manager-only').forEach(function (root) {
     refreshAlertTaskSummaryFromCards(root);
@@ -11608,7 +11643,7 @@ function initAlertTaskCardInteractions() {
         parseInt(link.getAttribute('data-assigned'), 10) || 0,
         parseInt(link.getAttribute('data-completed'), 10) || 0,
         link.getAttribute('data-metric') === 'assigned' ? 'assigned' : 'completed',
-        { managerReview: true }
+        { managerReview: true, overdue: parseInt(link.getAttribute('data-overdue'), 10) || 0 }
       );
     });
   }
@@ -11748,11 +11783,19 @@ function allocateCommStatsTotal(total, weights) {
 
 var _commStatsChannelSplitCache = {};
 
+function getCommStatsRosterNames() {
+  if (typeof getAllManagerGoalSalesNames === 'function') {
+    var names = getAllManagerGoalSalesNames();
+    if (names.length) return names;
+  }
+  return Object.keys(COMM_STATS_SALES_CUSTOMER_TOTALS);
+}
+
 function getCommStatsChannelSplit(period) {
   var block = COMM_STATS_TEAM_CHANNEL_DATA[period];
   if (!block) return null;
-  var names = getCommStatsManagerSalesNames();
-  var cacheKey = (_managerGoalScopeLevel1 || 'self') + '|' + period + '|' + names.join(',');
+  var names = getCommStatsRosterNames();
+  var cacheKey = 'roster|' + period + '|' + names.join(',');
   if (_commStatsChannelSplitCache[cacheKey]) return _commStatsChannelSplitCache[cacheKey];
   var custWeights = names.map(getCommStatsSalesCustomerTotal);
   var telContacted = allocateCommStatsTotal(block.tel.contacted, custWeights);
@@ -11914,9 +11957,9 @@ function fillCommStatsQc(col, data) {
 }
 
 // 总览指标为历史至今累计：销售视角取本人一行，管理视角取全员合计
-function getCommStatsSummaryValues(names) {
+function getCommStatsSummaryValues(names, usePersonalAlign) {
   var agg = aggregateCommStatsSummaryRows(names.map(function (name) {
-    return buildCommStatsSummaryFollowRowForName(name, 'all');
+    return buildCommStatsSummaryFollowRowForName(name, 'all', usePersonalAlign);
   }));
   return {
     values: [agg.assigned, agg.contacted, agg.telConnected, agg.waReplied, agg.crReplied].map(String),
@@ -11946,8 +11989,8 @@ function applyCommStatsModulePeriod(period) {
   if (!section) return;
   if (!COMM_STATS_TEAM_CHANNEL_DATA[period]) return;
   var teamNames = getCommStatsManagerSalesNames();
-  var buildRows = function (names, channelType) {
-    return names.map(function (name) { return buildCommStatsFollowRowForName(name, channelType, period); });
+  var buildRows = function (names, channelType, personal) {
+    return names.map(function (name) { return buildCommStatsFollowRowForName(name, channelType, period, !!personal); });
   };
   var buildQcRows = function (names, qcType) {
     return names.map(function (name) { return buildCommQcFollowRowForName(name, qcType, period); });
@@ -11960,10 +12003,10 @@ function applyCommStatsModulePeriod(period) {
     if (!root) return;
     var isManager = view === 'manager';
     var names = isManager ? teamNames : [COMM_STATS_CURRENT_SALES];
-    var tel = isManager ? teamTel : aggregateCommStatsTelRows(buildRows(names, 'tel'));
-    var wa = isManager ? teamWa : aggregateCommStatsWaRows(buildRows(names, 'wa'));
-    var chat = isManager ? teamChat : aggregateCommStatsChatRows(buildRows(names, 'chat'));
-    var summary = getCommStatsSummaryValues(names);
+    var tel = isManager ? teamTel : aggregateCommStatsTelRows(buildRows(names, 'tel', true));
+    var wa = isManager ? teamWa : aggregateCommStatsWaRows(buildRows(names, 'wa', true));
+    var chat = isManager ? teamChat : aggregateCommStatsChatRows(buildRows(names, 'chat', true));
+    var summary = getCommStatsSummaryValues(names, !isManager);
     fillCommStatsSummary(root, summary.values, summary.uniqueReply);
     fillCommStatsChannel(root.querySelector('.comm-channel--tel'), {
       metrics: [String(tel.contacted), String(tel.duration60), tel.effectiveRate + '%'],
@@ -12040,15 +12083,9 @@ var COMM_STATS_FOLLOW_GROUP_KEYS = ['A', 'B', 'C', 'DA', 'DB', 'DC'];
 var COMM_STATS_FOLLOW_TEAM_LABEL = '团队整体进度';
 
 function getCommStatsManagerSalesNames() {
-  var names = [];
-  if (typeof getSopScopedSalesNames === 'function') names = getSopScopedSalesNames();
-  else if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') names = MANAGER_GOAL_PERF_RANK_ORDER.slice();
-  else names = ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
-  var selfName = (typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.currentUser)
-    ? INDIA_SALES_ORG.currentUser.name
-    : 'May';
-  if (selfName && names.indexOf(selfName) === -1) names = names.concat([selfName]);
-  return names;
+  if (typeof getSopScopedSalesNames === 'function') return getSopScopedSalesNames();
+  if (typeof MANAGER_GOAL_PERF_RANK_ORDER !== 'undefined') return MANAGER_GOAL_PERF_RANK_ORDER.slice();
+  return ['Coulson', 'May', 'Daisy', 'Fitz', 'Simmons', 'Mack', 'Fury', 'Hunter'];
 }
 
 function isCommStatsFollowGroupExpanded(groupKey) {
@@ -12101,8 +12138,8 @@ function getCommStatsAlignedSalesChannel(channelType, period) {
   return null;
 }
 
-function buildCommStatsFollowRowForName(name, channelType, period) {
-  var aligned = name === COMM_STATS_CURRENT_SALES ? getCommStatsAlignedSalesChannel(channelType, period) : null;
+function buildCommStatsFollowRowForName(name, channelType, period, usePersonalAlign) {
+  var aligned = usePersonalAlign && name === COMM_STATS_CURRENT_SALES ? getCommStatsAlignedSalesChannel(channelType, period) : null;
   var split = getCommStatsChannelSplit(period) || getCommStatsChannelSplit('today');
   if (channelType === 'tel') {
     var tel = aligned || (split && split.tel[name]) || { contacted: 0, connected: 0, duration60: 0, totalDurationMin: 0 };
@@ -12143,8 +12180,8 @@ function buildCommStatsFollowRowForName(name, channelType, period) {
 }
 
 // 有效沟通客户管理为历史至今累计，分配客户取该销售绑定的客户总数，不随周期变化
-function buildCommStatsSummaryFollowRowForName(name, period) {
-  if (name === COMM_STATS_CURRENT_SALES) {
+function buildCommStatsSummaryFollowRowForName(name, period, usePersonalAlign) {
+  if (usePersonalAlign && name === COMM_STATS_CURRENT_SALES) {
     var a = COMM_STATS_SALES_GOAL_ALIGN;
     return {
       name: name,
@@ -13378,6 +13415,24 @@ function handleChannelCommScreenshotPreview(nick, screenshotName) {
   alert('查看截图\n客户：' + nick + '\n文件：' + screenshotName + '\n（原型占位）');
 }
 
+var COMM_ENTRY_MODES = ['手动', '自动', '自动（待确认）'];
+
+function buildCommEntryMode(seed) {
+  return COMM_ENTRY_MODES[Math.abs(seed) % COMM_ENTRY_MODES.length];
+}
+
+function renderCommEntryModeHtml(mode) {
+  var pending = mode === '自动（待确认）';
+  return '<span class="comm-entry-mode' + (pending ? ' comm-entry-mode--pending' : '') + '">' + mode + '</span>';
+}
+
+function renderCommSidWithEntryModeHtml(row) {
+  return '<div class="col-sid-stack">' +
+    '<a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a>' +
+    renderCommEntryModeHtml(row.entryMode) +
+    '</div>';
+}
+
 function buildPhoneCommDetailRows(salesName, rowCount, metric) {
   var seed = alertTaskFollowSeed('phone-comm-detail|' + _commStatsFollowPeriod + '|' + salesName + '|' + metric);
   var total = Math.max(0, parseInt(rowCount, 10) || 0);
@@ -13404,7 +13459,8 @@ function buildPhoneCommDetailRows(salesName, rowCount, metric) {
       durationSec: durationSec,
       connectedLabel: isConnected ? '是' : '否',
       durationHtml: formatPhoneCommDurationHtml(durationSec),
-      resultHtml: buildPhoneCommResultHtml(s)
+      resultHtml: buildPhoneCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -13438,7 +13494,7 @@ function filterPhoneCommDetailRows(rows, filters) {
 
 function renderPhoneCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-connected">' + buildCommStatsContactedHtml(row.connectedLabel) + '</td>' +
@@ -13626,7 +13682,8 @@ function buildWaCommDetailRows(salesName, rowCount, metric) {
       hasScreenshot: screenshotMeta.hasScreenshot,
       screenshotName: screenshotMeta.screenshotName,
       screenshotNames: screenshotMeta.screenshotNames,
-      resultHtml: buildChannelCommResultHtml(s)
+      resultHtml: buildChannelCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -13660,7 +13717,7 @@ function filterWaCommDetailRows(rows, filters) {
 function renderWaCommDetailRowHtml(row) {
   var auditedHtml = renderCommReviewStatusHtml(row.auditStatus);
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
@@ -13839,7 +13896,8 @@ function buildChatCommDetailRows(salesName, rowCount, metric) {
       isReplied: isReplied,
       isFollowup2min: isFollowup2min,
       repliedLabel: isReplied ? '是' : '否',
-      resultHtml: buildChannelCommResultHtml(s)
+      resultHtml: buildChannelCommResultHtml(s),
+      entryMode: buildCommEntryMode(s)
     });
   }
   return rows;
@@ -13869,7 +13927,7 @@ function filterChatCommDetailRows(rows, filters) {
 
 function renderChatCommDetailRowHtml(row) {
   return '<tr>' +
-    '<td class="col-sid"><a href="#" class="col-sid-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.sid + '</a></td>' +
+    '<td class="col-sid">' + renderCommSidWithEntryModeHtml(row) + '</td>' +
     '<td class="col-nick"><button type="button" class="col-nick-link" data-sid="' + row.sid + '" data-nick="' + row.name + '">' + row.name + '</button></td>' +
     '<td class="col-time">' + row.commTime + '</td>' +
     '<td class="col-replied">' + buildCommStatsContactedHtml(row.repliedLabel) + '</td>' +
@@ -14952,6 +15010,12 @@ function handleCommQcLinkActivate(link) {
   }
 }
 
+function getAlertTaskCardOverdueCount(card) {
+  if (!card) return 0;
+  var strong = card.querySelector('.alert-task-card-meta strong');
+  return strong ? (parseInt(strong.textContent, 10) || 0) : 0;
+}
+
 function getAlertTaskCardProgressCounts(card) {
   var strongEl = card.querySelector('.alert-task-card-progress strong');
   if (!strongEl) return { completed: 0, assigned: 0 };
@@ -15008,7 +15072,7 @@ function handleTempMktCardActivate(card) {
     _alertTaskFollowPeriod = 'today';
     setAlertTaskDetailCategory(getTempMktCardCategory(card));
     _alertTaskDetailMode = 'default';
-    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
   }
 }
 
@@ -15034,12 +15098,12 @@ function handleAlertTaskCardActivate(card) {
     if (specialMode) {
       if (!counts.assigned) return;
       _alertTaskDetailMode = specialMode;
-      openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
+      openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
       return;
     }
     if (!counts.completed) return;
     _alertTaskDetailMode = 'default';
-    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed);
+    openAlertTaskDetailDrawer(COMM_STATS_CURRENT_SALES, counts.assigned, counts.completed, undefined, { overdue: getAlertTaskCardOverdueCount(card) });
   }
 }
 
@@ -15188,6 +15252,10 @@ function normalizeTempMktRemainingDays() {
 
 function randomizeRankNamesInPanel(panel) {
   if (!panel) return;
+  if (!panel.closest('.customer-rank-panel') && document.body.dataset.view === 'manager' && _managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'self') {
+    applySopScopeRankBoards();
+    return;
+  }
   var tbody = panel.querySelector('table tbody');
   if (!tbody) return;
   var rows = tbody.querySelectorAll('tr');
@@ -18161,10 +18229,9 @@ function getSopManagerFollowOutline() {
   return outline;
 }
 
-/** 行动SOP：当前管理范围下的销售名单。角色范围固定为角色内所有人，不可单选 */
+/** 行动SOP：第二个下拉不可改，工作区始终用当前范围的全部人员 */
 function getSopScopedSalesNames() {
-  var outline = getSopManagerFollowOutline();
-  return outline.scopeNames.slice();
+  return getSopManagerFollowOutline().scopeNames.slice();
 }
 
 function getSopScopedGroupKeys() {
@@ -18187,9 +18254,12 @@ function getSopFollowTeamLabel() {
 function getSopAlertTaskScopeRatio() {
   if (document.body.dataset.view !== 'manager') return 1;
   if (_managerGoalScopeLevel1 === 'self' || _managerGoalScopeLevel1 === 'all' || !_managerGoalScopeLevel1) return 1;
-  var all = getAllManagerGoalSalesNames().length || 1;
-  var scoped = getSopScopedSalesNames().length || 1;
-  return scoped / all;
+  var allNames = typeof getAllManagerGoalSalesNames === 'function' ? getAllManagerGoalSalesNames() : [];
+  var scoped = getSopScopedSalesNames();
+  if (!allNames.length || !scoped.length) return 1;
+  var allW = allNames.reduce(function (sum, name) { return sum + getCommStatsSalesCustomerTotal(name); }, 0);
+  var scopeW = scoped.reduce(function (sum, name) { return sum + getCommStatsSalesCustomerTotal(name); }, 0);
+  return allW > 0 ? scopeW / allW : scoped.length / allNames.length;
 }
 
 function refreshOpenSopScopeModals() {
@@ -18214,7 +18284,117 @@ function applySopManagerScopeView() {
   if (typeof applyAlertTaskModulePeriod === 'function') {
     applyAlertTaskModulePeriod(_alertTaskModulePeriod || 'week');
   }
+  applySopScopeRankBoards();
   refreshOpenSopScopeModals();
+}
+
+var _sopRankBoardSnapshot = null;
+
+function captureSopRankBoardSnapshot() {
+  if (_sopRankBoardSnapshot) return;
+  _sopRankBoardSnapshot = [];
+  document.querySelectorAll('.comm-rank-panel .rank-tab-panel, .task-rank-panel .rev-rank-tab-panel').forEach(function (panel) {
+    if (panel.classList.contains('gca-pending-wrap')) return;
+    var tbody = panel.querySelector('tbody');
+    var foot = panel.querySelector('.rev-rank-foot');
+    if (!tbody) return;
+    _sopRankBoardSnapshot.push({
+      tbody: tbody,
+      foot: foot,
+      tbodyHtml: tbody.innerHTML,
+      footHtml: foot ? foot.innerHTML : ''
+    });
+  });
+}
+
+function restoreSopRankBoardSnapshot() {
+  captureSopRankBoardSnapshot();
+  _sopRankBoardSnapshot.forEach(function (item) {
+    item.tbody.innerHTML = item.tbodyHtml;
+    if (item.foot) item.foot.innerHTML = item.footHtml;
+  });
+}
+
+function applySopScopeRankBoards() {
+  captureSopRankBoardSnapshot();
+  if (document.body.dataset.view !== 'manager' || !_managerGoalScopeLevel1 || _managerGoalScopeLevel1 === 'self') {
+    restoreSopRankBoardSnapshot();
+    return;
+  }
+  var names = getSopScopedSalesNames();
+  if (!names.length) return;
+  var period = _commStatsModulePeriod || 'today';
+  var split = getCommStatsChannelSplit(period);
+  function topBy(scoreFn) {
+    return names.slice().sort(function (a, b) {
+      return scoreFn(b) - scoreFn(a) || String(a).localeCompare(String(b));
+    }).slice(0, 10);
+  }
+  function fillBoard(panel, rowsHtml, footHtml) {
+    if (!panel) return;
+    var tbody = panel.querySelector('tbody');
+    if (tbody) tbody.innerHTML = rowsHtml;
+    var foot = panel.querySelector('.rev-rank-foot');
+    if (foot && footHtml) foot.innerHTML = footHtml;
+  }
+  function average(scoreFn) {
+    return names.reduce(function (sum, name) { return sum + scoreFn(name); }, 0) / names.length;
+  }
+  var telScore = function (name) {
+    return (split && split.tel[name] && split.tel[name].totalDurationMin) || 0;
+  };
+  var telList = topBy(telScore);
+  fillBoard(document.querySelector('.comm-rank-panel [data-comm-panel="tel"]'), telList.map(function (name, i) {
+    var row = (split && split.tel[name]) || { totalDurationMin: 0, contacted: 0 };
+    return '<tr><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + name + '</td><td class="rank-val">' + formatCommStatsCallDuration(row.totalDurationMin) + '</td><td class="rank-val">' + row.contacted + '</td></tr>';
+  }).join(''),
+    '<span class="rev-rank-chip">范围均值 <strong>' + formatCommStatsCallDuration(Math.round(average(telScore))) + '</strong></span>' +
+    '<span class="rev-rank-chip">人均通话 <strong>' + Math.round(average(function (name) { return (split && split.tel[name] && split.tel[name].contacted) || 0; })) + ' 通</strong></span>');
+  [['whatsapp', 'wa'], ['chatroom', 'chat']].forEach(function (pair) {
+    var score = function (name) {
+      return (split && split[pair[1]][name] && split[pair[1]][name].contacted) || 0;
+    };
+    var list = topBy(score);
+    fillBoard(document.querySelector('.comm-rank-panel [data-comm-panel="' + pair[0] + '"]'), list.map(function (name, i) {
+      var row = (split && split[pair[1]][name]) || { contacted: 0, replied: 0 };
+      var rate = row.contacted ? Math.round(row.replied / row.contacted * 100) : 0;
+      return '<tr><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + name + '</td><td class="rank-val">' + row.contacted + ' 人</td><td class="rank-val">' + rate + '%</td></tr>';
+    }).join(''),
+      '<span class="rev-rank-chip">范围均值 <strong>' + Math.round(average(score)) + ' 人</strong></span>');
+  });
+  ['risk', 'daily'].forEach(function (key, keyIndex) {
+    var panel = document.querySelector('.task-rank-panel [data-task-panel="' + key + '"]');
+    if (!panel || panel.classList.contains('gca-pending-wrap')) return;
+    var score = function (name) {
+      return Math.max(1, Math.round(getCommStatsSalesCustomerTotal(name) / (18 + keyIndex * 4)));
+    };
+    var list = topBy(score);
+    var scopeTotal = names.reduce(function (sum, name) { return sum + score(name); }, 0);
+    var max = list.length ? score(list[0]) : 0;
+    var mean = average(score);
+    var above = names.filter(function (name) { return score(name) > mean; }).length;
+    var topSum = list.reduce(function (sum, name) { return sum + score(name); }, 0);
+    var medals = ['🥇', '🥈', '🥉'];
+    fillBoard(panel, list.map(function (name, i) {
+      var value = score(name);
+      var pct = scopeTotal ? (value / scopeTotal * 100).toFixed(1) : '0.0';
+      var width = max ? Math.round(value / max * 100) : 0;
+      var cls = i < 3 ? ' class="rank-top' + (i + 1) + '"' : '';
+      var no = i < 3 ? medals[i] : String(i + 1);
+      return '<tr' + cls + '><td class="rank-no">' + no + '</td><td class="rank-name">' + name + '</td><td class="rank-val-main">' + value + ' 项</td><td class="rank-share-cell"><span class="rank-share-pct">' + pct + '%</span><span class="rank-mini-bar"><span class="rank-mini-bar-fill" style="width:' + width + '%"></span></span></td></tr>';
+    }).join(''),
+      '<span class="rev-rank-chip">范围均值 <strong>' + mean.toFixed(1) + ' 项</strong></span>' +
+      '<span class="rev-rank-chip">高于均值 <strong>' + above + ' 人</strong></span>' +
+      '<span class="rev-rank-chip">前' + list.length + '名范围占比 <strong>' + (scopeTotal ? (topSum / scopeTotal * 100).toFixed(1) : '0.0') + '%</strong></span>');
+    var self = panel.querySelector('.rev-rank-self.manager-only');
+    if (self && list.length) {
+      var nameEl = self.querySelector('.rev-rank-self-name');
+      var valEl = self.querySelector('.rev-rank-self-val');
+      var top3 = list.slice(0, 3).reduce(function (sum, name) { return sum + score(name); }, 0);
+      if (nameEl) nameEl.textContent = list[0] + ' · 第 1 名';
+      if (valEl) valEl.textContent = '范围 TOP3 完成总数为：' + top3 + ' 项';
+    }
+  });
 }
 
 function getManagerGoalScopeDisplayLabel(filter) {
@@ -18225,7 +18405,7 @@ function getManagerGoalScopeDisplayLabel(filter) {
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
-    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+    return group ? group.label + ' · 角色内汇总' : '角色内汇总';
   }
   if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all' && _managerGoalScopeLevel1 !== 'self') {
     var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
@@ -18236,7 +18416,7 @@ function getManagerGoalScopeDisplayLabel(filter) {
   return filter;
 }
 
-function resolveManagerGoalFilter(level1, level2) {
+function resolveManagerGoalFilter(level1) {
   if (level1 === 'self') return MANAGER_GOAL_SELF_SALES;
   if (level1 === 'all' || !level1) return 'all';
   return 'group:' + level1;
@@ -18250,6 +18430,7 @@ function parseManagerGoalFilterToScopes(filter) {
   if (filter.indexOf('group:') === 0) {
     return { level1: filter.slice(6), level2: '__group__' };
   }
+  if (_managerGoalScopeLevel1 === 'all') return { level1: 'all', level2: filter };
   var groupKey;
   for (groupKey in MANAGER_GOAL_SALES_GROUPS) {
     if (MANAGER_GOAL_SALES_GROUPS[groupKey].members.indexOf(filter) !== -1 && _managerGoalScopeLevel1 === groupKey) {
@@ -18277,7 +18458,14 @@ function rebuildManagerGoalLevel2Options(level1) {
     _managerGoalScopeLevel2 = MANAGER_GOAL_SELF_SALES;
     return;
   }
-  select.innerHTML = '<option value="__group__">角色内所有人</option>';
+  if (!level1 || level1 === 'all') {
+    select.innerHTML = '<option value="__all__">全员汇总</option>';
+    select.value = '__all__';
+    _managerGoalScopeLevel2 = '__all__';
+    return;
+  }
+  if (!MANAGER_GOAL_SALES_GROUPS[level1]) return;
+  select.innerHTML = '<option value="__group__">角色内汇总</option>';
   select.value = '__group__';
   _managerGoalScopeLevel2 = '__group__';
 }
@@ -18312,8 +18500,9 @@ function onManagerGoalScopeLevel1Change() {
 
 function onManagerGoalScopeLevel2Change() {
   var level1Select = document.getElementById('managerGoalScopeLevel1');
+  var level2Select = document.getElementById('managerGoalScopeLevel2');
   _managerGoalScopeLevel1 = level1Select ? level1Select.value : 'self';
-  rebuildManagerGoalLevel2Options(_managerGoalScopeLevel1);
+  _managerGoalScopeLevel2 = level2Select ? level2Select.value : '__all__';
   applyManagerGoalSalesFilter(resolveManagerGoalFilter(_managerGoalScopeLevel1, _managerGoalScopeLevel2));
 }
 

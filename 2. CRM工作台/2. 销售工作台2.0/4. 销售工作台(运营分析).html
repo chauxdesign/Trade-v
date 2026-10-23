@@ -266,6 +266,9 @@
     .manager-goal-scope-select:focus{
       outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.25);
     }
+    .manager-goal-scope-select:disabled{
+      background-color:#f1f5f9;color:#64748b;cursor:not-allowed;opacity:1;
+    }
     .manager-goal-scope-hint{
       width:95%;margin:0;padding:0;box-sizing:border-box;text-align:left;
       font-size:13px;color:#475569;line-height:1.7;
@@ -14101,7 +14104,7 @@ function getManagerGoalScopeDisplayLabel(filter) {
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
-    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+    return group ? group.label + ' · 角色内汇总' : '角色内汇总';
   }
   if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
     var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
@@ -14147,7 +14150,7 @@ function rebuildManagerGoalLevel2Options(level1, keepValue) {
   } else {
     var group = MANAGER_GOAL_SALES_GROUPS[level1];
     if (!group) return;
-    html += '<option value="__group__">角色内所有人</option>';
+    html += '<option value="__group__">角色内汇总</option>';
     group.members.forEach(function (name) {
       html += '<option value="' + name + '">' + ((typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel) ? INDIA_SALES_ORG.formatScopePersonLabel(name) : name) + '</option>';
     });
@@ -16766,7 +16769,7 @@ function rpScopeLabel() {
   }
   var group = MANAGER_GOAL_SALES_GROUPS[_rpScopeLevel1];
   var label = group ? group.label : '当前组';
-  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 组内所有人';
+  if (!_rpScopeLevel2 || _rpScopeLevel2 === '__group__') return label + ' · 角色内汇总';
   return label + ' · ' + _rpScopeLevel2;
 }
 
@@ -16858,7 +16861,7 @@ function rpRebuildScopeLevel2(level1, keepValue) {
   } else {
     var group = MANAGER_GOAL_SALES_GROUPS[level1];
     if (!group) return;
-    options.push({ value: '__group__', label: '角色内所有人' });
+    options.push({ value: '__group__', label: '角色内汇总' });
     group.members.forEach(function (name) { options.push({ value: name, label: rpPersonOptionLabel(name) }); });
   }
   select.textContent = '';

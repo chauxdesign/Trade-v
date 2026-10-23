@@ -4343,6 +4343,7 @@
     }
     .gca-pending-wrap > *:not(.gca-pending-mask){pointer-events:none}
     .customer-target-ai.gca-pending-wrap{margin-top:0}
+    .goal-card.gca-pending-wrap{margin-bottom:0}
     .gca-forecast-grid{
       display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
     }
@@ -4718,7 +4719,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--risk">
+                <article class="goal-card goal-card--risk gca-pending-wrap" aria-label="本期暂不开发">
+                  <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
                   <div class="goal-card-head">
                     <span class="goal-badge">险</span>
                     <div><h3>风险</h3><p class="goal-q">需要关注与处置的客户风险有哪些？（数据为7日内数据）</p></div>
@@ -4925,7 +4927,8 @@
                     </div>
                   </div>
                 </article>
-                <article class="goal-card goal-card--risk">
+                <article class="goal-card goal-card--risk gca-pending-wrap" aria-label="本期暂不开发">
+                  <div class="gca-pending-mask" aria-hidden="true"><span>本期暂不开发</span></div>
                   <div class="goal-card-head">
                     <span class="goal-badge">险</span>
                     <div><h3>团队风险</h3><p class="goal-q">需要关注与处置的客户风险有哪些？（数据为7日内数据）</p></div>
@@ -12081,6 +12084,7 @@ function normalizeTempMktRemainingDays() {
 
 function randomizeRankNamesInPanel(panel) {
   if (!panel) return;
+  if (document.body.dataset.view === 'manager' && panel.closest('#view-team, .revenue-rank-panel, .customer-rank-panel, .perf-rank-panel')) return;
   var tbody = panel.querySelector('table tbody');
   if (!tbody) return;
   var rows = tbody.querySelectorAll('tr');
@@ -15073,14 +15077,18 @@ function ensureIndiaSalesOrgMockData() {
       return;
     }
     var rank = nextRank++;
-    var reward = Math.max(420, Math.round(4280 - (rank - 1) * 38));
+    var steps = Math.max(1, rank - maxRank);
+    var reward = Math.max(260, Math.round(820 - steps * 8));
+    var net = Math.max(8, Math.round(46 - steps * 0.35));
+    var fee = Math.max(0.4, Math.round((2 - steps * 0.015) * 10) / 10);
+    var lots = Math.max(40, Math.round(240 - steps * 2));
     MANAGER_GOAL_SALES_META[name] = {
       rank: rank,
       reward: '$' + reward.toLocaleString('en-US'),
       revenueRank: rank,
-      netK: '$' + Math.max(28, Math.round(286 - (rank - 1) * 2.2)) + 'K',
-      feeK: '$' + (Math.max(1.2, 17.2 - (rank - 1) * 0.14)).toFixed(1) + 'K',
-      tradeLots: Math.max(180, Math.round(1280 - (rank - 1) * 10)).toLocaleString('en-US'),
+      netK: '$' + net + 'K',
+      feeK: '$' + fee.toFixed(1) + 'K',
+      tradeLots: lots.toLocaleString('en-US'),
       v34: 0,
       topLabel: '第 ' + rank + ' 名',
       role: (INDIA_SALES_ORG.getRole && INDIA_SALES_ORG.getRole(name)) || ''
@@ -15185,7 +15193,7 @@ function getManagerGoalScopeDisplayLabel(filter) {
   if (filter.indexOf('group:') === 0) {
     var groupKey = filter.slice(6);
     var group = MANAGER_GOAL_SALES_GROUPS[groupKey];
-    return group ? group.label + ' · 角色内所有人' : '角色内所有人';
+    return group ? group.label + ' · 角色内汇总' : '角色内汇总';
   }
   if (_managerGoalScopeLevel1 && _managerGoalScopeLevel1 !== 'all') {
     var grp = MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1];
@@ -15213,6 +15221,7 @@ function parseManagerGoalFilterToScopes(filter) {
     return { level1: filter.slice(6), level2: '__group__' };
   }
   var groupKey;
+  if (_managerGoalScopeLevel1 === 'all') return { level1: 'all', level2: filter };
   if (_managerGoalScopeLevel1 && MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1]
     && MANAGER_GOAL_SALES_GROUPS[_managerGoalScopeLevel1].members.indexOf(filter) !== -1) {
     return { level1: _managerGoalScopeLevel1, level2: filter };
@@ -15247,7 +15256,7 @@ function rebuildManagerGoalLevel2Options(level1, keepValue) {
   } else {
     var group = MANAGER_GOAL_SALES_GROUPS[level1];
     if (!group) return;
-    html += '<option value="__group__">角色内所有人</option>';
+    html += '<option value="__group__">角色内汇总</option>';
     group.members.forEach(function (name) {
       html += '<option value="' + name + '">' + ((typeof INDIA_SALES_ORG !== 'undefined' && INDIA_SALES_ORG.formatScopePersonLabel) ? INDIA_SALES_ORG.formatScopePersonLabel(name) : name) + '</option>';
     });
@@ -16024,10 +16033,11 @@ function applyManagerGoalCustomerRankPanel(panel, sidebar) {
   });
 }
 
-function applyManagerGoalRevenueRankPanel(panel, sidebar) {
+function applyManagerGoalRevenueRankPanel(panel, sidebar, data) {
   if (!panel || !sidebar) return;
   var intro = panel.querySelector('.rank-period-intro');
   if (intro) intro.innerHTML = sidebar.revenueIntro;
+  var members = (data && data.isGroup && data.groupMembers && data.groupMembers.length) ? data.groupMembers : null;
   ['deposit', 'fee', 'trade'].forEach(function (key) {
     var tabPanel = panel.querySelector('[data-rev-panel="' + key + '"]');
     var block = sidebar.revenueRank[key];
@@ -16044,7 +16054,7 @@ function applyManagerGoalRevenueRankPanel(panel, sidebar) {
       heroes[2].querySelector('.rev-hero-val').textContent = block.mineVal;
       heroes[2].querySelector('.rev-hero-sub').textContent = block.mineSub;
     }
-    limitManagerGoalTableRows(tabPanel.querySelector('.revenue-rank-table tbody'), MANAGER_GOAL_RANK_LIMIT);
+    renderManagerGoalRevenueRankRows(tabPanel.querySelector('.revenue-rank-table tbody'), members, key);
     var self = tabPanel.querySelector('.rev-rank-self');
     if (self && block.self) {
       self.style.display = '';
@@ -16292,27 +16302,40 @@ function formatPerfRewardWithRelative(reward) {
   return '$' + amount.toLocaleString('en-US') + ' / $' + relative.toLocaleString('en-US');
 }
 
+function renderManagerGoalRevenueRankRows(tbody, members, kind) {
+  if (!tbody) return;
+  var list = (members && members.length ? members.slice() : getAllManagerGoalSalesNames()).filter(function (name) {
+    return !!MANAGER_GOAL_SALES_META[name];
+  });
+  var total = sumManagerGoalMetaMetric(kind, list);
+  list.sort(function (a, b) {
+    return sumManagerGoalMetaMetric(kind, [b]) - sumManagerGoalMetaMetric(kind, [a]);
+  });
+  var format = kind === 'deposit' ? formatManagerGoalMetaNet : kind === 'fee' ? formatManagerGoalMetaFee : formatManagerGoalMetaLots;
+  var medals = ['🥇', '🥈', '🥉'];
+  tbody.innerHTML = list.slice(0, MANAGER_GOAL_RANK_LIMIT).map(function (name, i) {
+    var value = sumManagerGoalMetaMetric(kind, [name]);
+    var pct = total > 0 ? (value / total * 100).toFixed(1) + '%' : '0%';
+    var cls = i < 3 ? ' class="rank-top' + (i + 1) + '"' : '';
+    var no = i < 3 ? medals[i] : String(i + 1);
+    return '<tr' + cls + '><td class="rank-no">' + no + '</td><td class="rank-name">' + name + '</td><td class="rank-val-main">' + format(value) + '</td><td class="rank-val-sub">' + pct + '</td></tr>';
+  }).join('');
+}
+
 function applyManagerGoalPerfRankPanel(panel, data) {
   if (!panel) return;
-  var memberSet = null;
-  if (data.isGroup && data.groupMembers) {
-    memberSet = {};
-    data.groupMembers.forEach(function (name) { memberSet[name] = true; });
-  }
-  var perfRows = panel.querySelectorAll('tbody tr[data-sales-name]');
-  var visibleIndex = 0;
-  perfRows.forEach(function (row) {
-    var name = row.getAttribute('data-sales-name');
-    var inScope = !memberSet || memberSet[name];
-    if (!inScope) {
-      row.style.display = 'none';
-      row.classList.remove('is-active-sales');
-      return;
-    }
-    row.style.display = visibleIndex < MANAGER_GOAL_RANK_LIMIT ? '' : 'none';
-    visibleIndex++;
-    row.classList.toggle('is-active-sales', !data.isTeam && row.getAttribute('data-sales-name') === data.salesName);
+  var tbody = panel.querySelector('tbody');
+  var members = (data.isGroup && data.groupMembers && data.groupMembers.length) ? data.groupMembers.slice() : getAllManagerGoalSalesNames();
+  members = members.filter(function (name) { return !!MANAGER_GOAL_SALES_META[name]; });
+  members.sort(function (a, b) {
+    return parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[b].reward) - parseManagerGoalRewardUsd(MANAGER_GOAL_SALES_META[a].reward);
   });
+  if (tbody) {
+    tbody.innerHTML = members.slice(0, MANAGER_GOAL_RANK_LIMIT).map(function (name, i) {
+      var active = !data.isTeam && name === data.salesName ? ' class="is-active-sales"' : '';
+      return '<tr data-sales-name="' + name + '"' + active + '><td class="rank-no">' + (i + 1) + '</td><td class="rank-name">' + name + '</td><td class="rank-val">' + MANAGER_GOAL_SALES_META[name].reward + '</td></tr>';
+    }).join('');
+  }
   var self = panel.querySelector('.rank-self');
   if (!self) return;
   var labelEl = self.querySelector('.rank-self-label');
@@ -16430,7 +16453,7 @@ function applyManagerGoalSidebar(data) {
 
   applyManagerGoalPerfRankPanel(document.getElementById('manager-goal-perf-rank-panel'), data);
   applyManagerGoalCustomerRankPanel(perfTeam.querySelector('.customer-rank-panel'), sb);
-  applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb);
+  applyManagerGoalRevenueRankPanel(perfTeam.querySelector('.revenue-rank-panel'), sb, data);
 }
 
 /** 管理视角三种范围：团队汇总 / 单个销售组 / 单个销售 */
